@@ -1,4 +1,4 @@
-package spout;
+package spout.text;
 
 import java.io.File;
 import java.io.IOException;

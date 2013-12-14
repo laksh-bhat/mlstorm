@@ -1,28 +1,20 @@
-package bdconsistency.spouts;
+package spout.text;
 
-import java.io.File;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.io.IOException;
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.text.MessageFormat;
-import java.io.InputStreamReader;
-
-import backtype.storm.utils.Utils;
-import backtype.storm.tuple.Values;
-import backtype.storm.tuple.Fields;
-import storm.trident.spout.ITridentSpout;
 import backtype.storm.task.TopologyContext;
+import backtype.storm.tuple.Fields;
+import backtype.storm.tuple.Values;
+import backtype.storm.utils.Utils;
 import storm.trident.operation.TridentCollector;
-import storm.trident.topology.TransactionAttempt;
+import storm.trident.spout.ITridentSpout;
 import storm.trident.spout.RichSpoutBatchExecutor;
+import storm.trident.topology.TransactionAttempt;
+
+import java.io.*;
+import java.text.MessageFormat;
+import java.util.*;
 
 /**
- * A quick "transactionnal" text file spout: emits one tuple with one single field for each line in the file.
+ * A quick "transactional" text file spout: emits one tuple with one single field for each line in the file.
  * <p/>
  * <p/>
  * Watch out that:

@@ -2,6 +2,8 @@
   <dictionary name="lbhat">
     <words>
       <w>eigen</w>
+      <w>eigenspace</w>
+      <w>eigenvectors</w>
     </words>
   </dictionary>
 </component>

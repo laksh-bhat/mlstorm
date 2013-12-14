@@ -28,10 +28,12 @@ import java.util.Map;
  */
 public class PcaStreamer implements IRichBolt {
     int localPartition;
+    OutputCollector collector;
 
     @Override
     public void prepare(Map map, TopologyContext context, OutputCollector collector) {
-        localPartition = context.getThisTaskId();
+        this.collector = collector;
+        this.localPartition = context.getThisTaskId();
     }
 
     @Override
