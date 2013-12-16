@@ -1,5 +1,7 @@
 package bolt.ml.state.pca;
 
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 import org.ejml.data.DenseMatrix64F;
 import org.ejml.factory.DecompositionFactory;
 import org.ejml.factory.SingularValueDecomposition;
@@ -8,12 +10,17 @@ import org.ejml.ops.NormOps;
 import org.ejml.ops.SingularOps;
 import storm.trident.state.State;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * User: lbhat@damsl
  * Date: 12/13/13
  * Time: 9:08 PM
  */
 public class PrincipalComponents implements State {
+
+    private Cache<Integer, Double[]> features;
+
     // principle component subspace is stored in the rows
     private DenseMatrix64F V_t;
 
@@ -29,6 +36,10 @@ public class PrincipalComponents implements State {
 
     public PrincipalComponents () {
 
+        features = CacheBuilder.newBuilder()
+                .expireAfterAccess(24, TimeUnit.HOURS)
+                .maximumSize(1000)
+        .build();
     }
 
     /**
@@ -244,4 +255,8 @@ public class PrincipalComponents implements State {
 
     @Override
     public void commit (final Long txid) {}
+
+    public Cache<Integer, Double[]> getFeatures() {
+        return features;
+    }
 }

@@ -15,15 +15,14 @@ import java.util.Map;
  * Time: 10:55 PM
  */
 public class PrincipalComponentUpdater implements StateUpdater<PrincipalComponents> {
+
     @Override
     public void updateState (final PrincipalComponents state,
                              final List<TridentTuple> tuples,
                              final TridentCollector collector)
     {
         for (TridentTuple tuple : tuples){
-            double[] data = new double[tuple.size()];
-            /*todo fill data*/
-            state.addSample(data);
+            state.getFeatures().put(tuple.getIntegerByField("integer"), (Double[]) tuple.getValueByField("sensorData"));
         }
     }
 
