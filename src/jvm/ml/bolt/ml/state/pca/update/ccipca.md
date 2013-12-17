@@ -1,9 +1,5 @@
 """ Candid Covariance-free Incremental Principal Component Analysis
 """
-
-# Author: Kevin Hughes <kevinhughes27@gmail.com>
-# License: BSD Style.
-
 import numpy as np
 from scipy import linalg as la
 

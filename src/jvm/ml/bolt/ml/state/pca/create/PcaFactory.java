@@ -2,6 +2,7 @@ package bolt.ml.state.pca.create;
 
 
 import backtype.storm.task.IMetricsContext;
+import bolt.ml.state.pca.PrincipalComponents;
 import storm.trident.state.State;
 import storm.trident.state.StateFactory;
 
@@ -13,12 +14,22 @@ import java.util.Map;
  * Time: 9:29 PM
  */
 public class PcaFactory implements StateFactory {
+    final int numSamples, sampleSize;
+    PrincipalComponents pc = null;
+
+    public PcaFactory (int numSamples, int sampleSize) {
+        this.sampleSize = sampleSize;
+        this.numSamples = numSamples;
+    }
+
     @Override
-    public State makeState (final Map conf,
+    public synchronized State makeState (final Map conf,
                             final IMetricsContext metrics,
                             final int partitionIndex,
                             final int numPartitions)
     {
-        return null;
+
+        if (pc == null) pc = new PrincipalComponents(numSamples, sampleSize, partitionIndex, numPartitions);
+        return pc;
     }
 }

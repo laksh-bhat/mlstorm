@@ -11,27 +11,29 @@ import java.util.Map;
 
 /**
  * User: lbhat <laksh85@gmail.com>
- * Date: 12/13/13
- * Time: 10:55 PM
+ * Date: 12/16/13
+ * Time: 12:36 PM
  */
-public class PrincipalComponentUpdater implements StateUpdater<PrincipalComponents> {
-    int localPartition, numPartitions;
+public class PrincipalComponentsRefresher implements StateUpdater<PrincipalComponents> {
     @Override
-    public void updateState (final PrincipalComponents state,
+    public void updateState (final PrincipalComponents principalComponents,
                              final List<TridentTuple> tuples,
                              final TridentCollector collector)
     {
         for (TridentTuple tuple : tuples){
-            state.getFeatures().asMap().putIfAbsent(tuple.getIntegerByField("key"), (Double[]) tuple.getValueByField("sensorData"));
+            // TODO figure out a way to perform state "merge"
+            // TODO look at Candid covariance-free incremental principal component analysis (CCIPCA) paper.
+            collector.emit(tuple);
         }
     }
 
     @Override
-    public void prepare (final Map conf, final TridentOperationContext context) {
-        localPartition = context.getPartitionIndex();
-        numPartitions = context.numPartitions();
+    public void prepare (final Map map, final TridentOperationContext tridentOperationContext) {
+
     }
 
     @Override
-    public void cleanup () {}
+    public void cleanup () {
+
+    }
 }

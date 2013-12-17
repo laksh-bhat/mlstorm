@@ -24,8 +24,11 @@ public class PrincipalComponents implements State {
     // principle component subspace is stored in the rows
     private DenseMatrix64F V_t;
 
-    // how many principle components are used
-    private int numComponents;
+    // how many principal components are used
+    private int numPrincipalComponents;
+
+    // state partition information
+    private int localPartition, numPartition;
 
     // where the data is stored
     private DenseMatrix64F A = new DenseMatrix64F(1, 1);
@@ -34,12 +37,12 @@ public class PrincipalComponents implements State {
     // mean values of each element across all the samples
     double mean[];
 
-    public PrincipalComponents () {
+    public PrincipalComponents (int numSamples, int elementsInSample, int localPartition, int numPartitions) {
+        this.localPartition = localPartition;
+        this.numPartition   = numPartitions;
 
-        features = CacheBuilder.newBuilder()
-                .expireAfterAccess(24, TimeUnit.HOURS)
-                .maximumSize(1000)
-        .build();
+        setup(numSamples, elementsInSample);
+        features = CacheBuilder.newBuilder().expireAfterAccess(24, TimeUnit.HOURS).maximumSize(1000).build();
     }
 
     /**
@@ -52,7 +55,7 @@ public class PrincipalComponents implements State {
         mean = new double[sampleSize];
         A.reshape(numSamples, sampleSize, false);
         sampleIndex = 0;
-        numComponents = -1;
+        numPrincipalComponents = -1;
     }
 
     /**
@@ -98,7 +101,7 @@ public class PrincipalComponents implements State {
     }
 
     /**
-     * Computes a basis (the principle components) from the most dominant eigenvectors.
+     * Computes a basis (the principal components) from the most dominant eigenvectors.
      *
      * @param numComponents Number of vectors it will use to describe the data.  Typically much
      * smaller than the number of elements in the input vector.
@@ -111,7 +114,7 @@ public class PrincipalComponents implements State {
         if( numComponents > sampleIndex )
             throw new IllegalArgumentException("More data needed to compute the desired number of components");
 
-        this.numComponents = numComponents;
+        this.numPrincipalComponents = numComponents;
 
         // compute the mean of all the samples
         for( int i = 0; i < A.getNumRows(); i++ ) {
@@ -153,7 +156,7 @@ public class PrincipalComponents implements State {
      * @return Vector from the PCA basis.
      */
     public double[] getBasisVector( int which ) {
-        if( which < 0 || which >= numComponents )
+        if( which < 0 || which >= numPrincipalComponents)
             throw new IllegalArgumentException("Invalid component");
 
         DenseMatrix64F v = new DenseMatrix64F(1,A.numCols);
@@ -174,7 +177,7 @@ public class PrincipalComponents implements State {
         DenseMatrix64F mean = DenseMatrix64F.wrap(A.getNumCols(),1,this.mean);
 
         DenseMatrix64F s = new DenseMatrix64F(A.getNumCols(),1,true,sampleData);
-        DenseMatrix64F r = new DenseMatrix64F(numComponents,1);
+        DenseMatrix64F r = new DenseMatrix64F(numPrincipalComponents,1);
 
         CommonOps.sub(s,mean,s);
 
@@ -190,11 +193,11 @@ public class PrincipalComponents implements State {
      * @return Sample space projection.
      */
     public double[] eigenToSampleSpace( double[] eigenData ) {
-        if( eigenData.length != numComponents )
+        if( eigenData.length != numPrincipalComponents)
             throw new IllegalArgumentException("Unexpected sample length");
 
         DenseMatrix64F s = new DenseMatrix64F(A.getNumCols(),1);
-        DenseMatrix64F r = DenseMatrix64F.wrap(numComponents,1,eigenData);
+        DenseMatrix64F r = DenseMatrix64F.wrap(numPrincipalComponents,1,eigenData);
 
         CommonOps.multTransA(V_t,r,s);
 
@@ -243,7 +246,7 @@ public class PrincipalComponents implements State {
         if( sample.length != A.numCols )
             throw new IllegalArgumentException("Expected input vector to be in sample space");
 
-        DenseMatrix64F dots = new DenseMatrix64F(numComponents,1);
+        DenseMatrix64F dots = new DenseMatrix64F(numPrincipalComponents,1);
         DenseMatrix64F s = DenseMatrix64F.wrap(A.numCols,1,sample);
 
         CommonOps.mult(V_t,s,dots);
@@ -258,5 +261,13 @@ public class PrincipalComponents implements State {
 
     public Cache<Integer, Double[]> getFeatures() {
         return features;
+    }
+
+    public int getLocalPartition () {
+        return localPartition;
+    }
+
+    public int getNumPartition () {
+        return numPartition;
     }
 }
