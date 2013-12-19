@@ -1,5 +1,9 @@
 package topology;
 
+import backtype.storm.Config;
+import backtype.storm.StormSubmitter;
+import backtype.storm.generated.AlreadyAliveException;
+import backtype.storm.generated.InvalidTopologyException;
 import backtype.storm.generated.StormTopology;
 import backtype.storm.topology.IRichSpout;
 import backtype.storm.tuple.Fields;
@@ -9,10 +13,13 @@ import bolt.ml.state.ipca.query.PrincipalComponentsQuery;
 import bolt.ml.state.ipca.update.AggregateFilter;
 import bolt.ml.state.ipca.update.PrincipalComponentUpdater;
 import bolt.ml.state.ipca.update.PrincipalComponentsRefresher;
+import com.google.common.collect.Lists;
 import spout.sensor.SensorStreamingSpout;
 import storm.trident.Stream;
 import storm.trident.TridentState;
 import storm.trident.TridentTopology;
+import storm.trident.spout.ITridentSpout;
+import storm.trident.spout.RichSpoutBatchExecutor;
 import storm.trident.state.StateFactory;
 
 /**
@@ -35,22 +42,35 @@ import storm.trident.state.StateFactory;
  */
 
 public class PcaTopology {
-    public static void main (String[] args) {
-        String filename = args[0];
+    public static void main (String[] args) throws AlreadyAliveException, InvalidTopologyException {
         String[] fields = {"sensor", "sensorData"};
-        int parallelism = args.length > 1 ? Integer.valueOf(args[1]) : 2;
+        int parallelism = args.length > 1 ? Integer.valueOf(args[0]) : 2;
 
-        StormTopology stormTopology = buildTopology(parallelism, filename, fields, 100);
+        StormTopology stormTopology = buildTopology(parallelism, fields, 100);
+        StormSubmitter.submitTopology("Pca", getStormConfig(parallelism), stormTopology);
+    }
+
+    public static Config getStormConfig (int numWorkers) {
+        Config conf = new Config();
+        conf.setNumAckers(numWorkers);
+        conf.setNumWorkers(numWorkers);
+        conf.setMaxSpoutPending(100);
+        conf.put("topology.spout.max.batch.size", 1000 );
+        conf.put("topology.trident.batch.emit.interval.millis", 5000);
+        conf.put(Config.DRPC_SERVERS, Lists.newArrayList("qp-hd3", "qp-hd4", "qp-hd5", "qp-hd6", "qp-hd7", "qp-hd8", "qp-hd9"));
+        conf.put(Config.STORM_CLUSTER_MODE, "distributed");
+        conf.put(Config.NIMBUS_TASK_TIMEOUT_SECS, 120);
+        return conf;
     }
 
     private static StormTopology buildTopology (final int parallelism,
-                                                final String filename,
                                                 final String[] fields,
                                                 final int pcaRowWidth)
     {
         IRichSpout sensorSpout = new SensorStreamingSpout(fields);
+        ITridentSpout batchSpout = new RichSpoutBatchExecutor(sensorSpout);
         TridentTopology topology = new TridentTopology();
-        Stream sensorStream = topology.newStream("sensorSpout", sensorSpout);
+        Stream sensorStream = topology.newStream("sensorSpout", batchSpout);
         StateFactory pcaFactory = new PcaFactory(pcaRowWidth);
 
         TridentState principalComponents =
