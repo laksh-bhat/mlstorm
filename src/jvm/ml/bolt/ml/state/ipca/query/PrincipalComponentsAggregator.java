@@ -8,15 +8,20 @@ import storm.trident.tuple.TridentTuple;
  * Date: 12/16/13
  * Time: 3:47 PM
  */
-public class PrincipalComponentsAggregator implements CombinerAggregator<Double[][]> {
+public class PrincipalComponentsAggregator implements CombinerAggregator<double[][]> {
     @Override
-    public Double[][] init (final TridentTuple eigen) {
-        return (Double[][]) eigen.getValueByField("eigen");
+    public double[][] init (final TridentTuple components) {
+        double [] component = (double[]) components.getValueByField("component");
+        double[][] eigen = new double[component.length][];
+        for (int i = 0; i < component.length; i++){
+            eigen[i][0] = component[i];
+        }
+        return eigen;
     }
 
     @Override
-    public Double[][] combine (final Double[][] partition1, final Double[][] partition2) {
-        Double[][] combined = new Double[partition1.length + partition2.length][partition1[0].length];
+    public double[][] combine (final double[][] partition1, final double[][] partition2) {
+        double[][] combined = new double[partition1.length + partition2.length][partition1[0].length];
         int i = 0;
         for (; i < partition1.length; i++)
             System.arraycopy(partition1, i, combined, i, partition1[i].length);
@@ -28,7 +33,7 @@ public class PrincipalComponentsAggregator implements CombinerAggregator<Double[
     }
 
     @Override
-    public Double[][] zero () {
-        return new Double[0][];
+    public double[][] zero () {
+        return new double[0][];
     }
 }

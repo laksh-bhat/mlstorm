@@ -302,7 +302,7 @@ public class PrincipalComponents implements State {
 
     public Map<String, Double> getFeatureVectors () {return getUpdatedFeatureVectors(false);}
 
-    public synchronized Map<String, Double> getUpdatedFeatureVectors (final boolean updateFeatureCache) {
+    private synchronized Map<String, Double> getUpdatedFeatureVectors (final boolean updateFeatureCache) {
         final Map<String, Double> oldSensors = new ConcurrentSkipListMap<String, Double>();
         oldSensors.putAll(currentSensors);
         if (updateFeatureCache) currentSensors.clear();

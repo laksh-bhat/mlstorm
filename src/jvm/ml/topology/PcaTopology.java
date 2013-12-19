@@ -10,9 +10,7 @@ import backtype.storm.tuple.Fields;
 import bolt.ml.state.ipca.create.PcaFactory;
 import bolt.ml.state.ipca.query.PrincipalComponentsAggregator;
 import bolt.ml.state.ipca.query.PrincipalComponentsQuery;
-import bolt.ml.state.ipca.update.AggregateFilter;
 import bolt.ml.state.ipca.update.PrincipalComponentUpdater;
-import bolt.ml.state.ipca.update.PrincipalComponentsRefresher;
 import com.google.common.collect.Lists;
 import spout.sensor.SensorStreamingSpout;
 import storm.trident.Stream;
@@ -82,14 +80,14 @@ public class PcaTopology {
         Stream principalComponentsStream =
                 topology.newDRPCStream("PCA")
                         .broadcast()
-                        .stateQuery(principalComponents, new Fields("args"), new PrincipalComponentsQuery(), new Fields("eigen"));
+                        .stateQuery(principalComponents, new Fields("args"), new PrincipalComponentsQuery(), new Fields("components"));
 
         principalComponentsStream
-                .aggregate(new Fields("eigen"), new PrincipalComponentsAggregator(), new Fields("refreshedEigen"))
-                .each(new Fields("refreshedEigen"), new AggregateFilter(), new Fields("eigen"))
-                .project(new Fields("eigen"))
-                .broadcast()
-                .partitionPersist(pcaFactory, new Fields("eigen"), new PrincipalComponentsRefresher())
+                .aggregate(new Fields("components"), new PrincipalComponentsAggregator(), new Fields("eigen"))
+                //.each(new Fields("refreshedEigen"), new AggregateFilter(), new Fields("eigen"))
+                //.project(new Fields("eigen"))
+                //.broadcast()
+                //.partitionPersist(pcaFactory, new Fields("eigen"), new PrincipalComponentsRefresher())
                 .parallelismHint(parallelism)
         ;
         return topology.build();
