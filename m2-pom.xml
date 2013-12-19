@@ -48,15 +48,35 @@
 			<version>3.2.1</version>
 		</dependency>
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.27</version>
-		</dependency>
-		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<version>3.0</version>
 		</dependency>
+                <dependency>
+    			<groupId>com.microsoft.sqlserver</groupId>
+    			<artifactId>sqljdbc</artifactId>
+			<version>4</version>
+			<scope>system</scope>
+    			<systemPath>${basedir}/lib/sqljdbc4.jar</systemPath>
+                </dependency>
+   		<!--  Gson: Java to Json conversion -->
+   		<dependency>
+   		  <groupId>com.google.code.gson</groupId>
+   		  <artifactId>gson</artifactId>
+   		  <version>2.2.4</version>
+   		  <scope>compile</scope>
+   		</dependency>
+		<dependency>
+		  <groupId>nz.ac.waikato.cms.weka</groupId>
+	          <artifactId>weka-stable</artifactId>
+	          <version>3.6.6</version>
+		</dependency>
+		<dependency>
+			<groupId>com.googlecode.efficient-java-matrix-library</groupId>
+			<artifactId>ejml</artifactId>
+			<version>0.23</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -70,6 +90,7 @@
 		    <!--
 		    bind the maven-assembly-plugin to the package phase
 		    this will create a jar file without the storm dependencies
+B
 		    suitable for deployment to a cluster.
 		     -->
 			<plugin>
