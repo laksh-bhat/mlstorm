@@ -1,4 +1,4 @@
-package bolt.ml.state.pca.update;
+package bolt.ml.state.ipca.update;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.Priority;

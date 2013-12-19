@@ -3,13 +3,12 @@ package topology.weka;
 import backtype.storm.generated.StormTopology;
 import backtype.storm.topology.IRichSpout;
 import backtype.storm.tuple.Fields;
-import spout.text.FileStreamingSpout;
 import storm.trident.Stream;
 import storm.trident.TridentState;
 import storm.trident.TridentTopology;
-import storm.trident.state.BaseStateUpdater;
 import storm.trident.state.QueryFunction;
 import storm.trident.state.StateFactory;
+import storm.trident.state.StateUpdater;
 
 /**
  * User: lbhat <laksh85@gmail.com>
@@ -17,22 +16,23 @@ import storm.trident.state.StateFactory;
  * Time: 7:31 PM
  */
 public class WekaLearningBaseTopology {
-    private static StormTopology buildTopology (final int parallelism,
-                                                final String filename,
-                                                final String[] fields,
-                                                final BaseStateUpdater stateUpdater,
-                                                final StateFactory stateFactory,
-                                                final QueryFunction queryFunction,
-                                                final String drpcFunction)
+    protected static StormTopology buildTopology (final IRichSpout spout,
+                                                  final int parallelism,
+                                                  final StateUpdater stateUpdater,
+                                                  final StateFactory stateFactory,
+                                                  final QueryFunction queryFunction,
+                                                  final String drpcFunction)
     {
         TridentTopology topology = new TridentTopology();
-        IRichSpout features = new FileStreamingSpout(filename, fields);
-        Stream featuresStream = topology.newStream("featureVector", features);
+        Stream featuresStream = topology.newStream("features", spout);
 
         TridentState state =
-                featuresStream.partitionBy(new Fields("featureVector"))
-                              .partitionPersist(stateFactory, new Fields("featureVector"), stateUpdater)
-                              .parallelismHint(parallelism);
+                featuresStream
+                        .broadcast()
+                        .parallelismHint(parallelism)
+                        .partitionPersist(stateFactory, new Fields("key", "featureVector"), stateUpdater)
+                        .parallelismHint(parallelism)
+                ;
 
 
         Stream stateStream

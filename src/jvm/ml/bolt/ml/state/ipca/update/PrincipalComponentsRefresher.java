@@ -1,6 +1,6 @@
-package bolt.ml.state.pca.update;
+package bolt.ml.state.ipca.update;
 
-import bolt.ml.state.pca.PrincipalComponents;
+import bolt.ml.state.ipca.PrincipalComponents;
 import storm.trident.operation.TridentCollector;
 import storm.trident.operation.TridentOperationContext;
 import storm.trident.state.StateUpdater;
@@ -29,7 +29,6 @@ public class PrincipalComponentsRefresher implements StateUpdater<PrincipalCompo
 
     @Override
     public void prepare (final Map map, final TridentOperationContext tridentOperationContext) {
-
     }
 
     @Override

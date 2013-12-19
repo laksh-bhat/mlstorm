@@ -1,4 +1,4 @@
-package bolt.ml.state.pca.query;
+package bolt.ml.state.ipca.query;
 
 import storm.trident.operation.CombinerAggregator;
 import storm.trident.tuple.TridentTuple;

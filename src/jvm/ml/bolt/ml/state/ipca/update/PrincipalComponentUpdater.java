@@ -1,6 +1,6 @@
-package bolt.ml.state.pca.update;
+package bolt.ml.state.ipca.update;
 
-import bolt.ml.state.pca.PrincipalComponents;
+import bolt.ml.state.ipca.PrincipalComponents;
 import storm.trident.operation.TridentCollector;
 import storm.trident.operation.TridentOperationContext;
 import storm.trident.state.StateUpdater;
@@ -14,15 +14,24 @@ import java.util.Map;
  * Date: 12/13/13
  * Time: 10:55 PM
  */
+
 public class PrincipalComponentUpdater implements StateUpdater<PrincipalComponents> {
     int localPartition, numPartitions;
+
     @Override
     public void updateState (final PrincipalComponents state,
                              final List<TridentTuple> tuples,
                              final TridentCollector collector)
     {
-        for (TridentTuple tuple : tuples){
-            state.getFeatures().asMap().putIfAbsent(tuple.getIntegerByField("key"), (Double[]) tuple.getValueByField("sensorData"));
+        for (TridentTuple tuple : tuples) {
+            String key = tuple.getStringByField("sensor");
+            Double value = (Double) tuple.getValueByField("sensorData");
+            Map<String, Double> sensors = state.getFeatureVectors();
+
+            if (sensors.containsKey(key)) {
+                Double existingValue = sensors.get(key);
+                sensors.put(key, (existingValue + value) / 2.0);
+            } else sensors.put(key, value);
         }
     }
 

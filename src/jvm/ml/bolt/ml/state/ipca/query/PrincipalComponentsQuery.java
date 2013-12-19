@@ -1,6 +1,6 @@
-package bolt.ml.state.pca.query;
+package bolt.ml.state.ipca.query;
 
-import bolt.ml.state.pca.PrincipalComponents;
+import bolt.ml.state.ipca.PrincipalComponents;
 import storm.trident.operation.TridentCollector;
 import storm.trident.operation.TridentOperationContext;
 import storm.trident.state.QueryFunction;

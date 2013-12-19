@@ -16,15 +16,12 @@ import java.util.Collection;
 public class ClustererState extends BaseState {
     private Cobweb     clusterer;
     private Instances  dataInstances;
-    private int        featureWidth;
     private int        numClusters;
     private FastVector attributes;
 
-    public ClustererState (int featureWidth, int numClusters) {
+    public ClustererState (int numClusters) {
         clusterer = new Cobweb();
-        this.featureWidth = featureWidth;
         this.numClusters = numClusters;
-        this.attributes = WekaUtils.getFeatureVectorForClustering(numClusters, featureWidth);
     }
 
     public void train (Instances instances) throws Exception {
@@ -45,14 +42,14 @@ public class ClustererState extends BaseState {
     @Override
     public void commit (final Long txId) {
         Collection<Double[]> groundValues = getFeatures().asMap().values();
-        Instance trainingInstance = null;
         try {
-            for (Double[] feature : groundValues) {
-                trainingInstance = new SparseInstance(featureWidth);
-                for (int i = 0; i < featureWidth; i++)
-                    trainingInstance.setValue((Attribute) attributes.elementAt(i), feature[i]);
+            for (Double[] features : groundValues) {
+                getWekaAttributes(features);
+                Instance trainingInstance = new SparseInstance(features.length);
+                for (int i = 0; i < features.length; i++)
+                    trainingInstance.setValue((Attribute) attributes.elementAt(i), features[i]);
+                train(trainingInstance);
             }
-            train(trainingInstance);
         } catch ( Exception e ) {
             e.printStackTrace();
         } finally {
@@ -60,5 +57,14 @@ public class ClustererState extends BaseState {
             getFeatures().invalidateAll();
             //TODO persist clusterer in database with txId
         }
+    }
+
+    private void getWekaAttributes (final Double[] features) {
+        if (this.attributes != null)
+            this.attributes = WekaUtils.getFeatureVectorForClustering(numClusters, features.length);
+    }
+
+    public int getNumClusters () {
+        return numClusters;
     }
 }
