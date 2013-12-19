@@ -15,7 +15,9 @@ import spout.mddb.MddbFeatureExtractorSpout;
 import storm.trident.state.QueryFunction;
 import storm.trident.state.StateFactory;
 import storm.trident.state.StateUpdater;
+
 import java.util.logging.Level;
+import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 
@@ -27,9 +29,9 @@ import java.util.logging.Logger;
 
 public class ClusteringTopology extends WekaLearningBaseTopology {
     public static void main (String[] args) throws AlreadyAliveException, InvalidTopologyException {
-
+        Logger logger = LogManager.getLogManager().getLogger("");
         if (args.length < 3) {
-            Logger.getGlobal().log(Level.ALL, "-- use args -- folder numWorkers");
+            logger.log(Level.ALL, "-- use args -- folder numWorkers");
             return;
         }
 

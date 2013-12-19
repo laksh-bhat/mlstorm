@@ -14,6 +14,7 @@ import java.io.File;
 import java.text.MessageFormat;
 import java.util.*;
 import java.util.logging.Level;
+import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 /**
@@ -127,8 +128,9 @@ public class MddbFeatureExtractorSpout implements IRichSpout {
      */
     @Override
     public void nextTuple () {
+        Logger logger = LogManager.getLogManager().getLogger("");
         if (scanner == null) {
-            Logger.getGlobal().log(Level.INFO, MessageFormat.format("No more features. Visit {0} later", taskId));
+            logger.log(Level.INFO, MessageFormat.format("No more features. Visit {0} later", taskId));
         } else {
             try {
                 if(scanner.hasNextLine()) previous = scanner.nextLine();

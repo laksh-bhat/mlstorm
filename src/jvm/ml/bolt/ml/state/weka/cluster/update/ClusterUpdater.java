@@ -10,6 +10,7 @@ import java.text.MessageFormat;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
+import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 /**
@@ -19,7 +20,8 @@ import java.util.logging.Logger;
  */
 public class ClusterUpdater implements StateUpdater<ClustererState> {
 
-    int localPartition, numPartitions;
+    private int localPartition, numPartitions;
+    private Logger logger = LogManager.getLogManager().getLogger("");
 
     @Override
     public void updateState (final ClustererState state,
@@ -31,7 +33,7 @@ public class ClusterUpdater implements StateUpdater<ClustererState> {
             state.getFeatures().asMap().putIfAbsent(tuple.getIntegerByField("key"), fv);
         }
 
-        Logger.getGlobal().log(Level.ALL, MessageFormat.format(
+        logger.log(Level.ALL, MessageFormat.format(
                 "Updating state at partition [{0}] of [{1}]", localPartition, numPartitions));
     }
 
