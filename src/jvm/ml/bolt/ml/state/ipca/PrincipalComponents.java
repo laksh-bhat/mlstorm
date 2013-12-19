@@ -11,7 +11,9 @@ import org.ejml.ops.SingularOps;
 import spout.dbutils.SensorDbUtils;
 import storm.trident.state.State;
 
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.TimeUnit;
 
@@ -23,7 +25,7 @@ import java.util.concurrent.TimeUnit;
 public class PrincipalComponents implements State {
 
     private Map<String, Double>              currentSensors;
-    private Cache<Long, Map<String, Double>> windowOfSensors;
+    private Cache<Long, Map<String, Double>> windowTimesteps;
 
     // principle component subspace is stored in the rows
     private DenseMatrix64F V_t;
@@ -48,7 +50,7 @@ public class PrincipalComponents implements State {
 
         //setup(numSamples, elementsInSample);
         currentSensors = new ConcurrentSkipListMap<String, Double>();
-        windowOfSensors = CacheBuilder.newBuilder().expireAfterAccess(24, TimeUnit.HOURS).maximumSize(elementsInSample).build();
+        windowTimesteps = CacheBuilder.newBuilder().expireAfterAccess(24, TimeUnit.HOURS).maximumSize(elementsInSample).build();
     }
 
     /**
@@ -261,6 +263,7 @@ public class PrincipalComponents implements State {
 
     /**
      * Before we start a batch, storm tells us which "storm transaction" we are going to commit
+     *
      * @param txid
      */
     @Override
@@ -268,30 +271,56 @@ public class PrincipalComponents implements State {
 
     /**
      * Nothing fancy. We push this sensor reading to the time-series window
+     *
      * @param txId
      */
     @Override
-    public void commit (final Long txId) {
-        if (currentSensors.size() == SensorDbUtils.NO_OF_SENSORS) {
-            windowOfSensors.put(txId, getFeatureVectors(true));
-            setup(SensorDbUtils.NO_OF_SENSORS, pcaRowWidth);
-            computeBasis(10);
+    public synchronized void commit (final Long txId) {
+        Set<String> sensorNames = currentSensors.keySet();
+
+        if (currentSensors.size() == SensorDbUtils.NO_OF_SENSORS)
+            windowTimesteps.put(txId, getUpdatedFeatureVectors(true));
+
+        if (windowTimesteps.size() < pcaRowWidth)
+            return;
+
+        setup(SensorDbUtils.NO_OF_SENSORS, (int) windowTimesteps.size());
+        // Read all the rows and add them to the matrix
+        for (String sensorName : sensorNames) {
+            double[] row = new double[((int) windowTimesteps.size())];
+            Iterator<Map<String, Double>> iterator = windowTimesteps.asMap().values().iterator();
+            int i = 0;
+            while (iterator.hasNext()) {
+                final Map<String, Double> timeStep = iterator.next();
+                row[i++] = timeStep.get(sensorName);
+            }
+            addSample(row);
         }
+        computeBasis(5);
+        A.zero();
     }
 
-    public Map<String, Double> getFeatureVectors () {return getFeatureVectors(false);}
+    public Map<String, Double> getFeatureVectors () {return getUpdatedFeatureVectors(false);}
 
-    public synchronized Map<String, Double> getFeatureVectors (final boolean updateFeatureCache) {
+    public synchronized Map<String, Double> getUpdatedFeatureVectors (final boolean updateFeatureCache) {
         final Map<String, Double> oldSensors = new ConcurrentSkipListMap<String, Double>();
         oldSensors.putAll(currentSensors);
         if (updateFeatureCache) currentSensors.clear();
         return oldSensors;
     }
 
+    /**
+     * Returns the local partition Id
+     * @return
+     */
     public int getLocalPartition () {
         return localPartition;
     }
 
+    /**
+     * Returns the total number of partitions persisting this state
+     * @return
+     */
     public int getNumPartition () {
         return numPartition;
     }
