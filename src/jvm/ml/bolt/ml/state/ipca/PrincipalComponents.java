@@ -44,6 +44,7 @@ public class PrincipalComponents implements State {
     double mean[];
 
     public PrincipalComponents (int elementsInSample, int localPartition, int numPartitions) {
+	System.out.println("DEBUG: Construct PCA State.");
         this.localPartition = localPartition;
         this.numPartition = numPartitions;
         this.pcaRowWidth = elementsInSample;
@@ -73,6 +74,8 @@ public class PrincipalComponents implements State {
      * @param sampleData Sample from original raw data.
      */
     public void addSample (double[] sampleData) {
+	System.out.println("DEBUG: Adding samples to data matrix");
+
         if (A.getNumCols() != sampleData.length)
             throw new IllegalArgumentException("Unexpected sample size");
         if (sampleIndex >= A.getNumRows())
@@ -115,6 +118,9 @@ public class PrincipalComponents implements State {
      *                      smaller than the number of elements in the input vector.
      */
     public void computeBasis (int numComponents) {
+	
+	System.out.println("DEBUG: Compute basis to get principal components. ");
+	
         if (numComponents > A.getNumCols())
             throw new IllegalArgumentException("More components requested that the data's length.");
         if (sampleIndex != A.getNumRows())
@@ -276,13 +282,20 @@ public class PrincipalComponents implements State {
      */
     @Override
     public synchronized void commit (final Long txId) {
+	
+	System.out.println("DEBUG: Commit called for transaction " + txId);
+	
         Set<String> sensorNames = currentSensors.keySet();
 
         if (currentSensors.size() == SensorDbUtils.NO_OF_SENSORS)
-            windowTimesteps.put(txId, getUpdatedFeatureVectors(true));
+		System.out.println("DEBUG: sensors equal!");
 
-        if (windowTimesteps.size() < pcaRowWidth)
+        windowTimesteps.put(txId, getUpdatedFeatureVectors(true));
+
+        if (windowTimesteps.size() < pcaRowWidth * 0.75)
             return;
+
+	System.out.println("DEBUG: Proceeding with data matrix setup for transaction " + txId);
 
         setup(SensorDbUtils.NO_OF_SENSORS, (int) windowTimesteps.size());
         // Read all the rows and add them to the matrix

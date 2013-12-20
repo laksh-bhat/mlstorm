@@ -62,6 +62,7 @@ public class SensorStreamingSpout implements IRichSpout {
     @Override
     public void open (final Map conf, final TopologyContext context, final SpoutOutputCollector collector) {
         try {
+	    System.err.println("DEBUG: Starting sensor spout. Connecting to zinc14.pha.jhu.edu");
             jdbcConnection = SensorDbUtils.getNewDatabaseConnection(SensorDbUtils.DB_USER, SensorDbUtils.DB_USER);
             sensor = SensorDbUtils.getAllFromSensorDb(jdbcConnection, SensorDbUtils.TABLE_NAME, SensorDbUtils.ORDER_BY_COLUMN);
             if (!sensor.next()) sensor = null;

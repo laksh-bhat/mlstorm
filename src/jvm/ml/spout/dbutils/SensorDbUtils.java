@@ -48,6 +48,9 @@ public class SensorDbUtils {
                                                 String orderByColumn) throws
     SQLException
     {
+	
+	System.err.println("DEBUG: Querying sensor DB to stream all data.");
+
         Statement stmt = jdbcConnection.createStatement();
         stmt.setFetchSize(100);
         stmt.setQueryTimeout(0);
