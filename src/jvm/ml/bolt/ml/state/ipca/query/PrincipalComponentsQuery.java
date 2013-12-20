@@ -24,7 +24,8 @@ public class PrincipalComponentsQuery implements QueryFunction<PrincipalComponen
         List<double[]> components = new ArrayList<double[]>();
         for (TridentTuple ignored : queryTuples) {
             int component = 0;
-            while (component < 3) components.add(principalComponents.getBasisVector(component++));
+            while (component < principalComponents.getNumOfPrincipalComponents()) 
+                components.add(principalComponents.getBasisVector(component++));
         }
         return components;
     }

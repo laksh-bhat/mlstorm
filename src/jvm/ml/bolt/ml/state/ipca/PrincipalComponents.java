@@ -54,6 +54,8 @@ public class PrincipalComponents implements State {
         windowTimesteps = Collections.synchronizedMap(windowTimesteps);
     }
 
+    public int getNumOfPrincipalComponents(){ return numPrincipalComponents; }
+
     /**
      * Must be called before any other functions. Declares and sets up internal data structures.
      *
@@ -126,7 +128,7 @@ public class PrincipalComponents implements State {
         if (sampleIndex != A.getNumRows())
             throw new IllegalArgumentException("Not all the data has been added");
         if (numComponents > sampleIndex)
-            throw new IllegalArgumentException("More data needed to compute the desired number of components");
+            throw new IllegalArgumentException("More data needed to compute the desired number of components (sampleIndex=" + sampleIndex + ") (numComponents = " + numComponents + ") ");
 
         this.numPrincipalComponents = numComponents;
 
@@ -286,31 +288,37 @@ public class PrincipalComponents implements State {
         System.out.println("DEBUG: Commit called for transaction " + txId);
 
         Set<String> sensorNames = currentSensors.keySet();
-
-        if (currentSensors.size() == SensorDbUtils.NO_OF_SENSORS)
+	int numRows = currentSensors.size();
+        int numColumns = pcaRowWidth;
+ 
+        if (true/*currentSensors.size() == SensorDbUtils.NO_OF_SENSORS*/){
+            windowTimesteps.put(txId, getUpdatedFeatureVectors(true));
             System.out.println("DEBUG: sensors equal!");
+        }
 
-        windowTimesteps.put(txId, getUpdatedFeatureVectors(true));
 
         if (windowTimesteps.size() < pcaRowWidth)
             return;
 
         System.out.println("DEBUG: Proceeding with data matrix setup for transaction " + txId);
 
-        setup(SensorDbUtils.NO_OF_SENSORS, (int) windowTimesteps.size());
+        setup(numRows, numColumns);
         // Read all the rows and add them to the matrix
         for (String sensorName : sensorNames) {
-            double[] row = new double[((int) windowTimesteps.size())];
+            double[] row = new double[pcaRowWidth];
             Iterator<Map<String, Double>> iterator = windowTimesteps.values().iterator();
             int i = 0;
-            while (iterator.hasNext()) {
+            while (iterator.hasNext() && i < pcaRowWidth) {
                 final Map<String, Double> timeStep = iterator.next();
                 row[i++] = timeStep.get(sensorName);
             }
             addSample(row);
         }
-        computeBasis(5);
-        A.zero();
+	if(numRows > 0 && numColumns > 0){
+            computeBasis(1);
+            A.zero();
+	    sampleIndex = 0;
+        }
     }
 
     public Map<String, Double> getFeatureVectors () {return getUpdatedFeatureVectors(false);}

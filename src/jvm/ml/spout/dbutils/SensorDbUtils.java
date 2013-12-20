@@ -52,9 +52,9 @@ public class SensorDbUtils {
 	System.err.println("DEBUG: Querying sensor DB to stream all data.");
 
         Statement stmt = jdbcConnection.createStatement();
-        stmt.setFetchSize(100);
+        stmt.setFetchSize(10000);
         stmt.setQueryTimeout(0);
-        String sql = MessageFormat.format("SELECT * FROM {0} ORDER BY {1}", tableName, orderByColumn);
+        String sql = MessageFormat.format("SELECT * FROM {0} WHERE polltime > '2013-12-15' ORDER BY {1}", tableName, orderByColumn);
         return stmt.executeQuery(sql);
     }
 

@@ -54,7 +54,7 @@ public class PcaTopology {
         conf.setNumWorkers(numWorkers);
         conf.setMaxSpoutPending(100);
         conf.put("topology.spout.max.batch.size", 1000 );
-        conf.put("topology.trident.batch.emit.interval.millis", 5000);
+        conf.put("topology.trident.batch.emit.interval.millis", 500);
         conf.put(Config.DRPC_SERVERS, Lists.newArrayList("qp-hd3", "qp-hd4", "qp-hd5", "qp-hd6", "qp-hd7", "qp-hd8", "qp-hd9"));
         conf.put(Config.STORM_CLUSTER_MODE, "distributed");
         conf.put(Config.NIMBUS_TASK_TIMEOUT_SECS, 120);
