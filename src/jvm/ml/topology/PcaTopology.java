@@ -42,9 +42,9 @@ import storm.trident.state.StateFactory;
 public class PcaTopology {
     public static void main (String[] args) throws AlreadyAliveException, InvalidTopologyException {
         String[] fields = {"sensor", "sensorData"};
-        int parallelism = args.length > 1 ? Integer.valueOf(args[0]) : 2;
+        int parallelism = args.length > 0 ? Integer.valueOf(args[0]) : 1;
 
-        StormTopology stormTopology = buildTopology(parallelism, fields, 100);
+        StormTopology stormTopology = buildTopology(parallelism, fields, 10);
         StormSubmitter.submitTopology("Pca", getStormConfig(parallelism), stormTopology);
     }
 

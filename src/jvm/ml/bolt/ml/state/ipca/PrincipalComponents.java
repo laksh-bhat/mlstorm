@@ -1,7 +1,5 @@
 package bolt.ml.state.ipca;
 
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
 import org.ejml.data.DenseMatrix64F;
 import org.ejml.factory.DecompositionFactory;
 import org.ejml.factory.SingularValueDecomposition;
@@ -11,11 +9,8 @@ import org.ejml.ops.SingularOps;
 import spout.dbutils.SensorDbUtils;
 import storm.trident.state.State;
 
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentSkipListMap;
-import java.util.concurrent.TimeUnit;
 
 /**
  * User: lbhat@damsl
@@ -24,8 +19,8 @@ import java.util.concurrent.TimeUnit;
  */
 public class PrincipalComponents implements State {
 
-    private Map<String, Double>              currentSensors;
-    private Cache<Long, Map<String, Double>> windowTimesteps;
+    private Map<String, Double>            currentSensors;
+    private Map<Long, Map<String, Double>> windowTimesteps;
 
     // principle component subspace is stored in the rows
     private DenseMatrix64F V_t;
@@ -43,15 +38,20 @@ public class PrincipalComponents implements State {
     // mean values of each element across all the samples
     double mean[];
 
-    public PrincipalComponents (int elementsInSample, int localPartition, int numPartitions) {
-	System.out.println("DEBUG: Construct PCA State.");
+    public PrincipalComponents (final int elementsInSample, int localPartition, int numPartitions) {
+        System.out.println("DEBUG: Construct PCA State.");
         this.localPartition = localPartition;
         this.numPartition = numPartitions;
         this.pcaRowWidth = elementsInSample;
 
         //setup(numSamples, elementsInSample);
         currentSensors = new ConcurrentSkipListMap<String, Double>();
-        windowTimesteps = CacheBuilder.newBuilder().expireAfterAccess(24, TimeUnit.HOURS).maximumSize(elementsInSample).build();
+        windowTimesteps = new LinkedHashMap<Long, Map<String, Double>>(this.pcaRowWidth, 0.75f, false) {
+            public boolean removeEldestEntry (Map.Entry<Long, Map<String, Double>> eldest) {
+                return size() > pcaRowWidth;
+            }
+        };
+        windowTimesteps = Collections.synchronizedMap(windowTimesteps);
     }
 
     /**
@@ -74,7 +74,7 @@ public class PrincipalComponents implements State {
      * @param sampleData Sample from original raw data.
      */
     public void addSample (double[] sampleData) {
-	System.out.println("DEBUG: Adding samples to data matrix");
+        System.out.println("DEBUG: Adding samples to data matrix");
 
         if (A.getNumCols() != sampleData.length)
             throw new IllegalArgumentException("Unexpected sample size");
@@ -118,9 +118,9 @@ public class PrincipalComponents implements State {
      *                      smaller than the number of elements in the input vector.
      */
     public void computeBasis (int numComponents) {
-	
-	System.out.println("DEBUG: Compute basis to get principal components. ");
-	
+
+        System.out.println("DEBUG: Compute basis to get principal components. ");
+
         if (numComponents > A.getNumCols())
             throw new IllegalArgumentException("More components requested that the data's length.");
         if (sampleIndex != A.getNumRows())
@@ -282,26 +282,26 @@ public class PrincipalComponents implements State {
      */
     @Override
     public synchronized void commit (final Long txId) {
-	
-	System.out.println("DEBUG: Commit called for transaction " + txId);
-	
+
+        System.out.println("DEBUG: Commit called for transaction " + txId);
+
         Set<String> sensorNames = currentSensors.keySet();
 
         if (currentSensors.size() == SensorDbUtils.NO_OF_SENSORS)
-		System.out.println("DEBUG: sensors equal!");
+            System.out.println("DEBUG: sensors equal!");
 
         windowTimesteps.put(txId, getUpdatedFeatureVectors(true));
 
-        if (windowTimesteps.size() < pcaRowWidth * 0.75)
+        if (windowTimesteps.size() < pcaRowWidth)
             return;
 
-	System.out.println("DEBUG: Proceeding with data matrix setup for transaction " + txId);
+        System.out.println("DEBUG: Proceeding with data matrix setup for transaction " + txId);
 
         setup(SensorDbUtils.NO_OF_SENSORS, (int) windowTimesteps.size());
         // Read all the rows and add them to the matrix
         for (String sensorName : sensorNames) {
             double[] row = new double[((int) windowTimesteps.size())];
-            Iterator<Map<String, Double>> iterator = windowTimesteps.asMap().values().iterator();
+            Iterator<Map<String, Double>> iterator = windowTimesteps.values().iterator();
             int i = 0;
             while (iterator.hasNext()) {
                 final Map<String, Double> timeStep = iterator.next();
@@ -324,6 +324,7 @@ public class PrincipalComponents implements State {
 
     /**
      * Returns the local partition Id
+     *
      * @return
      */
     public int getLocalPartition () {
@@ -332,6 +333,7 @@ public class PrincipalComponents implements State {
 
     /**
      * Returns the total number of partitions persisting this state
+     *
      * @return
      */
     public int getNumPartition () {

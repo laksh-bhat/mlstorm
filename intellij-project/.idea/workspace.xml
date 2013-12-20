@@ -64,10 +64,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="PcaTopology.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="PcaTopology.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/PcaTopology.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="85" column="107" selection-start="3853" selection-end="3858" vertical-scroll-proportion="0.6196513" vertical-offset="459" max-vertical-offset="1122">
+            <state line="54" column="81" selection-start="2203" selection-end="2203" vertical-scroll-proportion="0.0" vertical-offset="51" max-vertical-offset="1122">
               <folding>
                 <element signature="docComment;class#PcaTopology#0" expanded="false" />
               </folding>
@@ -87,7 +87,7 @@
       <file leaf-file-name="PrincipalComponentsQuery.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/query/PrincipalComponentsQuery.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="27" column="10" selection-start="996" selection-end="996" vertical-scroll-proportion="0.0" vertical-offset="151" max-vertical-offset="782">
+            <state line="26" column="75" selection-start="963" selection-end="963" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="782">
               <folding />
             </state>
           </provider>
@@ -113,17 +113,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TestJdbcConnection.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../src/jvm/ml/utils/TestJdbcConnection.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="884">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="ClusterUpdater.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/update/ClusterUpdater.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -133,17 +122,17 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PrincipalComponents.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="PrincipalComponents.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/PrincipalComponents.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="170" column="17" selection-start="6176" selection-end="6185" vertical-scroll-proportion="0.0" vertical-offset="2595" max-vertical-offset="5661">
+            <state line="55" column="73" selection-start="1865" selection-end="1865" vertical-scroll-proportion="-0.44849446" vertical-offset="1218" max-vertical-offset="5916">
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#10844#10860#0" expanded="true" />
-                <element signature="e#11102#11103#0" expanded="true" />
-                <element signature="e#11139#11140#0" expanded="true" />
-                <element signature="e#11275#11276#0" expanded="true" />
-                <element signature="e#11310#11311#0" expanded="true" />
+                <element signature="e#11318#11334#0" expanded="true" />
+                <element signature="e#11583#11584#0" expanded="true" />
+                <element signature="e#11620#11621#0" expanded="true" />
+                <element signature="e#11763#11764#0" expanded="true" />
+                <element signature="e#11798#11799#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -226,10 +215,10 @@
         <option value="$PROJECT_DIR$/../src/jvm/ml/topology/weka/ClusteringTopology.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/spout/mddb/MddbFeatureExtractorSpout.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/update/ClusterUpdater.java" />
-        <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/PrincipalComponents.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/query/PrincipalComponentsQuery.java" />
-        <option value="$PROJECT_DIR$/../src/jvm/ml/topology/PcaTopology.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/query/PrincipalComponentsAggregator.java" />
+        <option value="$PROJECT_DIR$/../src/jvm/ml/topology/PcaTopology.java" />
+        <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/PrincipalComponents.java" />
       </list>
     </option>
   </component>
@@ -1006,13 +995,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://$PROJECT_DIR$/../lib/ejml-0.23.jar!/org/ejml/data/DenseMatrix64F.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="16" selection-start="1663" selection-end="1663" vertical-scroll-proportion="0.62046206" vertical-offset="372" max-vertical-offset="1003">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$PROJECT_DIR$/../lib/guava-13.0.jar!/com/google/common/cache/LocalCache.class">
       <provider selected="true" editor-type-id="text-editor">
         <state line="228" column="20" selection-start="11317" selection-end="11317" vertical-scroll-proportion="-8.24" vertical-offset="3653" max-vertical-offset="20111">
@@ -1100,13 +1082,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/query/PrincipalComponentsQuery.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="10" selection-start="996" selection-end="996" vertical-scroll-proportion="0.0" vertical-offset="151" max-vertical-offset="782">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/update/PrincipalComponentsRefresher.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="31" column="6" selection-start="1087" selection-end="1087" vertical-scroll-proportion="0.64659274" vertical-offset="0" max-vertical-offset="631">
@@ -1130,20 +1105,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/PrincipalComponents.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="170" column="17" selection-start="6176" selection-end="6185" vertical-scroll-proportion="0.0" vertical-offset="2595" max-vertical-offset="5661">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#10844#10860#0" expanded="true" />
-            <element signature="e#11102#11103#0" expanded="true" />
-            <element signature="e#11139#11140#0" expanded="true" />
-            <element signature="e#11275#11276#0" expanded="true" />
-            <element signature="e#11310#11311#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/query/PrincipalComponentsAggregator.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="19" column="5" selection-start="638" selection-end="638" vertical-scroll-proportion="0.0" vertical-offset="117" max-vertical-offset="748">
@@ -1151,11 +1112,39 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar://$PROJECT_DIR$/../lib/ejml-0.23.jar!/org/ejml/data/DenseMatrix64F.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="25" column="16" selection-start="937" selection-end="937" vertical-scroll-proportion="0.34653464" vertical-offset="198" max-vertical-offset="1003">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/query/PrincipalComponentsQuery.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="75" selection-start="963" selection-end="963" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="782">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/PcaTopology.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="85" column="107" selection-start="3853" selection-end="3858" vertical-scroll-proportion="0.6196513" vertical-offset="459" max-vertical-offset="1122">
+        <state line="54" column="81" selection-start="2203" selection-end="2203" vertical-scroll-proportion="0.0" vertical-offset="51" max-vertical-offset="1122">
           <folding>
             <element signature="docComment;class#PcaTopology#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/PrincipalComponents.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="55" column="73" selection-start="1865" selection-end="1865" vertical-scroll-proportion="-0.44849446" vertical-offset="1218" max-vertical-offset="5916">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#11318#11334#0" expanded="true" />
+            <element signature="e#11583#11584#0" expanded="true" />
+            <element signature="e#11620#11621#0" expanded="true" />
+            <element signature="e#11763#11764#0" expanded="true" />
+            <element signature="e#11798#11799#0" expanded="true" />
           </folding>
         </state>
       </provider>
