@@ -9,6 +9,7 @@ import org.ejml.ops.SingularOps;
 import spout.dbutils.SensorDbUtils;
 import storm.trident.state.State;
 
+import java.text.MessageFormat;
 import java.util.*;
 import java.util.concurrent.ConcurrentSkipListMap;
 
@@ -44,7 +45,7 @@ public class PrincipalComponents implements State {
         this.numPartition = numPartitions;
         this.pcaRowWidth = elementsInSample;
 
-        //setup(numSamples, elementsInSample);
+        //setupDataMatrix(numSamples, elementsInSample);
         currentSensors = new ConcurrentSkipListMap<String, Double>();
         windowTimesteps = new LinkedHashMap<Long, Map<String, Double>>(this.pcaRowWidth, 0.75f, false) {
             public boolean removeEldestEntry (Map.Entry<Long, Map<String, Double>> eldest) {
@@ -54,7 +55,7 @@ public class PrincipalComponents implements State {
         windowTimesteps = Collections.synchronizedMap(windowTimesteps);
     }
 
-    public int getNumOfPrincipalComponents(){ return numPrincipalComponents; }
+    public int getNumOfPrincipalComponents () { return numPrincipalComponents; }
 
     /**
      * Must be called before any other functions. Declares and sets up internal data structures.
@@ -62,7 +63,7 @@ public class PrincipalComponents implements State {
      * @param numSamples Number of samples that will be processed.
      * @param sampleSize Number of elements in each sample.
      */
-    public void setup (int numSamples, int sampleSize) {
+    public void setupDataMatrix (int numSamples, int sampleSize) {
         mean = new double[sampleSize];
         A.reshape(numSamples, sampleSize, false);
         sampleIndex = 0;
@@ -284,49 +285,52 @@ public class PrincipalComponents implements State {
      */
     @Override
     public synchronized void commit (final Long txId) {
+        System.err.println("DEBUG: Commit called for transaction " + txId);
 
-        System.out.println("DEBUG: Commit called for transaction " + txId);
+        final Set<String> sensorNames = currentSensors.keySet();
+        final int numRows = sensorNames.size();
+        final int numColumns = pcaRowWidth;
 
-        Set<String> sensorNames = currentSensors.keySet();
-	int numRows = currentSensors.size();
-        int numColumns = pcaRowWidth;
- 
-        if (true/*currentSensors.size() == SensorDbUtils.NO_OF_SENSORS*/){
-            windowTimesteps.put(txId, getUpdatedFeatureVectors(true));
-            System.out.println("DEBUG: sensors equal!");
+        System.err.println(MessageFormat.format("DEBUG: matrix has {0} rows and {1} columns", numRows, numColumns));
+
+        if (currentSensors.size() == SensorDbUtils.NO_OF_SENSORS) {
+            windowTimesteps.put(txId, getFeatureVectorsAndReset(true));
+            System.err.println("DEBUG: sensors equal!");
+        }
+        if (windowTimesteps.size() < pcaRowWidth) {
+            System.err.println("DEBUG: window is not full. Nothing to commit. ");
+            return;
         }
 
+        setupDataMatrix(numRows, numColumns);
+        addWindowSamplesToMatrix(sensorNames, numColumns);
+        if (numRows > 0 && numColumns > 0) computePrincipalComponentsAndResetDataVector();
+    }
 
-        if (windowTimesteps.size() < pcaRowWidth)
-            return;
-
-        System.out.println("DEBUG: Proceeding with data matrix setup for transaction " + txId);
-
-        setup(numRows, numColumns);
-        // Read all the rows and add them to the matrix
+    private void addWindowSamplesToMatrix (final Set<String> sensorNames, final int numColumns) {
         for (String sensorName : sensorNames) {
-            double[] row = new double[pcaRowWidth];
-            Iterator<Map<String, Double>> iterator = windowTimesteps.values().iterator();
-            int i = 0;
-            while (iterator.hasNext() && i < pcaRowWidth) {
-                final Map<String, Double> timeStep = iterator.next();
-                row[i++] = timeStep.get(sensorName);
+            int columnIndex = 0;
+            double[] row = new double[numColumns];
+            Iterator<Map<String, Double>> valuesIterator = windowTimesteps.values().iterator();
+            while (valuesIterator.hasNext() && columnIndex < numColumns) {
+                final Map<String, Double> timeStep = valuesIterator.next();
+                row[columnIndex++] = timeStep.get(sensorName);
             }
             addSample(row);
         }
-	if(numRows > 0 && numColumns > 0){
-            computeBasis(1);
-            A.zero();
-	    sampleIndex = 0;
-        }
     }
 
-    public Map<String, Double> getFeatureVectors () {return getUpdatedFeatureVectors(false);}
+    private void computePrincipalComponentsAndResetDataVector () {
+        computeBasis(1);
+        A.zero();
+        sampleIndex = 0;
+    }
 
-    private synchronized Map<String, Double> getUpdatedFeatureVectors (final boolean updateFeatureCache) {
-        final Map<String, Double> oldSensors = new ConcurrentSkipListMap<String, Double>();
-        oldSensors.putAll(currentSensors);
-        if (updateFeatureCache) currentSensors.clear();
+    public Map<String, Double> getFeatureVectors () {return getFeatureVectorsAndReset(false);}
+
+    private synchronized Map<String, Double> getFeatureVectorsAndReset (final boolean reset) {
+        final Map<String, Double> oldSensors = currentSensors;
+        if (reset) currentSensors = new ConcurrentSkipListMap<String, Double>();
         return oldSensors;
     }
 
