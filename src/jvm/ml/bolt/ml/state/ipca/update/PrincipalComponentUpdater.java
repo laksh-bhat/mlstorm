@@ -6,6 +6,7 @@ import storm.trident.operation.TridentOperationContext;
 import storm.trident.state.StateUpdater;
 import storm.trident.tuple.TridentTuple;
 
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -24,14 +25,15 @@ public class PrincipalComponentUpdater implements StateUpdater<PrincipalComponen
                              final TridentCollector collector)
     {
         for (TridentTuple tuple : tuples) {
-            String key = tuple.getStringByField("sensor");
-            Double value = (Double) tuple.getValueByField("sensorData");
+            String sensor = tuple.getStringByField("sensor");
+            Double data = (Double) tuple.getValueByField("sensorData");
+            System.err.println(MessageFormat.format("DEBUG: Updating state: sensor name is {0} and temperature is {1}", sensor, data));
             Map<String, Double> sensors = state.getFeatureVectors();
 
-            if (sensors.containsKey(key)) {
-                Double existingValue = sensors.get(key);
-                sensors.put(key, (existingValue + value) / 2.0);
-            } else sensors.put(key, value);
+            if (sensors.containsKey(sensor)) {
+                Double existingValue = sensors.get(sensor);
+                sensors.put(sensor, (existingValue + data) / 2.0);
+            } else sensors.put(sensor, data);
         }
     }
 

@@ -118,10 +118,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PrincipalComponents.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="PrincipalComponents.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/PrincipalComponents.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="289" column="15" selection-start="10219" selection-end="10219" vertical-scroll-proportion="0.22977346" vertical-offset="4771" max-vertical-offset="6052">
+            <state line="330" column="45" selection-start="11937" selection-end="11937" vertical-scroll-proportion="0.0" vertical-offset="5404" max-vertical-offset="6052">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -149,10 +149,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PrincipalComponentUpdater.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="PrincipalComponentUpdater.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/update/PrincipalComponentUpdater.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="68" selection-start="974" selection-end="974" vertical-scroll-proportion="0.0" vertical-offset="476" max-vertical-offset="884">
+            <state line="35" column="46" selection-start="1365" selection-end="1365" vertical-scroll-proportion="0.5150555" vertical-offset="134" max-vertical-offset="782">
               <folding />
             </state>
           </provider>
@@ -211,7 +211,6 @@
         <option value="$PROJECT_DIR$/../src/jvm/ml/spout/sensor/SensorStreamingSpout.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/create/PcaFactory.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/spout/dbutils/SensorDbUtils.java" />
-        <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/update/PrincipalComponentUpdater.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/topology/weka/ClusteringTopology.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/spout/mddb/MddbFeatureExtractorSpout.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/update/ClusterUpdater.java" />
@@ -219,6 +218,7 @@
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/query/PrincipalComponentsAggregator.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/topology/PcaTopology.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/PrincipalComponents.java" />
+        <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/update/PrincipalComponentUpdater.java" />
       </list>
     </option>
   </component>
@@ -1054,13 +1054,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/update/PrincipalComponentUpdater.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="68" selection-start="974" selection-end="974" vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="765">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/spout/mddb/MddbFeatureExtractorSpout.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="135" column="49" selection-start="5457" selection-end="5457" vertical-scroll-proportion="0.0" vertical-offset="2078" max-vertical-offset="3060">
@@ -1105,10 +1098,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/PrincipalComponents.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="289" column="15" selection-start="10219" selection-end="10219" vertical-scroll-proportion="0.22977346" vertical-offset="4771" max-vertical-offset="6052">
+        <state line="330" column="45" selection-start="11937" selection-end="11937" vertical-scroll-proportion="0.0" vertical-offset="5404" max-vertical-offset="6052">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/update/PrincipalComponentUpdater.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="46" selection-start="1365" selection-end="1365" vertical-scroll-proportion="0.5150555" vertical-offset="134" max-vertical-offset="782">
+          <folding />
         </state>
       </provider>
     </entry>
