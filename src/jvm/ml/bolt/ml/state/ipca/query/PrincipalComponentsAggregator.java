@@ -8,25 +8,21 @@ import storm.trident.tuple.TridentTuple;
  * Date: 12/16/13
  * Time: 3:47 PM
  */
-public class PrincipalComponentsAggregator implements CombinerAggregator<double[][]> {
+public class PrincipalComponentsAggregator implements CombinerAggregator<Double[][]> {
     @Override
-    public double[][] init (final TridentTuple components) {
-        if (components.getValueByField("components") != null)
-            return  (double[][]) components.getValueByField("components");
+    public Double[][] init (final TridentTuple components) {
+        if (components.getValueByField("components") != null){
+            return  (Double[][]) components.getValueByField("components");
+        }
         else return null;
-        
-        //double[][] initialPrimitive = new double[initial.length][initial[0].length];
-        //for (int i =0 ; i < initial.length; i++){
-        //    initialPrimitive[i] = ArrayUtils.toPrimitive(initial[i]);
-        //}
     }
 
     @Override
-    public double[][] combine (final double[][] partition1, final double[][] partition2) {
+    public Double[][] combine (final Double[][] partition1, final Double[][] partition2) {
         if (partition1 == null) return partition2;
         else if (partition2 == null) return partition1;
 
-        double[][] combined = new double[partition1.length + partition2.length][partition1[0].length];
+        Double[][] combined = new Double[partition1.length + partition2.length][partition1[0].length];
         int i = 0;
         for (; i < partition1.length; i++)
             System.arraycopy(partition1, i, combined, i, partition1[i].length);
@@ -38,7 +34,7 @@ public class PrincipalComponentsAggregator implements CombinerAggregator<double[
     }
 
     @Override
-    public double[][] zero () {
+    public Double[][] zero () {
         return null;
     }
 }

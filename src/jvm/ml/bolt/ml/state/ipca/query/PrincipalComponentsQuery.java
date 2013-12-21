@@ -16,19 +16,19 @@ import java.util.Map;
  * Date: 12/16/13
  * Time: 12:28 PM
  */
-public final class PrincipalComponentsQuery implements QueryFunction<PrincipalComponents, double[][]> {
+public final class PrincipalComponentsQuery implements QueryFunction<PrincipalComponents, Double[][]> {
     @Override
-    public List<double[][]> batchRetrieve(final PrincipalComponents principalComponents,
+    public List<Double[][]> batchRetrieve(final PrincipalComponents principalComponents,
                                           final List<TridentTuple> queryTuples) {
 
-        final List<double[][]> components = new ArrayList<double[][]>();
+        final List<Double[][]> components = new ArrayList<Double[][]>();
         for (TridentTuple ignored : queryTuples) components.add(principalComponents.getPrincipalComponents());
         return components;
     }
 
     @Override
     public void execute(final TridentTuple queryTuple,
-                        final double[][] component,
+                        final Double[][] component,
                         final TridentCollector tridentCollector) {
         tridentCollector.emit(new Values(component));
     }

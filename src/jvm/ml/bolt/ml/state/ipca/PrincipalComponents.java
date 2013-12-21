@@ -157,12 +157,12 @@ public class PrincipalComponents implements State {
      *
      * @return pca
      */
-    public synchronized double[][] getPrincipalComponents() {
+    public synchronized Double[][] getPrincipalComponents() {
         int component = 0;
-        final double[][] eigenRowMajor;
+        final Double[][] eigenRowMajor;
         final int numPrincipalComponents = this.getNumOfPrincipalComponents();
         final int numSensors = this.getReverseSensorDictionary().size();
-        eigenRowMajor = new double[numSensors][numPrincipalComponents];
+        eigenRowMajor = new Double[numSensors][numPrincipalComponents];
 
         while (component < numPrincipalComponents) {
             final double[] basisColumnVector = this.getBasisVector(component);
