@@ -27,7 +27,7 @@ public class PrincipalComponents implements State {
     private Map<Integer, String> reverseSensorDictionary;
     private Map<String, Integer> sensorDictionary;
 
-    // principle component subspace is stored in the rows
+    // principal component subspace is stored in the rows
     private DenseMatrix64F V_t;
 
     // how many principal components are used
@@ -157,21 +157,20 @@ public class PrincipalComponents implements State {
      *
      * @return pca
      */
-    public double[][] getPrincipalComponents() {
-        double[][] eigenRowMajor;
-        synchronized (V_t) {
-            int component = 0;
-            final int numPrincipalComponents = this.getNumOfPrincipalComponents();
-            final int numSensors = this.getReverseSensorDictionary().size();
-            eigenRowMajor = new double[numSensors][numPrincipalComponents];
+    public synchronized double[][] getPrincipalComponents() {
+        int component = 0;
+        final double[][] eigenRowMajor;
+        final int numPrincipalComponents = this.getNumOfPrincipalComponents();
+        final int numSensors = this.getReverseSensorDictionary().size();
+        eigenRowMajor = new double[numSensors][numPrincipalComponents];
 
-            while (component < numPrincipalComponents) {
-                final double[] basisColumnVector = this.getBasisVector(component);
-                for (int sensorIndex = 0; sensorIndex < numSensors; sensorIndex++)
-                    eigenRowMajor[sensorIndex][component] = basisColumnVector[sensorIndex];
-                component++;
-            }
+        while (component < numPrincipalComponents) {
+            final double[] basisColumnVector = this.getBasisVector(component);
+            for (int sensorIndex = 0; sensorIndex < basisColumnVector.length; sensorIndex++)
+                eigenRowMajor[sensorIndex][component] = basisColumnVector[sensorIndex];
+            component++;
         }
+
         return eigenRowMajor;
     }
 
@@ -304,7 +303,7 @@ public class PrincipalComponents implements State {
         System.err.println(MessageFormat.format("DEBUG: matrix has {0} rows and {1} columns", numRows, numColumns));
 
         if (currentSensors.size() > numRows / 2 + 10 /*we expect 50% + 10 success rate*/)
-            windowTimesteps.put(txId, getFeatureVectorsAndReset(true));
+            windowTimesteps.put(txId, getCurrentSensorsAndReset(true));
         if (windowTimesteps.size() < windowSize) return;
 
         constructDataMatrixForPca(numRows, numColumns);
@@ -312,6 +311,12 @@ public class PrincipalComponents implements State {
         if (numRows > 0 && numColumns > 0) computePrincipalComponentsAndResetDataMatrix();
     }
 
+    /**
+     * Simply adds samples in the window to the data matrix by making sure 0's are added when a particular sensor isn't seen
+     *
+     * @param sensorNames
+     * @param numColumns
+     */
     private void addSamplesInWindowToMatrix(final Set<String> sensorNames, final int numColumns) {
         for (String sensorName : sensorNames) {
             int columnIndex = 0;
@@ -325,6 +330,9 @@ public class PrincipalComponents implements State {
         }
     }
 
+    /**
+     * Compute PCA and set all elements of data matrix to 0
+     */
     private void computePrincipalComponentsAndResetDataMatrix() {
         computeBasis(numExpectedComponents);
         {   // Reset the data matrix and its index
@@ -333,11 +341,22 @@ public class PrincipalComponents implements State {
         }
     }
 
-    public Map<String, Double> getFeatureVectors() {
-        return getFeatureVectorsAndReset(false);
+    /**
+     * Returns the latest map of sensor data in the window
+     *
+     * @return map of sensors and data
+     */
+    public Map<String, Double> getCurrentSensors() {
+        return getCurrentSensorsAndReset(false);
     }
 
-    private synchronized Map<String, Double> getFeatureVectorsAndReset(final boolean reset) {
+    /**
+     * Internal
+     *
+     * @param reset
+     * @return
+     */
+    private synchronized Map<String, Double> getCurrentSensorsAndReset(final boolean reset) {
         final Map<String, Double> oldSensors = currentSensors;
         if (reset) currentSensors = new ConcurrentSkipListMap<String, Double>();
         return oldSensors;
@@ -361,6 +380,11 @@ public class PrincipalComponents implements State {
         return numPartition;
     }
 
+    /**
+     * Returns the dictionary that maps sensor ids to names
+     *
+     * @return Map
+     */
     public Map<Integer, String> getReverseSensorDictionary() {
         return reverseSensorDictionary;
     }

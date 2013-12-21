@@ -27,7 +27,7 @@ public class PrincipalComponentUpdater implements StateUpdater<PrincipalComponen
             String sensor = tuple.getStringByField("sensor");
             Double data = (Double) tuple.getValueByField("sensorData");
             //System.err.println(MessageFormat.format("DEBUG: Updating state: sensor name is {0} and temperature is {1}", sensor, data));
-            Map<String, Double> sensors = state.getFeatureVectors();
+            Map<String, Double> sensors = state.getCurrentSensors();
 
             if (sensors.containsKey(sensor)) {
                 Double existingValue = sensors.get(sensor);
