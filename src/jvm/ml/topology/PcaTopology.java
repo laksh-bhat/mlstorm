@@ -44,7 +44,7 @@ public class PcaTopology {
     public static void main (String[] args) throws AlreadyAliveException, InvalidTopologyException {
         String[] fields = {"sensor", "sensorData"};
         int parallelism = args.length > 0 ? Integer.valueOf(args[0]) : 1;
-        StormTopology stormTopology = buildTopology(parallelism, fields, 1000, 10);
+        StormTopology stormTopology = buildTopology(parallelism, fields, 100, 5);
 
         if (parallelism == 1) {
             LocalCluster cluster = new LocalCluster();
@@ -69,7 +69,8 @@ public class PcaTopology {
 
     private static StormTopology buildTopology (final int parallelism,
                                                 final String[] fields,
-                                                final int pcaRowWidth, final int numPrincipalComponents)
+                                                final int pcaRowWidth,
+                                                final int numPrincipalComponents)
     {
         IRichSpout sensorSpout = new SensorStreamingSpout(fields);
         ITridentSpout batchSpout = new RichSpoutBatchExecutor(sensorSpout);
