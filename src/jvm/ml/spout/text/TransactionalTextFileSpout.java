@@ -141,16 +141,13 @@ public class TransactionalTextFileSpout implements ITridentSpout<Set<String>> {
 
         @Override
         public void emitBatch (TransactionAttempt tx, Set<String> coordinatorMeta, TridentCollector collector) {
-            try {
-                for (String messageId : txidMsgIds.get(tx.getTransactionId())) {
-                    assert emittedMessages.containsKey(messageId);
-                    String payload = emittedMessages.get(messageId);
-                    collector.emit(new Values(payload));
-                }
-            } catch ( NullPointerException nullPtrEx ) {
-                System.out.println(MessageFormat.format("Transactional attempt is {0}", tx));
-                System.out.println(nullPtrEx.getMessage());
-                System.out.println("Recovering ... ");
+            if (tx == null || coordinatorMeta == null || collector == null)
+                return;
+
+            for (String messageId : txidMsgIds.get(tx.getTransactionId())) {
+                assert emittedMessages.containsKey(messageId);
+                String payload = emittedMessages.get(messageId);
+                collector.emit(new Values(payload));
             }
         }
 

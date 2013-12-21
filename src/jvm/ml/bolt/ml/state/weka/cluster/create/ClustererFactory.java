@@ -13,11 +13,12 @@ import java.util.Map;
  * Time: 5:10 PM
  */
 public class ClustererFactory implements StateFactory {
+    private final int windowSize, k;
     private ClustererState state = null;
-    private int k;
 
-    public ClustererFactory (int k) {
+    public ClustererFactory (int k, int windowSize) {
         this.k = k;
+        this.windowSize = windowSize;
     }
 
     @Override
@@ -26,7 +27,7 @@ public class ClustererFactory implements StateFactory {
                             final int partitionIndex,
                             final int numPartitions)
     {
-        if (state == null) state = new ClustererState(k);
+        if (state == null) state = new ClustererState(k, windowSize);
         return state;
     }
 }

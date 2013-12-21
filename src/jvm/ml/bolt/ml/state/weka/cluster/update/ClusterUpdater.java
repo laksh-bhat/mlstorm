@@ -1,6 +1,7 @@
 package bolt.ml.state.weka.cluster.update;
 
 import bolt.ml.state.weka.cluster.ClustererState;
+import org.apache.commons.lang.ArrayUtils;
 import storm.trident.operation.TridentCollector;
 import storm.trident.operation.TridentOperationContext;
 import storm.trident.state.StateUpdater;
@@ -9,9 +10,6 @@ import storm.trident.tuple.TridentTuple;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
 
 /**
  * User: lbhat <laksh85@gmail.com>
@@ -21,7 +19,6 @@ import java.util.logging.Logger;
 public class ClusterUpdater implements StateUpdater<ClustererState> {
 
     private int localPartition, numPartitions;
-    private Logger logger = LogManager.getLogManager().getLogger("");
 
     @Override
     public void updateState (final ClustererState state,
@@ -30,11 +27,11 @@ public class ClusterUpdater implements StateUpdater<ClustererState> {
     {
         for (TridentTuple tuple : tuples) {
             Double[] fv = (Double[]) tuple.getValueByField("featureVector");
-            state.getFeatures().asMap().putIfAbsent(tuple.getIntegerByField("key"), fv);
+            state.getFeatures().put(tuple.getIntegerByField("key"), ArrayUtils.toPrimitive(fv));
         }
 
-        logger.log(Level.ALL, MessageFormat.format(
-                "Updating state at partition [{0}] of [{1}]", localPartition, numPartitions));
+        System.err.println(MessageFormat.format(
+            "updating state at partition [{0}] of [{1}]", localPartition, numPartitions));
     }
 
     @Override

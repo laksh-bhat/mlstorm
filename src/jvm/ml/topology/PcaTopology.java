@@ -1,6 +1,7 @@
 package topology;
 
 import backtype.storm.Config;
+import backtype.storm.LocalCluster;
 import backtype.storm.StormSubmitter;
 import backtype.storm.generated.AlreadyAliveException;
 import backtype.storm.generated.InvalidTopologyException;
@@ -43,9 +44,14 @@ public class PcaTopology {
     public static void main (String[] args) throws AlreadyAliveException, InvalidTopologyException {
         String[] fields = {"sensor", "sensorData"};
         int parallelism = args.length > 0 ? Integer.valueOf(args[0]) : 1;
-
         StormTopology stormTopology = buildTopology(parallelism, fields, 10);
-        StormSubmitter.submitTopology("Pca", getStormConfig(parallelism), stormTopology);
+
+        if (parallelism == 1) {
+            LocalCluster cluster = new LocalCluster();
+            cluster.submitTopology("Pca", getStormConfig(parallelism), stormTopology);
+        } else {
+            StormSubmitter.submitTopology("Pca", getStormConfig(parallelism), stormTopology);
+        }
     }
 
     public static Config getStormConfig (int numWorkers) {
@@ -53,7 +59,7 @@ public class PcaTopology {
         conf.setNumAckers(numWorkers);
         conf.setNumWorkers(numWorkers);
         conf.setMaxSpoutPending(100);
-        conf.put("topology.spout.max.batch.size", 1000 );
+        conf.put("topology.spout.max.batch.size", 1000);
         conf.put("topology.trident.batch.emit.interval.millis", 500);
         conf.put(Config.DRPC_SERVERS, Lists.newArrayList("qp-hd3", "qp-hd4", "qp-hd5", "qp-hd6", "qp-hd7", "qp-hd8", "qp-hd9"));
         conf.put(Config.STORM_CLUSTER_MODE, "distributed");
@@ -83,10 +89,10 @@ public class PcaTopology {
 
         principalComponentsStream
                 .aggregate(new Fields("components"), new PrincipalComponentsAggregator(), new Fields("eigen"))
-                //.each(new Fields("refreshedEigen"), new AggregateFilter(), new Fields("eigen"))
-                //.project(new Fields("eigen"))
-                //.broadcast()
-                //.partitionPersist(pcaFactory, new Fields("eigen"), new PrincipalComponentsRefresher())
+                        //.each(new Fields("refreshedEigen"), new AggregateFilter(), new Fields("eigen"))
+                        //.project(new Fields("eigen"))
+                        //.broadcast()
+                        //.partitionPersist(pcaFactory, new Fields("eigen"), new PrincipalComponentsRefresher())
                 .parallelismHint(parallelism)
         ;
         return topology.build();

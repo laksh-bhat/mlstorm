@@ -10,8 +10,9 @@ import java.text.MessageFormat;
  * Date: 12/16/13
  * Time: 8:37 PM
  */
+
 public class WekaUtils {
-    //TODO correct this
+
     public static FastVector getFeatureVectorForClustering (int noOfClusters, int noOfAttributes) {
         // Declare FEATURE VECTOR
         FastVector attributes = new FastVector(noOfAttributes);

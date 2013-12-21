@@ -8,14 +8,12 @@ import backtype.storm.topology.OutputFieldsDeclarer;
 import backtype.storm.tuple.Fields;
 import backtype.storm.tuple.Values;
 import org.apache.commons.lang.ArrayUtils;
+import org.slf4j.LoggerFactory;
 import utils.SpoutUtils;
 
 import java.io.File;
 import java.text.MessageFormat;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
 
 /**
  * User: lbhat <laksh85@gmail.com>
@@ -35,6 +33,7 @@ public class MddbFeatureExtractorSpout implements IRichSpout {
     private String               previous;
     private Scanner              scanner;
     private SpoutOutputCollector collector;
+    final   org.slf4j.Logger     logger;
 
     public MddbFeatureExtractorSpout (String directory, String[] fields) {
         this.fields = fields;
@@ -43,6 +42,7 @@ public class MddbFeatureExtractorSpout implements IRichSpout {
         SpoutUtils.listFilesForFolder(new File(folder), featureFiles);
         featuresIterator = featureFiles.iterator();
         scanner = getScanner(featuresIterator);
+        logger = LoggerFactory.getLogger(MddbFeatureExtractorSpout.class);
     }
 
     private Scanner getScanner (final Iterator<String> featuresIterator) {
@@ -128,9 +128,8 @@ public class MddbFeatureExtractorSpout implements IRichSpout {
      */
     @Override
     public void nextTuple () {
-        Logger logger = LogManager.getLogManager().getLogger("");
         if (scanner == null) {
-            logger.log(Level.INFO, MessageFormat.format("No more features. Visit {0} later", taskId));
+            logger.debug (MessageFormat.format("No more features. Visit {0} later", taskId));
         } else {
             try {
                 if(scanner.hasNextLine()) previous = scanner.nextLine();
