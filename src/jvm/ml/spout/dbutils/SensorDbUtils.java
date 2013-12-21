@@ -66,5 +66,5 @@ public class SensorDbUtils {
     private static final String DB_URL                    = "jdbc:sqlserver://zinc14.pha.jhu.edu:1433;Database=owsensordb";
     private static final String COM_SQLSERVER_JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
 
-    public static final int NO_OF_SENSORS = 255;
+    public static final int APPROX_NO_OF_SENSORS = 200;
 }

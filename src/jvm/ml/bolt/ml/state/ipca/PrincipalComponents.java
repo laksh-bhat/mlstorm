@@ -289,13 +289,12 @@ public class PrincipalComponents implements State {
 
         final Set<String> sensorNames = currentSensors.keySet();
         final int numRows = sensorNames.size();
-        final int numColumns = pcaRowWidth;
+        final int numColumns = windowTimesteps.size() + 1;
 
         System.err.println(MessageFormat.format("DEBUG: matrix has {0} rows and {1} columns", numRows, numColumns));
 
-        if (currentSensors.size() == SensorDbUtils.NO_OF_SENSORS) {
+        if (currentSensors.size() > SensorDbUtils.APPROX_NO_OF_SENSORS) {
             windowTimesteps.put(txId, getFeatureVectorsAndReset(true));
-            System.err.println("DEBUG: sensors equal!");
         }
         if (windowTimesteps.size() < pcaRowWidth) {
             System.err.println("DEBUG: window is not full. Nothing to commit. ");
@@ -314,7 +313,7 @@ public class PrincipalComponents implements State {
             Iterator<Map<String, Double>> valuesIterator = windowTimesteps.values().iterator();
             while (valuesIterator.hasNext() && columnIndex < numColumns) {
                 final Map<String, Double> timeStep = valuesIterator.next();
-                row[columnIndex++] = timeStep.get(sensorName);
+                row[columnIndex++] = timeStep.containsKey(sensorName)? timeStep.get(sensorName) : 0.0 ;
             }
             addSample(row);
         }
