@@ -64,10 +64,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="PcaTopology.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="PcaTopology.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/PcaTopology.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="54" column="81" selection-start="2203" selection-end="2203" vertical-scroll-proportion="0.0" vertical-offset="918" max-vertical-offset="1717">
+            <state line="84" column="107" selection-start="3816" selection-end="3821" vertical-scroll-proportion="0.6497623" vertical-offset="712" max-vertical-offset="1394">
               <folding />
             </state>
           </provider>
@@ -149,10 +149,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PrincipalComponentUpdater.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="PrincipalComponentUpdater.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/update/PrincipalComponentUpdater.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="35" column="46" selection-start="1365" selection-end="1365" vertical-scroll-proportion="0.5150555" vertical-offset="134" max-vertical-offset="782">
+            <state line="31" column="81" selection-start="1145" selection-end="1145" vertical-scroll-proportion="0.0" vertical-offset="134" max-vertical-offset="782">
               <folding />
             </state>
           </provider>
@@ -216,9 +216,9 @@
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/update/ClusterUpdater.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/query/PrincipalComponentsQuery.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/query/PrincipalComponentsAggregator.java" />
-        <option value="$PROJECT_DIR$/../src/jvm/ml/topology/PcaTopology.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/PrincipalComponents.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/update/PrincipalComponentUpdater.java" />
+        <option value="$PROJECT_DIR$/../src/jvm/ml/topology/PcaTopology.java" />
       </list>
     </option>
   </component>
@@ -1080,13 +1080,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/PcaTopology.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="54" column="81" selection-start="2203" selection-end="2203" vertical-scroll-proportion="0.0" vertical-offset="51" max-vertical-offset="1122">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/spout/dbutils/SensorDbUtils.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="68" column="28" selection-start="2601" selection-end="2601" vertical-scroll-proportion="0.0" vertical-offset="661" max-vertical-offset="1292">
@@ -1107,7 +1100,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/update/PrincipalComponentUpdater.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="46" selection-start="1365" selection-end="1365" vertical-scroll-proportion="0.5150555" vertical-offset="134" max-vertical-offset="782">
+        <state line="31" column="81" selection-start="1145" selection-end="1145" vertical-scroll-proportion="0.0" vertical-offset="134" max-vertical-offset="782">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/PcaTopology.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="84" column="107" selection-start="3816" selection-end="3821" vertical-scroll-proportion="0.6497623" vertical-offset="712" max-vertical-offset="1394">
           <folding />
         </state>
       </provider>

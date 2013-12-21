@@ -73,7 +73,6 @@ public class PcaTopology {
 
         TridentState principalComponents =
                 sensorStream
-                        .shuffle()
                         .partitionPersist(pcaFactory, new Fields("sensor", "sensorData"), new PrincipalComponentUpdater())
                         .parallelismHint(parallelism);
 
