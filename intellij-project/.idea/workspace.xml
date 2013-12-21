@@ -94,7 +94,7 @@
       <file leaf-file-name="PrincipalComponentsQuery.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/query/PrincipalComponentsQuery.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="30" column="51" selection-start="1088" selection-end="1088" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1219">
+            <state line="24" column="89" selection-start="912" selection-end="912" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1219">
               <folding />
             </state>
           </provider>
@@ -103,7 +103,16 @@
       <file leaf-file-name="PrincipalComponentsAggregator.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/query/PrincipalComponentsAggregator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="9" selection-start="709" selection-end="709" vertical-scroll-proportion="0.26790452" vertical-offset="38" max-vertical-offset="1354">
+            <state line="18" column="5" selection-start="667" selection-end="667" vertical-scroll-proportion="0.2877984" vertical-offset="38" max-vertical-offset="1339">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PrincipalComponents.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/PrincipalComponents.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="168" column="27" selection-start="6542" selection-end="6548" vertical-scroll-proportion="0.0" vertical-offset="2010" max-vertical-offset="6304">
               <folding />
             </state>
           </provider>
@@ -833,10 +842,7 @@
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/PrincipalComponents.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="45" column="30" selection-start="1404" selection-end="1423" vertical-scroll-proportion="0.0" vertical-offset="675" max-vertical-offset="5100">
-          <folding>
-            <element signature="e#13705#13706#0" expanded="true" />
-            <element signature="e#13751#13752#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1094,23 +1100,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/query/PrincipalComponentsQuery.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="51" selection-start="1088" selection-end="1088" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1219">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/PrincipalComponents.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="170" column="24" selection-start="6726" selection-end="6726" vertical-scroll-proportion="0.0" vertical-offset="2010" max-vertical-offset="6334">
-          <folding>
-            <element signature="e#13705#13706#0" expanded="true" />
-            <element signature="e#13751#13752#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$PROJECT_DIR$/../lib/commons-lang-2.5.jar!/org/apache/commons/lang/ArrayUtils.class">
       <provider selected="true" editor-type-id="text-editor">
         <state line="254" column="25" selection-start="12267" selection-end="12267" vertical-scroll-proportion="0.34497207" vertical-offset="3548" max-vertical-offset="7151">
@@ -1118,9 +1107,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/PrincipalComponents.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="168" column="27" selection-start="6542" selection-end="6548" vertical-scroll-proportion="0.0" vertical-offset="2010" max-vertical-offset="6304">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/query/PrincipalComponentsQuery.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="89" selection-start="912" selection-end="912" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1219">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/query/PrincipalComponentsAggregator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="9" selection-start="709" selection-end="709" vertical-scroll-proportion="0.26790452" vertical-offset="38" max-vertical-offset="1354">
+        <state line="18" column="5" selection-start="667" selection-end="667" vertical-scroll-proportion="0.2877984" vertical-offset="38" max-vertical-offset="1339">
           <folding />
         </state>
       </provider>

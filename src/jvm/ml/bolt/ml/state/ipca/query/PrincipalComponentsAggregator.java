@@ -1,6 +1,5 @@
 package bolt.ml.state.ipca.query;
 
-import org.apache.commons.lang.ArrayUtils;
 import storm.trident.operation.CombinerAggregator;
 import storm.trident.tuple.TridentTuple;
 
@@ -12,12 +11,11 @@ import storm.trident.tuple.TridentTuple;
 public class PrincipalComponentsAggregator implements CombinerAggregator<double[][]> {
     @Override
     public double[][] init (final TridentTuple components) {
-        Double[][] initial = (Double[][]) components.getValueByField("components");
-        double[][] initialPrimitive = new double[initial.length][initial[0].length];
-        for (int i =0 ; i < initial.length; i++){
-            initialPrimitive[i] = ArrayUtils.toPrimitive(initial[i]);
-        }
-        return initialPrimitive;
+        return  (double[][]) components.getValueByField("components");
+        //double[][] initialPrimitive = new double[initial.length][initial[0].length];
+        //for (int i =0 ; i < initial.length; i++){
+        //    initialPrimitive[i] = ArrayUtils.toPrimitive(initial[i]);
+        //}
     }
 
     @Override
