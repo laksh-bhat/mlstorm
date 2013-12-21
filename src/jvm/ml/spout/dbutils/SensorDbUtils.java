@@ -2,6 +2,11 @@ package spout.dbutils;
 
 import java.sql.*;
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 /**
  * User: lbhat <laksh85@gmail.com>
@@ -48,23 +53,59 @@ public class SensorDbUtils {
                                                 String orderByColumn) throws
     SQLException
     {
-	
-	System.err.println("DEBUG: Querying sensor DB to stream all data.");
+
+        System.err.println("DEBUG: Querying sensor DB to stream all data.");
 
         Statement stmt = jdbcConnection.createStatement();
         stmt.setFetchSize(10000);
         stmt.setQueryTimeout(0);
-        String sql = MessageFormat.format("SELECT * FROM {0} WHERE polltime > '2013-12-15' ORDER BY {1}", tableName, orderByColumn);
+        String sql = MessageFormat.format("SELECT * FROM {0} {1} ORDER BY {2}", tableName, PREDICATE, orderByColumn);
         return stmt.executeQuery(sql);
     }
 
-    public static final  String TABLE_NAME                = "dbo.sensordata";
+    public static List<String> getSensorsList (final Connection jdbcConnection, String tableName) throws SQLException {
+        List<String> sensors = new ArrayList<String>();
+        ResultSet rs = null;
+        Statement stmt = null;
+        try {
+            stmt = jdbcConnection.createStatement();
+            String totalSensors = MessageFormat.format("SELECT DISTINCT(sensor) FROM {0} {1}", tableName, PREDICATE);
+            rs = stmt.executeQuery(totalSensors);
+            while (rs.next()) sensors.add(rs.getString("sensor"));
+        } finally {
+            cleanupAfterQuery(rs, stmt);
+        }
+        Collections.sort(sensors);
+        return sensors;
+    }
+
+    public static final Map<Integer, String> buildBiDirectionalSensorDictionary (final Map<String, Integer> sensorDictionary) throws SQLException {
+        final Map<Integer, String> reverseDictionary = new ConcurrentSkipListMap<Integer, String>();
+        Connection jdbcConnection = getNewDatabaseConnection(DB_USER, DB_USER);
+        List<String> sensors = SensorDbUtils.getSensorsList(jdbcConnection, SensorDbUtils.TABLE_NAME);
+        int sensorIndex = 0;
+        for (String sensor : sensors) {
+            sensorDictionary.put(sensor, sensorIndex);
+            reverseDictionary.put(sensorIndex, sensor) ;
+            sensorIndex ++;
+        }
+        return reverseDictionary;
+    }
+
+    private static void cleanupAfterQuery (final ResultSet rs, final Statement stmt) throws SQLException {
+        if (rs != null) rs.close();
+        if (stmt != null) stmt.close();
+    }
+
+    public static final String TABLE_NAME = "dbo.sensordata";
+
     public static final  String SENSOR_COLUMN             = "sensor";
     public static final  String DATA_COLUMN               = "data";
     public static final  String ORDER_BY_COLUMN           = "polltime";
     public static final  String DB_USER                   = "sensorreader";
     private static final String DB_URL                    = "jdbc:sqlserver://zinc14.pha.jhu.edu:1433;Database=owsensordb";
+    private static final String PREDICATE                 = " WHERE polltime > '2013-12-15' ";
     private static final String COM_SQLSERVER_JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
 
-    public static final int APPROX_NO_OF_SENSORS = 200;
+    public static final int APPROX_NO_OF_SENSORS = 165;
 }

@@ -16,26 +16,34 @@ import java.util.Map;
  * Date: 12/16/13
  * Time: 12:28 PM
  */
-public class PrincipalComponentsQuery implements QueryFunction<PrincipalComponents, double[]> {
+public class PrincipalComponentsQuery implements QueryFunction<PrincipalComponents, double[][]> {
     @Override
-    public List<double[]> batchRetrieve (final PrincipalComponents principalComponents,
-                                         final List<TridentTuple> queryTuples)
+    public List<double[][]> batchRetrieve (final PrincipalComponents principalComponents,
+                                           final List<TridentTuple> queryTuples)
     {
-        List<double[]> components = new ArrayList<double[]>();
+        List<double[][]> components = new ArrayList<double[][]>();
+        double[][] eigenRowMajor = new double
+                [principalComponents.getReverseSensorDictionary().size()]
+                [principalComponents.getNumOfPrincipalComponents()];
+
         for (TridentTuple ignored : queryTuples) {
             int component = 0;
-            while (component < principalComponents.getNumOfPrincipalComponents()) 
-                components.add(principalComponents.getBasisVector(component++));
+            while (component < principalComponents.getNumOfPrincipalComponents()) {
+                double[] basisColumnVector = principalComponents.getBasisVector(component++);
+                for (int sensorIndex = 0; sensorIndex < principalComponents.getReverseSensorDictionary().size(); sensorIndex++)
+                    eigenRowMajor[sensorIndex][component] = basisColumnVector[sensorIndex];
+            }
+            components.add(eigenRowMajor);
         }
         return components;
     }
 
     @Override
     public void execute (final TridentTuple queryTuple,
-                         final double[] component,
+                         final double[][] component,
                          final TridentCollector tridentCollector)
     {
-         tridentCollector.emit(new Values(component));
+        tridentCollector.emit(new Values(component));
     }
 
     @Override

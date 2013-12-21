@@ -9,6 +9,7 @@ import org.ejml.ops.SingularOps;
 import spout.dbutils.SensorDbUtils;
 import storm.trident.state.State;
 
+import java.sql.SQLException;
 import java.text.MessageFormat;
 import java.util.*;
 import java.util.concurrent.ConcurrentSkipListMap;
@@ -20,8 +21,11 @@ import java.util.concurrent.ConcurrentSkipListMap;
  */
 public class PrincipalComponents implements State {
 
-    private Map<String, Double>            currentSensors;
-    private Map<Long, Map<String, Double>> windowTimesteps;
+    private final int                            numExpectedComponents;
+    private       Map<String, Double>            currentSensors;
+    private       Map<Long, Map<String, Double>> windowTimesteps;
+    private       Map<Integer, String>           reverseSensorDictionary;
+    private       Map<String, Integer>           sensorDictionary;
 
     // principle component subspace is stored in the rows
     private DenseMatrix64F V_t;
@@ -30,7 +34,7 @@ public class PrincipalComponents implements State {
     private int numPrincipalComponents;
 
     // state partition information
-    private int localPartition, numPartition, pcaRowWidth;
+    private int localPartition, numPartition, windowSize;
 
     // where the data is stored
     private DenseMatrix64F A = new DenseMatrix64F(1, 1);
@@ -39,23 +43,29 @@ public class PrincipalComponents implements State {
     // mean values of each element across all the samples
     double mean[];
 
-    public PrincipalComponents (final int elementsInSample, int localPartition, int numPartitions) {
-        System.out.println("DEBUG: Construct PCA State.");
+    public PrincipalComponents (final int elementsInSample,
+                                int numPrincipalComponents,
+                                int localPartition,
+                                int numPartitions) throws SQLException
+    {
         this.localPartition = localPartition;
         this.numPartition = numPartitions;
-        this.pcaRowWidth = elementsInSample;
-
-        //setupDataMatrix(numSamples, elementsInSample);
-        currentSensors = new ConcurrentSkipListMap<String, Double>();
-        windowTimesteps = new LinkedHashMap<Long, Map<String, Double>>(this.pcaRowWidth, 0.75f, false) {
+        this.windowSize = elementsInSample;
+        this.numExpectedComponents = numPrincipalComponents;
+        this.currentSensors = new ConcurrentSkipListMap<String, Double>();
+        this.windowTimesteps = new LinkedHashMap<Long, Map<String, Double>>(this.windowSize, 0.75f, false) {
             public boolean removeEldestEntry (Map.Entry<Long, Map<String, Double>> eldest) {
-                return size() > pcaRowWidth;
+                return size() > windowSize;
             }
         };
-        windowTimesteps = Collections.synchronizedMap(windowTimesteps);
+        this.windowTimesteps = Collections.synchronizedMap(this.windowTimesteps);
+        this.reverseSensorDictionary = new ConcurrentSkipListMap<Integer, String>();
+        this.sensorDictionary = new ConcurrentSkipListMap<String, Integer>();
+        // Bad practice, but gets the job done :D
+        this.reverseSensorDictionary = SensorDbUtils.buildBiDirectionalSensorDictionary(this.sensorDictionary);
     }
 
-    public int getNumOfPrincipalComponents () { return numPrincipalComponents; }
+    public int getNumOfPrincipalComponents () { return this.numPrincipalComponents; }
 
     /**
      * Must be called before any other functions. Declares and sets up internal data structures.
@@ -63,11 +73,11 @@ public class PrincipalComponents implements State {
      * @param numSamples Number of samples that will be processed.
      * @param sampleSize Number of elements in each sample.
      */
-    public void setupDataMatrix (int numSamples, int sampleSize) {
-        mean = new double[sampleSize];
-        A.reshape(numSamples, sampleSize, false);
-        sampleIndex = 0;
-        numPrincipalComponents = -1;
+    public void constructDataMatrixForPca (int numSamples, int sampleSize) {
+        this.mean = new double[sampleSize];
+        this.A.reshape(numSamples, sampleSize, false);
+        this.sampleIndex = 0;
+        this.numPrincipalComponents = -1;
     }
 
     /**
@@ -77,8 +87,6 @@ public class PrincipalComponents implements State {
      * @param sampleData Sample from original raw data.
      */
     public void addSample (double[] sampleData) {
-        System.out.println("DEBUG: Adding samples to data matrix");
-
         if (A.getNumCols() != sampleData.length)
             throw new IllegalArgumentException("Unexpected sample size");
         if (sampleIndex >= A.getNumRows())
@@ -88,30 +96,6 @@ public class PrincipalComponents implements State {
             A.set(sampleIndex, i, sampleData[i]);
         }
         sampleIndex++;
-    }
-
-    /**
-     * Adds a new sample of the raw data to internal data structure for later processing.  All the samples
-     * must be added before computeBasis is called.
-     *
-     * @param sampleData Sample from original raw data.
-     */
-    public void addSampleUnsafe (double[] sampleData, int setIndex) throws IllegalArgumentException {
-        if (A.getNumCols() != sampleData.length)
-            throw new IllegalArgumentException("Unexpected sample size");
-
-        for (int i = 0; i < sampleData.length; i++) {
-            A.set(setIndex, i, sampleData[i]);
-        }
-    }
-
-    public void addSample (double[][] sampleData) {
-        for (int i = 0; i < sampleData.length; i++)
-            try {
-                addSample(sampleData[i]);
-            } catch ( IllegalArgumentException e ) {
-                addSampleUnsafe(sampleData[i], sampleIndex);
-            }
     }
 
     /**
@@ -287,42 +271,39 @@ public class PrincipalComponents implements State {
     public synchronized void commit (final Long txId) {
         System.err.println("DEBUG: Commit called for transaction " + txId);
 
-        final Set<String> sensorNames = currentSensors.keySet();
-        final int numRows = sensorNames.size();
-        final int numColumns = windowTimesteps.size() + 1;
+        final Set<String> sensorNames = this.sensorDictionary.keySet();
+        final int numRows = this.sensorDictionary.size();
+        final int numColumns = this.windowSize;
 
         System.err.println(MessageFormat.format("DEBUG: matrix has {0} rows and {1} columns", numRows, numColumns));
 
-        if (currentSensors.size() > SensorDbUtils.APPROX_NO_OF_SENSORS) {
-            windowTimesteps.put(txId, getFeatureVectorsAndReset(true));
-        }
-        if (windowTimesteps.size() < pcaRowWidth) {
-            System.err.println("DEBUG: window is not full. Nothing to commit. ");
-            return;
-        }
+        if (currentSensors.size() == numRows) windowTimesteps.put(txId, getFeatureVectorsAndReset(true));
+        if (windowTimesteps.size() < windowSize) return;
 
-        setupDataMatrix(numRows, numColumns);
-        addWindowSamplesToMatrix(sensorNames, numColumns);
-        if (numRows > 0 && numColumns > 0) computePrincipalComponentsAndResetDataVector();
+        constructDataMatrixForPca(numRows, numColumns);
+        addSamplesInWindowToMatrix(sensorNames, numColumns);
+        if (numRows > 0 && numColumns > 0) computePrincipalComponentsAndResetDataMatrix();
     }
 
-    private void addWindowSamplesToMatrix (final Set<String> sensorNames, final int numColumns) {
+    private void addSamplesInWindowToMatrix (final Set<String> sensorNames, final int numColumns) {
         for (String sensorName : sensorNames) {
             int columnIndex = 0;
             double[] row = new double[numColumns];
             Iterator<Map<String, Double>> valuesIterator = windowTimesteps.values().iterator();
             while (valuesIterator.hasNext() && columnIndex < numColumns) {
                 final Map<String, Double> timeStep = valuesIterator.next();
-                row[columnIndex++] = timeStep.containsKey(sensorName)? timeStep.get(sensorName) : 0.0 ;
+                row[columnIndex++] = timeStep.containsKey(sensorName) ? timeStep.get(sensorName) : 0.0;
             }
             addSample(row);
         }
     }
 
-    private void computePrincipalComponentsAndResetDataVector () {
-        computeBasis(1);
-        A.zero();
-        sampleIndex = 0;
+    private void computePrincipalComponentsAndResetDataMatrix () {
+        computeBasis(numExpectedComponents);
+        {   // Reset the data matrix and its index
+            A.zero();
+            sampleIndex = 0;
+        }
     }
 
     public Map<String, Double> getFeatureVectors () {return getFeatureVectorsAndReset(false);}
@@ -349,5 +330,9 @@ public class PrincipalComponents implements State {
      */
     public int getNumPartition () {
         return numPartition;
+    }
+
+    public Map<Integer, String> getReverseSensorDictionary () {
+        return reverseSensorDictionary;
     }
 }

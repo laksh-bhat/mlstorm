@@ -11,16 +11,14 @@ import storm.trident.tuple.TridentTuple;
 public class PrincipalComponentsAggregator implements CombinerAggregator<double[][]> {
     @Override
     public double[][] init (final TridentTuple components) {
-        double [] component = (double[]) components.getValueByField("component");
-        double[][] eigen = new double[component.length][];
-        for (int i = 0; i < component.length; i++){
-            eigen[i][0] = component[i];
-        }
-        return eigen;
+        return (double[][]) components.getValueByField("component");
     }
 
     @Override
     public double[][] combine (final double[][] partition1, final double[][] partition2) {
+        if (partition1 == null) return partition2;
+        else if (partition2 == null) return partition1;
+
         double[][] combined = new double[partition1.length + partition2.length][partition1[0].length];
         int i = 0;
         for (; i < partition1.length; i++)
@@ -34,6 +32,6 @@ public class PrincipalComponentsAggregator implements CombinerAggregator<double[
 
     @Override
     public double[][] zero () {
-        return new double[0][];
+        return null;
     }
 }
