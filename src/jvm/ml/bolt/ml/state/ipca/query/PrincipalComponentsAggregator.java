@@ -11,7 +11,10 @@ import storm.trident.tuple.TridentTuple;
 public class PrincipalComponentsAggregator implements CombinerAggregator<double[][]> {
     @Override
     public double[][] init (final TridentTuple components) {
-        return  (double[][]) components.getValueByField("components");
+        if (components.getValueByField("components") != null)
+            return  (double[][]) components.getValueByField("components");
+        else return null;
+        
         //double[][] initialPrimitive = new double[initial.length][initial[0].length];
         //for (int i =0 ; i < initial.length; i++){
         //    initialPrimitive[i] = ArrayUtils.toPrimitive(initial[i]);

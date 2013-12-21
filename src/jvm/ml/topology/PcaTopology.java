@@ -9,6 +9,7 @@ import backtype.storm.generated.StormTopology;
 import backtype.storm.topology.IRichSpout;
 import backtype.storm.tuple.Fields;
 import bolt.ml.state.ipca.create.PcaFactory;
+import bolt.ml.state.ipca.query.PrincipalComponentsAggregator;
 import bolt.ml.state.ipca.query.PrincipalComponentsQuery;
 import bolt.ml.state.ipca.update.PrincipalComponentUpdater;
 import com.google.common.collect.Lists;
@@ -79,16 +80,15 @@ public class PcaTopology {
         TridentState principalComponents =
                 sensorStream
                         .partitionPersist(pcaFactory, new Fields("sensor", "sensorData"), new PrincipalComponentUpdater())
-                        .parallelismHint(parallelism)
-        ;
+                        .parallelismHint(parallelism);
 
-        Stream principalComponentsStream =
-                topology.newDRPCStream("PCA")
-                        .broadcast()
-                        .stateQuery(principalComponents, new Fields("args"), new PrincipalComponentsQuery(), new Fields("components"))
-                        .project(new Fields("components"))
-                        //.aggregate(new Fields("components"), new PrincipalComponentsAggregator(), new Fields("eigen"))
-        ;
+
+        topology.newDRPCStream("PCA")
+                .broadcast()
+                .stateQuery(principalComponents, new Fields("args"), new PrincipalComponentsQuery(), new Fields("components"))
+                .project(new Fields("components"))
+                .aggregate(new Fields("components"), new PrincipalComponentsAggregator(), new Fields("eigen"))
+                .project(new Fields("eigen"));
 
         //principalComponentsStream
         //.aggregate(new Fields("components"), new PrincipalComponentsAggregator(), new Fields("eigen"))
