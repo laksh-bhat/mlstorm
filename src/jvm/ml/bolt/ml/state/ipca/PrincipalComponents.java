@@ -21,11 +21,11 @@ import java.util.concurrent.ConcurrentSkipListMap;
  */
 public class PrincipalComponents implements State {
 
-    private final int                            numExpectedComponents;
-    private       Map<String, Double>            currentSensors;
-    private       Map<Long, Map<String, Double>> windowTimesteps;
-    private       Map<Integer, String>           reverseSensorDictionary;
-    private       Map<String, Integer>           sensorDictionary;
+    private final int numExpectedComponents;
+    private Map<String, Double> currentSensors;
+    private Map<Long, Map<String, Double>> windowTimesteps;
+    private Map<Integer, String> reverseSensorDictionary;
+    private Map<String, Integer> sensorDictionary;
 
     // principle component subspace is stored in the rows
     private DenseMatrix64F V_t;
@@ -43,18 +43,17 @@ public class PrincipalComponents implements State {
     // mean values of each element across all the samples
     double mean[];
 
-    public PrincipalComponents (final int elementsInSample,
-                                int numPrincipalComponents,
-                                int localPartition,
-                                int numPartitions) throws SQLException
-    {
+    public PrincipalComponents(final int elementsInSample,
+                               int numPrincipalComponents,
+                               int localPartition,
+                               int numPartitions) throws SQLException {
         this.localPartition = localPartition;
         this.numPartition = numPartitions;
         this.windowSize = elementsInSample;
         this.numExpectedComponents = numPrincipalComponents;
         this.currentSensors = new ConcurrentSkipListMap<String, Double>();
         this.windowTimesteps = new LinkedHashMap<Long, Map<String, Double>>(this.windowSize, 0.75f, false) {
-            public boolean removeEldestEntry (Map.Entry<Long, Map<String, Double>> eldest) {
+            public boolean removeEldestEntry(Map.Entry<Long, Map<String, Double>> eldest) {
                 return size() > windowSize;
             }
         };
@@ -65,7 +64,9 @@ public class PrincipalComponents implements State {
         this.reverseSensorDictionary = SensorDbUtils.buildBiDirectionalSensorDictionary(this.sensorDictionary);
     }
 
-    public int getNumOfPrincipalComponents () { return this.numPrincipalComponents; }
+    public int getNumOfPrincipalComponents() {
+        return this.numPrincipalComponents;
+    }
 
     /**
      * Must be called before any other functions. Declares and sets up internal data structures.
@@ -73,7 +74,7 @@ public class PrincipalComponents implements State {
      * @param numSamples Number of samples that will be processed.
      * @param sampleSize Number of elements in each sample.
      */
-    public void constructDataMatrixForPca (int numSamples, int sampleSize) {
+    public void constructDataMatrixForPca(int numSamples, int sampleSize) {
         this.mean = new double[sampleSize];
         this.A.reshape(numSamples, sampleSize, false);
         this.sampleIndex = 0;
@@ -86,7 +87,7 @@ public class PrincipalComponents implements State {
      *
      * @param sampleData Sample from original raw data.
      */
-    public void addSample (double[] sampleData) {
+    public void addSample(double[] sampleData) {
         if (A.getNumCols() != sampleData.length)
             throw new IllegalArgumentException("Unexpected sample size");
         if (sampleIndex >= A.getNumRows())
@@ -104,7 +105,7 @@ public class PrincipalComponents implements State {
      * @param numComponents Number of vectors it will use to describe the data.  Typically much
      *                      smaller than the number of elements in the input vector.
      */
-    public void computeBasis (int numComponents) {
+    public void computeBasis(int numComponents) {
 
         System.out.println("DEBUG: Compute basis to get principal components. ");
 
@@ -113,7 +114,8 @@ public class PrincipalComponents implements State {
         if (sampleIndex != A.getNumRows())
             throw new IllegalArgumentException("Not all the data has been added");
         if (numComponents > sampleIndex)
-            throw new IllegalArgumentException("More data needed to compute the desired number of components (sampleIndex=" + sampleIndex + ") (numComponents = " + numComponents + ") ");
+            throw new IllegalArgumentException("More data needed to compute the desired number of components " +
+                    "(sampleIndex=" + sampleIndex + ") (numComponents = " + numComponents + ") ");
 
         this.numPrincipalComponents = numComponents;
 
@@ -151,12 +153,35 @@ public class PrincipalComponents implements State {
     }
 
     /**
+     * Returns all the principal components of data matrix A
+     *
+     * @return pca
+     */
+    public double[][] getPrincipalComponents() {
+        double[][] eigenRowMajor;
+        synchronized (V_t) {
+            int component = 0;
+            final int numPrincipalComponents = this.getNumOfPrincipalComponents();
+            final int numSensors = this.getReverseSensorDictionary().size();
+            eigenRowMajor = new double[numSensors][numPrincipalComponents];
+
+            while (component < numPrincipalComponents) {
+                final double[] basisColumnVector = this.getBasisVector(component);
+                for (int sensorIndex = 0; sensorIndex < numSensors; sensorIndex++)
+                    eigenRowMajor[sensorIndex][component] = basisColumnVector[sensorIndex];
+                component++;
+            }
+        }
+        return eigenRowMajor;
+    }
+
+    /**
      * Returns a vector from the PCA's basis.
      *
      * @param which Which component's vector is to be returned.
      * @return Vector from the PCA basis.
      */
-    public double[] getBasisVector (int which) {
+    public double[] getBasisVector(int which) {
         if (which < 0 || which >= numPrincipalComponents)
             throw new IllegalArgumentException("Invalid component");
 
@@ -172,7 +197,7 @@ public class PrincipalComponents implements State {
      * @param sampleData Sample space data.
      * @return Eigen space projection.
      */
-    public double[] sampleToEigenSpace (double[] sampleData) {
+    public double[] sampleToEigenSpace(double[] sampleData) {
         if (sampleData.length != A.getNumCols())
             throw new IllegalArgumentException("Unexpected sample length");
         DenseMatrix64F mean = DenseMatrix64F.wrap(A.getNumCols(), 1, this.mean);
@@ -193,7 +218,7 @@ public class PrincipalComponents implements State {
      * @param eigenData Eigen space data.
      * @return Sample space projection.
      */
-    public double[] eigenToSampleSpace (double[] eigenData) {
+    public double[] eigenToSampleSpace(double[] eigenData) {
         if (eigenData.length != numPrincipalComponents)
             throw new IllegalArgumentException("Unexpected sample length");
 
@@ -222,7 +247,7 @@ public class PrincipalComponents implements State {
      * @param sampleA The sample whose membership status is being considered.
      * @return Its membership error.
      */
-    public double errorMembership (double[] sampleA) {
+    public double errorMembership(double[] sampleA) {
         double[] eig = sampleToEigenSpace(sampleA);
         double[] reproj = eigenToSampleSpace(eig);
 
@@ -243,7 +268,7 @@ public class PrincipalComponents implements State {
      * @param sample Sample of original data.
      * @return Higher value indicates it is more likely to be a member of input dataset.
      */
-    public double response (double[] sample) {
+    public double response(double[] sample) {
         if (sample.length != A.numCols)
             throw new IllegalArgumentException("Expected input vector to be in sample space");
 
@@ -260,7 +285,8 @@ public class PrincipalComponents implements State {
      * @param txid
      */
     @Override
-    public void beginCommit (final Long txid) {}
+    public void beginCommit(final Long txid) {
+    }
 
     /**
      * Nothing fancy. We push this sensor reading to the time-series window
@@ -268,7 +294,7 @@ public class PrincipalComponents implements State {
      * @param txId
      */
     @Override
-    public synchronized void commit (final Long txId) {
+    public synchronized void commit(final Long txId) {
         System.err.println("DEBUG: Commit called for transaction " + txId);
 
         final Set<String> sensorNames = this.sensorDictionary.keySet();
@@ -277,7 +303,8 @@ public class PrincipalComponents implements State {
 
         System.err.println(MessageFormat.format("DEBUG: matrix has {0} rows and {1} columns", numRows, numColumns));
 
-        if (currentSensors.size() > numRows/2 + 10 /*we expect 50% + 10 success rate*/) windowTimesteps.put(txId, getFeatureVectorsAndReset(true));
+        if (currentSensors.size() > numRows / 2 + 10 /*we expect 50% + 10 success rate*/)
+            windowTimesteps.put(txId, getFeatureVectorsAndReset(true));
         if (windowTimesteps.size() < windowSize) return;
 
         constructDataMatrixForPca(numRows, numColumns);
@@ -285,7 +312,7 @@ public class PrincipalComponents implements State {
         if (numRows > 0 && numColumns > 0) computePrincipalComponentsAndResetDataMatrix();
     }
 
-    private void addSamplesInWindowToMatrix (final Set<String> sensorNames, final int numColumns) {
+    private void addSamplesInWindowToMatrix(final Set<String> sensorNames, final int numColumns) {
         for (String sensorName : sensorNames) {
             int columnIndex = 0;
             double[] row = new double[numColumns];
@@ -298,7 +325,7 @@ public class PrincipalComponents implements State {
         }
     }
 
-    private void computePrincipalComponentsAndResetDataMatrix () {
+    private void computePrincipalComponentsAndResetDataMatrix() {
         computeBasis(numExpectedComponents);
         {   // Reset the data matrix and its index
             A.zero();
@@ -306,9 +333,11 @@ public class PrincipalComponents implements State {
         }
     }
 
-    public Map<String, Double> getFeatureVectors () {return getFeatureVectorsAndReset(false);}
+    public Map<String, Double> getFeatureVectors() {
+        return getFeatureVectorsAndReset(false);
+    }
 
-    private synchronized Map<String, Double> getFeatureVectorsAndReset (final boolean reset) {
+    private synchronized Map<String, Double> getFeatureVectorsAndReset(final boolean reset) {
         final Map<String, Double> oldSensors = currentSensors;
         if (reset) currentSensors = new ConcurrentSkipListMap<String, Double>();
         return oldSensors;
@@ -319,7 +348,7 @@ public class PrincipalComponents implements State {
      *
      * @return
      */
-    public int getLocalPartition () {
+    public int getLocalPartition() {
         return localPartition;
     }
 
@@ -328,11 +357,11 @@ public class PrincipalComponents implements State {
      *
      * @return
      */
-    public int getNumPartition () {
+    public int getNumPartition() {
         return numPartition;
     }
 
-    public Map<Integer, String> getReverseSensorDictionary () {
+    public Map<Integer, String> getReverseSensorDictionary() {
         return reverseSensorDictionary;
     }
 }

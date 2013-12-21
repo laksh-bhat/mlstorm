@@ -16,44 +16,26 @@ import java.util.Map;
  * Date: 12/16/13
  * Time: 12:28 PM
  */
-public class PrincipalComponentsQuery implements QueryFunction<PrincipalComponents, double[][]> {
+public final class PrincipalComponentsQuery implements QueryFunction<PrincipalComponents, double[][]> {
     @Override
-    public List<double[][]> batchRetrieve (final PrincipalComponents principalComponents,
-                                           final List<TridentTuple> queryTuples)
-    {
-        List<double[][]> components = new ArrayList<double[][]>();
-        double[][] eigenRowMajor = new double
-                [principalComponents.getReverseSensorDictionary().size()]
-                [principalComponents.getNumOfPrincipalComponents()];
+    public List<double[][]> batchRetrieve(final PrincipalComponents principalComponents,
+                                          final List<TridentTuple> queryTuples) {
 
-        for (TridentTuple ignored : queryTuples) {
-            int component = 0;
-            while (component < principalComponents.getNumOfPrincipalComponents()) {
-                double[] basisColumnVector = principalComponents.getBasisVector(component);
-                for (int sensorIndex = 0; sensorIndex < principalComponents.getReverseSensorDictionary().size(); sensorIndex++)
-                    eigenRowMajor[sensorIndex][component] = basisColumnVector[sensorIndex];
-	        component++;
-            }
-            components.add(eigenRowMajor);
-        }
+        final List<double[][]> components = new ArrayList<double[][]>();
+        for (TridentTuple ignored : queryTuples) components.add(principalComponents.getPrincipalComponents());
         return components;
     }
 
     @Override
-    public void execute (final TridentTuple queryTuple,
-                         final double[][] component,
-                         final TridentCollector tridentCollector)
-    {
+    public void execute(final TridentTuple queryTuple,
+                        final double[][] component,
+                        final TridentCollector tridentCollector) {
         tridentCollector.emit(new Values(component));
     }
 
     @Override
-    public void prepare (final Map map, final TridentOperationContext tridentOperationContext) {
-
-    }
+    public void prepare(final Map map, final TridentOperationContext tridentOperationContext) {}
 
     @Override
-    public void cleanup () {
-
-    }
+    public void cleanup() {}
 }

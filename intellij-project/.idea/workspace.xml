@@ -64,10 +64,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="PcaTopology.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="PcaTopology.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/PcaTopology.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="72" column="80" selection-start="3120" selection-end="3142" vertical-scroll-proportion="0.625" vertical-offset="646" max-vertical-offset="1496">
+            <state line="72" column="81" selection-start="3143" selection-end="3143" vertical-scroll-proportion="0.0" vertical-offset="306" max-vertical-offset="1969">
               <folding />
             </state>
           </provider>
@@ -76,7 +76,7 @@
       <file leaf-file-name="ClustererState.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/ClustererState.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="38" selection-start="621" selection-end="621" vertical-scroll-proportion="0.0" vertical-offset="408" max-vertical-offset="850">
+            <state line="24" column="5" selection-start="621" selection-end="621" vertical-scroll-proportion="0.0" vertical-offset="360" max-vertical-offset="690">
               <folding />
             </state>
           </provider>
@@ -85,25 +85,7 @@
       <file leaf-file-name="ClusteringTopology.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/weka/ClusteringTopology.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="33" column="82" selection-start="1263" selection-end="1263" vertical-scroll-proportion="0.0" vertical-offset="561" max-vertical-offset="1122">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SensorDbUtils.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../src/jvm/ml/spout/dbutils/SensorDbUtils.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="81" column="17" selection-start="2813" selection-end="2813" vertical-scroll-proportion="0.0" vertical-offset="1156" max-vertical-offset="1989">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SensorStreamingSpout.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../src/jvm/ml/spout/sensor/SensorStreamingSpout.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="31" column="47" selection-start="898" selection-end="898" vertical-scroll-proportion="0.0" vertical-offset="527" max-vertical-offset="2992">
+            <state line="33" column="19" selection-start="1263" selection-end="1263" vertical-scroll-proportion="0.0" vertical-offset="495" max-vertical-offset="930">
               <folding />
             </state>
           </provider>
@@ -112,12 +94,8 @@
       <file leaf-file-name="PrincipalComponents.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/PrincipalComponents.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="45" column="30" selection-start="1404" selection-end="1423" vertical-scroll-proportion="0.0" vertical-offset="753" max-vertical-offset="5780">
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#12287#12288#0" expanded="true" />
-                <element signature="e#12333#12334#0" expanded="true" />
-              </folding>
+            <state line="159" column="11" selection-start="6046" selection-end="6046" vertical-scroll-proportion="0.0" vertical-offset="1973" max-vertical-offset="5944">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -125,16 +103,16 @@
       <file leaf-file-name="PrincipalComponentsQuery.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/query/PrincipalComponentsQuery.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="62" selection-start="634" selection-end="634" vertical-scroll-proportion="0.0" vertical-offset="66" max-vertical-offset="935">
+            <state line="30" column="51" selection-start="1088" selection-end="1088" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1219">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PrincipalComponentsAggregator.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="PrincipalComponentsAggregator.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/query/PrincipalComponentsAggregator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="91" selection-start="821" selection-end="821" vertical-scroll-proportion="0.0" vertical-offset="83" max-vertical-offset="714">
+            <state line="30" column="5" selection-start="1095" selection-end="1095" vertical-scroll-proportion="0.5066313" vertical-offset="53" max-vertical-offset="1279">
               <folding />
             </state>
           </provider>
@@ -143,7 +121,7 @@
       <file leaf-file-name="PcaFactory.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/create/PcaFactory.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="19" selection-start="498" selection-end="498" vertical-scroll-proportion="0.0" vertical-offset="49" max-vertical-offset="680">
+            <state line="21" column="19" selection-start="498" selection-end="498" vertical-scroll-proportion="0.0" vertical-offset="315" max-vertical-offset="630">
               <folding />
             </state>
           </provider>
@@ -152,8 +130,28 @@
       <file leaf-file-name="PrincipalComponentUpdater.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/update/PrincipalComponentUpdater.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="30" column="103" selection-start="1115" selection-end="1115" vertical-scroll-proportion="0.0" vertical-offset="151" max-vertical-offset="782">
+            <state line="30" column="0" selection-start="1115" selection-end="1115" vertical-scroll-proportion="0.0" vertical-offset="113" max-vertical-offset="1339">
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PrincipalComponentsRefresher.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/update/PrincipalComponentsRefresher.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="25" column="34" selection-start="953" selection-end="953" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1204">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AggregateFilter.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/update/AggregateFilter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="35" column="1" selection-start="1228" selection-end="1228" vertical-scroll-proportion="0.0" vertical-offset="75" max-vertical-offset="1279">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -216,18 +214,17 @@
         <option value="$PROJECT_DIR$/../src/jvm/ml/spout/sensor/SensorStreamingSpout.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/spout/dbutils/SensorDbUtils.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/create/PcaFactory.java" />
-        <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/PrincipalComponents.java" />
-        <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/query/PrincipalComponentsQuery.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/query/PrincipalComponentsAggregator.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/topology/PcaTopology.java" />
+        <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/PrincipalComponents.java" />
+        <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/query/PrincipalComponentsQuery.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1382" />
-    <option name="height" value="784" />
+    <option name="y" value="22" />
+    <option name="width" value="1440" />
+    <option name="height" value="874" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -620,19 +617,6 @@
       <option name="PORT" value="5005" />
       <method />
     </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <method />
-    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -658,6 +642,19 @@
       <envs />
       <properties />
       <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -759,7 +756,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
+    <frame x="0" y="22" width="1440" height="874" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -767,7 +764,6 @@
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32890856" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39970502" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -778,10 +774,11 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23206443" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25208333" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32890856" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32890856" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32890856" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -828,14 +825,58 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/spout/dbutils/SensorDbUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="81" column="17" selection-start="2813" selection-end="2813" vertical-scroll-proportion="0.0" vertical-offset="1215" max-vertical-offset="1695">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/spout/sensor/SensorStreamingSpout.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="31" column="7" selection-start="898" selection-end="898" vertical-scroll-proportion="0.0" vertical-offset="465" max-vertical-offset="2580">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/PrincipalComponents.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="45" column="30" selection-start="1404" selection-end="1423" vertical-scroll-proportion="0.0" vertical-offset="675" max-vertical-offset="5100">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/query/PrincipalComponentsQuery.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="62" selection-start="634" selection-end="634" vertical-scroll-proportion="0.0" vertical-offset="300" max-vertical-offset="915">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/query/PrincipalComponentsAggregator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="42" selection-start="822" selection-end="822" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="585">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/create/PcaFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="19" selection-start="498" selection-end="498" vertical-scroll-proportion="0.0" vertical-offset="315" max-vertical-offset="630">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/update/PrincipalComponentUpdater.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="0" selection-start="1115" selection-end="1115" vertical-scroll-proportion="0.0" vertical-offset="450" max-vertical-offset="735">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="jar://$PROJECT_DIR$/../lib/guava-13.0.jar!/com/google/common/cache/CacheBuilder.class">
       <provider selected="true" editor-type-id="text-editor">
         <state line="65" column="53" selection-start="3456" selection-end="3456" vertical-scroll-proportion="0.34738618" vertical-offset="882" max-vertical-offset="2771" />
-      </provider>
-    </entry>
-    <entry file="jar://Z:/Java/jdk1.7.0_40/src.zip!/java/lang/System.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="479" column="33" selection-start="18693" selection-end="18764" vertical-scroll-proportion="0.090332806" vertical-offset="7406" max-vertical-offset="19941" />
       </provider>
     </entry>
     <entry file="jar://$PROJECT_DIR$/../lib/log4j-1.2.16.jar!/org/apache/log4j/Logger.class">
@@ -849,9 +890,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/update/ccipca.md">
-      <provider selected="true" editor-type-id="MarkdownPreviewEditor">
-        <state />
-      </provider>
       <provider editor-type-id="text-editor">
         <state line="1" column="3" selection-start="71" selection-end="71" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3757" />
       </provider>
@@ -906,11 +944,6 @@
         <state line="7" column="30" selection-start="240" selection-end="240" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="221" />
       </provider>
     </entry>
-    <entry file="jar://Z:/Java/jdk1.7.0_40/src.zip!/java/util/List.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="207" column="12" selection-start="8470" selection-end="8470" vertical-scroll-proportion="0.49445325" vertical-offset="2816" max-vertical-offset="9911" />
-      </provider>
-    </entry>
     <entry file="jar://$PROJECT_DIR$/../lib/storm-0.8.3-wip3.jar!/src/jvm/backtype/storm/StormSubmitter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="38" column="23" selection-start="1376" selection-end="1376" vertical-scroll-proportion="0.0" vertical-offset="253" max-vertical-offset="2482">
@@ -918,19 +951,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://Z:/Java/jdk1.7.0_40/src.zip!/java/io/File.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1200" column="24" selection-start="50257" selection-end="50257" vertical-scroll-proportion="0.0" vertical-offset="19548" max-vertical-offset="36618" />
-      </provider>
-    </entry>
     <entry file="jar://$PROJECT_DIR$/../lib/storm-0.8.3-wip3.jar!/src/jvm/storm/trident/state/StateUpdater.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="8" column="17" selection-start="204" selection-end="204" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="323" />
-      </provider>
-    </entry>
-    <entry file="jar://Z:/Java/jdk1.7.0_40/src.zip!/java/sql/Connection.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1124" column="17" selection-start="53542" selection-end="53542" vertical-scroll-proportion="0.828479" vertical-offset="18188" max-vertical-offset="24956" />
       </provider>
     </entry>
     <entry file="jar://$PROJECT_DIR$/../lib/guava-13.0.jar!/com/google/common/cache/LocalCache.class">
@@ -953,45 +976,14 @@
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="884" />
       </provider>
     </entry>
-    <entry file="jar://$PROJECT_DIR$/../lib/ejml-0.23.jar!/org/ejml/ops/CommonOps.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="79" column="23" selection-start="6020" selection-end="6020" vertical-scroll-proportion="0.34738618" vertical-offset="1120" max-vertical-offset="2533" />
-      </provider>
-    </entry>
     <entry file="jar://$PROJECT_DIR$/../lib/ejml-0.23.jar!/org/ejml/data/DenseMatrix64F.class">
       <provider selected="true" editor-type-id="text-editor">
         <state line="25" column="16" selection-start="937" selection-end="937" vertical-scroll-proportion="0.34653464" vertical-offset="198" max-vertical-offset="1003" />
       </provider>
     </entry>
-    <entry file="jar://Z:/Java/jdk1.7.0_40/src.zip!/java/util/logging/LogManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1010" column="42" selection-start="42802" selection-end="42812" vertical-scroll-proportion="0.5213946" vertical-offset="16042" max-vertical-offset="24854" />
-      </provider>
-    </entry>
-    <entry file="jar://Z:/Java/jdk1.7.0_40/src.zip!/java/util/logging/Logger.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="436" column="73" selection-start="19640" selection-end="19658" vertical-scroll-proportion="0.844691" vertical-offset="6216" max-vertical-offset="27710" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/weka/WekaLearningBaseTopology.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="32" column="110" selection-start="1362" selection-end="1362" vertical-scroll-proportion="0.0" vertical-offset="117" max-vertical-offset="748" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/update/PrincipalComponentsRefresher.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="34" selection-start="953" selection-end="953" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="629">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/update/AggregateFilter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="5" selection-start="826" selection-end="826" vertical-scroll-proportion="0.0" vertical-offset="83" max-vertical-offset="714">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/query/ClustererQuery.java">
@@ -1028,9 +1020,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/update/ClusterUpdater.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="99" selection-start="1019" selection-end="1019" vertical-scroll-proportion="0.0" vertical-offset="117" max-vertical-offset="748">
-          <folding />
-        </state>
+        <state line="29" column="99" selection-start="1019" selection-end="1019" vertical-scroll-proportion="0.0" vertical-offset="117" max-vertical-offset="748" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/spout/text/TransactionalTextFileSpout.java">
@@ -1045,28 +1035,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/weka/ClusteringTopology.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="82" selection-start="1263" selection-end="1263" vertical-scroll-proportion="0.0" vertical-offset="100" max-vertical-offset="833">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://Z:/Java/jdk1.7.0_40/src.zip!/java/util/Map.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="176" column="69" selection-start="7719" selection-end="7787" vertical-scroll-proportion="0.117274165" vertical-offset="2527" max-vertical-offset="7837">
+        <state line="33" column="19" selection-start="1263" selection-end="1263" vertical-scroll-proportion="0.0" vertical-offset="495" max-vertical-offset="930">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/spout/sensor/SensorStreamingSpout.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="47" selection-start="898" selection-end="898" vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="2788">
+        <state line="31" column="7" selection-start="898" selection-end="898" vertical-scroll-proportion="0.0" vertical-offset="465" max-vertical-offset="2580">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/ClustererState.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="38" selection-start="621" selection-end="621" vertical-scroll-proportion="0.0" vertical-offset="151" max-vertical-offset="782">
+        <state line="24" column="5" selection-start="621" selection-end="621" vertical-scroll-proportion="0.0" vertical-offset="360" max-vertical-offset="690">
           <folding />
         </state>
       </provider>
@@ -1075,38 +1058,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="81" column="17" selection-start="2813" selection-end="2813" vertical-scroll-proportion="0.0" vertical-offset="1156" max-vertical-offset="1989">
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/query/PrincipalComponentsQuery.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="62" selection-start="634" selection-end="634" vertical-scroll-proportion="0.0" vertical-offset="66" max-vertical-offset="935">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/query/PrincipalComponentsAggregator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="91" selection-start="821" selection-end="821" vertical-scroll-proportion="0.0" vertical-offset="83" max-vertical-offset="714">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/update/PrincipalComponentUpdater.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="103" selection-start="1115" selection-end="1115" vertical-scroll-proportion="0.0" vertical-offset="151" max-vertical-offset="782">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/PrincipalComponents.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="30" selection-start="1404" selection-end="1423" vertical-scroll-proportion="0.0" vertical-offset="753" max-vertical-offset="5780">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#12287#12288#0" expanded="true" />
-            <element signature="e#12333#12334#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1119,7 +1070,58 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/PcaTopology.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="72" column="80" selection-start="3120" selection-end="3142" vertical-scroll-proportion="0.625" vertical-offset="646" max-vertical-offset="1496">
+        <state line="72" column="81" selection-start="3143" selection-end="3143" vertical-scroll-proportion="0.0" vertical-offset="306" max-vertical-offset="1969">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../lib/ejml-0.23.jar!/org/ejml/ops/CommonOps.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="79" column="23" selection-start="6020" selection-end="6020" vertical-scroll-proportion="0.70111734" vertical-offset="668" max-vertical-offset="2846">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/PrincipalComponents.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="159" column="11" selection-start="6046" selection-end="6046" vertical-scroll-proportion="0.0" vertical-offset="1973" max-vertical-offset="5944">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/update/PrincipalComponentUpdater.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="0" selection-start="1115" selection-end="1115" vertical-scroll-proportion="0.0" vertical-offset="450" max-vertical-offset="735">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/update/PrincipalComponentsRefresher.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="25" column="34" selection-start="953" selection-end="953" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="629">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/update/AggregateFilter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="1" selection-start="1228" selection-end="1228" vertical-scroll-proportion="0.0" vertical-offset="75" max-vertical-offset="1279">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/query/PrincipalComponentsQuery.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="51" selection-start="1088" selection-end="1088" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1219">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/query/PrincipalComponentsAggregator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="5" selection-start="1095" selection-end="1095" vertical-scroll-proportion="0.5066313" vertical-offset="53" max-vertical-offset="1279">
           <folding />
         </state>
       </provider>
