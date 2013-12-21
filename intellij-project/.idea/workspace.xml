@@ -64,10 +64,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="PcaTopology.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="PcaTopology.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/PcaTopology.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="72" column="81" selection-start="3143" selection-end="3143" vertical-scroll-proportion="0.0" vertical-offset="306" max-vertical-offset="1969">
+            <state line="89" column="26" selection-start="4049" selection-end="4049" vertical-scroll-proportion="0.48938993" vertical-offset="696" max-vertical-offset="2014">
               <folding />
             </state>
           </provider>
@@ -94,16 +94,16 @@
       <file leaf-file-name="PrincipalComponentsQuery.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/query/PrincipalComponentsQuery.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="89" selection-start="912" selection-end="912" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1219">
+            <state line="32" column="50" selection-start="1197" selection-end="1206" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1219">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PrincipalComponentsAggregator.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="PrincipalComponentsAggregator.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/query/PrincipalComponentsAggregator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="5" selection-start="667" selection-end="667" vertical-scroll-proportion="0.2877984" vertical-offset="38" max-vertical-offset="1339">
+            <state line="13" column="67" selection-start="425" selection-end="435" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1339">
               <folding />
             </state>
           </provider>
@@ -214,10 +214,10 @@
         <option value="$PROJECT_DIR$/../src/jvm/ml/spout/sensor/SensorStreamingSpout.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/spout/dbutils/SensorDbUtils.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/create/PcaFactory.java" />
-        <option value="$PROJECT_DIR$/../src/jvm/ml/topology/PcaTopology.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/query/PrincipalComponentsQuery.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/PrincipalComponents.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/query/PrincipalComponentsAggregator.java" />
+        <option value="$PROJECT_DIR$/../src/jvm/ml/topology/PcaTopology.java" />
       </list>
     </option>
   </component>
@@ -1063,23 +1063,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/PcaTopology.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="72" column="81" selection-start="3143" selection-end="3143" vertical-scroll-proportion="0.0" vertical-offset="306" max-vertical-offset="1969">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$PROJECT_DIR$/../lib/ejml-0.23.jar!/org/ejml/ops/CommonOps.class">
       <provider selected="true" editor-type-id="text-editor">
         <state line="79" column="23" selection-start="6020" selection-end="6020" vertical-scroll-proportion="0.70111734" vertical-offset="668" max-vertical-offset="2846">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/update/PrincipalComponentUpdater.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="0" selection-start="1115" selection-end="1115" vertical-scroll-proportion="0.0" vertical-offset="450" max-vertical-offset="735">
           <folding />
         </state>
       </provider>
@@ -1114,16 +1100,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/query/PrincipalComponentsQuery.java">
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/query/PrincipalComponentsAggregator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="89" selection-start="912" selection-end="912" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1219">
+        <state line="13" column="67" selection-start="425" selection-end="435" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1339">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/query/PrincipalComponentsAggregator.java">
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/update/PrincipalComponentUpdater.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="5" selection-start="667" selection-end="667" vertical-scroll-proportion="0.2877984" vertical-offset="38" max-vertical-offset="1339">
+        <state line="30" column="0" selection-start="1115" selection-end="1115" vertical-scroll-proportion="0.0" vertical-offset="450" max-vertical-offset="735">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/query/PrincipalComponentsQuery.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="32" column="50" selection-start="1197" selection-end="1206" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1219">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/PcaTopology.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="89" column="26" selection-start="4049" selection-end="4049" vertical-scroll-proportion="0.48938993" vertical-offset="696" max-vertical-offset="2014">
           <folding />
         </state>
       </provider>

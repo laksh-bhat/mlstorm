@@ -9,7 +9,6 @@ import backtype.storm.generated.StormTopology;
 import backtype.storm.topology.IRichSpout;
 import backtype.storm.tuple.Fields;
 import bolt.ml.state.ipca.create.PcaFactory;
-import bolt.ml.state.ipca.query.PrincipalComponentsAggregator;
 import bolt.ml.state.ipca.query.PrincipalComponentsQuery;
 import bolt.ml.state.ipca.update.PrincipalComponentUpdater;
 import com.google.common.collect.Lists;
@@ -41,7 +40,7 @@ import storm.trident.state.StateFactory;
  */
 
 public class PcaTopology {
-    public static void main (String[] args) throws AlreadyAliveException, InvalidTopologyException {
+    public static void main(String[] args) throws AlreadyAliveException, InvalidTopologyException {
         String[] fields = {"sensor", "sensorData"};
         int parallelism = args.length > 0 ? Integer.valueOf(args[0]) : 1;
         StormTopology stormTopology = buildTopology(parallelism, fields, 100, 5);
@@ -54,7 +53,7 @@ public class PcaTopology {
         }
     }
 
-    public static Config getStormConfig (int numWorkers) {
+    public static Config getStormConfig(int numWorkers) {
         Config conf = new Config();
         conf.setNumAckers(numWorkers);
         conf.setNumWorkers(numWorkers);
@@ -67,11 +66,10 @@ public class PcaTopology {
         return conf;
     }
 
-    private static StormTopology buildTopology (final int parallelism,
-                                                final String[] fields,
-                                                final int pcaRowWidth,
-                                                final int numPrincipalComponents)
-    {
+    private static StormTopology buildTopology(final int parallelism,
+                                               final String[] fields,
+                                               final int pcaRowWidth,
+                                               final int numPrincipalComponents) {
         IRichSpout sensorSpout = new SensorStreamingSpout(fields);
         ITridentSpout batchSpout = new RichSpoutBatchExecutor(sensorSpout);
         TridentTopology topology = new TridentTopology();
@@ -81,20 +79,24 @@ public class PcaTopology {
         TridentState principalComponents =
                 sensorStream
                         .partitionPersist(pcaFactory, new Fields("sensor", "sensorData"), new PrincipalComponentUpdater())
-                        .parallelismHint(parallelism);
+                        .parallelismHint(parallelism)
+        ;
 
         Stream principalComponentsStream =
                 topology.newDRPCStream("PCA")
                         .broadcast()
-                        .stateQuery(principalComponents, new Fields("args"), new PrincipalComponentsQuery(), new Fields("components"));
+                        .stateQuery(principalComponents, new Fields("args"), new PrincipalComponentsQuery(), new Fields("components"))
+                        .project(new Fields("components"))
+                        //.aggregate(new Fields("components"), new PrincipalComponentsAggregator(), new Fields("eigen"))
+        ;
 
-        principalComponentsStream
-                .aggregate(new Fields("components"), new PrincipalComponentsAggregator(), new Fields("eigen"))
-                        //.each(new Fields("refreshedEigen"), new AggregateFilter(), new Fields("eigen"))
-                        //.project(new Fields("eigen"))
-                        //.broadcast()
-                        //.partitionPersist(pcaFactory, new Fields("eigen"), new PrincipalComponentsRefresher())
-                .parallelismHint(parallelism)
+        //principalComponentsStream
+        //.aggregate(new Fields("components"), new PrincipalComponentsAggregator(), new Fields("eigen"))
+        //.each(new Fields("refreshedEigen"), new AggregateFilter(), new Fields("eigen"))
+        //.project(new Fields("eigen"))
+        //.broadcast()
+        //.partitionPersist(pcaFactory, new Fields("eigen"), new PrincipalComponentsRefresher())
+        //.parallelismHint(parallelism)
         ;
         return topology.build();
     }
