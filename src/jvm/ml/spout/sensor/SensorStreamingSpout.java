@@ -130,6 +130,8 @@ public class SensorStreamingSpout implements IRichSpout {
                 String sensorName = sensor.getString(SensorDbUtils.SENSOR_COLUMN);
                 double temperature = sensor.getDouble(SensorDbUtils.DATA_COLUMN);
                 collector.emit(new Values(sensorName, temperature));
+                // todo (fix this) this is a hack. we need this if we are going to wrap this spout in a batch spout
+                if (!sensor.next()) sensor = null;
             }
         } catch ( SQLException e ) {
             e.printStackTrace();
