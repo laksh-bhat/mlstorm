@@ -29,9 +29,10 @@ public class PrincipalComponentsQuery implements QueryFunction<PrincipalComponen
         for (TridentTuple ignored : queryTuples) {
             int component = 0;
             while (component < principalComponents.getNumOfPrincipalComponents()) {
-                double[] basisColumnVector = principalComponents.getBasisVector(component++);
+                double[] basisColumnVector = principalComponents.getBasisVector(component);
                 for (int sensorIndex = 0; sensorIndex < principalComponents.getReverseSensorDictionary().size(); sensorIndex++)
                     eigenRowMajor[sensorIndex][component] = basisColumnVector[sensorIndex];
+	        component++;
             }
             components.add(eigenRowMajor);
         }

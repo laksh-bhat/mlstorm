@@ -11,7 +11,7 @@ import storm.trident.tuple.TridentTuple;
 public class PrincipalComponentsAggregator implements CombinerAggregator<double[][]> {
     @Override
     public double[][] init (final TridentTuple components) {
-        return (double[][]) components.getValueByField("component");
+        return (double[][]) components.getValueByField("components");
     }
 
     @Override

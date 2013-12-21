@@ -277,7 +277,7 @@ public class PrincipalComponents implements State {
 
         System.err.println(MessageFormat.format("DEBUG: matrix has {0} rows and {1} columns", numRows, numColumns));
 
-        if (currentSensors.size() == numRows) windowTimesteps.put(txId, getFeatureVectorsAndReset(true));
+        if (currentSensors.size() > numRows/2 + 10 /*we expect 50% + 10 success rate*/) windowTimesteps.put(txId, getFeatureVectorsAndReset(true));
         if (windowTimesteps.size() < windowSize) return;
 
         constructDataMatrixForPca(numRows, numColumns);
