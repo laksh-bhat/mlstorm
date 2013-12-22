@@ -34,15 +34,7 @@ public abstract class BaseOnlineState implements State {
      * @param txId
      */
     @Override
-    public void beginCommit(final Long txId) {
-
-        try {
-            preUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
+    public void beginCommit(final Long txId) {}
 
     /**
      * This is where you do online state commit
