@@ -13,10 +13,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class SpoutUtils {
     public static List<Map<String, List<Double>>> pythonDictToJava (String filename) throws FileNotFoundException {
@@ -27,7 +24,8 @@ public class SpoutUtils {
         return gson.fromJson(scanner.nextLine(), listOfMapOfStringObjectType);
     }
 
-    public static void listFilesForFolder (final File folder, List<String> listToLoadFiles) {
+    public static void listFilesForFolder (final File folder, Queue<String> listToLoadFiles) {
+        assert (folder != null);
         for (final File fileEntry : folder.listFiles()) {
             if (fileEntry.isDirectory()) {
                 listFilesForFolder(fileEntry, listToLoadFiles);
@@ -39,8 +37,8 @@ public class SpoutUtils {
 
     public static void main (String[] args) throws FileNotFoundException {
         final File folder = new File("G:\\code\\storm\\mlstorm\\res");
-        List<String> files = new ArrayList<String>();
+        Queue<String> files = new ArrayDeque<String>();
         listFilesForFolder(folder, files);
-        System.out.println(pythonDictToJava(files.get(0)));
+        System.out.println(pythonDictToJava(files.remove()));
     }
 }

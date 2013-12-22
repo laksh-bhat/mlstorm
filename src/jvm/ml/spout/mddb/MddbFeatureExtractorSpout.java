@@ -23,34 +23,34 @@ import java.util.*;
 
 public class MddbFeatureExtractorSpout implements IRichSpout {
 
-    private final String[]         fields;
-    private final Iterator<String> featuresIterator;
+    private final String[] fields;
+    private final org.slf4j.Logger logger;
+    private final Queue<String> featureFiles;
 
-    private int                  messageId;
-    private int                  taskId;
-    private String               previous;
-    private Scanner              scanner;
+    private int messageId;
+    private int taskId;
+    private String previous;
+    private Scanner scanner;
     private SpoutOutputCollector collector;
-    final   org.slf4j.Logger     logger;
 
     /**
      * Feature streaming spout for mddb data-set
-     * @param directory the directory where you read the feature files from
+     *
+     * @param directory          the directory where you read the feature files from
      * @param initialStormFields
      */
-    public MddbFeatureExtractorSpout (String directory, String[] initialStormFields) {
+    public MddbFeatureExtractorSpout(String directory, String[] initialStormFields) {
         this.fields = initialStormFields;
-        List<String> featureFiles = new ArrayList<String>();
+        featureFiles = new ArrayDeque<String>();
         SpoutUtils.listFilesForFolder(new File(directory), featureFiles);
-        featuresIterator = featureFiles.iterator();
-        scanner = getScanner(featuresIterator);
+
+        scanner = getScanner(featureFiles.size() > 0 ? featureFiles.remove() : null);
         logger = LoggerFactory.getLogger(MddbFeatureExtractorSpout.class);
     }
 
-    private Scanner getScanner (final Iterator<String> featuresIterator) {
+    private Scanner getScanner(final String filePath) {
         if (scanner != null) scanner.close();
-        if (featuresIterator.hasNext())
-            return new Scanner(featuresIterator.next());
+        if (filePath != null) return new Scanner(filePath);
         else return null;
     }
 
@@ -60,7 +60,7 @@ public class MddbFeatureExtractorSpout implements IRichSpout {
      * @param declarer this is used to declare output stream ids, output fields, and whether or not each output stream is a direct stream
      */
     @Override
-    public void declareOutputFields (final OutputFieldsDeclarer declarer) {
+    public void declareOutputFields(final OutputFieldsDeclarer declarer) {
         declarer.declare(new Fields(fields));
     }
 
@@ -70,7 +70,9 @@ public class MddbFeatureExtractorSpout implements IRichSpout {
      * topology using {@link backtype.storm.topology.TopologyBuilder}
      */
     @Override
-    public Map<String, Object> getComponentConfiguration () {return new Config();}
+    public Map<String, Object> getComponentConfiguration() {
+        return new Config();
+    }
 
     /**
      * Called when a task for this component is initialized within a worker on the cluster.
@@ -83,7 +85,7 @@ public class MddbFeatureExtractorSpout implements IRichSpout {
      * @param collector The collector is used to emit tuples from this spout. Tuples can be emitted at any time, including the open and close methods. The collector is thread-safe and should be saved as an instance variable of this spout object.
      */
     @Override
-    public void open (final Map conf, final TopologyContext context, final SpoutOutputCollector collector) {
+    public void open(final Map conf, final TopologyContext context, final SpoutOutputCollector collector) {
         this.collector = collector;
         this.taskId = context.getThisTaskId();
     }
@@ -96,7 +98,7 @@ public class MddbFeatureExtractorSpout implements IRichSpout {
      * killed when running Storm in local mode.</p>
      */
     @Override
-    public void close () {
+    public void close() {
         if (scanner != null) scanner.close();
     }
 
@@ -107,7 +109,7 @@ public class MddbFeatureExtractorSpout implements IRichSpout {
      * `storm` client.
      */
     @Override
-    public void activate () {
+    public void activate() {
         // no op for now
     }
 
@@ -116,7 +118,7 @@ public class MddbFeatureExtractorSpout implements IRichSpout {
      * a spout is deactivated. The spout may or may not be reactivated in the future.
      */
     @Override
-    public void deactivate () {
+    public void deactivate() {
         // again, no op for now
     }
 
@@ -129,12 +131,12 @@ public class MddbFeatureExtractorSpout implements IRichSpout {
      * so as not to waste too much CPU.
      */
     @Override
-    public void nextTuple () {
+    public void nextTuple() {
         if (scanner == null) {
-            logger.debug (MessageFormat.format("No more featureVectorsInWindow. Visit {0} later", taskId));
+            logger.debug(MessageFormat.format("No more featureVectorsInWindow. Visit {0} later", taskId));
         } else {
             try {
-                if(scanner.hasNextLine()) previous = scanner.nextLine();
+                if (scanner.hasNextLine()) previous = scanner.nextLine();
                 List<Map<String, List<Double>>> dict = SpoutUtils.pythonDictToJava(previous);
                 for (Map<String, List<Double>> map : dict) {
                     Double[] features = map.get("chi1").toArray(new Double[0]);
@@ -142,7 +144,7 @@ public class MddbFeatureExtractorSpout implements IRichSpout {
                     Double[] both = (Double[]) ArrayUtils.addAll(features, moreFeatures);
                     collector.emit(new Values(messageId++, both));
                 }
-            } catch ( Exception e ) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -156,8 +158,8 @@ public class MddbFeatureExtractorSpout implements IRichSpout {
      * @param msgId
      */
     @Override
-    public void ack (final Object msgId) {
-        scanner = getScanner(featuresIterator);
+    public void ack(final Object msgId) {
+        scanner = getScanner(featureFiles.size() > 0 ? featureFiles.remove() : null);
     }
 
     /**
@@ -168,7 +170,7 @@ public class MddbFeatureExtractorSpout implements IRichSpout {
      * @param msgId
      */
     @Override
-    public void fail (final Object msgId) {
+    public void fail(final Object msgId) {
         // since this failed, we are not going to forward the scanner to the next batch of featureVectorsInWindow
         // so no-op
     }

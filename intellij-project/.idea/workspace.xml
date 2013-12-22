@@ -64,62 +64,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="PcaTopology.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/PcaTopology.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="87" column="88" selection-start="3913" selection-end="3913" vertical-scroll-proportion="0.0" vertical-offset="615" max-vertical-offset="1735">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ClustererState.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/ClustererState.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="56" column="0" selection-start="1695" selection-end="1695" vertical-scroll-proportion="0.0" vertical-offset="405" max-vertical-offset="1594">
-              <folding>
-                <element signature="e#1729#1730#0" expanded="true" />
-                <element signature="e#1763#1764#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ClusterUpdater.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/update/ClusterUpdater.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="29" column="110" selection-start="1033" selection-end="1033" vertical-scroll-proportion="0.0" vertical-offset="60" max-vertical-offset="1309">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ClustererFactory.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/create/ClustererFactory.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="34" column="0" selection-start="907" selection-end="907" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1174">
-              <folding>
-                <element signature="imports" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ClustererQuery.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/query/ClustererQuery.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="27" column="28" selection-start="1002" selection-end="1002" vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="1219">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MddbFeatureExtractorSpout.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="MddbFeatureExtractorSpout.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/spout/mddb/MddbFeatureExtractorSpout.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="151" column="75" selection-start="6238" selection-end="6238" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3156">
+            <state line="54" column="5" selection-start="1713" selection-end="1713" vertical-scroll-proportion="-0.62827224" vertical-offset="1095" max-vertical-offset="3209">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SpoutUtils.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../src/jvm/ml/utils/SpoutUtils.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="42" column="5" selection-start="1478" selection-end="1478" vertical-scroll-proportion="0.0" vertical-offset="94" max-vertical-offset="1294">
               <folding>
-                <element signature="e#1336#1344#0" expanded="true" />
+                <element signature="e#1356#1364#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -128,7 +87,7 @@
       <file leaf-file-name="ClusteringTopology.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/weka/ClusteringTopology.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="44" column="44" selection-start="1810" selection-end="1810" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1444">
+            <state line="43" column="46" selection-start="1734" selection-end="1734" vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="1444">
               <folding />
             </state>
           </provider>
@@ -137,30 +96,19 @@
       <file leaf-file-name="WekaLearningBaseTopology.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/weka/WekaLearningBaseTopology.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="20" selection-start="828" selection-end="828" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1309">
+            <state line="18" column="72" selection-start="562" selection-end="567" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1309">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BaseOnlineState.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="BaseOnlineState.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/BaseOnlineState.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="33" column="7" selection-start="900" selection-end="900" vertical-scroll-proportion="0.5570292" vertical-offset="0" max-vertical-offset="2164">
+            <state line="33" column="7" selection-start="900" selection-end="900" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2164">
               <folding>
                 <element signature="e#2410#2411#0" expanded="true" />
                 <element signature="e#2455#2456#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PrincipalComponentsRefresher.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/update/PrincipalComponentsRefresher.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="34" selection-start="953" selection-end="953" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1204">
-              <folding>
-                <element signature="imports" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -205,7 +153,6 @@
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/utils/wekaUtils.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/utils/PythonDictToJson.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/utils/Utils.java" />
-        <option value="$PROJECT_DIR$/../src/jvm/ml/utils/SpoutUtils.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/topology/weka/WekaLearningBaseTopology.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/spout/dbutils/DbUtils.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/update/PrincipalComponentsRefresher.java" />
@@ -225,9 +172,10 @@
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/query/ClustererQuery.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/spout/sensor/SensorStreamingSpout.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/topology/weka/ClusteringTopology.java" />
-        <option value="$PROJECT_DIR$/../src/jvm/ml/spout/mddb/MddbFeatureExtractorSpout.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/ClustererState.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/BaseOnlineState.java" />
+        <option value="$PROJECT_DIR$/../src/jvm/ml/utils/SpoutUtils.java" />
+        <option value="$PROJECT_DIR$/../src/jvm/ml/spout/mddb/MddbFeatureExtractorSpout.java" />
       </list>
     </option>
   </component>
@@ -925,61 +873,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/spout/dbutils/SensorDbUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="81" column="17" selection-start="2813" selection-end="2813" vertical-scroll-proportion="0.0" vertical-offset="1215" max-vertical-offset="1695">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/spout/sensor/SensorStreamingSpout.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="7" selection-start="898" selection-end="898" vertical-scroll-proportion="0.0" vertical-offset="465" max-vertical-offset="2580">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/PrincipalComponents.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="30" selection-start="1404" selection-end="1423" vertical-scroll-proportion="0.0" vertical-offset="675" max-vertical-offset="5100">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/query/PrincipalComponentsQuery.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="62" selection-start="634" selection-end="634" vertical-scroll-proportion="0.0" vertical-offset="300" max-vertical-offset="915">
-          <folding>
-            <element signature="e#795#803#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/query/PrincipalComponentsAggregator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="42" selection-start="822" selection-end="822" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="585">
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/create/PcaFactory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="19" selection-start="498" selection-end="498" vertical-scroll-proportion="0.0" vertical-offset="315" max-vertical-offset="630">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/update/PrincipalComponentUpdater.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="0" selection-start="1115" selection-end="1115" vertical-scroll-proportion="0.0" vertical-offset="450" max-vertical-offset="735">
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$PROJECT_DIR$/../lib/guava-13.0.jar!/com/google/common/cache/CacheBuilder.class">
       <provider selected="true" editor-type-id="text-editor">
         <state line="65" column="53" selection-start="3456" selection-end="3456" vertical-scroll-proportion="0.34738618" vertical-offset="882" max-vertical-offset="2771" />
@@ -1065,11 +958,6 @@
     <entry file="jar://$PROJECT_DIR$/../lib/guava-13.0.jar!/com/google/common/cache/Cache.class">
       <provider selected="true" editor-type-id="text-editor">
         <state line="26" column="9" selection-start="772" selection-end="772" vertical-scroll-proportion="0.6353135" vertical-offset="40" max-vertical-offset="646" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/utils/SpoutUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="40" column="74" selection-start="1356" selection-end="1356" vertical-scroll-proportion="0.703645" vertical-offset="66" max-vertical-offset="697" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/utils/TestJdbcConnection.java">
@@ -1193,33 +1081,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/weka/ClusteringTopology.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="44" selection-start="1810" selection-end="1810" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1444">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/weka/WekaLearningBaseTopology.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="20" selection-start="828" selection-end="828" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1309">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/spout/dbutils/SensorDbUtils.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="56" column="76" selection-start="1829" selection-end="1829" vertical-scroll-proportion="0.0" vertical-offset="1470" max-vertical-offset="2301">
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/spout/mddb/MddbFeatureExtractorSpout.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="151" column="75" selection-start="6238" selection-end="6238" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3156">
-          <folding>
-            <element signature="e#1336#1344#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1256,11 +1121,90 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/BaseOnlineState.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="7" selection-start="900" selection-end="900" vertical-scroll-proportion="0.5570292" vertical-offset="0" max-vertical-offset="2164">
+        <state line="33" column="7" selection-start="900" selection-end="900" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2164">
           <folding>
             <element signature="e#2410#2411#0" expanded="true" />
             <element signature="e#2455#2456#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/weka/WekaLearningBaseTopology.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="72" selection-start="562" selection-end="567" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1309">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/weka/ClusteringTopology.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="43" column="46" selection-start="1734" selection-end="1734" vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="1444">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/classes.jar!/java/util/Iterator.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="17" selection-start="156" selection-end="156" vertical-scroll-proportion="0.0994695" vertical-offset="0" max-vertical-offset="904">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/classes.jar!/java/io/File.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="84" column="33" selection-start="2879" selection-end="2879" vertical-scroll-proportion="0.33333334" vertical-offset="998" max-vertical-offset="2991">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/utils/SpoutUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="42" column="5" selection-start="1478" selection-end="1478" vertical-scroll-proportion="0.0" vertical-offset="94" max-vertical-offset="1279">
+          <folding>
+            <element signature="e#1356#1364#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/classes.jar!/java/util/ArrayDeque.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="57" column="13" selection-start="1808" selection-end="1808" vertical-scroll-proportion="0.0" vertical-offset="593" max-vertical-offset="2571">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/classes.jar!/java/util/Deque.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="39" column="6" selection-start="627" selection-end="627" vertical-scroll-proportion="0.0" vertical-offset="319" max-vertical-offset="1624">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/classes.jar!/java/util/concurrent/LinkedBlockingQueue.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="13" selection-start="163" selection-end="163" vertical-scroll-proportion="-0.2631579" vertical-offset="270" max-vertical-offset="2196">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/classes.jar!/java/util/AbstractQueue.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="22" selection-start="161" selection-end="161" vertical-scroll-proportion="0.0994695" vertical-offset="0" max-vertical-offset="994">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/classes.jar!/java/util/Queue.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="6" selection-start="255" selection-end="255" vertical-scroll-proportion="0.198939" vertical-offset="0" max-vertical-offset="994">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/spout/mddb/MddbFeatureExtractorSpout.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="54" column="5" selection-start="1713" selection-end="1713" vertical-scroll-proportion="-0.62827224" vertical-offset="1095" max-vertical-offset="3209">
+          <folding />
         </state>
       </provider>
     </entry>
