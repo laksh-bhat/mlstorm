@@ -16,17 +16,17 @@ import java.util.Collection;
 
 /**
  * Example of a clustering state
- *
+ * <p/>
  * Look at abstract base class for method details
  * The base class gives the structure and the ClassifierState classes implement them
  */
 
 public class ClustererState extends BaseOnlineState {
-    private Cobweb     clusterer;
-    private int        numClusters;
+    private Cobweb clusterer;
+    private int numClusters;
 
 
-    public ClustererState (int numClusters, int windowSize) {
+    public ClustererState(int numClusters, int windowSize) {
         super(windowSize);
         // This is where you create your own classifier and set the necessary parameters
         clusterer = new Cobweb();
@@ -34,7 +34,7 @@ public class ClustererState extends BaseOnlineState {
     }
 
     @Override
-    public void train (Instances trainingInstances) throws Exception {
+    public void train(Instances trainingInstances) throws Exception {
         while (trainingInstances.enumerateInstances().hasMoreElements()) {
             train((Instance) trainingInstances.enumerateInstances().nextElement());
         }
@@ -46,13 +46,14 @@ public class ClustererState extends BaseOnlineState {
     }
 
     @Override
-    protected void preUpdate() throws Exception {
+    protected synchronized void preUpdate() throws Exception {
         Collection<double[]> features = featureVectorsInWindow.values();
-        for (double[] some : features){
-            loadWekaAttributes(some); break;
+        for (double[] some : features) {
+            loadWekaAttributes(some);
+            break;
         }
-        Instances data = new Instances("training", this.wekaAttributes, 1000);
-        clusterer.buildClusterer(data);
+        Instances data = new Instances("training", this.wekaAttributes, 0);
+        clusterer.buildClusterer(data.stringFreeStructure());
     }
 
     @Override
@@ -61,17 +62,19 @@ public class ClustererState extends BaseOnlineState {
     }
 
     @Override
-    protected void loadWekaAttributes (final double[] features) {
-        if (this.wekaAttributes == null)
-            this.wekaAttributes = WekaUtils.getFeatureVectorForClustering(numClusters, features.length);
+    protected synchronized void loadWekaAttributes(final double[] features) {
+        if (this.wekaAttributes == null) {
+            this.wekaAttributes = WekaUtils.getFeatureVectorForOnlineClustering(numClusters, features.length);
+            this.wekaAttributes.trimToSize();
+        }
     }
 
     @Override
-    protected void train (Instance instance) throws Exception {
+    protected void train(Instance instance) throws Exception {
         clusterer.updateClusterer(instance);
     }
 
-    public int getNumClusters () {
+    public int getNumClusters() {
         return numClusters;
     }
 }

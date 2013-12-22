@@ -13,12 +13,13 @@ import java.text.MessageFormat;
 
 public class WekaUtils {
 
-    public static FastVector getFeatureVectorForClustering (int noOfClusters, int noOfAttributes) {
-        // Declare FEATURE VECTOR
-        FastVector attributes = new FastVector(noOfAttributes);
+    public static FastVector getFeatureVectorForOnlineClustering(int noOfClusters, int noOfAttributes) {
+        // Declare FAST VECTOR
+        FastVector attributeInfo = new FastVector();
+
         // Declare FEATURES and add them to FEATURE VECTOR
         for (int i = 0; i < noOfAttributes; i++)
-            attributes.addElement(new Attribute(MessageFormat.format("feature-{0}", i)));
+            attributeInfo.addElement(new Attribute(MessageFormat.format("feature-{0}", i)));
 
 /*        FastVector clusters = new FastVector(noOfClusters);
         for (int i = 1; i <= noOfClusters; i++)
@@ -26,6 +27,7 @@ public class WekaUtils {
         Attribute cluster = new Attribute("cluster", clusters);
         // last element in a FEATURE VECTOR is the category
         attributes.addElement(cluster);*/
-        return attributes;
+        System.err.println("DEBUG: no. of attributes = " + attributeInfo.size());
+        return attributeInfo;
     }
 }
