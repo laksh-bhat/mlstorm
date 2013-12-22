@@ -95,6 +95,8 @@ public abstract class BaseWekaState implements State {
 
         } catch (Exception e) {
             e.printStackTrace();
+        }finally {
+            dataset.delete();
         }
     }
 

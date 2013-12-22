@@ -42,16 +42,17 @@ import java.util.logging.Logger;
 public class KmeansClusteringTopology extends WekaLearningBaseTopology {
     public static void main(String[] args) throws AlreadyAliveException, InvalidTopologyException {
         final Logger logger = Logger.getLogger("topology.weka.KmeansClusteringTopology", null);
-        if (args.length < 3) {
-            logger.log(Level.ALL, "-- use args -- folder numWorkers windowSize");
+        if (args.length < 4) {
+            logger.log(Level.ALL, "-- use args -- folder numWorkers windowSize k");
             return;
         }
 
         String[] fields = {"key", "featureVector"};
         int numWorkers = Integer.valueOf(args[1]);
         int windowSize = Integer.valueOf(args[2]);
+        int k = Integer.valueOf(args[3]);
         StateUpdater stateUpdater = new KmeansClusterUpdater();
-        StateFactory stateFactory = new ClustererFactory.KmeansClustererFactory(numWorkers, windowSize);
+        StateFactory stateFactory = new ClustererFactory.KmeansClustererFactory(k, windowSize);
         QueryFunction<KmeansClustererState, String> queryFunction = new ClustererQuery.KmeansClustererQuery();
         IRichSpout features = new MddbFeatureExtractorSpout(args[0], fields);
         StormTopology stormTopology = buildTopology(features, numWorkers, stateUpdater, stateFactory, queryFunction, null, "kmeans");
