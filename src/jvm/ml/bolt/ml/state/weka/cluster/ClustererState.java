@@ -24,7 +24,7 @@ import java.util.Collection;
 public class ClustererState extends BaseOnlineState {
     private Cobweb clusterer;
     private int numClusters;
-
+    private Instances dataset;
 
     public ClustererState(int numClusters, int windowSize) {
         super(windowSize);
@@ -42,18 +42,24 @@ public class ClustererState extends BaseOnlineState {
 
     @Override
     protected void postUpdate() {
-        this.clusterer.updateFinished();
+       	this.clusterer.updateFinished();
     }
 
     @Override
     protected synchronized void preUpdate() throws Exception {
-        Collection<double[]> features = featureVectorsInWindow.values();
+        // Our aim is to create a singleton dataset which will be reused by all trainingInstances
+	if(dataset != null) return;
+
+	// hack to obtain the feature set length
+	Collection<double[]> features = this.featureVectorsInWindow.values();
         for (double[] some : features) {
             loadWekaAttributes(some);
             break;
         }
-        Instances data = new Instances("training", this.wekaAttributes, 0);
-        clusterer.buildClusterer(data.stringFreeStructure());
+	
+	// we are now ready to create a training dataset metadata
+        dataset = new Instances("training", this.wekaAttributes, 0);
+        this.clusterer.buildClusterer(dataset.stringFreeStructure());
     }
 
     @Override
@@ -72,7 +78,9 @@ public class ClustererState extends BaseOnlineState {
 
     @Override
     protected void train(Instance instance) throws Exception {
-        if(instance != null) clusterer.updateClusterer(instance);
+	// setting dataset for the instance is crucial, otherwise you'll hit NPE when weka tries to create a single instance dataset internally
+	instance.setDataset(dataset);
+        if(instance != null) this.clusterer.updateClusterer(instance);
     }
 
     public int getNumClusters() {

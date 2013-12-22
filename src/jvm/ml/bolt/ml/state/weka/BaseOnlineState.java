@@ -46,18 +46,18 @@ public abstract class BaseOnlineState implements State {
     public synchronized void commit(final Long txId) {
         // Although this looks like a windowed learning, it isn't. This is online learning
         Collection<double[]> groundValues = getFeatureVectorsInWindow().values();
+	System.err.println("DEBUG: total no of training instances = " + groundValues.size());
         try {
+            
+	    preUpdate();
             for (double[] features : groundValues) {
-                preUpdate();
-
                 Instance trainingInstance = new Instance(wekaAttributes.size());
-
                 for (int i = 0; i < features.length && i < wekaAttributes.size(); i++)
-                    trainingInstance.setValue((Attribute) wekaAttributes.elementAt(i), features[i]);
-
+                    trainingInstance.setValue(i /*(Attribute) wekaAttributes.elementAt(i)*/, features[i]);
                 train(trainingInstance);
-                postUpdate();
             }
+            postUpdate();
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
