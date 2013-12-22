@@ -24,13 +24,14 @@ import java.util.*;
 public class MddbFeatureExtractorSpout implements IRichSpout {
 
     private final String[] fields;
+    private final String folder;
     private final org.slf4j.Logger logger;
-    private final Queue<String> featureFiles;
+    private Queue<String> featureFiles;
 
     private int messageId;
     private int taskId;
     private String previous;
-    private Scanner scanner;
+    private transient Scanner scanner;
     private SpoutOutputCollector collector;
 
     /**
@@ -41,10 +42,8 @@ public class MddbFeatureExtractorSpout implements IRichSpout {
      */
     public MddbFeatureExtractorSpout(String directory, String[] initialStormFields) {
         this.fields = initialStormFields;
-        featureFiles = new ArrayDeque<String>();
-        SpoutUtils.listFilesForFolder(new File(directory), featureFiles);
+        this.folder = directory;
 
-        scanner = getScanner(featureFiles.size() > 0 ? featureFiles.remove() : null);
         logger = LoggerFactory.getLogger(MddbFeatureExtractorSpout.class);
     }
 
@@ -86,8 +85,12 @@ public class MddbFeatureExtractorSpout implements IRichSpout {
      */
     @Override
     public void open(final Map conf, final TopologyContext context, final SpoutOutputCollector collector) {
+        System.err.println("DEBUG: Opening MddbFeatureExtractorSpout... ");
         this.collector = collector;
         this.taskId = context.getThisTaskId();
+        featureFiles = new ArrayDeque<String>();
+        SpoutUtils.listFilesForFolder(new File(folder), featureFiles);
+        scanner = getScanner(featureFiles.size() > 0 ? featureFiles.remove() : null);
     }
 
     /**

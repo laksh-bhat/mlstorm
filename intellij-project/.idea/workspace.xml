@@ -64,10 +64,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="MddbFeatureExtractorSpout.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="MddbFeatureExtractorSpout.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/spout/mddb/MddbFeatureExtractorSpout.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="54" column="5" selection-start="1713" selection-end="1713" vertical-scroll-proportion="-0.62827224" vertical-offset="1095" max-vertical-offset="3209">
+            <state line="94" column="0" selection-start="3708" selection-end="3708" vertical-scroll-proportion="0.0" vertical-offset="1935" max-vertical-offset="3426">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ClusterUpdater.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/update/ClusterUpdater.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="39" column="64" selection-start="1437" selection-end="1437" vertical-scroll-proportion="0.51724136" vertical-offset="60" max-vertical-offset="1309">
               <folding />
             </state>
           </provider>
@@ -76,7 +87,7 @@
       <file leaf-file-name="SpoutUtils.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/utils/SpoutUtils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="42" column="5" selection-start="1478" selection-end="1478" vertical-scroll-proportion="0.0" vertical-offset="94" max-vertical-offset="1294">
+            <state line="26" column="23" selection-start="778" selection-end="778" vertical-scroll-proportion="0.0" vertical-offset="34" max-vertical-offset="1294">
               <folding>
                 <element signature="e#1356#1364#0" expanded="true" />
               </folding>
@@ -1102,13 +1113,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/update/ClusterUpdater.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="110" selection-start="1033" selection-end="1033" vertical-scroll-proportion="0.0" vertical-offset="60" max-vertical-offset="1309">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/ClustererState.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="56" column="0" selection-start="1695" selection-end="1695" vertical-scroll-proportion="0.0" vertical-offset="405" max-vertical-offset="1594">
@@ -1157,15 +1161,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/utils/SpoutUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="5" selection-start="1478" selection-end="1478" vertical-scroll-proportion="0.0" vertical-offset="94" max-vertical-offset="1279">
-          <folding>
-            <element signature="e#1356#1364#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/classes.jar!/java/util/ArrayDeque.class">
       <provider selected="true" editor-type-id="text-editor">
         <state line="57" column="13" selection-start="1808" selection-end="1808" vertical-scroll-proportion="0.0" vertical-offset="593" max-vertical-offset="2571">
@@ -1201,9 +1196,27 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/utils/SpoutUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="23" selection-start="778" selection-end="778" vertical-scroll-proportion="0.0" vertical-offset="34" max-vertical-offset="1294">
+          <folding>
+            <element signature="e#1356#1364#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/spout/mddb/MddbFeatureExtractorSpout.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="54" column="5" selection-start="1713" selection-end="1713" vertical-scroll-proportion="-0.62827224" vertical-offset="1095" max-vertical-offset="3209">
+        <state line="94" column="0" selection-start="3708" selection-end="3708" vertical-scroll-proportion="0.0" vertical-offset="1935" max-vertical-offset="3426">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/update/ClusterUpdater.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="39" column="64" selection-start="1437" selection-end="1437" vertical-scroll-proportion="0.51724136" vertical-offset="60" max-vertical-offset="1309">
           <folding />
         </state>
       </provider>
