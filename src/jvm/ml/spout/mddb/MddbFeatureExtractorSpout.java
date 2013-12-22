@@ -24,8 +24,6 @@ import java.util.*;
 public class MddbFeatureExtractorSpout implements IRichSpout {
 
     private final String[]         fields;
-    private final String           folder;
-    private final List<String>     featureFiles;
     private final Iterator<String> featuresIterator;
 
     private int                  messageId;
@@ -35,11 +33,15 @@ public class MddbFeatureExtractorSpout implements IRichSpout {
     private SpoutOutputCollector collector;
     final   org.slf4j.Logger     logger;
 
-    public MddbFeatureExtractorSpout (String directory, String[] fields) {
-        this.fields = fields;
-        this.folder = directory;
-        featureFiles = new ArrayList<String>();
-        SpoutUtils.listFilesForFolder(new File(folder), featureFiles);
+    /**
+     * Feature streaming spout for mddb data-set
+     * @param directory the directory where you read the feature files from
+     * @param initialStormFields
+     */
+    public MddbFeatureExtractorSpout (String directory, String[] initialStormFields) {
+        this.fields = initialStormFields;
+        List<String> featureFiles = new ArrayList<String>();
+        SpoutUtils.listFilesForFolder(new File(directory), featureFiles);
         featuresIterator = featureFiles.iterator();
         scanner = getScanner(featuresIterator);
         logger = LoggerFactory.getLogger(MddbFeatureExtractorSpout.class);
@@ -129,7 +131,7 @@ public class MddbFeatureExtractorSpout implements IRichSpout {
     @Override
     public void nextTuple () {
         if (scanner == null) {
-            logger.debug (MessageFormat.format("No more features. Visit {0} later", taskId));
+            logger.debug (MessageFormat.format("No more featureVectorsInWindow. Visit {0} later", taskId));
         } else {
             try {
                 if(scanner.hasNextLine()) previous = scanner.nextLine();
@@ -167,7 +169,7 @@ public class MddbFeatureExtractorSpout implements IRichSpout {
      */
     @Override
     public void fail (final Object msgId) {
-        // since this failed, we are not going to forward the scanner to the next batch of features
+        // since this failed, we are not going to forward the scanner to the next batch of featureVectorsInWindow
         // so no-op
     }
 }

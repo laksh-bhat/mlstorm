@@ -12,6 +12,7 @@ import java.util.Map;
  * Date: 12/17/13
  * Time: 5:10 PM
  */
+
 public class ClustererFactory implements StateFactory {
     private final int windowSize, k;
     private ClustererState state = null;

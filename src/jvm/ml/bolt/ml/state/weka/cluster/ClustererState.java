@@ -12,32 +12,49 @@ import weka.core.Instances;
  * Time: 7:45 PM
  */
 
+/**
+ * Example of a clustering state
+ *
+ * Look at abstract base class for method details
+ * The base class gives the structure and the ClassifierState classes implement them
+ */
+
 public class ClustererState extends BaseOnlineState {
     private Cobweb     clusterer;
-    private Instances  dataInstances;
     private int        numClusters;
 
 
     public ClustererState (int numClusters, int windowSize) {
         super(windowSize);
+        // This is where you create your own classifier and set the necessary parameters
         clusterer = new Cobweb();
         this.numClusters = numClusters;
     }
 
-    public void train (Instances instances) throws Exception {
-        while (instances.enumerateInstances().hasMoreElements()) {
-            train((Instance) instances.enumerateInstances().nextElement());
+    @Override
+    public void train (Instances trainingInstances) throws Exception {
+        while (trainingInstances.enumerateInstances().hasMoreElements()) {
+            train((Instance) trainingInstances.enumerateInstances().nextElement());
         }
     }
 
     @Override
-    protected void loadWekaAttributes (final double[] features) {
-        this.attributes = WekaUtils.getFeatureVectorForClustering(numClusters, features.length);
+    public Instance predict(Instance testInstance) throws Exception {
+        int prediction = clusterer.clusterInstance(testInstance);
+        testInstance.setClassValue(String.format("Cluster-%d", prediction));
+        return testInstance;
     }
 
-    public void train (Instance instance) throws Exception {
+    @Override
+    protected void loadWekaAttributes (final double[] features) {
+        this.wekaAttributes = WekaUtils.getFeatureVectorForClustering(numClusters, features.length);
+    }
+
+    @Override
+    protected void train (Instance instance) throws Exception {
         clusterer.updateClusterer(instance);
     }
+
     public int getNumClusters () {
         return numClusters;
     }

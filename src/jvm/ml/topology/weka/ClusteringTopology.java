@@ -1,6 +1,7 @@
 package topology.weka;
 
 import backtype.storm.Config;
+import backtype.storm.LocalCluster;
 import backtype.storm.StormSubmitter;
 import backtype.storm.generated.AlreadyAliveException;
 import backtype.storm.generated.InvalidTopologyException;
@@ -27,7 +28,7 @@ import java.util.logging.Logger;
  */
 
 public class ClusteringTopology extends WekaLearningBaseTopology {
-    public static void main (String[] args) throws AlreadyAliveException, InvalidTopologyException {
+    public static void main(String[] args) throws AlreadyAliveException, InvalidTopologyException {
         final Logger logger = Logger.getLogger("topology.weka.ClusteringTopology", null);
         if (args.length < 3) {
             logger.log(Level.ALL, "-- use args -- folder numWorkers windowSize");
@@ -42,15 +43,19 @@ public class ClusteringTopology extends WekaLearningBaseTopology {
         QueryFunction<ClustererState, String> queryFunction = new ClustererQuery();
         IRichSpout features = new MddbFeatureExtractorSpout(args[0], fields);
         StormTopology stormTopology = buildTopology(features, numWorkers, stateUpdater, stateFactory, queryFunction, "clusterer");
-        StormSubmitter.submitTopology("learner", getStormConfig(numWorkers), stormTopology);
+
+        if (numWorkers == 1) {
+            LocalCluster cluster = new LocalCluster();
+            cluster.submitTopology("learner", getStormConfig(numWorkers), stormTopology);
+        } else StormSubmitter.submitTopology("learner", getStormConfig(numWorkers), stormTopology);
     }
 
-    public static Config getStormConfig (int numWorkers) {
+    public static Config getStormConfig(int numWorkers) {
         Config conf = new Config();
         conf.setNumAckers(numWorkers);
         conf.setNumWorkers(numWorkers);
         conf.setMaxSpoutPending(1);
-        conf.put("topology.spout.max.batch.size", 1 /* x1000 i.e. every tuple has 1000 feature vectors*/ );
+        conf.put("topology.spout.max.batch.size", 1 /* x1000 i.e. every tuple has 1000 feature vectors*/);
         conf.put("topology.trident.batch.emit.interval.millis", 5000);
         conf.put(Config.DRPC_SERVERS, Lists.newArrayList("qp-hd3", "qp-hd4", "qp-hd5", "qp-hd6", "qp-hd7", "qp-hd8", "qp-hd9"));
         conf.put(Config.STORM_CLUSTER_MODE, "distributed");

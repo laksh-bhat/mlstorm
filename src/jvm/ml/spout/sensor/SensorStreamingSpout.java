@@ -62,17 +62,21 @@ public class SensorStreamingSpout implements IRichSpout {
     @Override
     public void open (final Map conf, final TopologyContext context, final SpoutOutputCollector collector) {
         try {
-            System.err.println("DEBUG: Starting sensor spout. Connecting to zinc14.pha.jhu.edu");
+            System.err.println("DEBUG: Starting JHU sensor spout. Connecting to database at zinc14... ");
             jdbcConnection = SensorDbUtils.getNewDatabaseConnection(SensorDbUtils.DB_USER, SensorDbUtils.DB_USER);
             sensor = SensorDbUtils.getAllFromSensorDb(jdbcConnection, SensorDbUtils.TABLE_NAME, SensorDbUtils.ORDER_BY_COLUMN);
-            moveSpoutForward(sensor);
+            moveSpoutForward();
             this.collector = collector;
         } catch ( SQLException e ) {
             e.printStackTrace();
         }
     }
 
-    private void moveSpoutForward (ResultSet sensor) throws SQLException {if (!sensor.next()) sensor = null;}
+    /**
+     * Method name is self explanatory
+     * @throws SQLException
+     */
+    private void moveSpoutForward() throws SQLException {if (!this.sensor.next()) this.sensor = null;}
 
     /**
      * Called when an ISpout is going to be shutdown. There is no guarantee that close
@@ -132,8 +136,9 @@ public class SensorStreamingSpout implements IRichSpout {
                 String sensorName = sensor.getString(SensorDbUtils.SENSOR_COLUMN);
                 double temperature = sensor.getDouble(SensorDbUtils.DATA_COLUMN);
                 collector.emit(new Values(sensorName, temperature));
-                // todo (fix this) this is a hack. we need this if we are going to wrap this spout in a batch spout
-                moveSpoutForward(sensor);
+                // todo (fix this) this is a hack.
+                // we need the following if we are going to wrap this spout in a batch spout
+                moveSpoutForward();
             }
         } catch ( SQLException e ) {
             e.printStackTrace();
@@ -150,7 +155,7 @@ public class SensorStreamingSpout implements IRichSpout {
     @Override
     public void ack (final Object msgId) {
         try {
-            moveSpoutForward(sensor);
+            moveSpoutForward();
         } catch ( SQLException e ) {
             e.printStackTrace();
         }

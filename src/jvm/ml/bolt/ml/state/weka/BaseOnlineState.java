@@ -1,10 +1,7 @@
 package bolt.ml.state.weka;
 
 import storm.trident.state.State;
-import weka.core.Attribute;
-import weka.core.FastVector;
-import weka.core.Instance;
-import weka.core.SparseInstance;
+import weka.core.*;
 
 import java.util.Collection;
 import java.util.LinkedHashMap;
@@ -15,28 +12,46 @@ import java.util.Map;
  * Date: 12/16/13
  * Time: 8:00 PM
  */
+
 public abstract class BaseOnlineState implements State {
-    public BaseOnlineState (final int window) {
-        features = new LinkedHashMap<Integer, double[]>(100, 0.75f, false) {
+
+    /**
+     * Construct the State representation for any weka based online learning algorithm
+     * @param windowSize the size of the sliding window (cache size)
+     */
+    public BaseOnlineState (final int windowSize) {
+        featureVectorsInWindow = new LinkedHashMap<Integer, double[]>(windowSize, 0.75f /*load factor*/, false) {
             public boolean removeEldestEntry (Map.Entry<Integer, double[]> eldest) {
-                return size() > window;
+                return size() > windowSize;
             }
         };
     }
 
+    /**
+     * Do any DB setup etc work here before you commit
+     *
+     * @param txId
+     */
     @Override
-    public void beginCommit (final Long txId) {}
+    public void beginCommit (final Long txId) {
+        // todo: prepare store for persistence here
+     }
 
+    /**
+     * This is where you do online state commit
+     * In our case we train the examples and update the model to incorporate the latest batch
+     * @param txId
+     */
     @Override
     public synchronized void commit (final Long txId) {
         // Although this looks like a windowed learning, it isn't. This is online learning
-        Collection<double[]> groundValues = getFeatures().values();
+        Collection<double[]> groundValues = getFeatureVectorsInWindow().values();
         try {
             for (double[] features : groundValues) {
                 loadWekaAttributes(features);
                 Instance trainingInstance = new SparseInstance(features.length);
                 for (int i = 0; i < features.length; i++)
-                    trainingInstance.setValue((Attribute) attributes.elementAt(i), features[i]);
+                    trainingInstance.setValue((Attribute) wekaAttributes.elementAt(i), features[i]);
                 train(trainingInstance);
             }
         } catch ( Exception e ) {
@@ -49,14 +64,37 @@ public abstract class BaseOnlineState implements State {
         }
     }
 
-    protected abstract void loadWekaAttributes (final double[] features);
+    /**
+     * return the feature collection of the most recent window
+     */
 
-    protected abstract void train (final Instance trainingInstance) throws Exception;
-
-    public Map<Integer, double[]> getFeatures () {
-        return features;
+    public Map<Integer, double[]> getFeatureVectorsInWindow() {
+        return featureVectorsInWindow;
     }
 
-    protected Map<Integer, double[]> features;
-    protected   FastVector             attributes;
+    /**
+     * Predict the class label for the test instance
+     * The input parameter is a Weka Instance without the class label
+     * @param testInstance
+     * @return testInstance with the class label set
+     */
+    public abstract Instance predict(final Instance testInstance) throws Exception;
+
+    /**
+     *
+     * @param features
+     */
+    protected abstract void loadWekaAttributes (final double[] features);
+
+    /**
+     *
+     * @param trainingInstance
+     * @throws Exception
+     */
+    protected abstract void train (final Instance trainingInstance) throws Exception;
+
+    protected abstract void train (Instances trainingInstances) throws Exception;
+
+    protected Map<Integer, double[]> featureVectorsInWindow;
+    protected   FastVector wekaAttributes;
 }

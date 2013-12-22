@@ -27,7 +27,7 @@ public class ClusterUpdater implements StateUpdater<ClustererState> {
     {
         for (TridentTuple tuple : tuples) {
             Double[] fv = (Double[]) tuple.getValueByField("featureVector");
-            state.getFeatures().put(tuple.getIntegerByField("key"), ArrayUtils.toPrimitive(fv));
+            state.getFeatureVectorsInWindow().put(tuple.getIntegerByField("key"), ArrayUtils.toPrimitive(fv));
         }
 
         System.err.println(MessageFormat.format(

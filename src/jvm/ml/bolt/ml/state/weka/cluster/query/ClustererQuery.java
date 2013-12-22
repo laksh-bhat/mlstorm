@@ -22,7 +22,7 @@ public class ClustererQuery implements QueryFunction<ClustererState, String> {
         List<String> queryResults = new ArrayList<String>();
         for (TridentTuple query : queryTuples){
             if(query.getStringByField("args").split(",")[0].trim().equals(String.valueOf(clustererState.getNumClusters()))){
-                //do something
+                //todo: do something
             }
         }
         return queryResults;

@@ -24,7 +24,7 @@ public class WekaLearningBaseTopology {
                                                   final String drpcFunction)
     {
         TridentTopology topology = new TridentTopology();
-        Stream featuresStream = topology.newStream("features", spout);
+        Stream featuresStream = topology.newStream("featureVectorsInWindow", spout);
 
         TridentState state =
                 featuresStream
