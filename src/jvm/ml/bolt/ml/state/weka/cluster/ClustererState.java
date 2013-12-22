@@ -6,6 +6,8 @@ import weka.clusterers.Cobweb;
 import weka.core.Instance;
 import weka.core.Instances;
 
+import java.util.Collection;
+
 /**
  * User: lbhat <laksh85@gmail.com>
  * Date: 12/16/13
@@ -45,8 +47,11 @@ public class ClustererState extends BaseOnlineState {
 
     @Override
     protected void preUpdate() throws Exception {
-        Instances data = new Instances("data", this.wekaAttributes, 1000);
-        data.setClassIndex(this.wekaAttributes.size() - 1);
+        Collection<double[]> features = featureVectorsInWindow.values();
+        for (double[] some : features){
+            loadWekaAttributes(some); break;
+        }
+        Instances data = new Instances("training", this.wekaAttributes, 1000);
         clusterer.buildClusterer(data);
     }
 
@@ -58,7 +63,7 @@ public class ClustererState extends BaseOnlineState {
     @Override
     protected void loadWekaAttributes (final double[] features) {
         if (this.wekaAttributes == null)
-            this.wekaAttributes = WekaUtils.getFeatureVectorForClustering(numClusters, features.length + 1);
+            this.wekaAttributes = WekaUtils.getFeatureVectorForClustering(numClusters, features.length);
     }
 
     @Override

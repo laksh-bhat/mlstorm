@@ -56,11 +56,10 @@ public abstract class BaseOnlineState implements State {
         Collection<double[]> groundValues = getFeatureVectorsInWindow().values();
         try {
             for (double[] features : groundValues) {
-                loadWekaAttributes(features);
                 preUpdate();
                 Instance trainingInstance = new Instance(features.length);
                 for (int i = 0; i < features.length; i++)
-                    trainingInstance.setValue(/*(Attribute) wekaAttributes.elementAt(i)*/ i, features[i]);
+                    trainingInstance.setValue((Attribute) wekaAttributes.elementAt(i), features[i]);
                 train(trainingInstance);
                 postUpdate();
             }
@@ -116,5 +115,5 @@ public abstract class BaseOnlineState implements State {
     protected abstract void train(Instances trainingInstances) throws Exception;
 
     protected Map<Integer, double[]> featureVectorsInWindow;
-    protected FastVector wekaAttributes;
+    protected FastVector wekaAttributes = null;
 }
