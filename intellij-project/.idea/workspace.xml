@@ -75,10 +75,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ClustererState.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="ClustererState.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/ClustererState.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="48" column="35" selection-start="1282" selection-end="1282" vertical-scroll-proportion="0.0" vertical-offset="390" max-vertical-offset="1555">
+            <state line="69" column="9" selection-start="2118" selection-end="2118" vertical-scroll-proportion="0.49204245" vertical-offset="574" max-vertical-offset="1834">
               <folding />
             </state>
           </provider>
@@ -122,13 +122,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BaseOnlineState.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="BaseOnlineState.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/BaseOnlineState.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="36" column="46" selection-start="966" selection-end="966" vertical-scroll-proportion="0.17639257" vertical-offset="332" max-vertical-offset="2329">
+            <state line="107" column="28" selection-start="3236" selection-end="3236" vertical-scroll-proportion="0.0" vertical-offset="1279" max-vertical-offset="2374">
               <folding>
-                <element signature="e#2642#2643#0" expanded="true" />
-                <element signature="e#2687#2688#0" expanded="true" />
+                <element signature="e#2680#2681#0" expanded="true" />
+                <element signature="e#2725#2726#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -194,8 +194,8 @@
         <option value="$PROJECT_DIR$/../src/jvm/ml/utils/SpoutUtils.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/spout/mddb/MddbFeatureExtractorSpout.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/utils/WekaUtils.java" />
-        <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/ClustererState.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/BaseOnlineState.java" />
+        <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/ClustererState.java" />
       </list>
     </option>
   </component>
@@ -1222,20 +1222,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/ClustererState.java">
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/BaseOnlineState.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="48" column="35" selection-start="1282" selection-end="1282" vertical-scroll-proportion="0.0" vertical-offset="390" max-vertical-offset="1555">
-          <folding />
+        <state line="107" column="28" selection-start="3236" selection-end="3236" vertical-scroll-proportion="0.0" vertical-offset="1279" max-vertical-offset="2374">
+          <folding>
+            <element signature="e#2680#2681#0" expanded="true" />
+            <element signature="e#2725#2726#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/BaseOnlineState.java">
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/ClustererState.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="46" selection-start="966" selection-end="966" vertical-scroll-proportion="0.17639257" vertical-offset="332" max-vertical-offset="2329">
-          <folding>
-            <element signature="e#2642#2643#0" expanded="true" />
-            <element signature="e#2687#2688#0" expanded="true" />
-          </folding>
+        <state line="69" column="9" selection-start="2118" selection-end="2118" vertical-scroll-proportion="0.49204245" vertical-offset="574" max-vertical-offset="1834">
+          <folding />
         </state>
       </provider>
     </entry>

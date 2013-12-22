@@ -49,9 +49,12 @@ public abstract class BaseOnlineState implements State {
         try {
             for (double[] features : groundValues) {
                 preUpdate();
-                Instance trainingInstance = new Instance(features.length);
-                for (int i = 0; i < features.length; i++)
+
+                Instance trainingInstance = new Instance(wekaAttributes.size());
+
+                for (int i = 0; i < features.length && i < wekaAttributes.size(); i++)
                     trainingInstance.setValue((Attribute) wekaAttributes.elementAt(i), features[i]);
+
                 train(trainingInstance);
                 postUpdate();
             }

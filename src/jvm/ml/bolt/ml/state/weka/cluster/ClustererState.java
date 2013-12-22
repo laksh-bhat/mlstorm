@@ -58,6 +58,7 @@ public class ClustererState extends BaseOnlineState {
 
     @Override
     public int predict(Instance testInstance) throws Exception {
+        assert (testInstance != null);
         return clusterer.clusterInstance(testInstance);
     }
 
@@ -71,7 +72,7 @@ public class ClustererState extends BaseOnlineState {
 
     @Override
     protected void train(Instance instance) throws Exception {
-        clusterer.updateClusterer(instance);
+        if(instance != null) clusterer.updateClusterer(instance);
     }
 
     public int getNumClusters() {
