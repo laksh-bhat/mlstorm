@@ -1,6 +1,6 @@
 package bolt.ml.state.weka.cluster;
 
-import bolt.ml.state.weka.BaseOnlineState;
+import bolt.ml.state.weka.BaseOnlineWekaState;
 import bolt.ml.state.weka.utils.WekaUtils;
 import weka.clusterers.Cobweb;
 import weka.core.Instance;
@@ -21,9 +21,10 @@ import java.util.Collection;
  * The base class gives the structure and the ClassifierState classes implement them
  */
 
-public class CobwebClustererState extends BaseOnlineState {
+public class CobwebClustererState extends BaseOnlineWekaState {
     private Cobweb clusterer;
     private int numClusters;
+    private final Object lock = new Object();
 
     public CobwebClustererState(int numClusters, int windowSize) {
         super(windowSize);
@@ -41,22 +42,22 @@ public class CobwebClustererState extends BaseOnlineState {
 
     @Override
     protected void postUpdate() {
-       	this.clusterer.updateFinished();
+        this.clusterer.updateFinished();
     }
 
     @Override
     protected synchronized void preUpdate() throws Exception {
         // Our aim is to create a singleton dataset which will be reused by all trainingInstances
-	if(dataset != null) return;
+        if (dataset != null) return;
 
-	// hack to obtain the feature set length
-	Collection<double[]> features = this.featureVectorsInWindow.values();
+        // hack to obtain the feature set length
+        Collection<double[]> features = this.featureVectorsInWindow.values();
         for (double[] some : features) {
             loadWekaAttributes(some);
             break;
         }
 
-	// we are now ready to create a training dataset metadata
+        // we are now ready to create a training dataset metadata
         dataset = new Instances("training", this.wekaAttributes, 0);
         this.clusterer.buildClusterer(dataset.stringFreeStructure());
     }
@@ -64,7 +65,9 @@ public class CobwebClustererState extends BaseOnlineState {
     @Override
     public int predict(Instance testInstance) throws Exception {
         assert (testInstance != null);
-        return clusterer.clusterInstance(testInstance);
+        synchronized (lock) {
+            return clusterer.clusterInstance(testInstance);
+        }
     }
 
     @Override
@@ -77,9 +80,11 @@ public class CobwebClustererState extends BaseOnlineState {
 
     @Override
     protected void train(Instance instance) throws Exception {
-	// setting dataset for the instance is crucial, otherwise you'll hit NPE when weka tries to create a single instance dataset internally
-	instance.setDataset(dataset);
-        if(instance != null) this.clusterer.updateClusterer(instance);
+        // setting dataset for the instance is crucial, otherwise you'll hit NPE when weka tries to create a single instance dataset internally
+        instance.setDataset(dataset);
+        synchronized (lock) {
+            if (instance != null) this.clusterer.updateClusterer(instance);
+        }
     }
 
     public int getNumClusters() {

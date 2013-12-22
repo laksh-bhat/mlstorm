@@ -50,7 +50,11 @@ public class ClustererFactory{
                                 final int partitionIndex,
                                 final int numPartitions)
         {
-            if (state == null) state = new KmeansClustererState(k, windowSize);
+            if (state == null) try {
+                state = new KmeansClustererState(k, windowSize);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             return state;
         }
     }

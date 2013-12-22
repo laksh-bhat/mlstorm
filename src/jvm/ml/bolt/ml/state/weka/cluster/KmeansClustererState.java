@@ -1,6 +1,6 @@
 package bolt.ml.state.weka.cluster;
 
-import bolt.ml.state.weka.BaseState;
+import bolt.ml.state.weka.BaseWekaState;
 import bolt.ml.state.weka.utils.WekaUtils;
 import weka.clusterers.SimpleKMeans;
 import weka.core.Instance;
@@ -34,30 +34,37 @@ import java.util.Collection;
  * The base class gives the structure and the ClassifierState classes implement them
  */
 
-public class KmeansClustererState extends BaseState {
+public class KmeansClustererState extends BaseWekaState {
     private SimpleKMeans clusterer;
     private int numClusters;
+    private final Object lock = new Object();
 
 
-    public KmeansClustererState (int numClusters, int windowSize) {
+    public KmeansClustererState(int numClusters, int windowSize) throws Exception {
         super(windowSize);
         // This is where you create your own classifier and set the necessary parameters
         clusterer = new SimpleKMeans();
+        clusterer.setNumClusters(numClusters);
         this.numClusters = numClusters;
     }
 
     @Override
     public void train() throws Exception {
-        this.clusterer.buildClusterer(dataset);
+        synchronized (lock) {
+            this.clusterer.buildClusterer(dataset);
+        }
     }
 
+    public SimpleKMeans getClusterer(){ return clusterer; }
+
     @Override
-    protected void postUpdate() {}
+    protected void postUpdate() {
+    }
 
     @Override
     protected synchronized void createDataSet() throws Exception {
         // Our aim is to create a singleton dataset which will be reused by all trainingInstances
-        if(dataset != null) return;
+        if (dataset != null) return;
 
         // hack to obtain the feature set length
         Collection<double[]> features = this.featureVectorsInWindow.values();
@@ -73,7 +80,9 @@ public class KmeansClustererState extends BaseState {
     @Override
     public int predict(Instance testInstance) throws Exception {
         assert (testInstance != null);
-        return clusterer.clusterInstance(testInstance);
+        synchronized (lock) {
+            return clusterer.clusterInstance(testInstance);
+        }
     }
 
     @Override

@@ -54,7 +54,7 @@ public class KmeansClusteringTopology extends WekaLearningBaseTopology {
         StateFactory stateFactory = new ClustererFactory.KmeansClustererFactory(numWorkers, windowSize);
         QueryFunction<KmeansClustererState, String> queryFunction = new ClustererQuery.KmeansClustererQuery();
         IRichSpout features = new MddbFeatureExtractorSpout(args[0], fields);
-        StormTopology stormTopology = buildTopology(features, numWorkers, stateUpdater, stateFactory, queryFunction, "clusterer");
+        StormTopology stormTopology = buildTopology(features, numWorkers, stateUpdater, stateFactory, queryFunction, null, "kmeans");
 
         if (numWorkers == 1) {
             LocalCluster cluster = new LocalCluster();

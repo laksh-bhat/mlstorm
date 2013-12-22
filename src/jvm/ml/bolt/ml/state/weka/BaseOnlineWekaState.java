@@ -13,14 +13,14 @@ import java.util.Map;
  * Time: 8:00 PM
  */
 
-public abstract class BaseOnlineState implements State {
+public abstract class BaseOnlineWekaState implements State {
 
     /**
      * Construct the State representation for any weka based online learning algorithm
      *
      * @param windowSize the size of the sliding window (cache size)
      */
-    public BaseOnlineState(final int windowSize) {
+    public BaseOnlineWekaState(final int windowSize) {
         featureVectorsInWindow = new LinkedHashMap<Integer, double[]>(windowSize, 0.75f /*load factor*/, false) {
             public boolean removeEldestEntry(Map.Entry<Integer, double[]> eldest) {
                 return size() > windowSize;

@@ -42,7 +42,7 @@ public class CobwebClusteringTopology extends WekaLearningBaseTopology {
         StateFactory stateFactory = new ClustererFactory.CobwebClustererFactory(numWorkers, windowSize);
         QueryFunction<CobwebClustererState, String> queryFunction = new ClustererQuery.CobwebClustererQuery();
         IRichSpout features = new MddbFeatureExtractorSpout(args[0], fields);
-        StormTopology stormTopology = buildTopology(features, numWorkers, stateUpdater, stateFactory, queryFunction, "clusterer");
+        StormTopology stormTopology = buildTopology(features, numWorkers, stateUpdater, stateFactory, queryFunction, null, "cobweb");
 
         if (numWorkers == 1) {
             LocalCluster cluster = new LocalCluster();
