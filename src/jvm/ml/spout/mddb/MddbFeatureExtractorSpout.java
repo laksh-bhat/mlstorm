@@ -90,7 +90,7 @@ public class MddbFeatureExtractorSpout implements IRichSpout {
         this.taskId = context.getThisTaskId();
         featureFiles = new ArrayDeque<String>();
         SpoutUtils.listFilesForFolder(new File(folder), featureFiles);
-        scanner = getScanner(featureFiles.size() > 0 ? featureFiles.remove() : null);
+        scanner = moveSpoutForward();
     }
 
     /**
@@ -136,7 +136,7 @@ public class MddbFeatureExtractorSpout implements IRichSpout {
     @Override
     public void nextTuple() {
         if (scanner == null) {
-            logger.debug(MessageFormat.format("No more featureVectorsInWindow. Visit {0} later", taskId));
+            System.err.println(MessageFormat.format("No more featureVectorsInWindow. Visit {0} later", taskId));
         } else {
             try {
                 if (scanner.hasNextLine()) previous = scanner.nextLine();
@@ -147,6 +147,7 @@ public class MddbFeatureExtractorSpout implements IRichSpout {
                     Double[] both = (Double[]) ArrayUtils.addAll(features, moreFeatures);
                     collector.emit(new Values(messageId++, both));
                 }
+                moveSpoutForward();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -162,7 +163,12 @@ public class MddbFeatureExtractorSpout implements IRichSpout {
      */
     @Override
     public void ack(final Object msgId) {
-        scanner = getScanner(featureFiles.size() > 0 ? featureFiles.remove() : null);
+        //scanner = moveSpoutForward();
+    }
+
+    private Scanner moveSpoutForward() {
+        System.err.println("DEBUG: Moving spout forward...");
+        return getScanner(featureFiles.size() > 0 ? featureFiles.remove() : null);
     }
 
     /**
