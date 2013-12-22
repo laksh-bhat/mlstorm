@@ -78,7 +78,7 @@
       <file leaf-file-name="ClustererState.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/ClustererState.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="31" column="5" selection-start="852" selection-end="852" vertical-scroll-proportion="0.29310346" vertical-offset="184" max-vertical-offset="1684">
+            <state line="56" column="0" selection-start="1597" selection-end="1597" vertical-scroll-proportion="0.53183025" vertical-offset="379" max-vertical-offset="1729">
               <folding />
             </state>
           </provider>
@@ -98,7 +98,7 @@
           <provider selected="true" editor-type-id="text-editor">
             <state line="26" column="23" selection-start="778" selection-end="778" vertical-scroll-proportion="0.0" vertical-offset="34" max-vertical-offset="1294">
               <folding>
-                <element signature="e#1356#1364#0" expanded="true" />
+                <element signature="imports" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -125,10 +125,10 @@
       <file leaf-file-name="BaseOnlineState.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/BaseOnlineState.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="68" column="42" selection-start="2363" selection-end="2363" vertical-scroll-proportion="0.0" vertical-offset="694" max-vertical-offset="2254">
+            <state line="85" column="28" selection-start="2642" selection-end="2642" vertical-scroll-proportion="0.0" vertical-offset="949" max-vertical-offset="2464">
               <folding>
-                <element signature="e#2550#2551#0" expanded="true" />
-                <element signature="e#2595#2596#0" expanded="true" />
+                <element signature="e#2815#2816#0" expanded="true" />
+                <element signature="e#2860#2861#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -1174,7 +1174,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="26" column="23" selection-start="778" selection-end="778" vertical-scroll-proportion="0.0" vertical-offset="34" max-vertical-offset="1294">
           <folding>
-            <element signature="e#1356#1364#0" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1202,16 +1202,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/BaseOnlineState.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="68" column="42" selection-start="2363" selection-end="2363" vertical-scroll-proportion="0.0" vertical-offset="694" max-vertical-offset="2254">
-          <folding>
-            <element signature="e#2550#2551#0" expanded="true" />
-            <element signature="e#2595#2596#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/update/ClusterUpdater.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="21" column="0" selection-start="599" selection-end="599" vertical-scroll-proportion="0.1591512" vertical-offset="60" max-vertical-offset="1309">
@@ -1226,9 +1216,19 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/BaseOnlineState.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="85" column="28" selection-start="2642" selection-end="2642" vertical-scroll-proportion="0.0" vertical-offset="949" max-vertical-offset="2464">
+          <folding>
+            <element signature="e#2815#2816#0" expanded="true" />
+            <element signature="e#2860#2861#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/ClustererState.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="5" selection-start="852" selection-end="852" vertical-scroll-proportion="0.29310346" vertical-offset="184" max-vertical-offset="1684">
+        <state line="56" column="0" selection-start="1597" selection-end="1597" vertical-scroll-proportion="0.53183025" vertical-offset="379" max-vertical-offset="1729">
           <folding />
         </state>
       </provider>
