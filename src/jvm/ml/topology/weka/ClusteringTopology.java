@@ -54,9 +54,9 @@ public class ClusteringTopology extends WekaLearningBaseTopology {
         Config conf = new Config();
         conf.setNumAckers(numWorkers);
         conf.setNumWorkers(numWorkers);
-        conf.setMaxSpoutPending(1);
+        conf.setMaxSpoutPending(10);
         conf.put("topology.spout.max.batch.size", 1 /* x1000 i.e. every tuple has 1000 feature vectors*/);
-        conf.put("topology.trident.batch.emit.interval.millis", 5000);
+        conf.put("topology.trident.batch.emit.interval.millis", 50);
         conf.put(Config.DRPC_SERVERS, Lists.newArrayList("qp-hd3", "qp-hd4", "qp-hd5", "qp-hd6", "qp-hd7", "qp-hd8", "qp-hd9"));
         conf.put(Config.STORM_CLUSTER_MODE, "distributed");
         conf.put(Config.NIMBUS_TASK_TIMEOUT_SECS, 30);

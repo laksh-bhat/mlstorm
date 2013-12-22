@@ -134,7 +134,7 @@ public class MddbFeatureExtractorSpout implements IRichSpout {
      * so as not to waste too much CPU.
      */
     @Override
-    public void nextTuple() {
+    public synchronized void nextTuple() {
         if (scanner == null) {
             System.err.println(MessageFormat.format("No more featureVectorsInWindow. Visit {0} later", taskId));
         } else {
@@ -147,7 +147,7 @@ public class MddbFeatureExtractorSpout implements IRichSpout {
                     Double[] both = (Double[]) ArrayUtils.addAll(features, moreFeatures);
                     collector.emit(new Values(messageId++, both));
                 }
-                moveSpoutForward();
+                scanner = moveSpoutForward();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -166,7 +166,7 @@ public class MddbFeatureExtractorSpout implements IRichSpout {
         //scanner = moveSpoutForward();
     }
 
-    private Scanner moveSpoutForward() {
+    private synchronized Scanner moveSpoutForward() {
         System.err.println("DEBUG: Moving spout forward...");
         return getScanner(featureFiles.size() > 0 ? featureFiles.remove() : null);
     }
