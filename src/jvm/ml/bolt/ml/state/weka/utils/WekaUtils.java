@@ -20,12 +20,12 @@ public class WekaUtils {
         for (int i = 0; i < noOfAttributes; i++)
             attributes.addElement(new Attribute(MessageFormat.format("feature-{0}", i)));
 
-/*        FastVector clusters = new FastVector(noOfClusters);
+        FastVector clusters = new FastVector(noOfClusters);
         for (int i = 1; i <= noOfClusters; i++)
             clusters.addElement(MessageFormat.format("cluster-{0}", String.valueOf(i)));
         Attribute cluster = new Attribute("cluster", clusters);
         // last element in a FEATURE VECTOR is the category
-        attributes.addElement(cluster);*/
+        attributes.addElement(cluster);
         return attributes;
     }
 }

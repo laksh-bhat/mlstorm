@@ -45,8 +45,8 @@ public class ClustererState extends BaseOnlineState {
 
     @Override
     protected void preUpdate() throws Exception {
-        Instances data = new Instances("data", this.wekaAttributes, 0);
-        //data.add(new Instance(this.wekaAttributes.size()));
+        Instances data = new Instances("data", this.wekaAttributes, 1000);
+        data.setClassIndex(this.wekaAttributes.size() - 1);
         clusterer.buildClusterer(data);
     }
 
@@ -58,7 +58,7 @@ public class ClustererState extends BaseOnlineState {
     @Override
     protected void loadWekaAttributes (final double[] features) {
         if (this.wekaAttributes == null)
-            this.wekaAttributes = WekaUtils.getFeatureVectorForClustering(numClusters, features.length);
+            this.wekaAttributes = WekaUtils.getFeatureVectorForClustering(numClusters, features.length + 1);
     }
 
     @Override
