@@ -39,10 +39,18 @@ public class ClustererState extends BaseOnlineState {
     }
 
     @Override
-    public Instance predict(Instance testInstance) throws Exception {
-        int prediction = clusterer.clusterInstance(testInstance);
-        testInstance.setClassValue(String.format("Cluster-%d", prediction));
-        return testInstance;
+    protected void postUpdates() {
+        this.clusterer.updateFinished();
+    }
+
+    @Override
+    protected void preUpdates() {
+        // no op as of now
+    }
+
+    @Override
+    public int predict(Instance testInstance) throws Exception {
+        return clusterer.clusterInstance(testInstance);
     }
 
     @Override

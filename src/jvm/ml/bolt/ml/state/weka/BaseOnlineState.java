@@ -47,6 +47,7 @@ public abstract class BaseOnlineState implements State {
         // Although this looks like a windowed learning, it isn't. This is online learning
         Collection<double[]> groundValues = getFeatureVectorsInWindow().values();
         try {
+            preUpdates();
             for (double[] features : groundValues) {
                 loadWekaAttributes(features);
                 Instance trainingInstance = new SparseInstance(features.length);
@@ -54,6 +55,7 @@ public abstract class BaseOnlineState implements State {
                     trainingInstance.setValue((Attribute) wekaAttributes.elementAt(i), features[i]);
                 train(trainingInstance);
             }
+            postUpdates();
         } catch ( Exception e ) {
             e.printStackTrace();
         } finally {
@@ -63,6 +65,10 @@ public abstract class BaseOnlineState implements State {
             groundValues.clear();
         }
     }
+
+    protected abstract void postUpdates();
+
+    protected abstract void preUpdates();
 
     /**
      * return the feature collection of the most recent window
@@ -76,9 +82,9 @@ public abstract class BaseOnlineState implements State {
      * Predict the class label for the test instance
      * The input parameter is a Weka Instance without the class label
      * @param testInstance
-     * @return testInstance with the class label set
+     * @return int, as in the cluster no.
      */
-    public abstract Instance predict(final Instance testInstance) throws Exception;
+    public abstract int predict(final Instance testInstance) throws Exception;
 
     /**
      *
