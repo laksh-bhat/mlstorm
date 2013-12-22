@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * Created by lbhat@DaMSl on 12/22/13.
  * <p/>
- * Copyright {2013} {Lakshmisha Bhat}
+ * Copyright {2013} {Lakshmisha Bhat <laksh85@gmail.com>}
  * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.

@@ -11,7 +11,7 @@ import java.util.Collection;
 /**
  * Created by lbhat@DaMSl on 12/22/13.
  * <p/>
- * Copyright {2013} {Lakshmisha Bhat}
+ * Copyright {2013} {Lakshmisha Bhat <laksh85@gmail.com>}
  * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,6 +37,7 @@ import java.util.Collection;
 public class KmeansClustererState extends BaseWekaState {
     private SimpleKMeans clusterer;
     private int numClusters;
+    private int featuresCount;
     private final Object lock = new Object();
 
 
@@ -48,14 +49,42 @@ public class KmeansClustererState extends BaseWekaState {
         this.numClusters = numClusters;
     }
 
+    /**
+     * I trust you.
+     * Call this very when you don't have ANY other choice and when you aren't updating the clusterer
+     * @return
+     */
+    public SimpleKMeans getClusterer(){ return clusterer; }
+
+    public int getNumClusters() {
+        return numClusters;
+    }
+
     @Override
-    public void train() throws Exception {
+    public int predict(Instance testInstance) throws Exception {
+        assert (testInstance != null);
+        synchronized (lock) {
+            return clusterer.clusterInstance(testInstance);
+        }
+    }
+
+    public final void updateClustererNumClusters(int k) throws Exception {
+        synchronized (lock){
+            numClusters = k;
+            clusterer = new SimpleKMeans();
+            clusterer.setNumClusters(numClusters);
+            this.wekaAttributes = WekaUtils.getFeatureVectorForKmeansClustering(numClusters, featuresCount);
+            this.wekaAttributes.trimToSize();
+            createDataSet();
+        }
+    }
+
+    @Override
+    protected void train() throws Exception {
         synchronized (lock) {
             this.clusterer.buildClusterer(dataset);
         }
     }
-
-    public SimpleKMeans getClusterer(){ return clusterer; }
 
     @Override
     protected void postUpdate() {
@@ -78,23 +107,12 @@ public class KmeansClustererState extends BaseWekaState {
     }
 
     @Override
-    public int predict(Instance testInstance) throws Exception {
-        assert (testInstance != null);
-        synchronized (lock) {
-            return clusterer.clusterInstance(testInstance);
-        }
-    }
-
-    @Override
     protected synchronized void loadWekaAttributes(final double[] features) {
         if (this.wekaAttributes == null) {
+            featuresCount = features.length;
             this.wekaAttributes = WekaUtils.getFeatureVectorForKmeansClustering(numClusters, features.length);
             this.wekaAttributes.trimToSize();
         }
-    }
-
-    public int getNumClusters() {
-        return numClusters;
     }
 }
 

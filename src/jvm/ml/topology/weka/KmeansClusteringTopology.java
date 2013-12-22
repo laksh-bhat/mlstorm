@@ -3,7 +3,7 @@ package topology.weka;
 /**
  * Created by lbhat@DaMSl on 12/22/13.
  * <p/>
- * Copyright {2013} {Lakshmisha Bhat}
+ * Copyright {2013} {Lakshmisha Bhat <laksh85@gmail.com>}
  * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,7 +39,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-public class KmeansClusteringTopology extends WekaLearningBaseTopology {
+public class KmeansClusteringTopology extends WekaBaseLearningTopology {
     public static void main(String[] args) throws AlreadyAliveException, InvalidTopologyException {
         final Logger logger = Logger.getLogger("topology.weka.KmeansClusteringTopology", null);
         if (args.length < 4) {
@@ -54,8 +54,9 @@ public class KmeansClusteringTopology extends WekaLearningBaseTopology {
         StateUpdater stateUpdater = new KmeansClusterUpdater();
         StateFactory stateFactory = new ClustererFactory.KmeansClustererFactory(k, windowSize);
         QueryFunction<KmeansClustererState, String> queryFunction = new ClustererQuery.KmeansClustererQuery();
+        QueryFunction<KmeansClustererState, String> updaterQueryFunction = new ClustererQuery.KmeansNumClustersUpdateQuery();
         IRichSpout features = new MddbFeatureExtractorSpout(args[0], fields);
-        StormTopology stormTopology = buildTopology(features, numWorkers, stateUpdater, stateFactory, queryFunction, null, "kmeans");
+        StormTopology stormTopology = buildTopology(features, numWorkers, stateUpdater, stateFactory, queryFunction, updaterQueryFunction, "kmeans");
 
         if (numWorkers == 1) {
             LocalCluster cluster = new LocalCluster();

@@ -48,6 +48,8 @@ public class ClustererQuery {
 
 
     public static class KmeansClustererQuery implements QueryFunction<KmeansClustererState, String> {
+        private int localPartition, numPartitions;
+
         @Override
         public List<String> batchRetrieve(final KmeansClustererState clustererState, final List<TridentTuple> queryTuples) {
             List<String> queryResults = new ArrayList<String>();
@@ -59,11 +61,52 @@ public class ClustererQuery {
 
         @Override
         public void execute(final TridentTuple tuple, final String result, final TridentCollector collector) {
+            collector.emit(new Values(localPartition, result));
+        }
+
+        @Override
+        public void prepare(final Map map, final TridentOperationContext tridentOperationContext) {
+            localPartition = tridentOperationContext.getPartitionIndex();
+            numPartitions = tridentOperationContext.numPartitions();
+        }
+
+        @Override
+        public void cleanup() {
+        }
+    }
+
+    public static class KmeansNumClustersUpdateQuery implements QueryFunction<KmeansClustererState, String> {
+        private int localPartition, numPartitions;
+
+        @Override
+        public List<String> batchRetrieve(final KmeansClustererState clustererState, final List<TridentTuple> queryTuples) {
+            List<String> queryResults = new ArrayList<String>();
+            for (TridentTuple args : queryTuples) {
+                String query = args.getStringByField("args");
+                String[] queryParts = query.split(",");
+                int partitionToBeUpdated = Integer.valueOf(queryParts[0].trim());
+                int newK = Integer.valueOf(queryParts[1].trim());
+                try {
+                    if (partitionToBeUpdated == localPartition) clustererState.updateClustererNumClusters(newK);
+                    queryResults.add("updated");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    queryResults.add("failed");
+                }
+
+            }
+            return queryResults;
+        }
+
+        @Override
+        public void execute(final TridentTuple tuple, final String result, final TridentCollector collector) {
             collector.emit(new Values(result));
         }
 
         @Override
         public void prepare(final Map map, final TridentOperationContext tridentOperationContext) {
+            localPartition = tridentOperationContext.getPartitionIndex();
+            numPartitions = tridentOperationContext.numPartitions();
         }
 
         @Override
