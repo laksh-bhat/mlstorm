@@ -21,12 +21,11 @@ import java.util.Collection;
  * The base class gives the structure and the ClassifierState classes implement them
  */
 
-public class ClustererState extends BaseOnlineState {
+public class CobwebClustererState extends BaseOnlineState {
     private Cobweb clusterer;
     private int numClusters;
-    private Instances dataset;
 
-    public ClustererState(int numClusters, int windowSize) {
+    public CobwebClustererState(int numClusters, int windowSize) {
         super(windowSize);
         // This is where you create your own classifier and set the necessary parameters
         clusterer = new Cobweb();
@@ -56,7 +55,7 @@ public class ClustererState extends BaseOnlineState {
             loadWekaAttributes(some);
             break;
         }
-	
+
 	// we are now ready to create a training dataset metadata
         dataset = new Instances("training", this.wekaAttributes, 0);
         this.clusterer.buildClusterer(dataset.stringFreeStructure());

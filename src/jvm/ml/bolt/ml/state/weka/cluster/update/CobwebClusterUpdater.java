@@ -1,6 +1,6 @@
 package bolt.ml.state.weka.cluster.update;
 
-import bolt.ml.state.weka.cluster.ClustererState;
+import bolt.ml.state.weka.cluster.CobwebClustererState;
 import org.apache.commons.lang.ArrayUtils;
 import storm.trident.operation.TridentCollector;
 import storm.trident.operation.TridentOperationContext;
@@ -16,12 +16,12 @@ import java.util.Map;
  * Date: 12/17/13
  * Time: 5:08 PM
  */
-public class ClusterUpdater implements StateUpdater<ClustererState> {
+public class CobwebClusterUpdater implements StateUpdater<CobwebClustererState> {
 
     private int localPartition, numPartitions;
 
     @Override
-    public void updateState (final ClustererState state,
+    public void updateState (final CobwebClustererState state,
                              final List<TridentTuple> tuples,
                              final TridentCollector collector)
     {

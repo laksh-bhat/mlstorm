@@ -1,7 +1,8 @@
 package bolt.ml.state.weka.cluster.create;
 
 import backtype.storm.task.IMetricsContext;
-import bolt.ml.state.weka.cluster.ClustererState;
+import bolt.ml.state.weka.cluster.CobwebClustererState;
+import bolt.ml.state.weka.cluster.KmeansClustererState;
 import storm.trident.state.State;
 import storm.trident.state.StateFactory;
 
@@ -13,22 +14,44 @@ import java.util.Map;
  * Time: 5:10 PM
  */
 
-public class ClustererFactory implements StateFactory {
-    private final int windowSize, k;
-    private ClustererState state = null;
+public class ClustererFactory{
+    public static class CobwebClustererFactory implements StateFactory {
+        private final int windowSize, k;
+        private CobwebClustererState state = null;
 
-    public ClustererFactory (int k, int windowSize) {
-        this.k = k;
-        this.windowSize = windowSize;
+        public CobwebClustererFactory (int k, int windowSize) {
+            this.k = k;
+            this.windowSize = windowSize;
+        }
+
+        @Override
+        public State makeState (final Map map,
+                                final IMetricsContext iMetricsContext,
+                                final int partitionIndex,
+                                final int numPartitions)
+        {
+            if (state == null) state = new CobwebClustererState(k, windowSize);
+            return state;
+        }
     }
 
-    @Override
-    public State makeState (final Map map,
-                            final IMetricsContext iMetricsContext,
-                            final int partitionIndex,
-                            final int numPartitions)
-    {
-        if (state == null) state = new ClustererState(k, windowSize);
-        return state;
+    public static class KmeansClustererFactory implements StateFactory {
+        private final int windowSize, k;
+        private KmeansClustererState state = null;
+
+        public KmeansClustererFactory (int k, int windowSize) {
+            this.k = k;
+            this.windowSize = windowSize;
+        }
+
+        @Override
+        public State makeState (final Map map,
+                                final IMetricsContext iMetricsContext,
+                                final int partitionIndex,
+                                final int numPartitions)
+        {
+            if (state == null) state = new KmeansClustererState(k, windowSize);
+            return state;
+        }
     }
 }

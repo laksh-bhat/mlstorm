@@ -7,10 +7,10 @@ import backtype.storm.generated.AlreadyAliveException;
 import backtype.storm.generated.InvalidTopologyException;
 import backtype.storm.generated.StormTopology;
 import backtype.storm.topology.IRichSpout;
-import bolt.ml.state.weka.cluster.ClustererState;
+import bolt.ml.state.weka.cluster.CobwebClustererState;
 import bolt.ml.state.weka.cluster.create.ClustererFactory;
 import bolt.ml.state.weka.cluster.query.ClustererQuery;
-import bolt.ml.state.weka.cluster.update.ClusterUpdater;
+import bolt.ml.state.weka.cluster.update.CobwebClusterUpdater;
 import com.google.common.collect.Lists;
 import spout.mddb.MddbFeatureExtractorSpout;
 import storm.trident.state.QueryFunction;
@@ -27,9 +27,9 @@ import java.util.logging.Logger;
  * Time: 5:05 PM
  */
 
-public class ClusteringTopology extends WekaLearningBaseTopology {
+public class CobwebClusteringTopology extends WekaLearningBaseTopology {
     public static void main(String[] args) throws AlreadyAliveException, InvalidTopologyException {
-        final Logger logger = Logger.getLogger("topology.weka.ClusteringTopology", null);
+        final Logger logger = Logger.getLogger("topology.weka.CobwebClusteringTopology", null);
         if (args.length < 3) {
             logger.log(Level.ALL, "-- use args -- folder numWorkers windowSize");
             return;
@@ -38,9 +38,9 @@ public class ClusteringTopology extends WekaLearningBaseTopology {
         String[] fields = {"key", "featureVector"};
         int numWorkers = Integer.valueOf(args[1]);
         int windowSize = Integer.valueOf(args[2]);
-        StateUpdater stateUpdater = new ClusterUpdater();
-        StateFactory stateFactory = new ClustererFactory(numWorkers, windowSize);
-        QueryFunction<ClustererState, String> queryFunction = new ClustererQuery();
+        StateUpdater stateUpdater = new CobwebClusterUpdater();
+        StateFactory stateFactory = new ClustererFactory.CobwebClustererFactory(numWorkers, windowSize);
+        QueryFunction<CobwebClustererState, String> queryFunction = new ClustererQuery.CobwebClustererQuery();
         IRichSpout features = new MddbFeatureExtractorSpout(args[0], fields);
         StormTopology stormTopology = buildTopology(features, numWorkers, stateUpdater, stateFactory, queryFunction, "clusterer");
 
