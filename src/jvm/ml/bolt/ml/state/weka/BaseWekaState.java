@@ -105,6 +105,7 @@ public abstract class BaseWekaState implements State {
      */
     protected abstract void postUpdate();
 
+    protected abstract void emptyDataset();
     /**
      * do anything you want after updating the classifier
      * @throws Exception

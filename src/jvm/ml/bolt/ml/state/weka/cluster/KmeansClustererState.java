@@ -61,6 +61,13 @@ public class KmeansClustererState extends BaseWekaState {
     }
 
     @Override
+    protected void emptyDataset(){
+        synchronized (lock) {
+    	    this.dataset.delete();
+        }
+    }
+
+    @Override
     public int predict(Instance testInstance) throws Exception {
         assert (testInstance != null);
         synchronized (lock) {
@@ -69,13 +76,15 @@ public class KmeansClustererState extends BaseWekaState {
     }
 
     public final void updateClustererNumClusters(int k) throws Exception {
+        System.err.println("DEBUG: updating k and rebuilding clusterer");
         synchronized (lock){
             numClusters = k;
             clusterer = new SimpleKMeans();
             clusterer.setNumClusters(numClusters);
             this.wekaAttributes = WekaUtils.getFeatureVectorForKmeansClustering(numClusters, featuresCount);
             this.wekaAttributes.trimToSize();
-            createDataSet();
+            this.dataset = new Instances("training", this.wekaAttributes, this.windowSize);
+            
         }
     }
 

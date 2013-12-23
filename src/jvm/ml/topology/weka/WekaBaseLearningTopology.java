@@ -56,12 +56,14 @@ public class WekaBaseLearningTopology {
                 .each(new Fields("partition", "result"), new Printer())
         ;
 
-        if (updaterQueryFunction != null)
+        if (updaterQueryFunction != null){
+            System.err.println("DEBUG: Adding drpc upgrade query to topology");
             topology.newDRPCStream(drpcUpdateFunction)
                     .broadcast()
-                    .stateQuery(state, new Fields("args"), queryFunction, new Fields("result"))
+                    .stateQuery(state, new Fields("args"), updaterQueryFunction, new Fields("result"))
                     .each(new Fields("result"), new Printer())
             ;
+        }
 
 
         return topology.build();
