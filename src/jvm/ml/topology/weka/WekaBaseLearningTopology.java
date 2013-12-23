@@ -42,6 +42,9 @@ public class WekaBaseLearningTopology {
         TridentTopology topology = new TridentTopology();
         Stream featuresStream = topology.newStream("featureVectorsInWindow", spout);
 
+        /**
+         *
+         */
         TridentState state =
                 featuresStream
                         .broadcast()
@@ -49,6 +52,7 @@ public class WekaBaseLearningTopology {
                         .partitionPersist(stateFactory, new Fields("key", "featureVector"), stateUpdater)
                         .parallelismHint(parallelism);
 
+        // This queries the partition for partitionId and cluster distribution.
         topology.newDRPCStream(drpcFunction)
                 .broadcast()
                 .stateQuery(state, new Fields("args"), queryFunction, new Fields("partition", "result"))
@@ -56,8 +60,14 @@ public class WekaBaseLearningTopology {
                 .each(new Fields("partition", "result"), new Printer())
         ;
 
+        /**
+         * The human feedback controller can look at the cluster distributions and later update the parameters (k for kmeans)
+         * as a Drpc query. (<partitionId,newK>) ex: args="1, 20". The partitionId is the value returned by the previous query.
+
+         * Notice that this function is generic and one could inject *any* parameter updater functions
+         */
+
         if (updaterQueryFunction != null){
-            System.err.println("DEBUG: Adding drpc upgrade query to topology");
             topology.newDRPCStream(drpcUpdateFunction)
                     .broadcast()
                     .stateQuery(state, new Fields("args"), updaterQueryFunction, new Fields("result"))

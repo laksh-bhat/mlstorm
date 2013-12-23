@@ -34,7 +34,8 @@ public abstract class BaseOnlineWekaState implements State {
      * @param txId
      */
     @Override
-    public void beginCommit(final Long txId) {}
+    public void beginCommit(final Long txId) {
+    }
 
     /**
      * This is where you do online state commit
@@ -46,10 +47,8 @@ public abstract class BaseOnlineWekaState implements State {
     public synchronized void commit(final Long txId) {
         // Although this looks like a windowed learning, it isn't. This is online learning
         Collection<double[]> groundValues = getFeatureVectorsInWindow().values();
-	System.err.println("DEBUG: total no of training instances = " + groundValues.size());
         try {
-
-	    preUpdate();
+            preUpdate();
             for (double[] features : groundValues) {
                 Instance trainingInstance = new Instance(wekaAttributes.size());
                 for (int i = 0; i < features.length && i < wekaAttributes.size(); i++)
@@ -75,6 +74,7 @@ public abstract class BaseOnlineWekaState implements State {
 
     /**
      * do anything you want after updating the classifier
+     *
      * @throws Exception
      */
     protected abstract void preUpdate() throws Exception;

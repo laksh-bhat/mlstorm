@@ -28,10 +28,10 @@ import java.util.Collection;
 
 
 /**
- * Example of a Kmeans clustering state
+ * Kmeans clustering state abstraction
  * <p/>
  * Look at abstract base class for method details
- * The base class gives the structure and the ClassifierState classes implement them
+ * The base class gives the structure (abstract methods) and the <Classifier>State classes implement them
  */
 
 public class KmeansClustererState extends BaseWekaState {
@@ -75,6 +75,11 @@ public class KmeansClustererState extends BaseWekaState {
         }
     }
 
+    /**
+     * Allows parameter updates to the current model
+     * @param k
+     * @throws Exception
+     */
     public final void updateClustererNumClusters(int k) throws Exception {
         System.err.println("DEBUG: updating k and rebuilding clusterer");
         synchronized (lock){
@@ -84,7 +89,7 @@ public class KmeansClustererState extends BaseWekaState {
             this.wekaAttributes = WekaUtils.getFeatureVectorForKmeansClustering(numClusters, featuresCount);
             this.wekaAttributes.trimToSize();
             this.dataset = new Instances("training", this.wekaAttributes, this.windowSize);
-            
+
         }
     }
 

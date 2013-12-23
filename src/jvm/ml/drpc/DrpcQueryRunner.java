@@ -23,16 +23,18 @@ import backtype.storm.utils.DRPCClient;
 import org.apache.thrift7.TException;
 import java.io.IOException;
 
-
+/**
+ * Simple utility class to run drpc queries
+ */
 public class DrpcQueryRunner {
     public static void main (final String[] args) throws IOException, TException, DRPCExecutionException {
-        if (args.length < 2) {
-            System.err.println("Where are the arguments?");
+        if (args.length < 3) {
+            System.err.println("Where are the arguments? args -- DrpcServer DrpcFunctionName parameters");
             return;
         }
 
-        final DRPCClient client = new DRPCClient("localhost", 3772, 100000 /*timeout*/);
-        runQuery(args[0], args[1], client);
+        final DRPCClient client = new DRPCClient(args[0], 3772, 100000 /*timeout*/);
+        System.err.println(runQuery(args[1], args[2], client));
         client.close();
     }
 

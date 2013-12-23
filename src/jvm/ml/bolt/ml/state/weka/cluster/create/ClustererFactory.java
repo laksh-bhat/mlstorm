@@ -15,6 +15,9 @@ import java.util.Map;
  */
 
 public class ClustererFactory{
+    /**
+     * Cluster state factory for Cobweb clusterer
+     */
     public static class CobwebClustererFactory implements StateFactory {
         private final int windowSize, k;
         private CobwebClustererState state = null;
@@ -35,6 +38,9 @@ public class ClustererFactory{
         }
     }
 
+    /**
+     * Cluster state factory for K-means clusterer
+     */
     public static class KmeansClustererFactory implements StateFactory {
         private final int windowSize, k;
         private KmeansClustererState state = null;
