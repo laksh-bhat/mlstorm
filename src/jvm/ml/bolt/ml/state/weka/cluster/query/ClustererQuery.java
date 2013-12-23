@@ -8,6 +8,7 @@ import storm.trident.operation.TridentOperationContext;
 import storm.trident.state.QueryFunction;
 import storm.trident.tuple.TridentTuple;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -81,14 +82,18 @@ public class ClustererQuery {
         @Override
         public List<String> batchRetrieve(final KmeansClustererState clustererState, final List<TridentTuple> queryTuples) {
             List<String> queryResults = new ArrayList<String>();
+            System.err.println(MessageFormat.format("DEBUG: KmeansNumClustersUpdateQuery ({0})", localPartition));
             for (TridentTuple args : queryTuples) {
                 String query = args.getStringByField("args");
                 String[] queryParts = query.split(",");
                 int partitionToBeUpdated = Integer.valueOf(queryParts[0].trim());
                 int newK = Integer.valueOf(queryParts[1].trim());
                 try {
-                    if (partitionToBeUpdated == localPartition) clustererState.updateClustererNumClusters(newK);
-                    queryResults.add("updated");
+                    if (partitionToBeUpdated == localPartition) {
+                        System.err.println("DEBUG: updating local partition " + localPartition);
+                        clustererState.updateClustererNumClusters(newK);
+                        queryResults.add("updated");
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                     queryResults.add("failed");

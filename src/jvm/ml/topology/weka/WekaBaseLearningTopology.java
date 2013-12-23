@@ -37,7 +37,8 @@ public class WekaBaseLearningTopology {
                                                  final StateFactory stateFactory,
                                                  final QueryFunction queryFunction,
                                                  QueryFunction updaterQueryFunction,
-                                                 final String drpcFunction) {
+                                                 final String drpcFunction,
+                                                 final String drpcUpdateFunction) {
         TridentTopology topology = new TridentTopology();
         Stream featuresStream = topology.newStream("featureVectorsInWindow", spout);
 
@@ -52,11 +53,11 @@ public class WekaBaseLearningTopology {
                 .broadcast()
                 .stateQuery(state, new Fields("args"), queryFunction, new Fields("partition", "result"))
                 .toStream()
-                .each(new Fields("result"), new Printer())
+                .each(new Fields("partition", "result"), new Printer())
         ;
 
         if (updaterQueryFunction != null)
-            topology.newDRPCStream("kUpdate")
+            topology.newDRPCStream(drpcUpdateFunction)
                     .broadcast()
                     .stateQuery(state, new Fields("args"), queryFunction, new Fields("result"))
                     .each(new Fields("result"), new Printer())
