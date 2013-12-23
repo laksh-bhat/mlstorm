@@ -36,7 +36,7 @@ public class WekaBaseLearningTopology {
                                                  final StateUpdater stateUpdater,
                                                  final StateFactory stateFactory,
                                                  final QueryFunction queryFunction,
-                                                 QueryFunction updaterQueryFunction,
+                                                 QueryFunction parameterUpdateFunction,
                                                  final String drpcFunction,
                                                  final String drpcUpdateFunction) {
         TridentTopology topology = new TridentTopology();
@@ -68,10 +68,10 @@ public class WekaBaseLearningTopology {
          * Notice that this function is generic and one could inject *any* parameter updater functions
          */
 
-        if (updaterQueryFunction != null){
+        if (parameterUpdateFunction != null){
             topology.newDRPCStream(drpcUpdateFunction)
                     .broadcast()
-                    .stateQuery(state, new Fields("args"), updaterQueryFunction, new Fields("result"))
+                    .stateQuery(state, new Fields("args"), parameterUpdateFunction, new Fields("result"))
                     .each(new Fields("result"), new Printer())
             ;
         }

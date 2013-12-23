@@ -35,15 +35,11 @@ import storm.trident.state.QueryFunction;
 import storm.trident.state.StateFactory;
 import storm.trident.state.StateUpdater;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 
 public class KmeansClusteringTopology extends WekaBaseLearningTopology {
     public static void main(String[] args) throws AlreadyAliveException, InvalidTopologyException {
-        final Logger logger = Logger.getLogger("topology.weka.KmeansClusteringTopology", null);
-        if (args.length < 4) {
-            logger.log(Level.ALL, "-- use args -- folder numWorkers windowSize k");
+        if (args.length < 5) {
+            System.err.println(" Where are all the arguments? -- use args -- folder numWorkers windowSize k parallelism");
             return;
         }
 
@@ -51,12 +47,13 @@ public class KmeansClusteringTopology extends WekaBaseLearningTopology {
         int numWorkers = Integer.valueOf(args[1]);
         int windowSize = Integer.valueOf(args[2]);
         int k = Integer.valueOf(args[3]);
+        int parallelism = Integer.valueOf(args[4]);
         StateUpdater stateUpdater = new KmeansClusterUpdater();
         StateFactory stateFactory = new ClustererFactory.KmeansClustererFactory(k, windowSize);
         QueryFunction<KmeansClustererState, String> queryFunction = new ClustererQuery.KmeansClustererQuery();
-        QueryFunction<KmeansClustererState, String> updaterQueryFunction = new ClustererQuery.KmeansNumClustersUpdateQuery();
+        QueryFunction<KmeansClustererState, String> parameterUpdateFunction = new ClustererQuery.KmeansNumClustersUpdateQuery();
         IRichSpout features = new MddbFeatureExtractorSpout(args[0], fields);
-        StormTopology stormTopology = buildTopology(features, numWorkers, stateUpdater, stateFactory, queryFunction, updaterQueryFunction, "kmeans", "kUpdate");
+        StormTopology stormTopology = buildTopology(features, parallelism, stateUpdater, stateFactory, queryFunction, parameterUpdateFunction, "kmeans", "kUpdate");
 
         if (numWorkers == 1) {
             LocalCluster cluster = new LocalCluster();
