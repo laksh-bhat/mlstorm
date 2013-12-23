@@ -43,7 +43,8 @@ public class WekaBaseLearningTopology {
         Stream featuresStream = topology.newStream("featureVectorsInWindow", spout);
 
         /**
-         *
+         * Stream the feature vectors using the given spout.
+         * Use the feature vectors to update a weka classifier/clusterer
          */
         TridentState state =
                 featuresStream

@@ -82,10 +82,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="WekaBaseLearningTopology.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="WekaBaseLearningTopology.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/weka/WekaBaseLearningTopology.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="45" column="10" selection-start="1934" selection-end="1934" vertical-scroll-proportion="0.0" vertical-offset="675" max-vertical-offset="1260">
+            <state line="60" column="71" selection-start="2741" selection-end="2741" vertical-scroll-proportion="0.67639256" vertical-offset="255" max-vertical-offset="1849">
               <folding />
             </state>
           </provider>
@@ -138,10 +138,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="KmeansClustererState.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="KmeansClustererState.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/KmeansClustererState.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="68" column="0" selection-start="2086" selection-end="2086" vertical-scroll-proportion="0.7758621" vertical-offset="315" max-vertical-offset="2599">
+            <state line="68" column="0" selection-start="2086" selection-end="2086" vertical-scroll-proportion="0.0" vertical-offset="315" max-vertical-offset="2599">
               <folding />
             </state>
           </provider>
@@ -215,11 +215,11 @@
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/query/ClustererQuery.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/topology/weka/KmeansClusteringTopology.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/topology/weka/CobwebClusteringTopology.java" />
-        <option value="$PROJECT_DIR$/../src/jvm/ml/topology/weka/WekaBaseLearningTopology.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/drpc/DrpcQueryRunner.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/create/ClustererFactory.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/BaseOnlineWekaState.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/KmeansClustererState.java" />
+        <option value="$PROJECT_DIR$/../src/jvm/ml/topology/weka/WekaBaseLearningTopology.java" />
       </list>
     </option>
   </component>
@@ -829,7 +829,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="22" width="1440" height="874" extended-state="6" />
+    <frame x="0" y="22" width="1440" height="874" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1168,13 +1168,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/weka/WekaBaseLearningTopology.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="10" selection-start="1934" selection-end="1934" vertical-scroll-proportion="0.0" vertical-offset="113" max-vertical-offset="1834">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/drpc/DrpcQueryRunner.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="48" column="0" selection-start="1667" selection-end="1667" vertical-scroll-proportion="0.0" vertical-offset="233" max-vertical-offset="1459">
@@ -1200,7 +1193,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/KmeansClustererState.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="68" column="0" selection-start="2086" selection-end="2086" vertical-scroll-proportion="0.7758621" vertical-offset="315" max-vertical-offset="2599">
+        <state line="68" column="0" selection-start="2086" selection-end="2086" vertical-scroll-proportion="0.0" vertical-offset="315" max-vertical-offset="2599">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/weka/WekaBaseLearningTopology.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="60" column="71" selection-start="2741" selection-end="2741" vertical-scroll-proportion="0.67639256" vertical-offset="255" max-vertical-offset="1849">
           <folding />
         </state>
       </provider>
