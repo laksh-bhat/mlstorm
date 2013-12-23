@@ -92,13 +92,12 @@ public class ClustererQuery {
                     if (partitionToBeUpdated == localPartition) {
                         System.err.println("DEBUG: updating local partition " + localPartition);
                         clustererState.updateClustererNumClusters(newK);
-                        queryResults.add("updated");
+
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    queryResults.add("failed");
                 }
-
+                queryResults.add(MessageFormat.format("update request received at [{0}]", localPartition));
             }
             return queryResults;
         }

@@ -73,10 +73,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="KmeansClusteringTopology.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="KmeansClusteringTopology.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/weka/KmeansClusteringTopology.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="60" column="98" selection-start="2982" selection-end="2982" vertical-scroll-proportion="0.78812414" vertical-offset="91" max-vertical-offset="1656">
+            <state line="60" column="98" selection-start="2982" selection-end="2982" vertical-scroll-proportion="0.0" vertical-offset="91" max-vertical-offset="1656">
               <folding />
             </state>
           </provider>
@@ -129,10 +129,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ClustererQuery.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="ClustererQuery.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/query/ClustererQuery.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="64" column="60" selection-start="2332" selection-end="2338" vertical-scroll-proportion="0.0" vertical-offset="960" max-vertical-offset="1845">
+            <state line="99" column="107" selection-start="3982" selection-end="3982" vertical-scroll-proportion="0.73607427" vertical-offset="750" max-vertical-offset="2359">
               <folding />
             </state>
           </provider>
@@ -212,7 +212,6 @@
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/query/PrincipalComponentsAggregator.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/query/PrincipalComponentsQuery.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/ipca/create/PcaFactory.java" />
-        <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/query/ClustererQuery.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/topology/weka/CobwebClusteringTopology.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/drpc/DrpcQueryRunner.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/create/ClustererFactory.java" />
@@ -220,6 +219,7 @@
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/KmeansClustererState.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/topology/weka/WekaBaseLearningTopology.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/topology/weka/KmeansClusteringTopology.java" />
+        <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/query/ClustererQuery.java" />
       </list>
     </option>
   </component>
@@ -1140,13 +1140,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/query/ClustererQuery.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="64" column="60" selection-start="2332" selection-end="2338" vertical-scroll-proportion="0.0" vertical-offset="405" max-vertical-offset="2374">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/general/Printer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="26" column="13" selection-start="914" selection-end="914" vertical-scroll-proportion="0.33289126" vertical-offset="139" max-vertical-offset="1384">
@@ -1202,7 +1195,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/weka/KmeansClusteringTopology.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="60" column="98" selection-start="2982" selection-end="2982" vertical-scroll-proportion="0.78812414" vertical-offset="91" max-vertical-offset="1656">
+        <state line="60" column="98" selection-start="2982" selection-end="2982" vertical-scroll-proportion="0.0" vertical-offset="91" max-vertical-offset="1656">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/query/ClustererQuery.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="99" column="107" selection-start="3982" selection-end="3982" vertical-scroll-proportion="0.73607427" vertical-offset="750" max-vertical-offset="2359">
           <folding />
         </state>
       </provider>
