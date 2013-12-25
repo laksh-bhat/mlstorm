@@ -136,19 +136,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="KmeansClustererState.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="KmeansClustererState.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/KmeansClustererState.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="91" column="38" selection-start="3009" selection-end="3009" vertical-scroll-proportion="0.0" vertical-offset="915" max-vertical-offset="2644">
+            <state line="83" column="64" selection-start="2561" selection-end="2561" vertical-scroll-proportion="0.29840848" vertical-offset="900" max-vertical-offset="2659">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BaseWekaState.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="BaseWekaState.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/BaseWekaState.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="139" column="0" selection-start="3984" selection-end="3984" vertical-scroll-proportion="0.37267905" vertical-offset="1699" max-vertical-offset="2719">
+            <state line="139" column="0" selection-start="3984" selection-end="3984" vertical-scroll-proportion="0.0" vertical-offset="214" max-vertical-offset="2719">
               <folding>
                 <element signature="e#2110#2111#0" expanded="true" />
                 <element signature="e#2149#2150#0" expanded="true" />
@@ -217,10 +217,10 @@
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/create/ClustererFactory.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/BaseOnlineWekaState.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/topology/weka/KmeansClusteringTopology.java" />
-        <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/KmeansClustererState.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/topology/weka/WekaBaseLearningTopology.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/query/ClustererQuery.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/BaseWekaState.java" />
+        <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/KmeansClustererState.java" />
       </list>
     </option>
   </component>
@@ -1188,20 +1188,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/KmeansClustererState.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="91" column="38" selection-start="3009" selection-end="3009" vertical-scroll-proportion="0.0" vertical-offset="915" max-vertical-offset="2644">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/BaseWekaState.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="139" column="0" selection-start="3984" selection-end="3984" vertical-scroll-proportion="0.37267905" vertical-offset="1699" max-vertical-offset="2719">
+        <state line="139" column="0" selection-start="3984" selection-end="3984" vertical-scroll-proportion="0.0" vertical-offset="214" max-vertical-offset="2719">
           <folding>
             <element signature="e#2110#2111#0" expanded="true" />
             <element signature="e#2149#2150#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/KmeansClustererState.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="83" column="64" selection-start="2561" selection-end="2561" vertical-scroll-proportion="0.29840848" vertical-offset="900" max-vertical-offset="2659">
+          <folding />
         </state>
       </provider>
     </entry>

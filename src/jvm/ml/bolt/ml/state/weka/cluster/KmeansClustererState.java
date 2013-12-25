@@ -81,6 +81,7 @@ public class KmeansClustererState extends BaseWekaState {
      * @throws Exception
      */
     public final void updateClustererNumClusters(int k) throws Exception {
+        Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
         System.err.println("DEBUG: updating k and rebuilding clusterer");
         synchronized (lock){
             numClusters = k;
