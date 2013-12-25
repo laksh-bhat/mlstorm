@@ -139,7 +139,7 @@
       <file leaf-file-name="KmeansClustererState.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/KmeansClustererState.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="83" column="64" selection-start="2561" selection-end="2561" vertical-scroll-proportion="0.29840848" vertical-offset="900" max-vertical-offset="2659">
+            <state line="102" column="86" selection-start="3432" selection-end="3432" vertical-scroll-proportion="0.49734747" vertical-offset="1035" max-vertical-offset="2659">
               <folding />
             </state>
           </provider>
@@ -1200,7 +1200,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/KmeansClustererState.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="83" column="64" selection-start="2561" selection-end="2561" vertical-scroll-proportion="0.29840848" vertical-offset="900" max-vertical-offset="2659">
+        <state line="102" column="86" selection-start="3432" selection-end="3432" vertical-scroll-proportion="0.49734747" vertical-offset="1035" max-vertical-offset="2659">
           <folding />
         </state>
       </provider>

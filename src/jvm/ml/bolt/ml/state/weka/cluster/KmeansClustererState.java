@@ -100,7 +100,7 @@ public class KmeansClustererState extends BaseWekaState {
             long startTime = System.currentTimeMillis();
             this.clusterer.buildClusterer(dataset);
             long endTime = System.currentTimeMillis();
-            this.trainingDuration = getTrainingDuration() + ((endTime - startTime)/2);
+            this.trainingDuration = (getTrainingDuration() + (endTime - startTime))/2;
         }
     }
 
