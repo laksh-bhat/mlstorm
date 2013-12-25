@@ -88,6 +88,10 @@ public class ClustererQuery {
                 String[] queryParts = query.split(",");
                 int partitionToBeUpdated = Integer.valueOf(queryParts[0].trim());
                 int newK = Integer.valueOf(queryParts[1].trim());
+
+                queryResults.add(MessageFormat.format("k update request ({1}->{3}) received at [{0}]; " +
+                        "average trainingtime for k = [{1}] = [{2}]ms",
+                        localPartition, clustererState.getNumClusters(), clustererState.getTrainingDuration(), newK));
                 try {
                     if (partitionToBeUpdated == localPartition) {
                         System.err.println("DEBUG: updating local partition " + localPartition);
@@ -97,7 +101,6 @@ public class ClustererQuery {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                queryResults.add(MessageFormat.format("update request received at [{0}]; average trainingtime = [{1}]ms", localPartition, clustererState.getTrainingDuration()));
             }
             return queryResults;
         }
