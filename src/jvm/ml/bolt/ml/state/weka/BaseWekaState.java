@@ -65,6 +65,14 @@ public abstract class BaseWekaState implements State {
     public abstract int predict(final Instance testInstance) throws Exception;
 
     /**
+     * returns average training time
+     * @return
+     */
+    public long getTrainingDuration() {
+        return trainingDuration;
+    }
+
+    /**
      * Do any DB setup etc work here before you commit
      *
      * @param txId
@@ -104,8 +112,8 @@ public abstract class BaseWekaState implements State {
      * do anything you want after updating the classifier
      */
     protected abstract void postUpdate();
-
     protected abstract void emptyDataset();
+
     /**
      * do anything you want after updating the classifier
      * @throws Exception
@@ -123,9 +131,9 @@ public abstract class BaseWekaState implements State {
     protected abstract void train() throws Exception;
 
     protected Map<Integer, double[]> featureVectorsInWindow;
-
     protected FastVector wekaAttributes;
     protected Instances dataset;
     protected final int windowSize;
+    protected long trainingDuration;
 }
 

@@ -89,14 +89,17 @@ public class KmeansClustererState extends BaseWekaState {
             this.wekaAttributes = WekaUtils.getFeatureVectorForKmeansClustering(numClusters, featuresCount);
             this.wekaAttributes.trimToSize();
             this.dataset = new Instances("training", this.wekaAttributes, this.windowSize);
-
+            this.trainingDuration = 0;
         }
     }
 
     @Override
     protected void train() throws Exception {
         synchronized (lock) {
+            long startTime = System.currentTimeMillis();
             this.clusterer.buildClusterer(dataset);
+            long endTime = System.currentTimeMillis();
+            this.trainingDuration = getTrainingDuration() + ((endTime - startTime)/2);
         }
     }
 
@@ -107,7 +110,7 @@ public class KmeansClustererState extends BaseWekaState {
     @Override
     protected synchronized void createDataSet() throws Exception {
         // Our aim is to create a singleton dataset which will be reused by all trainingInstances
-        if (dataset != null) return;
+        if (this.dataset != null) return;
 
         // hack to obtain the feature set length
         Collection<double[]> features = this.featureVectorsInWindow.values();
@@ -117,13 +120,13 @@ public class KmeansClustererState extends BaseWekaState {
         }
 
         // we are now ready to create a training dataset metadata
-        dataset = new Instances("training", this.wekaAttributes, windowSize);
+        dataset = new Instances("training", this.wekaAttributes, this.windowSize);
     }
 
     @Override
     protected synchronized void loadWekaAttributes(final double[] features) {
         if (this.wekaAttributes == null) {
-            featuresCount = features.length;
+            this.featuresCount = features.length;
             this.wekaAttributes = WekaUtils.getFeatureVectorForKmeansClustering(numClusters, features.length);
             this.wekaAttributes.trimToSize();
         }

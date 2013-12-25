@@ -97,7 +97,7 @@ public class ClustererQuery {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                queryResults.add(MessageFormat.format("update request received at [{0}]", localPartition));
+                queryResults.add(MessageFormat.format("update request received at [{0}]; average trainingtime = [{1}]ms", localPartition, clustererState.getTrainingDuration()));
             }
             return queryResults;
         }
