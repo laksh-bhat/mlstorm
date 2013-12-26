@@ -33,7 +33,7 @@ public class DrpcQueryRunner {
             return;
         }
 
-        final DRPCClient client = new DRPCClient(args[0], 3772, 100000 /*timeout*/);
+        final DRPCClient client = new DRPCClient(args[0], 3772, 1000000 /*timeout*/);
         System.err.println(runQuery(args[1], args[2], client));
         client.close();
     }
