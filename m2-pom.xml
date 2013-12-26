@@ -22,7 +22,7 @@
 			<id>clojars.org</id>
 			<url>http://clojars.org/repo</url>
 		</repository>
-		<!--other repositories if any-->
+		<!--Local repository -->
     		<repository>
             		<id>project.local</id>
                     	<name>project</name>
@@ -58,13 +58,6 @@
 			<artifactId>commons-lang3</artifactId>
 			<version>3.0</version>
 		</dependency>
-                <!--<dependency>
-    			<groupId>com.microsoft.sqlserver</groupId>
-    			<artifactId>sqljdbc</artifactId>
-			<version>4</version>
-			<scope>system</scope>
-    			<systemPath>${basedir}/lib/sqljdbc4.jar</systemPath>
-                </dependency> -->
 		<dependency>
 		    <groupId>com.microsoft.sqlserver</groupId>
 		    <artifactId>sqljdbc</artifactId>
@@ -78,17 +71,17 @@
    		  <version>2.2.4</version>
    		  <scope>compile</scope>
    		</dependency>
+   		
 		<dependency>
 		  <groupId>nz.ac.waikato.cms.weka</groupId>
 	          <artifactId>weka-stable</artifactId>
 	          <version>3.6.6</version>
 		</dependency>
 		<dependency>
-			<groupId>com.googlecode.efficient-java-matrix-library</groupId>
-			<artifactId>ejml</artifactId>
-			<version>0.23</version>
+		  <groupId>com.googlecode.efficient-java-matrix-library</groupId>
+		  <artifactId>ejml</artifactId>
+	          <version>0.23</version>
 		</dependency>
-
 	</dependencies>
 
 	<build>
