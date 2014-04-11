@@ -34,9 +34,10 @@ import java.util.Collection;
 
 public class ClustererState extends BaseWekaState {
     private final Clusterer clusterer;
-    private int numClusters;
+    private final int numClusters;
     private final Object lock;
-    private boolean emitAfterUpdate;
+    private final boolean emitAfterUpdate;
+    private boolean isTrained;
 
 
     public ClustererState(String clustererName, int numClusters, int windowSize, boolean emitAfterUpdate) throws Exception {
@@ -81,6 +82,7 @@ public class ClustererState extends BaseWekaState {
             this.clusterer.buildClusterer(dataset);
             long endTime = System.currentTimeMillis();
             this.trainingDuration = (getTrainingDuration() + (endTime - startTime))/2;
+            this.isTrained = true;
         }
     }
 
@@ -114,6 +116,10 @@ public class ClustererState extends BaseWekaState {
 
     public boolean isEmitAfterUpdate() {
         return emitAfterUpdate;
+    }
+
+    public boolean isTrained() {
+        return isTrained;
     }
 }
 

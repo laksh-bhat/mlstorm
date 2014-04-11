@@ -128,7 +128,7 @@ public abstract class BaseWekaState implements State {
 
     public Instance makeWekaInstance(double[] featureVector){
         if (wekaAttributes == null) loadWekaAttributes(featureVector);
-        
+
         Instance instance = new DenseInstance(wekaAttributes.size());
         for (int i = 0; i < featureVector.length && i < wekaAttributes.size(); i++)
             instance.setValue(i , featureVector[i]);

@@ -34,18 +34,19 @@ public class ClustererUpdater implements StateUpdater<ClustererState> {
     private int localPartition, numPartitions;
 
     @Override
-    public void updateState (final ClustererState state,
-                             final List<TridentTuple> tuples,
-                             final TridentCollector collector)
-    {
+    public void updateState(final ClustererState state,
+                            final List<TridentTuple> tuples,
+                            final TridentCollector collector) {
         for (TridentTuple tuple : tuples) {
             double[] fv = (double[]) tuple.getValueByField("featureVector");
             int key = tuple.getIntegerByField("key");
             state.getFeatureVectorsInWindow().put(key, fv);
 
             try {
-                int label = state.getClusterer().clusterInstance(state.makeWekaInstance(fv));
-                if (state.isEmitAfterUpdate()) collector.emit(new Values(localPartition, key, label));
+                if (state.isTrained()) {
+                    int label = state.getClusterer().clusterInstance(state.makeWekaInstance(fv));
+                    if (state.isEmitAfterUpdate()) collector.emit(new Values(localPartition, key, label));
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -56,13 +57,13 @@ public class ClustererUpdater implements StateUpdater<ClustererState> {
     }
 
     @Override
-    public void prepare (final Map map, final TridentOperationContext tridentOperationContext) {
+    public void prepare(final Map map, final TridentOperationContext tridentOperationContext) {
         localPartition = tridentOperationContext.getPartitionIndex();
         numPartitions = tridentOperationContext.numPartitions();
     }
 
     @Override
-    public void cleanup () {
+    public void cleanup() {
 
     }
 }
