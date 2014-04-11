@@ -38,7 +38,7 @@ public class KmeansClustererState extends BaseWekaState {
     private SimpleKMeans clusterer;
     private int numClusters;
     private int featuresCount;
-    private final Object lock = new Object();
+    private final Object lock;
 
 
     public KmeansClustererState(int numClusters, int windowSize) throws Exception {
@@ -47,6 +47,7 @@ public class KmeansClustererState extends BaseWekaState {
         clusterer = new SimpleKMeans();
         clusterer.setNumClusters(numClusters);
         this.numClusters = numClusters;
+        lock = new Object();
     }
 
     /**
@@ -63,12 +64,12 @@ public class KmeansClustererState extends BaseWekaState {
     @Override
     protected void emptyDataset(){
         synchronized (lock) {
-    	    this.dataset.delete();
+    	    this.dataset.clear();
         }
     }
 
     @Override
-    public int predict(Instance testInstance) throws Exception {
+    public double predict(Instance testInstance) throws Exception {
         assert (testInstance != null);
         synchronized (lock) {
             return clusterer.clusterInstance(testInstance);
@@ -87,7 +88,7 @@ public class KmeansClustererState extends BaseWekaState {
             numClusters = k;
             clusterer = new SimpleKMeans();
             clusterer.setNumClusters(numClusters);
-            this.wekaAttributes = WekaUtils.getFeatureVectorForKmeansClustering(numClusters, featuresCount);
+            this.wekaAttributes = WekaUtils.makeFeatureVectorForBatchClustering(numClusters, featuresCount);
             this.wekaAttributes.trimToSize();
             this.dataset = new Instances("training", this.wekaAttributes, this.windowSize);
             this.trainingDuration = 0;
@@ -128,7 +129,7 @@ public class KmeansClustererState extends BaseWekaState {
     protected synchronized void loadWekaAttributes(final double[] features) {
         if (this.wekaAttributes == null) {
             this.featuresCount = features.length;
-            this.wekaAttributes = WekaUtils.getFeatureVectorForKmeansClustering(numClusters, features.length);
+            this.wekaAttributes = WekaUtils.makeFeatureVectorForBatchClustering(numClusters, features.length);
             this.wekaAttributes.trimToSize();
         }
     }

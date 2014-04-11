@@ -19,7 +19,6 @@ package bolt.ml.state.weka.cluster.update;
  */
 
 import bolt.ml.state.weka.cluster.KmeansClustererState;
-import org.apache.commons.lang.ArrayUtils;
 import storm.trident.operation.TridentCollector;
 import storm.trident.operation.TridentOperationContext;
 import storm.trident.state.StateUpdater;
@@ -44,8 +43,8 @@ public class KmeansClusterUpdater implements StateUpdater<KmeansClustererState> 
                              final TridentCollector collector)
     {
         for (TridentTuple tuple : tuples) {
-            Double[] fv = (Double[]) tuple.getValueByField("featureVector");
-            state.getFeatureVectorsInWindow().put(tuple.getIntegerByField("key"), ArrayUtils.toPrimitive(fv));
+            double[] fv = (double[]) tuple.getValueByField("featureVector");
+            state.getFeatureVectorsInWindow().put(tuple.getIntegerByField("key"), fv);
         }
 
         System.err.println(MessageFormat.format(

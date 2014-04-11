@@ -8,8 +8,8 @@ import backtype.storm.generated.InvalidTopologyException;
 import backtype.storm.generated.StormTopology;
 import backtype.storm.topology.IRichSpout;
 import bolt.ml.state.weka.cluster.CobwebClustererState;
-import bolt.ml.state.weka.cluster.create.ClustererFactory;
-import bolt.ml.state.weka.cluster.query.ClustererQuery;
+import bolt.ml.state.weka.cluster.create.MlStormClustererFactory;
+import bolt.ml.state.weka.cluster.query.MlStormClustererQuery;
 import bolt.ml.state.weka.cluster.update.CobwebClusterUpdater;
 import com.google.common.collect.Lists;
 import spout.mddb.MddbFeatureExtractorSpout;
@@ -51,8 +51,8 @@ public class CobwebClusteringTopology extends WekaBaseLearningTopology {
         int numWorkers = Integer.valueOf(args[1]);
         int windowSize = Integer.valueOf(args[2]);
         StateUpdater stateUpdater = new CobwebClusterUpdater();
-        StateFactory stateFactory = new ClustererFactory.CobwebClustererFactory(numWorkers, windowSize);
-        QueryFunction<CobwebClustererState, String> queryFunction = new ClustererQuery.CobwebClustererQuery();
+        StateFactory stateFactory = new MlStormClustererFactory.CobwebClustererFactory(numWorkers, windowSize);
+        QueryFunction<CobwebClustererState, String> queryFunction = new MlStormClustererQuery.CobwebClustererQuery();
         IRichSpout features = new MddbFeatureExtractorSpout(args[0], fields);
         StormTopology stormTopology = buildTopology(features, numWorkers, stateUpdater, stateFactory, queryFunction, null, "cobweb", null);
 

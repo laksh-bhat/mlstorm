@@ -26,8 +26,8 @@ import backtype.storm.generated.InvalidTopologyException;
 import backtype.storm.generated.StormTopology;
 import backtype.storm.topology.IRichSpout;
 import bolt.ml.state.weka.cluster.KmeansClustererState;
-import bolt.ml.state.weka.cluster.create.ClustererFactory;
-import bolt.ml.state.weka.cluster.query.ClustererQuery;
+import bolt.ml.state.weka.cluster.create.MlStormClustererFactory;
+import bolt.ml.state.weka.cluster.query.MlStormClustererQuery;
 import bolt.ml.state.weka.cluster.update.KmeansClusterUpdater;
 import com.google.common.collect.Lists;
 import spout.mddb.MddbFeatureExtractorSpout;
@@ -49,9 +49,9 @@ public class KmeansClusteringTopology extends WekaBaseLearningTopology {
         int k = Integer.valueOf(args[3]);
         int parallelism = Integer.valueOf(args[4]);
         StateUpdater stateUpdater = new KmeansClusterUpdater();
-        StateFactory stateFactory = new ClustererFactory.KmeansClustererFactory(k, windowSize);
-        QueryFunction<KmeansClustererState, String> queryFunction = new ClustererQuery.KmeansClustererQuery();
-        QueryFunction<KmeansClustererState, String> parameterUpdateFunction = new ClustererQuery.KmeansNumClustersUpdateQuery();
+        StateFactory stateFactory = new MlStormClustererFactory.KmeansClustererFactory(k, windowSize);
+        QueryFunction<KmeansClustererState, String> queryFunction = new MlStormClustererQuery.KmeansClustererQuery();
+        QueryFunction<KmeansClustererState, String> parameterUpdateFunction = new MlStormClustererQuery.KmeansNumClustersUpdateQuery();
         IRichSpout features = new MddbFeatureExtractorSpout(args[0], fields);
         StormTopology stormTopology = buildTopology(features, parallelism, stateUpdater, stateFactory, queryFunction, parameterUpdateFunction, "kmeans", "kUpdate");
 

@@ -157,7 +157,7 @@ public class MddbFeatureExtractorSpout implements IRichSpout {
                     Double[] features = map.get("chi1").toArray(new Double[0]);
                     Double[] moreFeatures = map.get("chi2").toArray(new Double[0]);
                     Double[] both = (Double[]) ArrayUtils.addAll(features, moreFeatures);
-                    collector.emit(new Values(messageId++, both));
+                    collector.emit(new Values(messageId++, ArrayUtils.toPrimitive(both)));
                 }
                 scanner = moveSpoutForward();
             } catch (Exception e) {

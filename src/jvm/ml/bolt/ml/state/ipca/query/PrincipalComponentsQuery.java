@@ -1,7 +1,7 @@
 package bolt.ml.state.ipca.query;
 
 import backtype.storm.tuple.Values;
-import bolt.ml.state.ipca.PrincipalComponents;
+import bolt.ml.state.ipca.PrincipalComponentsBase;
 import storm.trident.operation.TridentCollector;
 import storm.trident.operation.TridentOperationContext;
 import storm.trident.state.QueryFunction;
@@ -30,13 +30,13 @@ import java.util.Map;
  */
 
 
-public final class PrincipalComponentsQuery implements QueryFunction<PrincipalComponents, Object> {
+public final class PrincipalComponentsQuery implements QueryFunction<PrincipalComponentsBase, Object> {
     @Override
-    public List<Object> batchRetrieve(final PrincipalComponents principalComponents,
+    public List<Object> batchRetrieve(final PrincipalComponentsBase principalComponentsBase,
                                           final List<TridentTuple> queryTuples) {
 
         final List<Object> components = new ArrayList<Object>();
-        for (TridentTuple ignored : queryTuples) components.add(principalComponents.getPrincipalComponents());
+        for (TridentTuple ignored : queryTuples) components.add(principalComponentsBase.getPrincipalComponents());
         return components;
     }
 

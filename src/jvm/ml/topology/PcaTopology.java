@@ -8,7 +8,7 @@ import backtype.storm.generated.InvalidTopologyException;
 import backtype.storm.generated.StormTopology;
 import backtype.storm.topology.IRichSpout;
 import backtype.storm.tuple.Fields;
-import bolt.ml.state.ipca.create.PcaFactory;
+import bolt.ml.state.ipca.create.WindowedPcaFactory;
 import bolt.ml.state.ipca.query.PrincipalComponentsAggregator;
 import bolt.ml.state.ipca.query.PrincipalComponentsQuery;
 import bolt.ml.state.ipca.update.PrincipalComponentUpdater;
@@ -74,7 +74,7 @@ public class PcaTopology {
         ITridentSpout batchSpout = new RichSpoutBatchExecutor(sensorSpout);
         TridentTopology topology = new TridentTopology();
         Stream sensorStream = topology.newStream("sensorSpout", batchSpout);
-        StateFactory pcaFactory = new PcaFactory(pcaRowWidth, numPrincipalComponents);
+        StateFactory pcaFactory = new WindowedPcaFactory(pcaRowWidth, numPrincipalComponents);
 
         TridentState principalComponents =
                 sensorStream

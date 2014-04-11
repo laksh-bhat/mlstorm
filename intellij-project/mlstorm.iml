@@ -16,6 +16,7 @@
         <SOURCES>
           <root url="file://$MODULE_DIR$/../lib" />
           <root url="jar://$MODULE_DIR$/../lib/storm-0.8.3-wip3.jar!/src/jvm" />
+          <root url="jar://$USER_HOME$/.ideaLibSources/ejml-0.23-sources.jar!/" />
         </SOURCES>
         <jarDirectory url="file://$MODULE_DIR$/../lib" recursive="false" />
         <jarDirectory url="file://$MODULE_DIR$/../lib" recursive="false" type="SOURCES" />

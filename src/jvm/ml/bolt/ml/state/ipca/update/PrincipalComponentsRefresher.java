@@ -1,6 +1,6 @@
 package bolt.ml.state.ipca.update;
 
-import bolt.ml.state.ipca.PrincipalComponents;
+import bolt.ml.state.ipca.PrincipalComponentsBase;
 import storm.trident.operation.TridentCollector;
 import storm.trident.operation.TridentOperationContext;
 import storm.trident.state.StateUpdater;
@@ -14,9 +14,9 @@ import java.util.Map;
  * Date: 12/16/13
  * Time: 12:36 PM
  */
-public class PrincipalComponentsRefresher implements StateUpdater<PrincipalComponents> {
+public class PrincipalComponentsRefresher implements StateUpdater<PrincipalComponentsBase> {
     @Override
-    public void updateState (final PrincipalComponents principalComponents,
+    public void updateState (final PrincipalComponentsBase principalComponentsBase,
                              final List<TridentTuple> tuples,
                              final TridentCollector collector)
     {
