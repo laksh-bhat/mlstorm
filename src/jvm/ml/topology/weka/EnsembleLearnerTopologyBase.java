@@ -85,7 +85,7 @@ public class EnsembleLearnerTopologyBase {
         for (TridentState ensembleState : ensembleStates) streamsToMerge.add(ensembleState.newValuesStream());
 
         // create meta state by reducing outputs from base learners/clusterers
-        TridentState metaState = topology.merge(streamsToMerge)
+        TridentState metaState = topology.merge(partitionOutputFields, streamsToMerge)
                 .groupBy(new Fields("key"))
                 .aggregate(partitionOutputFields, metaFeatureVectorBuilder, clustererUpdaterFields)
                 .global()
