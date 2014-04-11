@@ -10,7 +10,7 @@ import weka.classifiers.trees.J48;
 import weka.classifiers.trees.RandomForest;
 import weka.clusterers.*;
 import weka.core.Attribute;
-import weka.filters.supervised.attribute.AttributeSelection;
+import weka.filters.AllFilter;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -104,7 +104,7 @@ public class WekaUtils {
                 kmeans = new SimpleKMeans();
                 kmeans.setNumClusters(numClusters);
                 FilteredClusterer fc = new FilteredClusterer();
-                fc.setFilter(new AttributeSelection());
+                fc.setFilter(new AllFilter());
                 fc.setClusterer(kmeans);
                 return fc;
             default:
