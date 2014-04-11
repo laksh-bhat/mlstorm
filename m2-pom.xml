@@ -74,8 +74,8 @@
    		
 		<dependency>
 		  <groupId>nz.ac.waikato.cms.weka</groupId>
-	          <artifactId>weka-stable</artifactId>
-	          <version>3.6.6</version>
+	          <artifactId>weka-dev</artifactId>
+	          <version>3.7.10</version>
 		</dependency>
 		<dependency>
 		  <groupId>com.googlecode.efficient-java-matrix-library</groupId>
