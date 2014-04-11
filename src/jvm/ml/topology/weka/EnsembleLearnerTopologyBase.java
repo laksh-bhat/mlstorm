@@ -87,8 +87,9 @@ public class EnsembleLearnerTopologyBase {
         // create meta state by reducing outputs from base learners/clusterers
         TridentState metaState = topology.merge(streamsToMerge)
                 .groupBy(new Fields("key"))
+                // NOTE: Aggregator adds the grouping field to the OutputFields
                 .aggregate(partitionProjectionFields, metaFeatureVectorBuilder, new Fields("featureVector"))
-                .global()
+                .global() // Meta classifier/clusterer is not distributed.
                 .partitionPersist(metaStateFactory, clustererUpdaterFields, metaStateUpdater)
                 .parallelismHint(parallelism);
 
