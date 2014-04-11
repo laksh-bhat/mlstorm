@@ -45,7 +45,7 @@ public class ClustererUpdater implements StateUpdater<ClustererState> {
 
             try {
                 int label = state.getClusterer().clusterInstance(state.makeWekaInstance(fv));
-                if (state.isEmitAfterUpdate()) collector.emit(new Values(localPartition, label));
+                if (state.isEmitAfterUpdate()) collector.emit(new Values(localPartition, key, label));
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -55,7 +55,6 @@ public class EnsembleLearnerTopologyBase {
         Stream featuresStream       = topology.newStream("ensembleStream", spout);
 
         final Fields clustererUpdaterFields     = new Fields("key", "featureVector");
-        final Fields partitionOutputFields      = new Fields("partition", "label");
         final Fields partitionProjectionFields  = new Fields("partition", "key", "label");
         final Fields partitionQueryOutputFields = new Fields("partition", "result");
 
@@ -74,7 +73,7 @@ public class EnsembleLearnerTopologyBase {
                             stateFactories.get(i),
                             clustererUpdaterFields,
                             stateUpdaters.get(i),
-                            partitionOutputFields
+                            partitionProjectionFields
                     ).parallelismHint(parallelism))
             ;
         }
@@ -86,10 +85,9 @@ public class EnsembleLearnerTopologyBase {
         for (TridentState ensembleState : ensembleStates) streamsToMerge.add(ensembleState.newValuesStream());
 
         // create meta state by reducing outputs from base learners/clusterers
-        TridentState metaState = topology.
-                merge(partitionProjectionFields, streamsToMerge)
+        TridentState metaState = topology.merge(streamsToMerge)
                 .groupBy(new Fields("key"))
-                .aggregate(partitionOutputFields, metaFeatureVectorBuilder, clustererUpdaterFields)
+                .aggregate(partitionProjectionFields, metaFeatureVectorBuilder, new Fields("featureVector"))
                 .global()
                 .partitionPersist(metaStateFactory, clustererUpdaterFields, metaStateUpdater)
                 .parallelismHint(parallelism);
