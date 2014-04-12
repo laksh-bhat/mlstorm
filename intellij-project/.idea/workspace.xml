@@ -91,11 +91,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BptiEnsembleQuery.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="BptiEnsembleQuery.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/drpc/BptiEnsembleQuery.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="24" selection-start="216" selection-end="216" vertical-scroll-proportion="-0.22980501" vertical-offset="255" max-vertical-offset="1723">
+            <state line="55" column="49" selection-start="2330" selection-end="2330" vertical-scroll-proportion="0.0" vertical-offset="301" max-vertical-offset="1723">
               <folding>
+                <element signature="imports" expanded="true" />
                 <element signature="e#1667#1675#0" expanded="true" />
               </folding>
             </state>
@@ -151,10 +152,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FeatureVectorUtils.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="FeatureVectorUtils.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/utils/FeatureVectorUtils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="42" selection-start="1180" selection-end="1180" vertical-scroll-proportion="0.0" vertical-offset="210" max-vertical-offset="1045">
+            <state line="38" column="1" selection-start="1583" selection-end="1583" vertical-scroll-proportion="0.45554036" vertical-offset="237" max-vertical-offset="1301">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -223,8 +224,8 @@
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/BaseWekaState.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/ClustererState.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/update/ClustererUpdater.java" />
-        <option value="$PROJECT_DIR$/../src/jvm/ml/drpc/BptiEnsembleQuery.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/query/MlStormClustererQuery.java" />
+        <option value="$PROJECT_DIR$/../src/jvm/ml/drpc/BptiEnsembleQuery.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/utils/FeatureVectorUtils.java" />
       </list>
     </option>
@@ -1267,13 +1268,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/weka/EnsembleClustererTopology.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="69" column="78" selection-start="3326" selection-end="3326" vertical-scroll-proportion="0.0" vertical-offset="405" max-vertical-offset="1901">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/query/MlStormClustererQuery.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="10" column="32" selection-start="461" selection-end="461" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4180">
@@ -1281,20 +1275,28 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/utils/FeatureVectorUtils.java">
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/weka/EnsembleClustererTopology.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="42" selection-start="1180" selection-end="1180" vertical-scroll-proportion="0.0" vertical-offset="210" max-vertical-offset="1045">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state line="69" column="78" selection-start="3326" selection-end="3326" vertical-scroll-proportion="0.0" vertical-offset="405" max-vertical-offset="1901">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/drpc/BptiEnsembleQuery.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="24" selection-start="216" selection-end="216" vertical-scroll-proportion="-0.22980501" vertical-offset="255" max-vertical-offset="1723">
+        <state line="55" column="49" selection-start="2330" selection-end="2330" vertical-scroll-proportion="0.0" vertical-offset="301" max-vertical-offset="1723">
           <folding>
+            <element signature="imports" expanded="true" />
             <element signature="e#1667#1675#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/utils/FeatureVectorUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="38" column="1" selection-start="1583" selection-end="1583" vertical-scroll-proportion="0.45554036" vertical-offset="237" max-vertical-offset="1301">
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>

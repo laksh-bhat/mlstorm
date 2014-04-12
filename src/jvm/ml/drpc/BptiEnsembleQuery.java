@@ -53,7 +53,7 @@ public class BptiEnsembleQuery {
                 Double[] features = map.get("chi1").toArray(new Double[0]);
                 Double[] moreFeatures = map.get("chi2").toArray(new Double[0]);
                 Double[] both = (Double[]) ArrayUtils.addAll(features, moreFeatures);
-                String parameters = serializeFeatureVector(both);
+                String parameters = serializeFeatureVector(ArrayUtils.toPrimitive(both));
                 System.err.println(runQuery(args[1], parameters, client));
             }
         }

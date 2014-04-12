@@ -30,7 +30,7 @@ public class FeatureVectorUtils {
     }
 
 
-    public static String serializeFeatureVector(Double[] both) throws IOException {
+    public static String serializeFeatureVector(double[] both) throws IOException {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
         objectOutputStream.writeObject(both);
