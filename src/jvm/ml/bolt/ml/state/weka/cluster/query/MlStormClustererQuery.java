@@ -8,14 +8,13 @@ import storm.trident.operation.TridentCollector;
 import storm.trident.operation.TridentOperationContext;
 import storm.trident.state.QueryFunction;
 import storm.trident.tuple.TridentTuple;
+import utils.FeatureVectorUtils;
 import weka.core.Instance;
 
 import java.io.IOException;
 import java.io.Serializable;
 import java.text.MessageFormat;
 import java.util.*;
-
-import static utils.FeatureVectorUtils.deserializeToFeatureVector;
 
 /**
  * Created by lbhat@DaMSl on 4/10/14.
@@ -119,7 +118,7 @@ public class MlStormClustererQuery {
             for (TridentTuple query : queryTuples) {
                 String q = query.getStringByField("args");
                 try {
-                    double[] featureVector = deserializeToFeatureVector(q);
+                    double[] featureVector = FeatureVectorUtils.deserializeToFeatureVector(q);
                     Instance testInstance = clustererState.makeWekaInstance(featureVector);
                     double[] distribution = clustererState.getClusterer().distributionForInstance(testInstance);
                     Integer label = clustererState.getClusterer().clusterInstance(testInstance);
