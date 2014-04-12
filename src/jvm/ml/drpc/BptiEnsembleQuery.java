@@ -6,10 +6,9 @@ import org.apache.commons.lang.ArrayUtils;
 import org.apache.thrift7.TException;
 import utils.SpoutUtils;
 
+import java.io.File;
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 import static utils.FeatureVectorUtils.serializeFeatureVector;
 
@@ -30,6 +29,11 @@ import static utils.FeatureVectorUtils.serializeFeatureVector;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/*
+* Run drpc query as
+* java -cp .:`storm classpath`:$REPO/mlstorm/target/mlstorm-00.01-jar-with-dependencies.jar drpc.BptiEnsembleQuery qp-hd3 EnsembleClusterer /damsl/projects/mddb/bpti_db/features
+* */
 public class BptiEnsembleQuery {
     public static void main(final String[] args) throws IOException, TException, DRPCExecutionException {
         if (args.length < 3) {
@@ -38,7 +42,10 @@ public class BptiEnsembleQuery {
         }
 
         final DRPCClient client = new DRPCClient(args[0], 3772, 1000000 /*timeout*/);
-        Scanner scanner = new Scanner(args[2]);
+        final Queue<String> featureFiles = new ArrayDeque<String>();
+        SpoutUtils.listFilesForFolder(new File(args[2]), featureFiles);
+
+        Scanner scanner = new Scanner(featureFiles.peek());
         int i = 0;
         while (scanner.hasNextLine() && i++ < 1) {
             List<Map<String, List<Double>>> dict = SpoutUtils.pythonDictToJava(scanner.nextLine());

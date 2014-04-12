@@ -64,11 +64,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ClustererUpdater.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="ClustererUpdater.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/update/ClustererUpdater.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="45" column="40" selection-start="1689" selection-end="1689" vertical-scroll-proportion="0.3119015" vertical-offset="312" max-vertical-offset="1631">
+            <state line="45" column="40" selection-start="1689" selection-end="1689" vertical-scroll-proportion="0.0" vertical-offset="312" max-vertical-offset="1631">
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BptiEnsembleQuery.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/../src/jvm/ml/drpc/BptiEnsembleQuery.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="56" column="62" selection-start="2409" selection-end="2409" vertical-scroll-proportion="0.7103064" vertical-offset="330" max-vertical-offset="1723">
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#1667#1675#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -124,6 +136,15 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="MddbFeatureExtractorSpout.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../src/jvm/ml/spout/mddb/MddbFeatureExtractorSpout.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="103" column="63" selection-start="4157" selection-end="4219" vertical-scroll-proportion="0.0" vertical-offset="932" max-vertical-offset="3478">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="WekaClusterers.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/utils/WekaClusterers.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -164,7 +185,6 @@
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/update/MetaClusterer.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/drpc/DrpcQueryRunner.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/utils/FeatureVectorUtils.java" />
-        <option value="$PROJECT_DIR$/../src/jvm/ml/drpc/BptiEnsembleQuery.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/query/ConcensusClusterer.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/query/ConsensusClusterer.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/query/VotingConsensusClusterer.java" />
@@ -197,6 +217,7 @@
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/BaseWekaState.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/ClustererState.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/update/ClustererUpdater.java" />
+        <option value="$PROJECT_DIR$/../src/jvm/ml/drpc/BptiEnsembleQuery.java" />
       </list>
     </option>
   </component>
@@ -347,6 +368,58 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="ml" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="spout" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mlstorm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jvm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ml" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="spout" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mddb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mlstorm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jvm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ml" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="drpc" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -914,7 +987,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/drpc/DrpcQueryRunner.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="23" selection-start="341" selection-end="341" vertical-scroll-proportion="0.0" vertical-offset="1" max-vertical-offset="1345" />
+        <state line="11" column="23" selection-start="341" selection-end="341" vertical-scroll-proportion="0.0" vertical-offset="1" max-vertical-offset="1345">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/utils/FeatureVectorUtils.java">
@@ -924,11 +999,6 @@
             <element signature="imports" expanded="true" />
           </folding>
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/drpc/BptiEnsembleQuery.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="57" column="36" selection-start="2333" selection-end="2333" vertical-scroll-proportion="0.0" vertical-offset="150" max-vertical-offset="1608" />
       </provider>
     </entry>
     <entry file="jar://$PROJECT_DIR$/../lib/storm-0.8.3-wip3.jar!/src/jvm/storm/trident/operation/Function.java">
@@ -1017,13 +1087,6 @@
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/BaseOnlineWekaState.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="26" column="3" selection-start="876" selection-end="876" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2516">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/spout/mddb/MddbFeatureExtractorSpout.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="161" column="45" selection-start="6703" selection-end="6703" vertical-scroll-proportion="0.0" vertical-offset="1967" max-vertical-offset="3478">
           <folding />
         </state>
       </provider>
@@ -1140,13 +1203,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/weka/KmeansClusteringTopology.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="53" column="58" selection-start="2422" selection-end="2422" vertical-scroll-proportion="0.0" vertical-offset="264" max-vertical-offset="1633">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/utils/WekaClusterers.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="3" column="0" selection-start="146" selection-end="146" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="761">
@@ -1211,8 +1267,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/update/ClustererUpdater.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="40" selection-start="1689" selection-end="1689" vertical-scroll-proportion="0.3119015" vertical-offset="312" max-vertical-offset="1631">
+        <state line="45" column="40" selection-start="1689" selection-end="1689" vertical-scroll-proportion="0.0" vertical-offset="312" max-vertical-offset="1631">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/weka/KmeansClusteringTopology.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="53" column="58" selection-start="2422" selection-end="2422" vertical-scroll-proportion="0.0" vertical-offset="264" max-vertical-offset="1633">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/spout/mddb/MddbFeatureExtractorSpout.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="103" column="63" selection-start="4157" selection-end="4219" vertical-scroll-proportion="0.0" vertical-offset="932" max-vertical-offset="3478">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/drpc/BptiEnsembleQuery.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="56" column="62" selection-start="2409" selection-end="2409" vertical-scroll-proportion="0.7103064" vertical-offset="330" max-vertical-offset="1723">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1667#1675#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
