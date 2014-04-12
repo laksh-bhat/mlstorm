@@ -95,7 +95,7 @@ public class MlStormClustererQuery {
 
         @Override
         public void execute(TridentTuple tuple, Map.Entry<Integer, double[]> result, TridentCollector collector) {
-            collector.emit(new Values(result));
+            collector.emit(new Values(result.getKey()));
         }
 
         @Override
