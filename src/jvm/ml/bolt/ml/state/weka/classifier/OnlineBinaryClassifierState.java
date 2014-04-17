@@ -48,7 +48,7 @@ public class OnlineBinaryClassifierState extends BaseOnlineWekaState {
     @Override
     public void train(Instances trainingInstances) throws Exception {
         while (trainingInstances.enumerateInstances().hasMoreElements()) {
-            train(trainingInstances.enumerateInstances().nextElement());
+            train((Instance)trainingInstances.enumerateInstances().nextElement());
         }
     }
 
