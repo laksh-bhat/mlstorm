@@ -5,6 +5,8 @@ import weka.classifiers.bayes.NaiveBayesUpdateable;
 import weka.classifiers.functions.*;
 import weka.classifiers.lazy.IBk;
 import weka.classifiers.lazy.LWL;
+import weka.classifiers.meta.LogitBoost;
+import weka.classifiers.trees.DecisionStump;
 import weka.classifiers.trees.HoeffdingTree;
 import weka.classifiers.trees.J48;
 import weka.classifiers.trees.RandomForest;
@@ -67,9 +69,10 @@ public class WekaUtils {
         switch(WekaClassificationAlgorithms.valueOf(wekaClassifier)){
             case decisionTree: return new J48();
             case svm: return new SMO();
-            case logisticRegression: return new Logistic();
+            case logisticRegression: return new SimpleLogistic();
             case randomForest: return new RandomForest();
-            case guassianProcesses: return new GaussianProcesses();
+            case decisionStump: return new DecisionStump();
+            case boosting: return new LogitBoost();
             case perceptron: return new MultilayerPerceptron();
             default: return new SMO();
         }
