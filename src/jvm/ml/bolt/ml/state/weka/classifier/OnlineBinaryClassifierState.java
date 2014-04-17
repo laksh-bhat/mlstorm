@@ -1,17 +1,9 @@
-package bolt.ml.state.weka.cluster;
-
-import bolt.ml.state.weka.BaseOnlineWekaState;
-import bolt.ml.state.weka.utils.WekaUtils;
-import weka.clusterers.Cobweb;
-import weka.core.Instance;
-import weka.core.Instances;
-
-import java.util.Collection;
+package bolt.ml.state.weka.classifier;
 
 /**
- * Created by lbhat@DaMSl on 4/10/14.
+ * Created by lbhat@DaMSl on 4/17/14.
  * <p/>
- * Copyright {2013} {Lakshmisha Bhat <laksh85@gmail.com>}
+ * Copyright {2013} {Lakshmisha Bhat}
  * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,37 +18,42 @@ import java.util.Collection;
  * limitations under the License.
  */
 
+import bolt.ml.state.weka.BaseOnlineWekaState;
+import bolt.ml.state.weka.utils.WekaUtils;
+import weka.classifiers.Classifier;
+import weka.classifiers.UpdateableClassifier;
+import weka.core.Instance;
+import weka.core.Instances;
+
+import java.util.Collection;
 
 /**
- * Example of a clustering state
+ * Example of a online learner state
  * <p/>
  * Look at abstract base class for method details
- * The base class gives the structure and the BinaryClassifierState classes implement them
+ * The base class gives the structure and the OnlineBinaryClassifierState classes implement them
  */
 
-public class CobwebClustererState extends BaseOnlineWekaState {
-    private Cobweb clusterer;
-    private int numClusters;
+public class OnlineBinaryClassifierState extends BaseOnlineWekaState {
+
+    private Classifier updateableClassifier;
     private final Object lock = new Object();
 
-    public CobwebClustererState(int numClusters, int windowSize) {
+    public OnlineBinaryClassifierState(String classifier, int windowSize) {
         super(windowSize);
         // This is where you create your own classifier and set the necessary parameters
-        clusterer = new Cobweb();
-        this.numClusters = numClusters;
+        updateableClassifier = WekaUtils.makeOnlineClassifier(classifier);
     }
 
     @Override
     public void train(Instances trainingInstances) throws Exception {
         while (trainingInstances.enumerateInstances().hasMoreElements()) {
-            train((Instance) trainingInstances.enumerateInstances().nextElement());
+            train(trainingInstances.enumerateInstances().nextElement());
         }
     }
 
     @Override
-    protected void postUpdate() {
-        this.clusterer.updateFinished();
-    }
+    protected void postUpdate() {}
 
     @Override
     protected synchronized void preUpdate() throws Exception {
@@ -72,35 +69,34 @@ public class CobwebClustererState extends BaseOnlineWekaState {
 
         // we are now ready to create a training dataset metadata
         dataset = new Instances("training", this.wekaAttributes, 0);
-        this.clusterer.buildClusterer(dataset.stringFreeStructure());
+        this.updateableClassifier.buildClassifier(dataset.stringFreeStructure());
     }
 
     @Override
     public double predict(Instance testInstance) throws Exception {
         assert (testInstance != null);
         synchronized (lock) {
-            return clusterer.clusterInstance(testInstance);
+            return (int) updateableClassifier.classifyInstance(testInstance);
         }
     }
 
     @Override
     protected synchronized void loadWekaAttributes(final double[] features) {
         if (this.wekaAttributes == null) {
-            this.wekaAttributes = WekaUtils.makeFeatureVectorForOnlineClustering(numClusters, features.length);
+            // Binary classification
+            this.wekaAttributes = WekaUtils.makeFeatureVectorForClassification(features.length - 1 /* don't count class attributes */, 2);
             this.wekaAttributes.trimToSize();
         }
     }
 
     @Override
     protected void train(Instance instance) throws Exception {
-        // setting dataset for the instance is crucial, otherwise you'll hit NPE when weka tries to create a single instance dataset internally
+        // setting dataset for the instance is crucial,
+        // otherwise you'll hit NPE when weka tries to create a single instance dataset internally
         instance.setDataset(dataset);
-        synchronized (lock) {
-            if (instance != null) this.clusterer.updateClusterer(instance);
-        }
-    }
-
-    public int getNumClusters() {
-        return numClusters;
+        if (instance != null && this.updateableClassifier instanceof UpdateableClassifier)
+            synchronized (lock) {
+                ((UpdateableClassifier)this.updateableClassifier).updateClassifier(instance);
+            }
     }
 }

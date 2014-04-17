@@ -18,7 +18,6 @@ package bolt.ml.state.weka;
  * limitations under the License.
  */
 
-import storm.trident.state.State;
 import weka.core.Attribute;
 import weka.core.DenseInstance;
 import weka.core.Instance;
@@ -47,7 +46,7 @@ import java.util.Map;
  * limitations under the License.
  */
 
-public abstract class BaseWekaState implements State {
+public abstract class BaseWekaState implements MlStormWekaState {
 
     /**
      * Construct the State representation for any weka based learning algorithm

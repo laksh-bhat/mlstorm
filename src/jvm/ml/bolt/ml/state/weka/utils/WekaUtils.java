@@ -1,10 +1,10 @@
 package bolt.ml.state.weka.utils;
 
 import weka.classifiers.Classifier;
-import weka.classifiers.functions.GaussianProcesses;
-import weka.classifiers.functions.Logistic;
-import weka.classifiers.functions.SGD;
-import weka.classifiers.functions.SMO;
+import weka.classifiers.bayes.NaiveBayesUpdateable;
+import weka.classifiers.functions.*;
+import weka.classifiers.lazy.IBk;
+import weka.classifiers.lazy.LWL;
 import weka.classifiers.trees.HoeffdingTree;
 import weka.classifiers.trees.J48;
 import weka.classifiers.trees.RandomForest;
@@ -64,14 +64,25 @@ public class WekaUtils {
     }
 
     public static Classifier makeClassifier(String wekaClassifier){
-        switch(WekaAlgorithms.valueOf(wekaClassifier)){
+        switch(WekaClassificationAlgorithms.valueOf(wekaClassifier)){
             case decisionTree: return new J48();
-            case onlineDecisionTree: return new HoeffdingTree();
             case svm: return new SMO();
             case logisticRegression: return new Logistic();
             case randomForest: return new RandomForest();
             case guassianProcesses: return new GaussianProcesses();
-            default: return new SGD();
+            case perceptron: return new MultilayerPerceptron();
+            default: return new SMO();
+        }
+    }
+
+    public static Classifier makeOnlineClassifier(String wekaClassifier){
+        switch (WekaOnlineClassificationAlgorithms.valueOf(wekaClassifier)){
+            case naiveBayes: return new NaiveBayesUpdateable();
+            case locallyWeightedLearner: return new LWL();
+            case nearestNeighbors: return new IBk();
+            case onlineDecisionTree: return new HoeffdingTree();
+            case stochasticGradientDescent: return new SGD();
+            default: return new NaiveBayesUpdateable();
         }
     }
 

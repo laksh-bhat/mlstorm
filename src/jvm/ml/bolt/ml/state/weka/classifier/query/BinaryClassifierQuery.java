@@ -1,14 +1,18 @@
 package bolt.ml.state.weka.classifier.query;
 
 import backtype.storm.tuple.Values;
-import bolt.ml.state.weka.classifier.BinaryClassifierState;
+import bolt.ml.state.weka.MlStormWekaState;
+import bolt.ml.state.weka.cluster.query.MlStormClustererQuery;
 import storm.trident.operation.TridentCollector;
 import storm.trident.operation.TridentOperationContext;
 import storm.trident.state.QueryFunction;
 import storm.trident.tuple.TridentTuple;
+import topology.weka.EnsembleLearnerTopologyBase;
 import weka.core.Instance;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,11 +33,11 @@ import java.util.Map;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class BinaryClassifierQuery implements QueryFunction<BinaryClassifierState, Double> {
+public class BinaryClassifierQuery implements QueryFunction<MlStormWekaState, Double> {
     private int localPartition, numPartitions;
 
     @Override
-    public List<Double> batchRetrieve(final BinaryClassifierState binaryClassifierState, final List<TridentTuple> queryTuples) {
+    public List<Double> batchRetrieve(final MlStormWekaState binaryClassifierState, final List<TridentTuple> queryTuples) {
         List<Double> queryResults = new ArrayList<Double>();
         for (TridentTuple queryTuple : queryTuples) {
             double[] fv = getFeatureVectorFromArgs(queryTuple);
@@ -63,7 +67,7 @@ public class BinaryClassifierQuery implements QueryFunction<BinaryClassifierStat
     }
 
     private double[] getFeatureVectorFromArgs(TridentTuple queryTuple) {
-        String args = queryTuple.getStringByField("args");
+        String args = queryTuple.getStringByField(EnsembleLearnerTopologyBase.drpcQueryArgs.get(0));
         String[] features = args.split(",");
         double[] fv = new double[features.length];
         for (int i = 0; i < features.length; i++) {
@@ -71,5 +75,52 @@ public class BinaryClassifierQuery implements QueryFunction<BinaryClassifierStat
             fv[i] = Double.valueOf(feature);
         }
         return fv;
+    }
+
+    public static class MetaQuery implements QueryFunction<MlStormWekaState, Map.Entry<Double, double[]>> {
+        private int localPartition, numPartitions;
+
+        @Override
+        public List<Map.Entry<Double, double[]>> batchRetrieve(final MlStormWekaState clustererState, final List<TridentTuple> queryTuples) {
+            ArrayList<Map.Entry<Double,double[]>> queryResults = new ArrayList<Map.Entry<Double, double[]>>();
+            for (TridentTuple query : queryTuples) {
+
+                final HashMap<Integer, Map.Entry<Integer, double[]>> voteMap =
+                        (HashMap<Integer, Map.Entry<Integer, double[]>>) query.getValueByField("voteMap");
+                final double[] fv = new double[numPartitions];
+
+                for (Integer key : voteMap.keySet()) fv[key] = voteMap.get(key).getKey();
+
+                try {
+                    Instance testInstance = clustererState.makeWekaInstance(fv);
+                    double[] distribution = null;
+                    double result = clustererState.predict(testInstance);
+                    queryResults.add(new MlStormClustererQuery.Pair<Double, double[]>(result, distribution));
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            return queryResults;
+        }
+
+        @Override
+        public void execute(TridentTuple tuple, Map.Entry<Double, double[]> result, TridentCollector collector) {
+            collector.emit(new Values(result.getKey()));
+        }
+
+        @Override
+        public void prepare(final Map map, final TridentOperationContext tridentOperationContext) {
+            localPartition = tridentOperationContext.getPartitionIndex();
+            numPartitions = tridentOperationContext.numPartitions();
+        }
+
+        @Override
+        public void cleanup() {
+        }
     }
 }

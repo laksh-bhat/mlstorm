@@ -45,7 +45,7 @@ public class BinaryClassifierState extends BaseWekaState {
     public double predict(Instance testInstance) throws Exception {
         assert testInstance != null;
         synchronized (lock) {
-            return classifier.classifyInstance(testInstance);
+            return (int) classifier.classifyInstance(testInstance);
         }
     }
 
@@ -56,7 +56,7 @@ public class BinaryClassifierState extends BaseWekaState {
 
     @Override
     protected void emptyDataset() {
-        synchronized (lock){  dataset.clear(); }
+        dataset.clear();
     }
 
     @Override
@@ -79,7 +79,8 @@ public class BinaryClassifierState extends BaseWekaState {
     @Override
     protected void loadWekaAttributes(double[] features) {
         if (this.wekaAttributes == null) {
-            this.wekaAttributes = WekaUtils.makeFeatureVectorForBatchClustering(features.length, 2 /* binary classification */);
+            this.wekaAttributes = WekaUtils.makeFeatureVectorForBatchClustering
+                    (features.length-1 /* don't count class attributes */, 2 /* binary classification */);
             this.wekaAttributes.trimToSize();
         }
     }

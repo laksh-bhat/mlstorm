@@ -1,7 +1,9 @@
 package bolt.ml.state.weka;
 
-import storm.trident.state.State;
-import weka.core.*;
+import weka.core.Attribute;
+import weka.core.DenseInstance;
+import weka.core.Instance;
+import weka.core.Instances;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -26,7 +28,7 @@ import java.util.Map;
  * limitations under the License.
  */
 
-public abstract class BaseOnlineWekaState implements State {
+public abstract class BaseOnlineWekaState implements MlStormWekaState {
 
     /**
      * Construct the State representation for any weka based online learning algorithm
@@ -39,6 +41,16 @@ public abstract class BaseOnlineWekaState implements State {
                 return size() > windowSize;
             }
         };
+    }
+
+    @Override
+    public Instance makeWekaInstance(double[] featureVector){
+        if (wekaAttributes == null) loadWekaAttributes(featureVector);
+
+        Instance instance = new DenseInstance(wekaAttributes.size());
+        for (int i = 0; i < featureVector.length && i < wekaAttributes.size(); i++)
+            instance.setValue(i , featureVector[i]);
+        return instance;
     }
 
     /**
@@ -96,18 +108,10 @@ public abstract class BaseOnlineWekaState implements State {
      * return the feature collection of the most recent window
      */
 
+    @Override
     public Map<Integer, double[]> getFeatureVectorsInWindow() {
         return featureVectorsInWindow;
     }
-
-    /**
-     * Predict the class label for the test instance
-     * The input parameter is a Weka Instance without the class label
-     *
-     * @param testInstance
-     * @return int, as in the cluster no.
-     */
-    public abstract int predict(final Instance testInstance) throws Exception;
 
     /**
      * @param features

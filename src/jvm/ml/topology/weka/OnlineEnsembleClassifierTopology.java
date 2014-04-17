@@ -12,9 +12,9 @@ import bolt.ml.state.weka.classifier.create.BinaryClassifierFactory;
 import bolt.ml.state.weka.classifier.query.BinaryClassifierQuery;
 import bolt.ml.state.weka.classifier.update.BinaryClassifierStateUpdater;
 import bolt.ml.state.weka.cluster.query.EnsembleLabelDistributionPairAggregator;
-import bolt.ml.state.weka.utils.WekaClassificationAlgorithms;
+import bolt.ml.state.weka.utils.WekaOnlineClassificationAlgorithms;
 import com.google.common.collect.Lists;
-import spout.mddb.MddbFeatureExtractorSpout;
+import spout.AustralianElectricity;
 import storm.trident.operation.ReducerAggregator;
 import storm.trident.state.QueryFunction;
 import storm.trident.state.StateFactory;
@@ -40,22 +40,22 @@ import java.util.List;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class EnsembleClassifierTopology extends EnsembleLearnerTopologyBase {
+public class OnlineEnsembleClassifierTopology extends EnsembleLearnerTopologyBase {
     public static void main(String[] args) throws AlreadyAliveException, InvalidTopologyException {
         if (args.length < 5) {
-            System.err.println(" Where are all the arguments? -- use args -- folder numWorkers windowSize k parallelism");
+            System.err.println(" Where are all the arguments? -- use args -- trainingFile numWorkers windowSize k parallelism");
             return;
         }
 
-        final String[] fields           = {"key", "featureVector"};
-        final String drpcFunctionName   = "ClassifierEnsemble";
+        final String drpcFunctionName = "OnlineClassifierEnsemble";
+        final String[] fields = {"key", "featureVector"};
 
         final int numWorkers  = Integer.valueOf(args[1]);
         final int windowSize  = Integer.valueOf(args[2]);
         final int parallelism = Integer.valueOf(args[3]);
 
         final StateUpdater stateUpdater = new BinaryClassifierStateUpdater();
-        final StateFactory metaFactory  = new BinaryClassifierFactory(WekaClassificationAlgorithms.svm.name(), windowSize);
+        final StateFactory metaFactory  = new BinaryClassifierFactory(WekaOnlineClassificationAlgorithms.stochasticGradientDescent.name(), windowSize);
         final QueryFunction metaQueryFunction = new BinaryClassifierQuery.MetaQuery();
         final ReducerAggregator drpcPartitionResultAggregator =  new EnsembleLabelDistributionPairAggregator();
         final QueryFunction<MlStormWekaState, Double> queryFunction = new BinaryClassifierQuery();
@@ -65,14 +65,14 @@ public class EnsembleClassifierTopology extends EnsembleLearnerTopologyBase {
         final List<QueryFunction> queryFunctions = new ArrayList<QueryFunction>();
         final List<String> queryFunctionNames = new ArrayList<String>();
 
-        for (WekaClassificationAlgorithms alg : WekaClassificationAlgorithms.values()) {
-            factories.add(new BinaryClassifierFactory(alg.name(), windowSize));
+        for (WekaOnlineClassificationAlgorithms alg : WekaOnlineClassificationAlgorithms.values()) {
+            factories.add(new BinaryClassifierFactory.OnlineBinaryClassifierFactory(alg.name(), windowSize));
             stateUpdaters.add(stateUpdater);
             queryFunctions.add(queryFunction);
             queryFunctionNames.add(drpcFunctionName);
         }
 
-        final IRichSpout features = new MddbFeatureExtractorSpout(args[0], fields);
+        final IRichSpout features = new AustralianElectricity(args[0], fields);
         final StormTopology stormTopology = buildTopology(features, parallelism, stateUpdaters, factories,
                 queryFunctions, queryFunctionNames, drpcPartitionResultAggregator, metaFactory, stateUpdater, metaQueryFunction);
 
@@ -88,7 +88,7 @@ public class EnsembleClassifierTopology extends EnsembleLearnerTopologyBase {
         conf.setNumWorkers(numWorkers);
         conf.setMaxSpoutPending(10);
 
-        conf.put("topology.spout.max.batch.size", 1 /* x1000 i.e. every tuple has 1000 feature vectors*/);
+        conf.put("topology.spout.max.batch.size", 1 /* x1000 i.e. every tuple has 1000 feature vectors*/ );
         conf.put("topology.trident.batch.emit.interval.millis", 1000);
         conf.put(Config.DRPC_SERVERS, Lists.newArrayList("qp-hd3", "qp-hd4", "qp-hd5", "qp-hd6"));
         conf.put(Config.STORM_CLUSTER_MODE, "distributed");

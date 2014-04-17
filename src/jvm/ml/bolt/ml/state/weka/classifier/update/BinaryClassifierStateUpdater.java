@@ -1,11 +1,12 @@
 package bolt.ml.state.weka.classifier.update;
 
-import bolt.ml.state.weka.classifier.BinaryClassifierState;
+import bolt.ml.state.weka.MlStormWekaState;
 import org.apache.commons.lang.ArrayUtils;
 import storm.trident.operation.TridentCollector;
 import storm.trident.operation.TridentOperationContext;
 import storm.trident.state.StateUpdater;
 import storm.trident.tuple.TridentTuple;
+import topology.weka.EnsembleLearnerTopologyBase;
 
 import java.text.MessageFormat;
 import java.util.List;
@@ -28,18 +29,18 @@ import java.util.Map;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class BinaryClassifierStateUpdater implements StateUpdater<BinaryClassifierState> {
+public class BinaryClassifierStateUpdater implements StateUpdater<MlStormWekaState> {
 
     private int localPartition, numPartitions;
 
     @Override
-    public void updateState (final BinaryClassifierState state,
+    public void updateState (final MlStormWekaState state,
                              final List<TridentTuple> tuples,
                              final TridentCollector collector)
     {
         for (TridentTuple tuple : tuples) {
-            Double[] fv = (Double[]) tuple.getValueByField("featureVector");
-            state.getFeatureVectorsInWindow().put(tuple.getIntegerByField("key"), ArrayUtils.toPrimitive(fv));
+            Double[] fv = (Double[]) tuple.getValueByField(EnsembleLearnerTopologyBase.featureVector.get(0));
+            state.getFeatureVectorsInWindow().put(tuple.getIntegerByField(EnsembleLearnerTopologyBase.key.get(0)), ArrayUtils.toPrimitive(fv));
         }
 
         System.err.println(MessageFormat.format(

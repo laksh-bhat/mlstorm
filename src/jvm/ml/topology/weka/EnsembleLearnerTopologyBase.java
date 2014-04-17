@@ -51,13 +51,8 @@ public class EnsembleLearnerTopologyBase {
          * Use the feature vectors to update a weka classifiers/clusterers
          */
 
-        TridentTopology topology    = new TridentTopology();
-        Stream featuresStream       = topology.newStream("ensembleStream", spout);
-
-        final Fields clustererUpdaterFields     = new Fields("key", "featureVector");
-        final Fields partitionProjectionFields  = new Fields("partition", "key", "label");
-        final Fields partitionQueryOutputFields = new Fields("partition", "result");
-
+        TridentTopology topology                = new TridentTopology();
+        Stream featuresStream                   = topology.newStream("ensembleStream", spout);
 
         // create a stream of feature vectors and broadcast them to all partitions (learners/clusterers)
         Stream broadcastStream =
@@ -86,9 +81,9 @@ public class EnsembleLearnerTopologyBase {
 
         // create meta state by reducing outputs from base learners/clusterers
         TridentState metaState = topology.merge(streamsToMerge)
-                .groupBy(new Fields("key"))
+                .groupBy(key)
                 // NOTE: Aggregator adds the grouping field to the OutputFields
-                .aggregate(partitionProjectionFields, metaFeatureVectorBuilder, new Fields("featureVector"))
+                .aggregate(partitionProjectionFields, metaFeatureVectorBuilder, featureVector)
                 .global() // Meta classifier/clusterer is not distributed.
                 .partitionPersist(metaStateFactory, clustererUpdaterFields, metaStateUpdater)
                 .parallelismHint(parallelism);
@@ -100,10 +95,11 @@ public class EnsembleLearnerTopologyBase {
         for (int i = 0; i < stateUpdaters.size(); i++) {
             drpcQueryStream
                     .broadcast() // broadcast the query to all partitions
-                    .stateQuery(ensembleStates.get(i), new Fields("args"), queryFunctions.get(i), partitionQueryOutputFields)
+                    .stateQuery(ensembleStates.get(i), drpcQueryArgs, queryFunctions.get(i), partitionQueryOutputFields)
                     .toStream()
-                    .aggregate(partitionQueryOutputFields, drpcPartitionResultAggregator, new Fields("voteMap"))
-                    .stateQuery(metaState, new Fields("voteMap"), metaQueryFunction, new Fields("finalVote"))
+                    .aggregate(partitionQueryOutputFields, drpcPartitionResultAggregator, candidateVotes)
+                    .stateQuery(metaState, candidateVotes, metaQueryFunction, finalVote)
+                    .project(finalVote)
                     .parallelismHint(parallelism)
             ;
         }
@@ -123,4 +119,13 @@ public class EnsembleLearnerTopologyBase {
         assert metaStateFactory != null;
         assert metaStateUpdater != null;
     }
+
+    public static final Fields key                        = new Fields("key");
+    public static final Fields finalVote                  = new Fields("finalVote");
+    public static final Fields drpcQueryArgs              = new Fields("args");
+    public static final Fields featureVector              = new Fields("featureVector");
+    public static final Fields candidateVotes             = new Fields("voteMap");
+    public static final Fields clustererUpdaterFields     = new Fields("key", "featureVector");
+    public static final Fields partitionProjectionFields  = new Fields("partition", "key", "label");
+    public static final Fields partitionQueryOutputFields = new Fields("partition", "result");
 }

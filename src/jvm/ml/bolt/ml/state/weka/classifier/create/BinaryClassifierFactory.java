@@ -1,7 +1,9 @@
 package bolt.ml.state.weka.classifier.create;
 
 import backtype.storm.task.IMetricsContext;
+import bolt.ml.state.weka.MlStormWekaState;
 import bolt.ml.state.weka.classifier.BinaryClassifierState;
+import bolt.ml.state.weka.classifier.OnlineBinaryClassifierState;
 import storm.trident.state.State;
 import storm.trident.state.StateFactory;
 
@@ -42,5 +44,26 @@ public class BinaryClassifierFactory implements StateFactory {
     {
         if (state == null) state = new BinaryClassifierState(classifier, windowSize);
         return state;
+    }
+
+    public static class OnlineBinaryClassifierFactory implements StateFactory {
+        private final int windowSize;
+        private final String classifier;
+        private MlStormWekaState state = null;
+
+        public OnlineBinaryClassifierFactory (String classifier, int windowSize) {
+            this.classifier = classifier;
+            this.windowSize = windowSize;
+        }
+
+        @Override
+        public State makeState (final Map map,
+                                final IMetricsContext iMetricsContext,
+                                final int partitionIndex,
+                                final int numPartitions)
+        {
+            if (state == null) state = new OnlineBinaryClassifierState(classifier, windowSize);
+            return state;
+        }
     }
 }
