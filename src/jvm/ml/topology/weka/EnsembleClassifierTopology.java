@@ -14,7 +14,7 @@ import bolt.ml.state.weka.classifier.update.BinaryClassifierStateUpdater;
 import bolt.ml.state.weka.cluster.query.EnsembleLabelDistributionPairAggregator;
 import bolt.ml.state.weka.utils.WekaClassificationAlgorithms;
 import com.google.common.collect.Lists;
-import spout.mddb.MddbFeatureExtractorSpout;
+import spout.AustralianElectricity;
 import storm.trident.operation.ReducerAggregator;
 import storm.trident.state.QueryFunction;
 import storm.trident.state.StateFactory;
@@ -73,7 +73,7 @@ public class EnsembleClassifierTopology extends EnsembleLearnerTopologyBase {
             queryFunctionNames.add(drpcFunctionName);
         }
 
-        final IRichSpout features = new MddbFeatureExtractorSpout(args[0], fields);
+        final IRichSpout features = new AustralianElectricity(args[0], fields);
         final StormTopology stormTopology = buildTopology(features, parallelism, stateUpdaters, factories,
                 queryFunctions, queryFunctionNames, drpcPartitionResultAggregator, metaFactory, stateUpdater, metaQueryFunction);
 
