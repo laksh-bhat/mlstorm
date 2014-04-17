@@ -76,16 +76,16 @@
       <file leaf-file-name="BinaryClassifierStateUpdater.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/update/BinaryClassifierStateUpdater.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="53" column="103" selection-start="2208" selection-end="2208" vertical-scroll-proportion="0.0" vertical-offset="420" max-vertical-offset="1571">
+            <state line="45" column="113" selection-start="1885" selection-end="1885" vertical-scroll-proportion="0.0" vertical-offset="229" max-vertical-offset="1533">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MetaFeatureVectorBuilder.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="MetaFeatureVectorBuilder.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/update/MetaFeatureVectorBuilder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="49" column="31" selection-start="2114" selection-end="2114" vertical-scroll-proportion="0.0" vertical-offset="297" max-vertical-offset="1623">
+            <state line="50" column="47" selection-start="2155" selection-end="2155" vertical-scroll-proportion="0.47033897" vertical-offset="297" max-vertical-offset="1623">
               <folding />
             </state>
           </provider>
@@ -102,10 +102,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AustralianElectricityPricingSpout.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="AustralianElectricityPricingSpout.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/spout/AustralianElectricityPricingSpout.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="104" column="56" selection-start="3530" selection-end="3530" vertical-scroll-proportion="0.44491526" vertical-offset="1245" max-vertical-offset="2463">
+            <state line="104" column="56" selection-start="3530" selection-end="3530" vertical-scroll-proportion="0.0" vertical-offset="1245" max-vertical-offset="2463">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -151,7 +151,7 @@
       <file leaf-file-name="EnsembleClassifierTopology.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/weka/EnsembleClassifierTopology.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="80" column="153" selection-start="4117" selection-end="4117" vertical-scroll-proportion="0.0" vertical-offset="871" max-vertical-offset="1990">
+            <state line="65" column="0" selection-start="3125" selection-end="3125" vertical-scroll-proportion="0.0" vertical-offset="661" max-vertical-offset="2223">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -226,14 +226,14 @@
         <option value="$PROJECT_DIR$/../src/jvm/ml/spout/AustralianElectricity.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/utils/WekaClassificationAlgorithms.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/query/VotingConsensusAggregator.java" />
-        <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/update/BinaryClassifierStateUpdater.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/topology/weka/EnsembleLearnerTopologyBase.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/topology/weka/OnlineEnsembleClassifierTopology.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/topology/weka/EnsembleClassifierTopology.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/topology/weka/EnsembleClustererTopology.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/utils/WekaUtils.java" />
-        <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/update/MetaFeatureVectorBuilder.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/spout/AustralianElectricityPricingSpout.java" />
+        <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/update/BinaryClassifierStateUpdater.java" />
+        <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/update/MetaFeatureVectorBuilder.java" />
       </list>
     </option>
   </component>
@@ -495,78 +495,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="utils" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mlstorm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jvm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ml" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bolt" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="state" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="weka" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cluster" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mlstorm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jvm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ml" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bolt" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="state" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="weka" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cluster" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="update" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1414,15 +1342,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/weka/EnsembleClassifierTopology.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="80" column="153" selection-start="4117" selection-end="4117" vertical-scroll-proportion="0.0" vertical-offset="871" max-vertical-offset="1990">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/weka/EnsembleClustererTopology.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="97" column="67" selection-start="4902" selection-end="4905" vertical-scroll-proportion="0.56926405" vertical-offset="832" max-vertical-offset="1647">
@@ -1466,20 +1385,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/update/BinaryClassifierStateUpdater.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="53" column="103" selection-start="2208" selection-end="2208" vertical-scroll-proportion="0.0" vertical-offset="420" max-vertical-offset="1571">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/update/MetaFeatureVectorBuilder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="31" selection-start="2114" selection-end="2114" vertical-scroll-proportion="0.0" vertical-offset="297" max-vertical-offset="1623">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/drpc/AustralianElectricityPricingQuery.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="39" column="67" selection-start="1492" selection-end="1492" vertical-scroll-proportion="0.0" vertical-offset="177" max-vertical-offset="1481">
@@ -1491,10 +1396,33 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/spout/AustralianElectricityPricingSpout.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="104" column="56" selection-start="3530" selection-end="3530" vertical-scroll-proportion="0.44491526" vertical-offset="1245" max-vertical-offset="2463">
+        <state line="104" column="56" selection-start="3530" selection-end="3530" vertical-scroll-proportion="0.0" vertical-offset="1245" max-vertical-offset="2463">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/weka/EnsembleClassifierTopology.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="65" column="0" selection-start="3125" selection-end="3125" vertical-scroll-proportion="0.0" vertical-offset="661" max-vertical-offset="2223">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/update/BinaryClassifierStateUpdater.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="45" column="113" selection-start="1885" selection-end="1885" vertical-scroll-proportion="0.0" vertical-offset="229" max-vertical-offset="1533">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/update/MetaFeatureVectorBuilder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="50" column="47" selection-start="2155" selection-end="2155" vertical-scroll-proportion="0.47033897" vertical-offset="297" max-vertical-offset="1623">
+          <folding />
         </state>
       </provider>
     </entry>

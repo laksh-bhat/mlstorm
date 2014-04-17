@@ -43,8 +43,7 @@ public class BinaryClassifierStateUpdater implements StateUpdater<MlStormWekaSta
             int key = tuple.getIntegerByField(EnsembleLearnerTopologyBase.keyField.get(0));
             state.getFeatureVectorsInWindow().put(key, fv);
             try {
-                if (state.isTrained())
-                    collector.emit(new Values(localPartition, key, (int) state.predict(state.makeWekaInstance(fv)), fv[fv.length - 1]));
+                 collector.emit(new Values(localPartition, key, (int) state.predict(state.makeWekaInstance(fv)), fv[fv.length - 1]));
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
