@@ -87,7 +87,7 @@ public abstract class BaseOnlineWekaState implements MlStormWekaState {
         } finally {
             // Since we are doing online learning, we don't want to keep trained samples in memory
             // However, if you were doing windowed learning, then leave this alone i.e. don't clear the groundValues.
-            //TODO persist model in database with txId as key
+            //TODO persist model in database with txId as keyField
             groundValues.clear();
         }
     }

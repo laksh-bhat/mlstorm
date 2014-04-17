@@ -43,8 +43,8 @@ public class KmeansClusterUpdater implements StateUpdater<KmeansClustererState> 
                              final TridentCollector collector)
     {
         for (TridentTuple tuple : tuples) {
-            double[] fv = (double[]) tuple.getValueByField("featureVector");
-            state.getFeatureVectorsInWindow().put(tuple.getIntegerByField("key"), fv);
+            double[] fv = (double[]) tuple.getValueByField("featureVectorField");
+            state.getFeatureVectorsInWindow().put(tuple.getIntegerByField("keyField"), fv);
         }
 
         System.err.println(MessageFormat.format(

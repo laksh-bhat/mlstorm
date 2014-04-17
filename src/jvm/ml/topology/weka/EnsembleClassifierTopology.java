@@ -14,7 +14,7 @@ import bolt.ml.state.weka.classifier.update.BinaryClassifierStateUpdater;
 import bolt.ml.state.weka.cluster.query.EnsembleLabelDistributionPairAggregator;
 import bolt.ml.state.weka.utils.WekaClassificationAlgorithms;
 import com.google.common.collect.Lists;
-import spout.AustralianElectricity;
+import spout.AustralianElectricityPricingSpout;
 import storm.trident.operation.ReducerAggregator;
 import storm.trident.state.QueryFunction;
 import storm.trident.state.StateFactory;
@@ -48,7 +48,7 @@ public class EnsembleClassifierTopology extends EnsembleLearnerTopologyBase {
             return;
         }
 
-        final String[] fields           = {"key", "featureVector"};
+        final String[] fields           = {"keyField", "featureVectorField"};
         final String drpcFunctionName   = "ClassifierEnsemble";
 
         final int numWorkers  = Integer.valueOf(args[1]);
@@ -73,7 +73,7 @@ public class EnsembleClassifierTopology extends EnsembleLearnerTopologyBase {
             queryFunctionNames.add(drpcFunctionName);
         }
 
-        final IRichSpout features = new AustralianElectricity(args[0], fields);
+        final IRichSpout features = new AustralianElectricityPricingSpout(args[0], fields);
         final StormTopology stormTopology = buildTopology(features, parallelism, stateUpdaters, factories,
                 queryFunctions, queryFunctionNames, drpcPartitionResultAggregator, metaFactory, stateUpdater, metaQueryFunction);
 
@@ -90,7 +90,7 @@ public class EnsembleClassifierTopology extends EnsembleLearnerTopologyBase {
         conf.setMaxSpoutPending(10);
 
         conf.put("topology.spout.max.batch.size", 1 /* x1000 i.e. every tuple has 1000 feature vectors*/);
-        conf.put("topology.trident.batch.emit.interval.millis", 1000);
+        conf.put("topology.trident.batch.emit.interval.millis", 20000);
         conf.put(Config.DRPC_SERVERS, Lists.newArrayList("qp-hd3", "qp-hd4", "qp-hd5", "qp-hd6"));
         conf.put(Config.STORM_CLUSTER_MODE, "distributed");
         conf.put(Config.NIMBUS_TASK_TIMEOUT_SECS, 30);

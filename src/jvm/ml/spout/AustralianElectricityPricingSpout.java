@@ -33,7 +33,7 @@ import java.util.Scanner;
  * limitations under the License.
  */
 @SuppressWarnings({"serial", "rawtypes"})
-public class AustralianElectricity implements IRichSpout {
+public class AustralianElectricityPricingSpout implements IRichSpout {
 
         SpoutOutputCollector _collector;
         private Scanner scanner;
@@ -41,7 +41,7 @@ public class AustralianElectricity implements IRichSpout {
         private String[] fields;
         private int messageId;
 
-        public AustralianElectricity(String fileName, String[] fields) {
+        public AustralianElectricityPricingSpout(String fileName, String[] fields) {
             this.fileName = fileName;
             this.fields = fields;
             messageId = 0;

@@ -50,7 +50,7 @@ public class WekaBaseLearningTopology {
                 featuresStream
                         .broadcast()
                         .parallelismHint(parallelism)
-                        .partitionPersist(stateFactory, new Fields("key", "featureVector"), stateUpdater)
+                        .partitionPersist(stateFactory, new Fields("keyField", "featureVectorField"), stateUpdater)
                         .parallelismHint(parallelism);
 
         // This queries the partition for partitionId and cluster distribution.

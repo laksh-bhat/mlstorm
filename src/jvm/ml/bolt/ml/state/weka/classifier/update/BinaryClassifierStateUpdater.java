@@ -39,8 +39,8 @@ public class BinaryClassifierStateUpdater implements StateUpdater<MlStormWekaSta
                              final TridentCollector collector)
     {
         for (TridentTuple tuple : tuples) {
-            double[] fv = (double[]) tuple.getValueByField(EnsembleLearnerTopologyBase.featureVector.get(0));
-            int key = tuple.getIntegerByField(EnsembleLearnerTopologyBase.key.get(0));
+            double[] fv = (double[]) tuple.getValueByField(EnsembleLearnerTopologyBase.featureVectorField.get(0));
+            int key = tuple.getIntegerByField(EnsembleLearnerTopologyBase.keyField.get(0));
             state.getFeatureVectorsInWindow().put(key, fv);
             try {
                 if (state.isTrained())

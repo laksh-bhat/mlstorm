@@ -70,7 +70,7 @@ public class BinaryClassifierQuery implements QueryFunction<MlStormWekaState, Ma
     }
 
     private double[] getFeatureVectorFromArgs(TridentTuple queryTuple){
-        String args = queryTuple.getStringByField(EnsembleLearnerTopologyBase.drpcQueryArgs.get(0));
+        String args = queryTuple.getStringByField(EnsembleLearnerTopologyBase.drpcQueryArgsField.get(0));
         try {
             return FeatureVectorUtils.deserializeToFeatureVector(args);
         } catch (DecoderException e) {

@@ -81,9 +81,9 @@ public class EnsembleLearnerTopologyBase {
 
         // create meta state by reducing outputs from base learners/clusterers
         TridentState metaState = topology.merge(streamsToMerge)
-                .groupBy(key)
+                .groupBy(keyField)
                 // NOTE: Aggregator adds the grouping field to the OutputFields
-                .aggregate(partitionProjectionFields, metaFeatureVectorBuilder, featureVector)
+                .aggregate(partitionProjectionFields, metaFeatureVectorBuilder, featureVectorField)
                 .global() // Meta classifier/clusterer is not distributed.
                 .partitionPersist(metaStateFactory, clustererUpdaterFields, metaStateUpdater)
                 .parallelismHint(parallelism);
@@ -95,11 +95,11 @@ public class EnsembleLearnerTopologyBase {
         for (int i = 0; i < stateUpdaters.size(); i++) {
             drpcQueryStream
                     .broadcast() // broadcast the query to all partitions
-                    .stateQuery(ensembleStates.get(i), drpcQueryArgs, queryFunctions.get(i), partitionQueryOutputFields)
+                    .stateQuery(ensembleStates.get(i), drpcQueryArgsField, queryFunctions.get(i), partitionQueryOutputFields)
                     .toStream()
-                    .aggregate(partitionQueryOutputFields, drpcPartitionResultAggregator, candidateVotes)
-                    .stateQuery(metaState, candidateVotes, metaQueryFunction, finalVote)
-                    .project(finalVote)
+                    .aggregate(partitionQueryOutputFields, drpcPartitionResultAggregator, candidateVotesField)
+                    .stateQuery(metaState, candidateVotesField, metaQueryFunction, finalVoteField)
+                    .project(finalVoteField)
                     .parallelismHint(parallelism)
             ;
         }
@@ -120,12 +120,12 @@ public class EnsembleLearnerTopologyBase {
         assert metaStateUpdater != null;
     }
 
-    public static final Fields key                        = new Fields("key");
-    public static final Fields finalVote                  = new Fields("finalVote");
-    public static final Fields drpcQueryArgs              = new Fields("args");
-    public static final Fields featureVector              = new Fields("featureVector");
-    public static final Fields candidateVotes             = new Fields("voteMap");
-    public static final Fields clustererUpdaterFields     = new Fields("key", "featureVector");
-    public static final Fields partitionProjectionFields  = new Fields("partition", "key", "label", "actualLabel");
+    public static final Fields keyField = new Fields("keyField");
+    public static final Fields finalVoteField = new Fields("finalVoteField");
+    public static final Fields drpcQueryArgsField = new Fields("args");
+    public static final Fields featureVectorField = new Fields("featureVectorField");
+    public static final Fields candidateVotesField = new Fields("voteMap");
+    public static final Fields clustererUpdaterFields     = new Fields("keyField", "featureVectorField");
+    public static final Fields partitionProjectionFields  = new Fields("partition", "keyField", "label", "actualLabel");
     public static final Fields partitionQueryOutputFields = new Fields("partition", "result");
 }

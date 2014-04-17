@@ -47,7 +47,7 @@ public class CobwebClusteringTopology extends WekaBaseLearningTopology {
             return;
         }
 
-        String[] fields = {"key", "featureVector"};
+        String[] fields = {"keyField", "featureVectorField"};
         int numWorkers = Integer.valueOf(args[1]);
         int windowSize = Integer.valueOf(args[2]);
         StateUpdater stateUpdater = new CobwebClusterUpdater();

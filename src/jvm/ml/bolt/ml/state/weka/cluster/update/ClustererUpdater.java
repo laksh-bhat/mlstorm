@@ -38,8 +38,8 @@ public class ClustererUpdater implements StateUpdater<ClustererState> {
                             final List<TridentTuple> tuples,
                             final TridentCollector collector) {
         for (TridentTuple tuple : tuples) {
-            double[] fv = (double[]) tuple.getValueByField("featureVector");
-            int key = tuple.getIntegerByField("key");
+            double[] fv = (double[]) tuple.getValueByField("featureVectorField");
+            int key = tuple.getIntegerByField("keyField");
             state.getFeatureVectorsInWindow().put(key, fv);
 
             try {

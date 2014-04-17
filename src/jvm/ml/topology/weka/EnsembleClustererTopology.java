@@ -48,7 +48,7 @@ public class EnsembleClustererTopology extends EnsembleLearnerTopologyBase {
             return;
         }
 
-        final String[] fields = {"key", "featureVector"};
+        final String[] fields = {"keyField", "featureVectorField"};
         final String queryFunctionName = "ClustererEnsemble";
 
         final int numWorkers = Integer.valueOf(args[1]);
