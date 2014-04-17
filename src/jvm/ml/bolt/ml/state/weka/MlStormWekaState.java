@@ -23,6 +23,8 @@ import java.util.Map;
  * limitations under the License.
  */
 public interface MlStormWekaState extends State {
+    final static String NOT_READY_TO_PREDICT = "NotReadyToPredict";
+
     Instance makeWekaInstance(double[] featureVector);
 
     boolean isTrained();
