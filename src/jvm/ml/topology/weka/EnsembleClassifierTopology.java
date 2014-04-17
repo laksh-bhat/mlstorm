@@ -90,10 +90,10 @@ public class EnsembleClassifierTopology extends EnsembleLearnerTopologyBase {
         Config conf = new Config();
         conf.setNumAckers(numWorkers);
         conf.setNumWorkers(numWorkers);
-        conf.setMaxSpoutPending(10);
+        conf.setMaxSpoutPending(2);
 
-        conf.put("topology.spout.max.batch.size", 1 /* x1000 i.e. every tuple has 1000 feature vectors*/);
-        conf.put("topology.trident.batch.emit.interval.millis", 20000);
+        conf.put("topology.spout.max.batch.size", 100 /* x1000 i.e. every tuple has 1000 feature vectors*/);
+        conf.put("topology.trident.batch.emit.interval.millis", 1000);
         conf.put(Config.DRPC_SERVERS, Lists.newArrayList("qp-hd3", "qp-hd4", "qp-hd5", "qp-hd6"));
         conf.put(Config.STORM_CLUSTER_MODE, "distributed");
         conf.put(Config.NIMBUS_TASK_TIMEOUT_SECS, 30);
