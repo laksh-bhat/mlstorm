@@ -3,11 +3,13 @@ package bolt.ml.state.weka.classifier.query;
 import backtype.storm.tuple.Values;
 import bolt.ml.state.weka.MlStormWekaState;
 import bolt.ml.state.weka.cluster.query.MlStormClustererQuery;
+import org.apache.commons.codec.DecoderException;
 import storm.trident.operation.TridentCollector;
 import storm.trident.operation.TridentOperationContext;
 import storm.trident.state.QueryFunction;
 import storm.trident.tuple.TridentTuple;
 import topology.weka.EnsembleLearnerTopologyBase;
+import utils.FeatureVectorUtils;
 import weka.core.Instance;
 
 import java.io.IOException;
@@ -66,15 +68,20 @@ public class BinaryClassifierQuery implements QueryFunction<MlStormWekaState, Do
     public void cleanup() {
     }
 
-    private double[] getFeatureVectorFromArgs(TridentTuple queryTuple) {
+    private double[] getFeatureVectorFromArgs(TridentTuple queryTuple){
         String args = queryTuple.getStringByField(EnsembleLearnerTopologyBase.drpcQueryArgs.get(0));
-        String[] features = args.split(",");
-        double[] fv = new double[features.length];
-        for (int i = 0; i < features.length; i++) {
-            String feature = features[i];
-            fv[i] = Double.valueOf(feature);
+        try {
+            return FeatureVectorUtils.deserializeToFeatureVector(args);
+        } catch (DecoderException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-        return fv;
     }
 
     public static class MetaQuery implements QueryFunction<MlStormWekaState, Map.Entry<Double, double[]>> {
