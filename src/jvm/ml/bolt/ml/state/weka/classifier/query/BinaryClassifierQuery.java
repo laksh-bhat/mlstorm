@@ -46,7 +46,8 @@ public class BinaryClassifierQuery implements QueryFunction<MlStormWekaState, Ma
             final Instance instance = binaryClassifierState.makeWekaInstance(fv);
             try {
                 final double classification = binaryClassifierState.predict(instance);
-                queryResults.add(new MlStormClustererQuery.Pair<Double, double[]> (classification, null));
+                final double[] distribution = null;
+                queryResults.add(new MlStormClustererQuery.Pair<Double, double[]> (classification, distribution));
             } catch (Exception e) {
                 e.printStackTrace();
             }
