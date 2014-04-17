@@ -2,7 +2,6 @@ package bolt.ml.state.weka.classifier.update;
 
 import backtype.storm.tuple.Values;
 import bolt.ml.state.weka.MlStormWekaState;
-import org.apache.commons.lang.ArrayUtils;
 import storm.trident.operation.TridentCollector;
 import storm.trident.operation.TridentOperationContext;
 import storm.trident.state.StateUpdater;
@@ -40,12 +39,12 @@ public class BinaryClassifierStateUpdater implements StateUpdater<MlStormWekaSta
                              final TridentCollector collector)
     {
         for (TridentTuple tuple : tuples) {
-            Double[] fv = (Double[]) tuple.getValueByField(EnsembleLearnerTopologyBase.featureVector.get(0));
+            double[] fv = (double[]) tuple.getValueByField(EnsembleLearnerTopologyBase.featureVector.get(0));
             int key = tuple.getIntegerByField(EnsembleLearnerTopologyBase.key.get(0));
-            state.getFeatureVectorsInWindow().put(key, ArrayUtils.toPrimitive(fv));
+            state.getFeatureVectorsInWindow().put(key, fv);
             try {
                 if (state.isTrained())
-                    collector.emit(new Values(localPartition, key, (int) state.predict(state.makeWekaInstance(ArrayUtils.toPrimitive(fv)))));
+                    collector.emit(new Values(localPartition, key, (int) state.predict(state.makeWekaInstance(fv))));
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

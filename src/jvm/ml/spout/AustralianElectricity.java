@@ -94,7 +94,7 @@ public class AustralianElectricity implements IRichSpout {
             if (scanner.hasNextLine()){
                 String line = scanner.nextLine();
                 String[] attrs = line.split(",");
-                Double[] fv = new Double[attrs.length];
+                double[] fv = new double[attrs.length];
                 for (int i = 0; i < attrs.length; i++) {
                     String attr = attrs[i];
                     if (attr.equalsIgnoreCase("UP")) fv[i] = 1.0;
