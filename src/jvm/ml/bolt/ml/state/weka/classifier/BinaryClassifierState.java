@@ -44,8 +44,12 @@ public class BinaryClassifierState extends BaseWekaState {
     @Override
     public double predict(Instance testInstance) throws Exception {
         assert testInstance != null;
+        Instances dataUnlabeled = new Instances("TestInstances", wekaAttributes, 0);
+        dataUnlabeled.setClassIndex(wekaAttributes.size() - 1);
+        dataUnlabeled.add(testInstance);
+
         synchronized (lock) {
-            return (int) classifier.classifyInstance(testInstance);
+            return (int) classifier.classifyInstance(dataUnlabeled.firstInstance());
         }
     }
 

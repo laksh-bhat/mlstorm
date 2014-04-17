@@ -76,9 +76,14 @@ public class OnlineBinaryClassifierState extends BaseOnlineWekaState {
     @Override
     public double predict(Instance testInstance) throws Exception {
         assert (testInstance != null);
-        testInstance.setDataset(dataset);
+        assert (dataset != null);
+
+        Instances dataUnlabeled = new Instances("TestInstances", wekaAttributes, 0);
+        dataUnlabeled.setClassIndex(wekaAttributes.size() - 1);
+        dataUnlabeled.add(testInstance);
+
         synchronized (lock) {
-            return (int) updateableClassifier.classifyInstance(testInstance);
+            return (int) updateableClassifier.classifyInstance(dataUnlabeled.firstInstance());
         }
     }
 
