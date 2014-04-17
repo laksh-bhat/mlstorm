@@ -34,19 +34,19 @@ import java.util.Map;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class BinaryClassifierQuery implements QueryFunction<MlStormWekaState, Map.Entry<Double, double[]>> {
+public class BinaryClassifierQuery implements QueryFunction<MlStormWekaState, Map.Entry<Integer, double[]>> {
     private int localPartition, numPartitions;
 
     @Override
-    public List<Map.Entry<Double, double[]>> batchRetrieve(final MlStormWekaState binaryClassifierState, final List<TridentTuple> queryTuples) {
-        List<Map.Entry<Double, double[]>> queryResults = new ArrayList<Map.Entry<Double, double[]>>();
+    public List<Map.Entry<Integer, double[]>> batchRetrieve(final MlStormWekaState binaryClassifierState, final List<TridentTuple> queryTuples) {
+        List<Map.Entry<Integer, double[]>> queryResults = new ArrayList<Map.Entry<Integer, double[]>>();
         for (TridentTuple queryTuple : queryTuples) {
             double[] fv = getFeatureVectorFromArgs(queryTuple);
             final Instance instance = binaryClassifierState.makeWekaInstance(fv);
             try {
-                final double classification = binaryClassifierState.predict(instance);
+                final int classification = (int) binaryClassifierState.predict(instance);
                 final double[] distribution = null;
-                queryResults.add(new MlStormClustererQuery.Pair<Double, double[]> (classification, distribution));
+                queryResults.add(new MlStormClustererQuery.Pair<Integer, double[]> (classification, distribution));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -55,7 +55,7 @@ public class BinaryClassifierQuery implements QueryFunction<MlStormWekaState, Ma
     }
 
     @Override
-    public void execute(final TridentTuple tuple, final Map.Entry<Double, double[]> result, final TridentCollector collector) {
+    public void execute(final TridentTuple tuple, final Map.Entry<Integer, double[]> result, final TridentCollector collector) {
         collector.emit(new Values(localPartition, result));
     }
 

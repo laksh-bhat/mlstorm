@@ -78,7 +78,7 @@
       <file leaf-file-name="EnsembleLearnerTopologyBase.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/weka/EnsembleLearnerTopologyBase.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="99" column="105" selection-start="5082" selection-end="5082" vertical-scroll-proportion="0.0" vertical-offset="931" max-vertical-offset="2458">
+            <state line="96" column="73" selection-start="4823" selection-end="4823" vertical-scroll-proportion="0.0" vertical-offset="931" max-vertical-offset="2202">
               <folding />
             </state>
           </provider>
@@ -145,10 +145,10 @@
       <file leaf-file-name="BinaryClassifierQuery.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/query/BinaryClassifierQuery.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="113" column="17" selection-start="4888" selection-end="4888" vertical-scroll-proportion="0.9368421" vertical-offset="1025" max-vertical-offset="2245">
+            <state line="57" column="73" selection-start="2420" selection-end="2420" vertical-scroll-proportion="0.62927496" vertical-offset="170" max-vertical-offset="2501">
               <folding>
-                <element signature="e#1687#1716#0" expanded="true" />
-                <element signature="e#3855#3884#0" expanded="true" />
+                <element signature="e#1690#1720#0" expanded="true" />
+                <element signature="e#3864#3893#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -1007,7 +1007,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32736573" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32736573" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1410,13 +1410,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/weka/EnsembleLearnerTopologyBase.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="99" column="105" selection-start="5082" selection-end="5082" vertical-scroll-proportion="0.0" vertical-offset="931" max-vertical-offset="2458">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/query/MlStormClustererQuery.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="73" column="59" selection-start="2455" selection-end="2462" vertical-scroll-proportion="0.0" vertical-offset="525" max-vertical-offset="4226">
@@ -1431,12 +1424,19 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/weka/EnsembleLearnerTopologyBase.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="96" column="73" selection-start="4823" selection-end="4823" vertical-scroll-proportion="0.0" vertical-offset="931" max-vertical-offset="2202">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/query/BinaryClassifierQuery.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="113" column="17" selection-start="4888" selection-end="4888" vertical-scroll-proportion="0.9368421" vertical-offset="1025" max-vertical-offset="2245">
+        <state line="57" column="73" selection-start="2420" selection-end="2420" vertical-scroll-proportion="0.62927496" vertical-offset="170" max-vertical-offset="2501">
           <folding>
-            <element signature="e#1687#1716#0" expanded="true" />
-            <element signature="e#3855#3884#0" expanded="true" />
+            <element signature="e#1690#1720#0" expanded="true" />
+            <element signature="e#3864#3893#0" expanded="true" />
           </folding>
         </state>
       </provider>
