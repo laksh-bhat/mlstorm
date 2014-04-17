@@ -22,6 +22,7 @@ import storm.trident.state.StateUpdater;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by lbhat@DaMSl on 3/24/14.
@@ -59,7 +60,7 @@ public class OnlineEnsembleClassifierTopology extends EnsembleLearnerTopologyBas
                 OnlineBinaryClassifierFactory(WekaOnlineClassificationAlgorithms.stochasticGradientDescent.name(), windowSize);
         final QueryFunction metaQueryFunction = new BinaryClassifierQuery.MetaQuery();
         final ReducerAggregator drpcPartitionResultAggregator =  new EnsembleLabelDistributionPairAggregator();
-        final QueryFunction<MlStormWekaState, Double> queryFunction = new BinaryClassifierQuery();
+        final QueryFunction<MlStormWekaState, Map.Entry<Double, double[]>> queryFunction = new BinaryClassifierQuery();
 
         final List<StateUpdater> stateUpdaters = new ArrayList<StateUpdater>();
         final List<StateFactory> factories = new ArrayList<StateFactory>();
