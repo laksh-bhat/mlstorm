@@ -2,10 +2,12 @@ package bolt.ml.state.weka.utils;
 
 import weka.classifiers.Classifier;
 import weka.classifiers.bayes.NaiveBayesUpdateable;
-import weka.classifiers.functions.*;
+import weka.classifiers.functions.MultilayerPerceptron;
+import weka.classifiers.functions.SGD;
+import weka.classifiers.functions.SMO;
+import weka.classifiers.functions.SimpleLogistic;
 import weka.classifiers.lazy.IBk;
 import weka.classifiers.lazy.LWL;
-import weka.classifiers.meta.LogitBoost;
 import weka.classifiers.trees.DecisionStump;
 import weka.classifiers.trees.HoeffdingTree;
 import weka.classifiers.trees.J48;
@@ -77,10 +79,6 @@ public class WekaUtils {
                 return new RandomForest();
             case decisionStump:
                 return new DecisionStump();
-            case boosting:
-                LogitBoost boost = new LogitBoost();
-                boost.setNumFolds(0);
-                return boost;
             case perceptron:
                 return new MultilayerPerceptron();
             default:

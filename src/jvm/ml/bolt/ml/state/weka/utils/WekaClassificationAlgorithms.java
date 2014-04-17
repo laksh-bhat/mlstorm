@@ -7,6 +7,6 @@ package bolt.ml.state.weka.utils;
  */
 
 public enum WekaClassificationAlgorithms {
-    decisionTree, svm, randomForest, boosting, decisionStump, perceptron, logisticRegression
+    decisionTree, svm, randomForest, decisionStump, perceptron, logisticRegression
 }
 

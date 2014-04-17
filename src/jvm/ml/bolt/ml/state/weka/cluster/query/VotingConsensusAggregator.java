@@ -24,15 +24,15 @@ import java.util.TreeMap;
  * limitations under the License.
  */
 
-public class VotingConsensusAggregator implements ReducerAggregator<TreeMap<Integer, Integer>>{
+public class VotingConsensusAggregator implements ReducerAggregator<Map<Integer, Integer>>{
     @Override
-    public TreeMap<Integer, Integer> init() {
+    public Map<Integer, Integer> init() {
         // A map sorted by votes
         return new TreeMap<Integer, Integer>();
     }
 
     @Override
-    public TreeMap<Integer, Integer> reduce(TreeMap<Integer, Integer> reducedResult, TridentTuple tuple) {
+    public Map<Integer, Integer> reduce(Map<Integer, Integer> reducedResult, TridentTuple tuple) {
         Map.Entry<Integer, double[]> clusterResult = (Map.Entry<Integer, double[]>) tuple.getValueByField("result");
         int partition = tuple.getIntegerByField("partition");
 

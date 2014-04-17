@@ -126,6 +126,6 @@ public class EnsembleLearnerTopologyBase {
     public static final Fields featureVector              = new Fields("featureVector");
     public static final Fields candidateVotes             = new Fields("voteMap");
     public static final Fields clustererUpdaterFields     = new Fields("key", "featureVector");
-    public static final Fields partitionProjectionFields  = new Fields("partition", "key", "label");
+    public static final Fields partitionProjectionFields  = new Fields("partition", "key", "label", "actualLabel");
     public static final Fields partitionQueryOutputFields = new Fields("partition", "result");
 }
