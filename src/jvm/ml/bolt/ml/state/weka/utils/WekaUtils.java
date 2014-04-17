@@ -54,12 +54,12 @@ public class WekaUtils {
         for (int i = 0; i < noOfAttributes; i++)
             attributeInfo.add(new Attribute(MessageFormat.format("feature-{0}", i)));
 
-        ArrayList<String> clusters = new ArrayList<String>();
+        ArrayList<String> classes = new ArrayList<String>();
         for (int i = 1; i <= numClasses; i++)
-            clusters.add(MessageFormat.format("class-{0}", String.valueOf(i)));
-        Attribute cluster = new Attribute("classes", clusters);
+            classes.add(MessageFormat.format("class-{0}", String.valueOf(i)));
+        Attribute classesAttr = new Attribute("classes", classes);
         // last element in a FEATURE VECTOR is the category
-        attributeInfo.add(cluster);
+        attributeInfo.add(classesAttr);
         return attributeInfo;
     }
 

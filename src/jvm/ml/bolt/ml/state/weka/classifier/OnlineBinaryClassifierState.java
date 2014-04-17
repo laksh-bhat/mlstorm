@@ -69,6 +69,7 @@ public class OnlineBinaryClassifierState extends BaseOnlineWekaState {
 
         // we are now ready to create a training dataset metadata
         dataset = new Instances("training", this.wekaAttributes, 0);
+        dataset.setClassIndex(this.wekaAttributes.size() - 1);
         this.updateableClassifier.buildClassifier(dataset.stringFreeStructure());
     }
 
