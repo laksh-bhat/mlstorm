@@ -33,7 +33,7 @@ public class WekaUtils {
         return attributeInfo;
     }
 
-    public static ArrayList<Attribute> makeFeatureVectorForBatchClustering(int noOfClusters, int noOfAttributes) {
+    public static ArrayList<Attribute> makeFeatureVectorForBatchClustering(int noOfAttributes, int numClasses) {
         // Declare FAST VECTOR
         ArrayList<Attribute> attributeInfo = new ArrayList<Attribute>();
 
@@ -41,8 +41,8 @@ public class WekaUtils {
         for (int i = 0; i < noOfAttributes; i++)
             attributeInfo.add(new Attribute(MessageFormat.format("feature-{0}", i)));
 
-        ArrayList<String> clusters = new ArrayList<String>(noOfClusters);
-        for (int i = 1; i <= noOfClusters; i++)
+        ArrayList<String> clusters = new ArrayList<String>(numClasses);
+        for (int i = 1; i <= numClasses; i++)
             clusters.add(MessageFormat.format("class-{0}", String.valueOf(i)));
         Attribute cluster = new Attribute("classes", clusters);
         // last element in a FEATURE VECTOR is the category

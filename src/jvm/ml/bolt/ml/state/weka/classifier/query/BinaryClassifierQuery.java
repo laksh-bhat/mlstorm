@@ -13,7 +13,9 @@ import utils.FeatureVectorUtils;
 import weka.core.Instance;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -110,7 +112,11 @@ public class BinaryClassifierQuery implements QueryFunction<MlStormWekaState, Ma
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    if (e.toString().contains(MlStormWekaState.NOT_READY_TO_PREDICT)){
+                        System.err.println(MessageFormat.format("Not Ready yet! Continue training with - {0}", Arrays.toString(fv)));
+                        queryResults.add(new MlStormClustererQuery.Pair<Double, double[]>(fv[fv.length-1], null));
+                    }
+                    else throw new RuntimeException(e);
                 }
             }
             return queryResults;
