@@ -105,8 +105,15 @@
       <file leaf-file-name="WekaUtils.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/utils/WekaUtils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="83" column="58" selection-start="3712" selection-end="3712" vertical-scroll-proportion="0.44186047" vertical-offset="697" max-vertical-offset="2486">
-              <folding />
+            <state line="69" column="30" selection-start="3026" selection-end="3026" vertical-scroll-proportion="-0.48153216" vertical-offset="1387" max-vertical-offset="2951">
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#816#827#0" expanded="true" />
+                <element signature="e#1350#1361#0" expanded="true" />
+                <element signature="e#1611#1619#0" expanded="true" />
+                <element signature="e#2203#2214#0" expanded="true" />
+                <element signature="e#2524#2532#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -1513,8 +1520,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/utils/WekaUtils.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="83" column="58" selection-start="3712" selection-end="3712" vertical-scroll-proportion="0.44186047" vertical-offset="697" max-vertical-offset="2486">
-          <folding />
+        <state line="69" column="30" selection-start="3026" selection-end="3026" vertical-scroll-proportion="-0.48153216" vertical-offset="1387" max-vertical-offset="2951">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#816#827#0" expanded="true" />
+            <element signature="e#1350#1361#0" expanded="true" />
+            <element signature="e#1611#1619#0" expanded="true" />
+            <element signature="e#2203#2214#0" expanded="true" />
+            <element signature="e#2524#2532#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
