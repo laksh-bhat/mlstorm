@@ -38,8 +38,8 @@ public class MetaFeatureVectorBuilder implements Aggregator<Map<Integer, Map.Ent
     public void aggregate(Map<Integer, Map.Entry<Double, Double>> val, TridentTuple tuple, TridentCollector collector) {
         int partition = tuple.getIntegerByField("partition");
         double label = tuple.getIntegerByField("label");
-        double actualLabel = tuple.getIntegerByField("actualLabel");
-        val.put(partition, new MlStormClustererQuery.Pair<Double, Double>(label, actualLabel));
+        int actualLabel = tuple.getIntegerByField("actualLabel");
+        val.put(partition, new MlStormClustererQuery.Pair<Double, Double>(label, (double) actualLabel));
     }
 
     @Override

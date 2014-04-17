@@ -82,19 +82,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BinaryClassifierStateUpdater.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="BinaryClassifierStateUpdater.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/update/BinaryClassifierStateUpdater.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="53" column="103" selection-start="2208" selection-end="2208" vertical-scroll-proportion="0.30779755" vertical-offset="420" max-vertical-offset="1571">
+            <state line="53" column="103" selection-start="2208" selection-end="2208" vertical-scroll-proportion="0.0" vertical-offset="420" max-vertical-offset="1571">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MetaFeatureVectorBuilder.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="MetaFeatureVectorBuilder.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/update/MetaFeatureVectorBuilder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="39" column="38" selection-start="1596" selection-end="1596" vertical-scroll-proportion="0.0" vertical-offset="147" max-vertical-offset="1623">
+            <state line="49" column="31" selection-start="2114" selection-end="2114" vertical-scroll-proportion="0.4350205" vertical-offset="297" max-vertical-offset="1646">
               <folding />
             </state>
           </provider>
@@ -224,12 +224,12 @@
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/utils/WekaClassificationAlgorithms.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/query/VotingConsensusAggregator.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/update/BinaryClassifierStateUpdater.java" />
-        <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/update/MetaFeatureVectorBuilder.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/topology/weka/EnsembleLearnerTopologyBase.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/topology/weka/OnlineEnsembleClassifierTopology.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/topology/weka/EnsembleClassifierTopology.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/topology/weka/EnsembleClustererTopology.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/utils/WekaUtils.java" />
+        <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/update/MetaFeatureVectorBuilder.java" />
       </list>
     </option>
   </component>
@@ -1396,13 +1396,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/update/MetaFeatureVectorBuilder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="39" column="38" selection-start="1596" selection-end="1596" vertical-scroll-proportion="0.0" vertical-offset="147" max-vertical-offset="1623">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/utils/WekaClassificationAlgorithms.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="9" column="82" selection-start="239" selection-end="239" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="896">
@@ -1489,7 +1482,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/update/BinaryClassifierStateUpdater.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="53" column="103" selection-start="2208" selection-end="2208" vertical-scroll-proportion="0.30779755" vertical-offset="420" max-vertical-offset="1571">
+        <state line="53" column="103" selection-start="2208" selection-end="2208" vertical-scroll-proportion="0.0" vertical-offset="420" max-vertical-offset="1571">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/update/MetaFeatureVectorBuilder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="49" column="31" selection-start="2114" selection-end="2114" vertical-scroll-proportion="0.4350205" vertical-offset="297" max-vertical-offset="1646">
           <folding />
         </state>
       </provider>
