@@ -45,7 +45,7 @@ public class BinaryClassifierStateUpdater implements StateUpdater<MlStormWekaSta
             try {
                  collector.emit(new Values(localPartition, key, (int) state.predict(state.makeWekaInstance(fv)), fv[fv.length - 1]));
             } catch (Exception e) {
-                if (e.getMessage().indexOf(MlStormWekaState.NOT_READY_TO_PREDICT) > 0)
+                if (e.toString().contains(MlStormWekaState.NOT_READY_TO_PREDICT))
                     collector.emit(new Values(localPartition, key, (int) fv[fv.length - 1], fv[fv.length - 1]));
                 else
                     throw new RuntimeException(e);
