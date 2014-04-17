@@ -14,7 +14,6 @@ import weka.core.Instance;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -94,8 +93,8 @@ public class BinaryClassifierQuery implements QueryFunction<MlStormWekaState, Ma
             ArrayList<Map.Entry<Double,double[]>> queryResults = new ArrayList<Map.Entry<Double, double[]>>();
             for (TridentTuple query : queryTuples) {
 
-                final HashMap<Integer, Map.Entry<Integer, double[]>> voteMap =
-                        (HashMap<Integer, Map.Entry<Integer, double[]>>) query.getValueByField("voteMap");
+                final Map<Integer, Map.Entry<Integer, double[]>> voteMap =
+                        (Map<Integer, Map.Entry<Integer, double[]>>) query.getValueByField("voteMap");
                 final double[] fv = new double[numPartitions];
 
                 for (Integer key : voteMap.keySet()) fv[key] = voteMap.get(key).getKey();
