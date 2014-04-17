@@ -81,6 +81,7 @@ public class OnlineBinaryClassifierState extends BaseOnlineWekaState {
         Instances dataUnlabeled = new Instances("TestInstances", wekaAttributes, 0);
         dataUnlabeled.setClassIndex(wekaAttributes.size() - 1);
         dataUnlabeled.add(testInstance);
+        testInstance.setClassMissing();
 
         synchronized (lock) {
             return (int) updateableClassifier.classifyInstance(dataUnlabeled.firstInstance());

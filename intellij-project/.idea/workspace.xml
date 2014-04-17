@@ -96,7 +96,7 @@
       <file leaf-file-name="OnlineBinaryClassifierState.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/OnlineBinaryClassifierState.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="85" column="94" selection-start="3115" selection-end="3115" vertical-scroll-proportion="0.020519836" vertical-offset="1260" max-vertical-offset="2351">
+            <state line="83" column="39" selection-start="3029" selection-end="3029" vertical-scroll-proportion="0.36935705" vertical-offset="975" max-vertical-offset="2366">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -1434,7 +1434,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/OnlineBinaryClassifierState.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="85" column="94" selection-start="3115" selection-end="3115" vertical-scroll-proportion="0.020519836" vertical-offset="1260" max-vertical-offset="2351">
+        <state line="83" column="39" selection-start="3029" selection-end="3029" vertical-scroll-proportion="0.36935705" vertical-offset="975" max-vertical-offset="2366">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
