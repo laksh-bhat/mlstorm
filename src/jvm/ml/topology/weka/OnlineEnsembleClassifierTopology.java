@@ -55,7 +55,8 @@ public class OnlineEnsembleClassifierTopology extends EnsembleLearnerTopologyBas
         final int parallelism = Integer.valueOf(args[3]);
 
         final StateUpdater stateUpdater = new BinaryClassifierStateUpdater();
-        final StateFactory metaFactory  = new BinaryClassifierFactory(WekaOnlineClassificationAlgorithms.stochasticGradientDescent.name(), windowSize);
+        final StateFactory metaFactory  = new BinaryClassifierFactory.
+                OnlineBinaryClassifierFactory(WekaOnlineClassificationAlgorithms.stochasticGradientDescent.name(), windowSize);
         final QueryFunction metaQueryFunction = new BinaryClassifierQuery.MetaQuery();
         final ReducerAggregator drpcPartitionResultAggregator =  new EnsembleLabelDistributionPairAggregator();
         final QueryFunction<MlStormWekaState, Double> queryFunction = new BinaryClassifierQuery();
