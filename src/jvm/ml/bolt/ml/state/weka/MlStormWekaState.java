@@ -25,6 +25,8 @@ import java.util.Map;
 public interface MlStormWekaState extends State {
     Instance makeWekaInstance(double[] featureVector);
 
+    boolean isTrained();
+
     @Override
     void beginCommit(Long txId);
 

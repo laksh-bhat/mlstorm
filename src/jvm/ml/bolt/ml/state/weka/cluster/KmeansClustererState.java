@@ -39,6 +39,7 @@ public class KmeansClustererState extends BaseWekaState {
     private int numClusters;
     private int featuresCount;
     private final Object lock;
+    private boolean isTrained;
 
 
     public KmeansClustererState(int numClusters, int windowSize) throws Exception {
@@ -66,6 +67,11 @@ public class KmeansClustererState extends BaseWekaState {
         synchronized (lock) {
     	    this.dataset.clear();
         }
+    }
+
+    @Override
+    public boolean isTrained() {
+        return isTrained;
     }
 
     @Override
@@ -103,6 +109,7 @@ public class KmeansClustererState extends BaseWekaState {
             long endTime = System.currentTimeMillis();
             this.trainingDuration = (getTrainingDuration() + (endTime - startTime))/2;
         }
+        isTrained = true;
     }
 
     @Override

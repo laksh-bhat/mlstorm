@@ -48,18 +48,13 @@ public class WekaUtils {
         return attributeInfo;
     }
 
-    public static ArrayList<Attribute> makeFeatureVectorForClassification(int noOfAttributes, int numClasses) {
+    public static ArrayList<Attribute> makeFeatureVectorForBinaryClassification(int noOfAttributes) {
         ArrayList<Attribute> attributeInfo = new ArrayList<Attribute>();
         // Declare FEATURES and add them to FEATURE VECTOR
         for (int i = 0; i < noOfAttributes; i++)
             attributeInfo.add(new Attribute(MessageFormat.format("feature-{0}", i)));
-
-        ArrayList<String> classes = new ArrayList<String>();
-        for (int i = 1; i <= numClasses; i++)
-            classes.add(MessageFormat.format("class-{0}", String.valueOf(i)));
-        Attribute classesAttr = new Attribute("classes", classes);
         // last element in a FEATURE VECTOR is the category
-        attributeInfo.add(classesAttr);
+        attributeInfo.add(new Attribute("class", attributeInfo.size()-1));
         return attributeInfo;
     }
 

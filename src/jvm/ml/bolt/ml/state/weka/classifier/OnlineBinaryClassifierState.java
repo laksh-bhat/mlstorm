@@ -38,6 +38,7 @@ public class OnlineBinaryClassifierState extends BaseOnlineWekaState {
 
     private Classifier updateableClassifier;
     private final Object lock = new Object();
+    private boolean isTrained;
 
     public OnlineBinaryClassifierState(String classifier, int windowSize) {
         super(windowSize);
@@ -74,6 +75,11 @@ public class OnlineBinaryClassifierState extends BaseOnlineWekaState {
     }
 
     @Override
+    public boolean isTrained() {
+        return isTrained;
+    }
+
+    @Override
     public double predict(Instance testInstance) throws Exception {
         assert (testInstance != null);
         assert (dataset != null);
@@ -91,7 +97,7 @@ public class OnlineBinaryClassifierState extends BaseOnlineWekaState {
     protected synchronized void loadWekaAttributes(final double[] features) {
         if (this.wekaAttributes == null) {
             // Binary classification
-            this.wekaAttributes = WekaUtils.makeFeatureVectorForClassification(features.length - 1 /* don't count class attributes */, 2);
+            this.wekaAttributes = WekaUtils.makeFeatureVectorForBinaryClassification(features.length - 1 /* don't count class attributes */);
             this.wekaAttributes.trimToSize();
         }
     }
@@ -105,5 +111,6 @@ public class OnlineBinaryClassifierState extends BaseOnlineWekaState {
             synchronized (lock) {
                 ((UpdateableClassifier)this.updateableClassifier).updateClassifier(instance);
             }
+        isTrained = true;
     }
 }

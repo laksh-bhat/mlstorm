@@ -38,6 +38,7 @@ public class CobwebClustererState extends BaseOnlineWekaState {
     private Cobweb clusterer;
     private int numClusters;
     private final Object lock = new Object();
+    private boolean isTrained;
 
     public CobwebClustererState(int numClusters, int windowSize) {
         super(windowSize);
@@ -76,6 +77,11 @@ public class CobwebClustererState extends BaseOnlineWekaState {
     }
 
     @Override
+    public boolean isTrained() {
+        return isTrained;
+    }
+
+    @Override
     public double predict(Instance testInstance) throws Exception {
         assert (testInstance != null);
         synchronized (lock) {
@@ -98,6 +104,7 @@ public class CobwebClustererState extends BaseOnlineWekaState {
         synchronized (lock) {
             if (instance != null) this.clusterer.updateClusterer(instance);
         }
+        isTrained = true;
     }
 
     public int getNumClusters() {

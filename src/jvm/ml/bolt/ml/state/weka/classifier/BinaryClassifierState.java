@@ -29,6 +29,7 @@ public class BinaryClassifierState extends BaseWekaState {
 
     private Classifier classifier;
     private final Object lock;
+    private boolean isTrained;
 
     /**
      * Construct the State representation for any weka based learning algorithm
@@ -39,6 +40,11 @@ public class BinaryClassifierState extends BaseWekaState {
         super(windowSize);
         this.classifier = WekaUtils.makeClassifier(classifier);
         lock = new Object();
+    }
+
+    @Override
+    public boolean isTrained() {
+        return isTrained;
     }
 
     @Override
@@ -97,5 +103,8 @@ public class BinaryClassifierState extends BaseWekaState {
             long endTime = System.currentTimeMillis();
             this.trainingDuration = (getTrainingDuration() + (endTime - startTime))/2;
         }
+        isTrained = true;
     }
+
+
 }
