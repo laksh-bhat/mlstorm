@@ -64,19 +64,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="MetaFeatureVectorBuilder.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/update/MetaFeatureVectorBuilder.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="51" column="39" selection-start="1856" selection-end="1856" vertical-scroll-proportion="0.0" vertical-offset="252" max-vertical-offset="1571">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="EnsembleLearnerTopologyBase.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/weka/EnsembleLearnerTopologyBase.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="79" column="110" selection-start="3881" selection-end="3881" vertical-scroll-proportion="0.0" vertical-offset="654" max-vertical-offset="2458">
+            <state line="61" column="0" selection-start="2985" selection-end="2985" vertical-scroll-proportion="0.0" vertical-offset="744" max-vertical-offset="2443">
               <folding />
             </state>
           </provider>
@@ -91,10 +82,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BinaryClassifierStateUpdater.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="BinaryClassifierStateUpdater.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/update/BinaryClassifierStateUpdater.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="53" column="103" selection-start="2208" selection-end="2208" vertical-scroll-proportion="0.0" vertical-offset="150" max-vertical-offset="1548">
+            <state line="53" column="103" selection-start="2208" selection-end="2208" vertical-scroll-proportion="0.30779755" vertical-offset="420" max-vertical-offset="1571">
               <folding />
             </state>
           </provider>
@@ -112,13 +103,12 @@
       <file leaf-file-name="WekaUtils.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/utils/WekaUtils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="76" column="38" selection-start="3292" selection-end="3292" vertical-scroll-proportion="0.0" vertical-offset="885" max-vertical-offset="2898">
+            <state line="55" column="67" selection-start="2312" selection-end="2312" vertical-scroll-proportion="0.0" vertical-offset="390" max-vertical-offset="2921">
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#916#927#0" expanded="true" />
                 <element signature="e#1450#1461#0" expanded="true" />
                 <element signature="e#1711#1719#0" expanded="true" />
-                <element signature="e#2303#2314#0" expanded="true" />
                 <element signature="e#2624#2632#0" expanded="true" />
               </folding>
             </state>
@@ -128,10 +118,19 @@
       <file leaf-file-name="OnlineBinaryClassifierState.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/OnlineBinaryClassifierState.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="36" column="56" selection-start="1217" selection-end="1217" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2426">
+            <state line="86" column="84" selection-start="2995" selection-end="2995" vertical-scroll-proportion="0.0" vertical-offset="420" max-vertical-offset="2426">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BinaryClassifierState.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/BinaryClassifierState.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="108" column="0" selection-start="3510" selection-end="3510" vertical-scroll-proportion="0.0" vertical-offset="525" max-vertical-offset="2246">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -145,11 +144,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EnsembleClassifierTopology.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="EnsembleClassifierTopology.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/weka/EnsembleClassifierTopology.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="92" column="66" selection-start="4579" selection-end="4579" vertical-scroll-proportion="0.5129959" vertical-offset="675" max-vertical-offset="1871">
-              <folding />
+            <state line="80" column="153" selection-start="4117" selection-end="4117" vertical-scroll-proportion="0.0" vertical-offset="871" max-vertical-offset="1990">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -157,8 +158,10 @@
       <file leaf-file-name="OnlineEnsembleClassifierTopology.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/weka/OnlineEnsembleClassifierTopology.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="79" column="0" selection-start="4019" selection-end="4019" vertical-scroll-proportion="0.0" vertical-offset="840" max-vertical-offset="1863">
-              <folding />
+            <state line="81" column="153" selection-start="4239" selection-end="4239" vertical-scroll-proportion="0.0" vertical-offset="885" max-vertical-offset="2005">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -196,7 +199,6 @@
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/query/EnsembleLabelDistributionPairAggregator.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/query/HungarianMethodBasedVoting.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/update/CobwebClusterUpdater.java" />
-        <option value="$PROJECT_DIR$/../src/jvm/ml/topology/weka/EnsembleClustererTopology.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/topology/weka/CobwebClusteringTopology.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/topology/weka/KmeansClusteringTopology.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/utils/WekaClusterers.java" />
@@ -212,7 +214,6 @@
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/create/BinaryClassifierFactory.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/drpc/AustralianElectricityPricingQuery.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/query/BinaryClassifierQuery.java" />
-        <option value="$PROJECT_DIR$/../src/jvm/ml/topology/weka/OnlineEnsembleClassifierTopology.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/MlStormWekaState.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/OnlineBinaryClassifierState.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/BinaryClassifierState.java" />
@@ -224,9 +225,11 @@
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/query/VotingConsensusAggregator.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/update/BinaryClassifierStateUpdater.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/update/MetaFeatureVectorBuilder.java" />
-        <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/utils/WekaUtils.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/topology/weka/EnsembleLearnerTopologyBase.java" />
+        <option value="$PROJECT_DIR$/../src/jvm/ml/topology/weka/OnlineEnsembleClassifierTopology.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/topology/weka/EnsembleClassifierTopology.java" />
+        <option value="$PROJECT_DIR$/../src/jvm/ml/topology/weka/EnsembleClustererTopology.java" />
+        <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/utils/WekaUtils.java" />
       </list>
     </option>
   </component>
@@ -1299,13 +1302,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/weka/EnsembleClustererTopology.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="69" column="78" selection-start="3326" selection-end="3326" vertical-scroll-proportion="0.0" vertical-offset="600" max-vertical-offset="1878">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/utils/WekaOnlineClassificationAlgorithms.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="20" column="66" selection-start="811" selection-end="811" vertical-scroll-proportion="0.0" vertical-offset="57" max-vertical-offset="1046">
@@ -1327,16 +1323,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/BinaryClassifierState.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="108" column="0" selection-start="3510" selection-end="3510" vertical-scroll-proportion="0.0" vertical-offset="1215" max-vertical-offset="2020">
-          <folding>
-            <element signature="e#1479#1480#0" expanded="false" />
-            <element signature="e#1511#1512#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/KmeansClustererState.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="111" column="25" selection-start="3595" selection-end="3595" vertical-scroll-proportion="0.0" vertical-offset="1185" max-vertical-offset="2500">
@@ -1353,15 +1339,6 @@
           <folding>
             <element signature="e#2645#2646#0" expanded="true" />
             <element signature="e#2677#2678#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/query/BinaryClassifierQuery.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="57" column="73" selection-start="2420" selection-end="2420" vertical-scroll-proportion="0.0" vertical-offset="170" max-vertical-offset="2245">
-          <folding>
-            <element signature="e#1690#1720#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1405,13 +1382,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/query/EnsembleLabelDistributionPairAggregator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="39" column="29" selection-start="1678" selection-end="1678" vertical-scroll-proportion="0.0" vertical-offset="57" max-vertical-offset="1286">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/update/MetaFeatureVectorBuilder.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="51" column="39" selection-start="1856" selection-end="1856" vertical-scroll-proportion="0.0" vertical-offset="252" max-vertical-offset="1571">
@@ -1419,25 +1389,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/OnlineBinaryClassifierState.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="56" selection-start="1217" selection-end="1217" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2426">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/BaseOnlineWekaState.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="30" column="53" selection-start="992" selection-end="1009" vertical-scroll-proportion="0.0" vertical-offset="87" max-vertical-offset="2523">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/weka/OnlineEnsembleClassifierTopology.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="79" column="0" selection-start="4019" selection-end="4019" vertical-scroll-proportion="0.0" vertical-offset="840" max-vertical-offset="1863">
           <folding />
         </state>
       </provider>
@@ -1449,34 +1403,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/utils/WekaUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="76" column="38" selection-start="3292" selection-end="3292" vertical-scroll-proportion="0.0" vertical-offset="885" max-vertical-offset="2898">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#916#927#0" expanded="true" />
-            <element signature="e#1450#1461#0" expanded="true" />
-            <element signature="e#1711#1719#0" expanded="true" />
-            <element signature="e#2303#2314#0" expanded="true" />
-            <element signature="e#2624#2632#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/update/BinaryClassifierStateUpdater.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="53" column="103" selection-start="2208" selection-end="2208" vertical-scroll-proportion="0.0" vertical-offset="150" max-vertical-offset="1548">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/weka/EnsembleLearnerTopologyBase.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="79" column="110" selection-start="3881" selection-end="3881" vertical-scroll-proportion="0.0" vertical-offset="654" max-vertical-offset="2458">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/utils/WekaClassificationAlgorithms.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="9" column="82" selection-start="239" selection-end="239" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="896">
@@ -1484,9 +1410,86 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/query/BinaryClassifierQuery.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="97" column="0" selection-start="3956" selection-end="4134" vertical-scroll-proportion="0.49658003" vertical-offset="867" max-vertical-offset="2501">
+          <folding>
+            <element signature="e#1690#1720#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/query/EnsembleLabelDistributionPairAggregator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="13" selection-start="877" selection-end="877" vertical-scroll-proportion="0.33333334" vertical-offset="64" max-vertical-offset="1263">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/weka/OnlineEnsembleClassifierTopology.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="81" column="153" selection-start="4239" selection-end="4239" vertical-scroll-proportion="0.0" vertical-offset="885" max-vertical-offset="2005">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/weka/EnsembleClassifierTopology.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="92" column="66" selection-start="4579" selection-end="4579" vertical-scroll-proportion="0.5129959" vertical-offset="675" max-vertical-offset="1871">
+        <state line="80" column="153" selection-start="4117" selection-end="4117" vertical-scroll-proportion="0.0" vertical-offset="871" max-vertical-offset="1990">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/weka/EnsembleClustererTopology.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="97" column="67" selection-start="4902" selection-end="4905" vertical-scroll-proportion="0.56926405" vertical-offset="832" max-vertical-offset="1647">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/utils/WekaUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="55" column="67" selection-start="2312" selection-end="2312" vertical-scroll-proportion="0.0" vertical-offset="390" max-vertical-offset="2921">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#916#927#0" expanded="true" />
+            <element signature="e#1450#1461#0" expanded="true" />
+            <element signature="e#1711#1719#0" expanded="true" />
+            <element signature="e#2624#2632#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/weka/EnsembleLearnerTopologyBase.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="61" column="0" selection-start="2985" selection-end="2985" vertical-scroll-proportion="0.0" vertical-offset="744" max-vertical-offset="2443">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/OnlineBinaryClassifierState.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="86" column="84" selection-start="2995" selection-end="2995" vertical-scroll-proportion="0.0" vertical-offset="420" max-vertical-offset="2426">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/BinaryClassifierState.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="108" column="0" selection-start="3510" selection-end="3510" vertical-scroll-proportion="0.0" vertical-offset="525" max-vertical-offset="2246">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/update/BinaryClassifierStateUpdater.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="53" column="103" selection-start="2208" selection-end="2208" vertical-scroll-proportion="0.30779755" vertical-offset="420" max-vertical-offset="1571">
           <folding />
         </state>
       </provider>

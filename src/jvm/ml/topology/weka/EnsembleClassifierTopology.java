@@ -12,9 +12,11 @@ import bolt.ml.state.weka.classifier.create.BinaryClassifierFactory;
 import bolt.ml.state.weka.classifier.query.BinaryClassifierQuery;
 import bolt.ml.state.weka.classifier.update.BinaryClassifierStateUpdater;
 import bolt.ml.state.weka.cluster.query.EnsembleLabelDistributionPairAggregator;
+import bolt.ml.state.weka.classifier.update.MetaFeatureVectorBuilder;
 import bolt.ml.state.weka.utils.WekaClassificationAlgorithms;
 import com.google.common.collect.Lists;
 import spout.AustralianElectricityPricingSpout;
+import storm.trident.operation.Aggregator;
 import storm.trident.operation.ReducerAggregator;
 import storm.trident.state.QueryFunction;
 import storm.trident.state.StateFactory;
@@ -59,6 +61,7 @@ public class EnsembleClassifierTopology extends EnsembleLearnerTopologyBase {
         final StateFactory metaFactory  = new BinaryClassifierFactory(WekaClassificationAlgorithms.svm.name(), windowSize);
         final QueryFunction metaQueryFunction = new BinaryClassifierQuery.MetaQuery();
         final ReducerAggregator drpcPartitionResultAggregator =  new EnsembleLabelDistributionPairAggregator();
+        final Aggregator metaFeatureVectorBuilder = new MetaFeatureVectorBuilder();
         final QueryFunction<MlStormWekaState, Map.Entry<Integer, double[]>> queryFunction = new BinaryClassifierQuery();
 
         final List<StateUpdater> stateUpdaters = new ArrayList<StateUpdater>();
@@ -75,7 +78,7 @@ public class EnsembleClassifierTopology extends EnsembleLearnerTopologyBase {
 
         final IRichSpout features = new AustralianElectricityPricingSpout(args[0], fields);
         final StormTopology stormTopology = buildTopology(features, parallelism, stateUpdaters, factories,
-                queryFunctions, queryFunctionNames, drpcPartitionResultAggregator, metaFactory, stateUpdater, metaQueryFunction);
+                queryFunctions, queryFunctionNames, drpcPartitionResultAggregator, metaFactory, stateUpdater, metaQueryFunction, metaFeatureVectorBuilder);
 
         if (numWorkers == 1) {
             LocalCluster cluster = new LocalCluster();

@@ -12,9 +12,11 @@ import bolt.ml.state.weka.cluster.create.MlStormClustererFactory;
 import bolt.ml.state.weka.cluster.query.EnsembleLabelDistributionPairAggregator;
 import bolt.ml.state.weka.cluster.query.MlStormClustererQuery;
 import bolt.ml.state.weka.cluster.update.ClustererUpdater;
+import bolt.ml.state.weka.cluster.update.MetaFeatureVectorBuilder;
 import bolt.ml.state.weka.utils.WekaClusterers;
 import com.google.common.collect.Lists;
 import spout.mddb.MddbFeatureExtractorSpout;
+import storm.trident.operation.Aggregator;
 import storm.trident.operation.ReducerAggregator;
 import storm.trident.state.QueryFunction;
 import storm.trident.state.StateFactory;
@@ -68,6 +70,7 @@ public class EnsembleClustererTopology extends EnsembleLearnerTopologyBase {
         final StateUpdater metaStateUpdater = new ClustererUpdater();
         final StateFactory metaStateFactory = new MlStormClustererFactory.ClustererFactory(k, windowSize, WekaClusterers.densityBased.name(), false);
         final QueryFunction metaQueryFunction = new MlStormClustererQuery.MetaQuery();
+        final Aggregator metaFeatureVectorBuilder = new MetaFeatureVectorBuilder();
 
         for (WekaClusterers alg : WekaClusterers.values()) {
             factories.add(new MlStormClustererFactory.ClustererFactory(k, windowSize, alg.name(), true));
@@ -78,7 +81,7 @@ public class EnsembleClustererTopology extends EnsembleLearnerTopologyBase {
 
         final IRichSpout features = new MddbFeatureExtractorSpout(args[0], fields);
         final StormTopology stormTopology = buildTopology(features, parallelism, stateUpdaters, factories,
-                queryFunctions, queryFunctionNames, drpcPartitionResultAggregator, metaStateFactory, metaStateUpdater, metaQueryFunction);
+                queryFunctions, queryFunctionNames, drpcPartitionResultAggregator, metaStateFactory, metaStateUpdater, metaQueryFunction, metaFeatureVectorBuilder);
 
         if (numWorkers == 1) {
             LocalCluster cluster = new LocalCluster();

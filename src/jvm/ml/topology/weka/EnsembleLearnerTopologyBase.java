@@ -3,7 +3,6 @@ package topology.weka;
 import backtype.storm.generated.StormTopology;
 import backtype.storm.topology.IRichSpout;
 import backtype.storm.tuple.Fields;
-import bolt.ml.state.weka.cluster.update.MetaFeatureVectorBuilder;
 import storm.trident.Stream;
 import storm.trident.TridentState;
 import storm.trident.TridentTopology;
@@ -43,7 +42,8 @@ public class EnsembleLearnerTopologyBase {
                                                  final ReducerAggregator drpcPartitionResultAggregator,
                                                  final StateFactory metaStateFactory,
                                                  final StateUpdater metaStateUpdater,
-                                                 final QueryFunction metaQueryFunction) {
+                                                 final QueryFunction metaQueryFunction,
+                                                 final Aggregator metaFeatureVectorBuilder) {
         assertArguments(spout, parallelism, stateUpdaters, stateFactories, queryFunctions, drpcQueryFunctionNames, drpcPartitionResultAggregator, metaStateFactory, metaStateUpdater, metaQueryFunction);
 
         /**
@@ -74,8 +74,6 @@ public class EnsembleLearnerTopologyBase {
         }
 
         final List<Stream> streamsToMerge = new ArrayList<Stream>();
-        final Aggregator metaFeatureVectorBuilder = new MetaFeatureVectorBuilder();
-
         // Accumulate all the streams to be merged to be processed by meta clusterer
         for (TridentState ensembleState : ensembleStates) streamsToMerge.add(ensembleState.newValuesStream());
 
