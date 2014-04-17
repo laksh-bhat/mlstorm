@@ -91,11 +91,27 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MetaFeatureVectorBuilder.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="MetaFeatureVectorBuilder.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/update/MetaFeatureVectorBuilder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="47" column="31" selection-start="2035" selection-end="2035" vertical-scroll-proportion="0.92210525" vertical-offset="147" max-vertical-offset="1390">
+            <state line="39" column="38" selection-start="1596" selection-end="1596" vertical-scroll-proportion="0.0" vertical-offset="147" max-vertical-offset="1623">
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="WekaUtils.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/utils/WekaUtils.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="76" column="38" selection-start="3292" selection-end="3292" vertical-scroll-proportion="0.3601695" vertical-offset="885" max-vertical-offset="2898">
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#916#927#0" expanded="true" />
+                <element signature="e#1450#1461#0" expanded="true" />
+                <element signature="e#1711#1719#0" expanded="true" />
+                <element signature="e#2303#2314#0" expanded="true" />
+                <element signature="e#2624#2632#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -142,15 +158,6 @@
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/query/EnsembleLabelDistributionPairAggregator.java">
           <provider selected="true" editor-type-id="text-editor">
             <state line="39" column="29" selection-start="1678" selection-end="1678" vertical-scroll-proportion="0.0" vertical-offset="57" max-vertical-offset="1286">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="VoteMajority.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/query/VoteMajority.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="13" selection-start="1010" selection-end="1010" vertical-scroll-proportion="0.0" vertical-offset="72" max-vertical-offset="1286">
               <folding />
             </state>
           </provider>
@@ -214,12 +221,12 @@
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/update/MetaFeatureVectorBuilder.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/spout/AustralianElectricity.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/topology/weka/EnsembleClassifierTopology.java" />
-        <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/utils/WekaUtils.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/utils/WekaClassificationAlgorithms.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/query/VotingConsensusAggregator.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/topology/weka/EnsembleLearnerTopologyBase.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/update/BinaryClassifierStateUpdater.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/update/MetaFeatureVectorBuilder.java" />
+        <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/utils/WekaUtils.java" />
       </list>
     </option>
   </component>
@@ -1035,7 +1042,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32736573" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32736573" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1384,20 +1391,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/utils/WekaUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="84" column="33" selection-start="3589" selection-end="3589" vertical-scroll-proportion="0.0" vertical-offset="877" max-vertical-offset="2921">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#922#933#0" expanded="true" />
-            <element signature="e#1456#1467#0" expanded="true" />
-            <element signature="e#1717#1725#0" expanded="true" />
-            <element signature="e#2309#2320#0" expanded="true" />
-            <element signature="e#2630#2638#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/utils/WekaClassificationAlgorithms.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="12" column="0" selection-start="243" selection-end="243" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="896">
@@ -1479,8 +1472,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/update/MetaFeatureVectorBuilder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="31" selection-start="2035" selection-end="2035" vertical-scroll-proportion="0.92210525" vertical-offset="147" max-vertical-offset="1390">
+        <state line="39" column="38" selection-start="1596" selection-end="1596" vertical-scroll-proportion="0.0" vertical-offset="147" max-vertical-offset="1623">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/utils/WekaUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="76" column="38" selection-start="3292" selection-end="3292" vertical-scroll-proportion="0.3601695" vertical-offset="885" max-vertical-offset="2898">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#916#927#0" expanded="true" />
+            <element signature="e#1450#1461#0" expanded="true" />
+            <element signature="e#1711#1719#0" expanded="true" />
+            <element signature="e#2303#2314#0" expanded="true" />
+            <element signature="e#2624#2632#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

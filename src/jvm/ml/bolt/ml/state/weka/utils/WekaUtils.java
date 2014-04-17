@@ -2,10 +2,10 @@ package bolt.ml.state.weka.utils;
 
 import weka.classifiers.Classifier;
 import weka.classifiers.bayes.NaiveBayesUpdateable;
+import weka.classifiers.functions.Logistic;
 import weka.classifiers.functions.MultilayerPerceptron;
 import weka.classifiers.functions.SGD;
 import weka.classifiers.functions.SMO;
-import weka.classifiers.functions.SimpleLogistic;
 import weka.classifiers.lazy.IBk;
 import weka.classifiers.lazy.LWL;
 import weka.classifiers.trees.DecisionStump;
@@ -74,7 +74,7 @@ public class WekaUtils {
             case svm:
                 return new SMO();
             case logisticRegression:
-                return new SimpleLogistic();
+                return new Logistic();
             case randomForest:
                 return new RandomForest();
             case decisionStump:
