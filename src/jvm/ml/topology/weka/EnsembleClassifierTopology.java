@@ -59,7 +59,7 @@ public class EnsembleClassifierTopology extends EnsembleLearnerTopologyBase {
         final StateFactory metaFactory  = new BinaryClassifierFactory(WekaClassificationAlgorithms.svm.name(), windowSize);
         final QueryFunction metaQueryFunction = new BinaryClassifierQuery.MetaQuery();
         final ReducerAggregator drpcPartitionResultAggregator =  new EnsembleLabelDistributionPairAggregator();
-        final QueryFunction<MlStormWekaState, Map.Entry<Double, double[]>> queryFunction = new BinaryClassifierQuery();
+        final QueryFunction<MlStormWekaState, Map.Entry<Integer, double[]>> queryFunction = new BinaryClassifierQuery();
 
         final List<StateUpdater> stateUpdaters = new ArrayList<StateUpdater>();
         final List<StateFactory> factories = new ArrayList<StateFactory>();
