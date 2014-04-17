@@ -64,11 +64,22 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="OnlineEnsembleClassifierTopology.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="OnlineEnsembleClassifierTopology.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/weka/OnlineEnsembleClassifierTopology.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="87" column="39" selection-start="4371" selection-end="4371" vertical-scroll-proportion="0.6564987" vertical-offset="495" max-vertical-offset="1894">
+            <state line="87" column="39" selection-start="4371" selection-end="4371" vertical-scroll-proportion="0.0" vertical-offset="495" max-vertical-offset="1894">
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AustralianElectricityPricingQuery.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/../src/jvm/ml/drpc/AustralianElectricityPricingQuery.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="51" column="0" selection-start="1853" selection-end="1853" vertical-scroll-proportion="0.5769231" vertical-offset="330" max-vertical-offset="1504">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -80,6 +91,15 @@
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BptiEnsembleQuery.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../src/jvm/ml/drpc/BptiEnsembleQuery.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="36" column="0" selection-start="1220" selection-end="2761" vertical-scroll-proportion="0.0" vertical-offset="330" max-vertical-offset="1596">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -108,7 +128,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/utils/WekaAlgorithms.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/query/ClustererQuery.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/create/ClustererFactory.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/update/MetaClassifier.java" />
@@ -159,6 +178,7 @@
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/BinaryClassifierState.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/spout/AustralianElectricity.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/topology/weka/OnlineEnsembleClassifierTopology.java" />
+        <option value="$PROJECT_DIR$/../src/jvm/ml/drpc/AustralianElectricityPricingQuery.java" />
       </list>
     </option>
   </component>
@@ -639,7 +659,7 @@
       <recent name="bolt.ml.state" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.TestJdbcConnection">
+  <component name="RunManager" selected="Application.AustralianElectricityPricingQuery">
     <configuration default="false" name="SpoutUtils" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="utils.SpoutUtils" />
       <option name="VM_PARAMETERS" />
@@ -659,6 +679,22 @@
       </RunnerSettings>
       <RunnerSettings RunnerId="Run" />
       <ConfigurationWrapper RunnerId="Debug" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+    <configuration default="false" name="AustralianElectricityPricingQuery" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="drpc.AustralianElectricityPricingQuery" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="mlstorm" />
+      <envs />
+      <RunnerSettings RunnerId="Run" />
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
@@ -811,13 +847,15 @@
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
-    <list size="2">
+    <list size="3">
       <item index="0" class="java.lang.String" itemvalue="Application.TestJdbcConnection" />
       <item index="1" class="java.lang.String" itemvalue="Application.SpoutUtils" />
+      <item index="2" class="java.lang.String" itemvalue="Application.AustralianElectricityPricingQuery" />
     </list>
     <recent_temporary>
-      <list size="1">
-        <item index="0" class="java.lang.String" itemvalue="Application.SpoutUtils" />
+      <list size="2">
+        <item index="0" class="java.lang.String" itemvalue="Application.AustralianElectricityPricingQuery" />
+        <item index="1" class="java.lang.String" itemvalue="Application.SpoutUtils" />
       </list>
     </recent_temporary>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
@@ -856,7 +894,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16523606" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32890856" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3286445" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -929,13 +967,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$PROJECT_DIR$/../lib/storm-0.8.3-wip3.jar!/src/jvm/storm/trident/TridentTopology.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="216" column="17" selection-start="9406" selection-end="9406" vertical-scroll-proportion="0.0" vertical-offset="2086" max-vertical-offset="11743">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$PROJECT_DIR$/../lib/storm-0.8.3-wip3.jar!/src/jvm/storm/trident/Stream.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="131" column="22" selection-start="5062" selection-end="5062" vertical-scroll-proportion="0.0" vertical-offset="1141" max-vertical-offset="5458">
@@ -1005,13 +1036,6 @@
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/utils/FeatureVectorUtils.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="38" column="1" selection-start="1583" selection-end="1583" vertical-scroll-proportion="0.0" vertical-offset="237" max-vertical-offset="1301">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/drpc/BptiEnsembleQuery.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="60" column="5" selection-start="2499" selection-end="2499" vertical-scroll-proportion="0.0" vertical-offset="301" max-vertical-offset="1723">
           <folding />
         </state>
       </provider>
@@ -1277,8 +1301,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/weka/OnlineEnsembleClassifierTopology.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="87" column="39" selection-start="4371" selection-end="4371" vertical-scroll-proportion="0.6564987" vertical-offset="495" max-vertical-offset="1894">
+        <state line="87" column="39" selection-start="4371" selection-end="4371" vertical-scroll-proportion="0.0" vertical-offset="495" max-vertical-offset="1894">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/drpc/BptiEnsembleQuery.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="36" column="0" selection-start="1220" selection-end="2761" vertical-scroll-proportion="0.0" vertical-offset="330" max-vertical-offset="1596">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/drpc/AustralianElectricityPricingQuery.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="51" column="0" selection-start="1853" selection-end="1853" vertical-scroll-proportion="0.5769231" vertical-offset="330" max-vertical-offset="1504">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
