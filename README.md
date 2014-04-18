@@ -22,7 +22,7 @@ Machine Learning in storm: Experimenting with parallel streaming PCA and Ensembl
 ==========================================================================================================================
 
        b. A distributed query (querying for parameters/model statistics) on the model can be executed like the following.
-         java -cp .: (output of "storm classpath" command) : $REPO/mlstorm/target/mlstorm-00.01-jar-with-dependencies.jar drpc.DrpcQueryRunner qp-hd3 kmeans "no args" *-- This returns the centroids of all the clusters for a given K --*
+         java -cp .: `storm classpath` : $REPO/mlstorm/target/mlstorm-00.01-jar-with-dependencies.jar drpc.DrpcQueryRunner qp-hd3 kmeans "no args" /*-- This returns the centroids of all the clusters for a given K --*/
 ==========================================================================================================================
        c. An update could be made like the following.
        
