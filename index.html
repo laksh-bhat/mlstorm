@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Mlstorm : Machinelearning in storm" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Mlstorm</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/lbhat1/mlstorm">View on GitHub</a>
+
+          <h1 id="project_title">Mlstorm</h1>
+          <h2 id="project_tagline">Machinelearning in storm</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/lbhat1/mlstorm/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/lbhat1/mlstorm/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a name="mlstorm" class="anchor" href="#mlstorm"><span class="octicon octicon-link"></span></a>mlstorm</h1>
+
+<h2>
+<a name="machine-learning-in-storm-experimenting-with-parallel-streaming-pca-and-ensemble-methods-for-collaborative-learning" class="anchor" href="#machine-learning-in-storm-experimenting-with-parallel-streaming-pca-and-ensemble-methods-for-collaborative-learning"><span class="octicon octicon-link"></span></a>Machine Learning in storm: Experimenting with parallel streaming PCA and Ensemble methods for collaborative learning.</h2>
+
+<ol>
+<li><p>The PCA and Clustering algorithm implementations are window based. There's also an online/incremental PCA implementation available for experimentation.</p></li>
+<li><p>All the learning algorithms are implemented in Trident and use external EJML and Weka libraries.</p></li>
+<li><p>The consensus clustering algorithms (EnsembleClusteringTopology.java) use 2-level (shallow!) deep-learning technique. I experimented with relabelling and majority voting based scheme without decent result on a stream. Interested readers are encouraged to look at Vega-Pons &amp; Ruiz-Shulcloper, 2011 for detailed explanation of the techniques.  </p></li>
+<li><p>There are also an implementation of EnsembleBinaryClassifierTopology and it's online counterpart in OnlineEnsembleBinaryClassifierTopology.java. All the base algorithms are run in parallel with intelligent reduction (aggregation) into meta-classifier inputs. </p></li>
+<li><p>The Kmeans clustering implementation allows querying different partitions. The result of such a query is a partitionId and the query result. Using the partion id returned and the usefulness of the results a human/machine can update the parameters of the model on the fly. The following is an example.</p></li>
+</ol><h1></h1>
+
+<pre><code>   a. The topology is run as usual.
+
+     storm jar /damsl/software/storm/code/mlstorm/target/mlstorm-00.01-jar-with-dependencies.jar topology.weka.KmeansClusteringTopology /damsl/projects/bpti_db/features&lt;directory containing feature vectors&gt; 4&lt;no of workers&gt; 10000 10&lt;k&gt; 10&lt;parallelism&gt;
+</code></pre>
+
+<h1></h1>
+
+<pre><code>   b. A distributed query (querying for parameters/model statistics) on the model can be executed like the following.
+     java -cp .: (output of "storm classpath" command) : $REPO/mlstorm/target/mlstorm-00.01-jar-with-dependencies.jar drpc.DrpcQueryRunner qp-hd3 kmeans "no args" *-- This returns the centroids of all the clusters for a given K --*
+</code></pre>
+
+<h1></h1>
+
+<pre><code>   c. An update could be made like the following.
+
+ Run/&gt; java -cp .:`storm classpath`:$REPO/mlstorm/target/mlstorm-00.01-jar-with-dependencies.jar 
+ drpc.DrpcQueryRunner qp-hd3 kUpdate 0,45
+
+ Description/&gt; In (c) we are updating the parameters of the said algorithm (K-means clustering)
+ on the fly using DRPC. We started the topology with 10 partitions and (c) is updating the Clusterer
+ at partition '0' to [k=45]. 
+
+     Result/&gt; &lt;[["0,35","k update request (30-&gt;35) received at [0]; average trainingtime for 
+     k = [30] = [334,809]ms"]]&gt;
+
+   The classpath above is returned by the "storm classpath" command.
+</code></pre>
+
+<h1></h1>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Mlstorm maintained by <a href="https://github.com/lbhat1">lbhat1</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
