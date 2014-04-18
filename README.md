@@ -26,11 +26,15 @@ Machine Learning in storm: Experimenting with parallel streaming PCA and Ensembl
 ==========================================================================================================================
        c. An update could be made like the following.
        
-	 java -cp .:`storm classpath`:$REPO/mlstorm/target/mlstorm-00.01-jar-with-dependencies.jar drpc.DrpcQueryRunner qp-hd3 kUpdate 0,45
+	 Run/> java -cp .:`storm classpath`:$REPO/mlstorm/target/mlstorm-00.01-jar-with-dependencies.jar 
+	 drpc.DrpcQueryRunner qp-hd3 kUpdate 0,45
 	 
-	 Description: In (c) we are updating the parameters of the said algorithm (K-means clustering) on the fly using DRPC. We started the topology with 10 partitions and (c) is updating the Clusterer at partition '0' to [k=45]. 
+	 Description/> In (c) we are updating the parameters of the said algorithm (K-means clustering)
+	 on the fly using DRPC. We started the topology with 10 partitions and (c) is updating the Clusterer
+	 at partition '0' to [k=45]. 
 	 
-         Result : <[["0,35","k update request (30->35) received at [0]; average trainingtime for k = [30] = [334,809]ms"]]>
+         Result/> <[["0,35","k update request (30->35) received at [0]; average trainingtime for 
+         k = [30] = [334,809]ms"]]>
 
        The classpath above is returned by the "storm classpath" command.
 ==========================================================================================================================
