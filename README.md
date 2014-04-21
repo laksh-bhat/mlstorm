@@ -5,13 +5,20 @@ Experimenting with parallel streaming PCA and Ensemble methods for collaborative
 
 Introduction
 ------------
-a. A basic description of Storm and its capabilities is available at http://storm.incubator.apache.org/
-b. A detailed tutorial on how to install and run a multi-node storm cluster is described at http://www.michael-noll.com/tutorials/running-multi-node-storm-cluster/
-c. The following page helps you understand the lifecycle of a storm topology.
-   https://github.com/nathanmarz/storm/wiki/Lifecycle-of-a-topology
-d. https://github.com/nathanmarz/storm/wiki/Trident-API-Overview provides a detailed description of the API's used in this project.
+a. A basic description of Storm and its capabilities is available at - http://storm.incubator.apache.org/
 
+b. A detailed tutorial on how to install and run a multi-node storm cluster is available at - http://www.michael-noll.com/tutorials/running-multi-node-storm-cluster/
 
+c. The following wiki page helps you understand the lifecycle of a storm topology -  https://github.com/nathanmarz/storm/wiki/Lifecycle-of-a-topology
+
+d. The following wiki provides a detailed description of the API's used in this project - https://github.com/nathanmarz/storm/wiki/Trident-API-Overview
+
+e. This following wiki page should be useful to understand the parallelism of a storm topology - https://github.com/nathanmarz/storm/wiki/Understanding-the-parallelism-of-a-Storm-topology
+
+f. We have implemented several spouts to stream BPTI features, sensor data etc. spout.mddb.MddbFeatureExtractorSpout, spout.sensor.SensorStreamingSpout and spout.AustralianElectricityPricingSpout are all NonTransactional spouts. A detailed description of Transactional, Non-Transactional and Opaque-Transactional spouts is available here - https://github.com/nathanmarz/storm/wiki/Trident-spouts
+
+The MLSTORM project
+-------------------
 
 1. All the learning algorithms are implemented in Trident and use external EJML and Weka libraries. All these libraries reside in the /lib directory in the project home directory. Look at m2-pom.xml to get an idea about the project dependencies.
 
