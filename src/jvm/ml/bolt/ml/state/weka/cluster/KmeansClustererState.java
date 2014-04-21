@@ -54,18 +54,21 @@ public class KmeansClustererState extends BaseWekaState {
     /**
      * I trust you.
      * Call this very when you don't have ANY other choice and when you aren't updating the clusterer
+     *
      * @return
      */
-    public SimpleKMeans getClusterer(){ return clusterer; }
+    public SimpleKMeans getClusterer() {
+        return clusterer;
+    }
 
     public int getNumClusters() {
         return numClusters;
     }
 
     @Override
-    protected void emptyDataset(){
+    protected void emptyDataset() {
         synchronized (lock) {
-    	    this.dataset.clear();
+            this.dataset.clear();
         }
     }
 
@@ -84,13 +87,14 @@ public class KmeansClustererState extends BaseWekaState {
 
     /**
      * Allows parameter updates to the current model
+     *
      * @param k
      * @throws Exception
      */
     public final void updateClustererNumClusters(int k) throws Exception {
         Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
         System.err.println("DEBUG: updating k and rebuilding clusterer");
-        synchronized (lock){
+        synchronized (lock) {
             numClusters = k;
             clusterer = new SimpleKMeans();
             clusterer.setNumClusters(numClusters);
@@ -103,12 +107,12 @@ public class KmeansClustererState extends BaseWekaState {
 
     @Override
     protected void train() throws Exception {
+        long startTime = System.currentTimeMillis();
         synchronized (lock) {
-            long startTime = System.currentTimeMillis();
             this.clusterer.buildClusterer(dataset);
-            long endTime = System.currentTimeMillis();
-            this.trainingDuration = (getTrainingDuration() + (endTime - startTime))/2;
         }
+        long endTime = System.currentTimeMillis();
+        this.trainingDuration = (getTrainingDuration() + (endTime - startTime)) / 2;
         isTrained = true;
     }
 
@@ -118,18 +122,20 @@ public class KmeansClustererState extends BaseWekaState {
 
     @Override
     protected synchronized void createDataSet() throws Exception {
-        // Our aim is to create a singleton dataset which will be reused by all trainingInstances
-        if (this.dataset != null) return;
+        synchronized (lock) {
+            // Our aim is to create a singleton dataset which will be reused by all trainingInstances
+            if (this.dataset != null) return;
 
-        // hack to obtain the feature set length
-        Collection<double[]> features = this.featureVectorsInWindow.values();
-        for (double[] some : features) {
-            loadWekaAttributes(some);
-            break;
+            // hack to obtain the feature set length
+            Collection<double[]> features = this.featureVectorsInWindow.values();
+            for (double[] some : features) {
+                loadWekaAttributes(some);
+                break;
+            }
+
+            // we are now ready to create a training dataset metadata
+            dataset = new Instances("training", this.wekaAttributes, this.windowSize);
         }
-
-        // we are now ready to create a training dataset metadata
-        dataset = new Instances("training", this.wekaAttributes, this.windowSize);
     }
 
     @Override
