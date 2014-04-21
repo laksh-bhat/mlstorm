@@ -98,7 +98,7 @@ public class KmeansClustererState extends BaseWekaState {
             numClusters = k;
             clusterer = new SimpleKMeans();
             clusterer.setNumClusters(numClusters);
-            this.wekaAttributes = WekaUtils.makeFeatureVectorForBatchClustering(numClusters, featuresCount);
+            this.wekaAttributes = WekaUtils.makeFeatureVectorForBatchClustering(featuresCount, numClusters);
             this.wekaAttributes.trimToSize();
             this.dataset = new Instances("training", this.wekaAttributes, this.windowSize);
             this.trainingDuration = 0;

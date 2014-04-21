@@ -109,7 +109,7 @@ public class ClustererState extends BaseWekaState {
     @Override
     protected synchronized void loadWekaAttributes(final double[] features) {
         if (this.wekaAttributes == null) {
-            this.wekaAttributes = WekaUtils.makeFeatureVectorForBatchClustering(numClusters, features.length);
+            this.wekaAttributes = WekaUtils.makeFeatureVectorForBatchClustering(features.length, numClusters);
             this.wekaAttributes.trimToSize();
         }
     }
