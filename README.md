@@ -1,7 +1,6 @@
-mlstorm - Machine Learning in Storm Ecosystem
----------------------------------------------
+#mlstorm - Machine Learning in Storm Ecosystem
 
-Experimenting with parallel streaming PCA and Ensemble methods for collaborative learning.
+Experimenting with online ensemble methods for collaborative learning and parallel streaming principal components analysis.
 
 ## Introduction
 
