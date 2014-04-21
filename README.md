@@ -36,7 +36,33 @@ Implementation Details
 
 Experiments
 -----------
+
+2. Our implementation of consensus clustering uses the MddbFeatureExtractorSpout to inject feature vectors. 
+
+  a. To submit the topology one can fire away the following command.
+
+      <code> storm jar $REPO/mlstorm/target/mlstorm-00.01-jar-with-dependencies.jar topology.weka.EnsembleClustererTopology /damsl/projects/bpti_db/features 4 1000 5 1 </code>
+      
+    <code>The arguments to the topology is described below </code>
+  
+     1. directory - The folder containing containing feature vectors (We use BPTI dataset for our experiments. The spout  implementation - spout.mddb.MddbFeatureExtractorSpout - is responsible to feed the topology with the feature vectors. Look at res/features_o.txt for an example dataset. If you want access to the bpti dataset, contact lbhat1@jhu.edu or yanif@jhu.edu)
+     2. no of workers - total no. of nodes to run the topology on.
+     3. window-size - The total number of training examples in the sliding window
+     4. k - the number of clusters
+     5. parallelism - the number of threads per bolt
+  
+
+  b. To predict the cluster for a test example, one can invoke a drpc query to query the meta learner (k-means clustering, by default) state.
+  
+    <code> java -cp .:`storm classpath`:$REPO/mlstorm/target/mlstorm-00.01-jar-with-dependencies.jar drpc.BptiEnsembleQuery drpc-server-host ClustererEnsemble </code>
+
 3. There are also implementations of an ensemble of binary classifiers (topology.weka.EnsembleBinaryClassifierTopology) and it's online counterpart (topology.weka.OnlineEnsembleBinaryClassifierTopology). All the base/weak learning algorithms are run in parallel with their predictions reduced into (aggregation) a meta-classifier training sample labelled using the original dataset.
+
+      <code> storm jar $REPO/mlstorm/target/mlstorm-00.01-jar-with-dependencies.jar topology.weka.EnsembleClassifierTopology $REPO/mlstorm/res/elecNormNew.arff 1 10 5 1 </code>
+      
+      b. To classify a test example, one can invoke a drpc query to query the meta learner (SVM, by default) state.
+      
+      <code> java -cp .:`storm classpath`:$REPO/mlstorm/target/mlstorm-00.01-jar-with-dependencies.jar drpc.AustralianElectricityPricingQuery drpc-server-host-name ClassifierEnsemble </code>
 
 4. Our implementation of Kmeans clustering allows querying different partitions (each partition runs a separate k-means instance). The result of such a query is a partitionId and the query result (for ex. the centroids of all the clusters or the distribution depicting the association of a test sample (feature vector) to the different clusters). Using the partion id returned and the usefulness of the results a human/machine can update the parameters of the model on the fly. The following is an example.
 
@@ -46,7 +72,7 @@ Experiments
 
          
    The arguments to the topology is described below:
-   1. <directory> The folder containing containing feature vectors (We use BPTI dataset for our experiments. The spout  implementation - spout.mddb.MddbFeatureExtractorSpout - is responsible to feed the topology with the feature vectors. Look at res/features_o.txt for an example dataset. If you want access to the bpti dataset, contact lbhat1@jhu.edu or yanif@jhu.edu)
+   1. <directory> The folder containing containing feature vectors 
    2. <no of workers> total no. of nodes to run the topology on.
    3. <k> the number of clusters
    4. <parallelism> the number of threads per bolt
