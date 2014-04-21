@@ -124,19 +124,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BaseWekaState.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/BaseWekaState.java">
+      <file leaf-file-name="MlStormClustererQuery.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/query/MlStormClustererQuery.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="104" column="7" selection-start="3221" selection-end="3221" vertical-scroll-proportion="0.0" vertical-offset="202" max-vertical-offset="2800">
+            <state line="181" column="54" selection-start="7017" selection-end="7017" vertical-scroll-proportion="0.511579" vertical-offset="2187" max-vertical-offset="4180">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ClustererState.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="ClustererState.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/ClustererState.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="108" column="13" selection-start="3578" selection-end="3578" vertical-scroll-proportion="0.4350205" vertical-offset="1182" max-vertical-offset="2411">
+            <state line="108" column="13" selection-start="3578" selection-end="3578" vertical-scroll-proportion="0.0" vertical-offset="1182" max-vertical-offset="2411">
               <folding />
             </state>
           </provider>
@@ -145,7 +145,7 @@
       <file leaf-file-name="KMeansDrpcQuery.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/drpc/KMeansDrpcQuery.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="70" column="92" selection-start="3410" selection-end="3410" vertical-scroll-proportion="0.0" vertical-offset="466" max-vertical-offset="2083">
+            <state line="61" column="129" selection-start="2842" selection-end="2842" vertical-scroll-proportion="0.0" vertical-offset="466" max-vertical-offset="2083">
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1852#1860#0" expanded="true" />
@@ -217,7 +217,6 @@
         <option value="$PROJECT_DIR$/../src/jvm/ml/topology/weka/EnsembleClustererTopology.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/topology/weka/OnlineEnsembleClassifierTopology.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/drpc/BptiEnsembleQuery.java" />
-        <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/query/MlStormClustererQuery.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/drpc/KMeansDrpcQuery.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/update/ClustererUpdater.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/update/BaseClustererUpdater.java" />
@@ -227,6 +226,7 @@
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/utils/WekaUtils.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/ClustererState.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/KmeansClustererState.java" />
+        <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/query/MlStormClustererQuery.java" />
       </list>
     </option>
   </component>
@@ -920,7 +920,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32736573" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32736573" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1238,16 +1238,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/query/MlStormClustererQuery.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="181" column="14" selection-start="6977" selection-end="6977" vertical-scroll-proportion="0.0" vertical-offset="2187" max-vertical-offset="4436">
-          <folding>
-            <element signature="e#2263#2293#0" expanded="true" />
-            <element signature="e#4373#4403#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/weka/EnsembleClassifierTopology.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="85" column="81" selection-start="4303" selection-end="4303" vertical-scroll-proportion="0.0" vertical-offset="750" max-vertical-offset="2426">
@@ -1341,16 +1331,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/drpc/KMeansDrpcQuery.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="70" column="92" selection-start="3410" selection-end="3410" vertical-scroll-proportion="0.0" vertical-offset="466" max-vertical-offset="2083">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1852#1860#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/update/BaseClustererUpdater.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="42" column="59" selection-start="1643" selection-end="1643" vertical-scroll-proportion="0.0" vertical-offset="402" max-vertical-offset="1375">
@@ -1381,7 +1361,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/ClustererState.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="108" column="13" selection-start="3578" selection-end="3578" vertical-scroll-proportion="0.4350205" vertical-offset="1182" max-vertical-offset="2411">
+        <state line="108" column="13" selection-start="3578" selection-end="3578" vertical-scroll-proportion="0.0" vertical-offset="1182" max-vertical-offset="2411">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/drpc/KMeansDrpcQuery.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="61" column="129" selection-start="2842" selection-end="2842" vertical-scroll-proportion="0.0" vertical-offset="466" max-vertical-offset="2083">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1852#1860#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/query/MlStormClustererQuery.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="181" column="54" selection-start="7017" selection-end="7017" vertical-scroll-proportion="0.511579" vertical-offset="2187" max-vertical-offset="4180">
           <folding />
         </state>
       </provider>
