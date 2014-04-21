@@ -3,6 +3,7 @@ package drpc;
 import backtype.storm.generated.DRPCExecutionException;
 import backtype.storm.utils.DRPCClient;
 import bolt.ml.state.weka.cluster.query.MlStormClustererQuery;
+import com.google.gson.Gson;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.thrift7.TException;
@@ -59,20 +60,29 @@ public class KMeansDrpcQuery {
                 String parameters = serializeFeatureVector(ArrayUtils.toPrimitive(both));
 
                 String centroidsSerialized = runQuery(args[1], parameters, client);
-                String[] centroidSerializedArrays = centroidsSerialized.split(MlStormClustererQuery.KmeansClustererQuery.CENTROID_DELIM);
-                List<double[]> centroids = new ArrayList<double[]>();
-                for (String centroid : centroidSerializedArrays) centroids.add(FeatureVectorUtils.deserializeToFeatureVector(centroid));
 
-                double[] rmsdPrimitive = ArrayUtils.toPrimitive(both);
-                double[] rmsdKmeans = new double[centroids.size()];
+                Gson gson = new Gson();
+                Object[] deserialized = gson.fromJson(centroidsSerialized, Object[].class);
+                for ( Object obj : deserialized ) {
+                    // result we get is of the form <partition, result>
+                    centroidsSerialized = ((String)obj).split(",")[1];
+                    String[] centroidSerializedArrays = centroidsSerialized.split(MlStormClustererQuery.KmeansClustererQuery.CENTROID_DELIM);
+                    List<double[]> centroids = new ArrayList<double[]>();
+                    for (String centroid : centroidSerializedArrays) centroids.add(FeatureVectorUtils.deserializeToFeatureVector(centroid));
 
-                for (int k = 0; k < centroids.size(); k++) {
-                    double[] centroid = centroids.get(k);
-                    rmsdKmeans[k] = computeRootMeanSquareDeviation(rmsdPrimitive, centroid);
+                    double[] rmsdPrimitive = ArrayUtils.toPrimitive(both);
+                    double[] rmsdKmeans = new double[centroids.size()];
+
+                    for (int k = 0; k < centroids.size(); k++) {
+                        double[] centroid = centroids.get(k);
+                        rmsdKmeans[k] = computeRootMeanSquareDeviation(rmsdPrimitive, centroid);
+                    }
+                    System.out.println("1 -- " + Arrays.toString(rmsd));
+                    System.out.println("2 -- " + Arrays.toString(rmsdKmeans));
+                    System.out.println();
                 }
-                System.out.println("1 -- " + Arrays.toString(rmsd));
-                System.out.println("2 -- " + Arrays.toString(rmsdKmeans));
-                System.out.println();
+
+
             }
         }
         client.close();

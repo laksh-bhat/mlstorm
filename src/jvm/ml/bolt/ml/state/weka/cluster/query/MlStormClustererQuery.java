@@ -179,7 +179,7 @@ public class MlStormClustererQuery {
 
 
     public static class KmeansClustererQuery implements QueryFunction<KmeansClustererState, String> {
-        public static final String CENTROID_DELIM = ",";
+        public static final String CENTROID_DELIM = "$%-%$";
         private int localPartition, numPartitions;
 
         @Override
