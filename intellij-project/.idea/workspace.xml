@@ -136,7 +136,7 @@
       <file leaf-file-name="KMeansDrpcQuery.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/drpc/KMeansDrpcQuery.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="67" column="70" selection-start="3069" selection-end="3069" vertical-scroll-proportion="0.35097492" vertical-offset="753" max-vertical-offset="2233">
+            <state line="83" column="25" selection-start="4112" selection-end="4112" vertical-scroll-proportion="0.6643454" vertical-offset="768" max-vertical-offset="2323">
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1881#1889#0" expanded="true" />
@@ -225,8 +225,8 @@
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/ClustererState.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/KmeansClustererState.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/topology/weka/WekaBaseLearningTopology.java" />
-        <option value="$PROJECT_DIR$/../src/jvm/ml/drpc/KMeansDrpcQuery.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/query/MlStormClustererQuery.java" />
+        <option value="$PROJECT_DIR$/../src/jvm/ml/drpc/KMeansDrpcQuery.java" />
       </list>
     </option>
   </component>
@@ -1375,7 +1375,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/drpc/KMeansDrpcQuery.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="67" column="70" selection-start="3069" selection-end="3069" vertical-scroll-proportion="0.35097492" vertical-offset="753" max-vertical-offset="2233">
+        <state line="83" column="25" selection-start="4112" selection-end="4112" vertical-scroll-proportion="0.6643454" vertical-offset="768" max-vertical-offset="2323">
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1881#1889#0" expanded="true" />
