@@ -10,6 +10,7 @@ import storm.trident.state.QueryFunction;
 import storm.trident.tuple.TridentTuple;
 import utils.FeatureVectorUtils;
 import weka.core.Instance;
+import weka.core.Instances;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -178,13 +179,27 @@ public class MlStormClustererQuery {
 
 
     public static class KmeansClustererQuery implements QueryFunction<KmeansClustererState, String> {
+        public static final String CENTROID_DELIM = "<%$#>";
         private int localPartition, numPartitions;
 
         @Override
         public List<String> batchRetrieve(final KmeansClustererState clustererState, final List<TridentTuple> queryTuples) {
             List<String> queryResults = new ArrayList<String>();
-            for (TridentTuple ignored : queryTuples) {
-                queryResults.add(Arrays.toString(clustererState.getClusterer().getClusterSizes()));
+            try {
+                for (TridentTuple ignored : queryTuples) {
+                    Instances centroids = clustererState.getClusterer().getClusterCentroids();
+                    StringBuilder serializedClusterCentres = new StringBuilder ();
+                    for (int i = 0; i < centroids.size(); i++) {
+                        Instance centroid = centroids.get(i);
+                        String serialized = FeatureVectorUtils.serializeFeatureVector(centroid.toDoubleArray());
+                        if (i != centroids.size()-1) serialized += CENTROID_DELIM;
+                        serializedClusterCentres.append(serialized);
+                    }
+
+                    queryResults.add(serializedClusterCentres.toString());
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
             return queryResults;
         }
