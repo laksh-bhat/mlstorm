@@ -33,7 +33,7 @@ In our framework, each window is supplied for training to a WEKA analysis algori
 
 1. All the learning algorithms are implemented in `Trident` and use external `EJML` and `Weka` libraries. All these libraries reside in the /lib directory in the project home directory. Look at `m2-pom.xml` to get an idea about the project dependencies.
 
-2. The consensus clustering algorithm (topology.weka.EnsembleClusteringTopology) uses 2-level (shallow!) deep-learning technique. We experimented with relabelling and majority voting based schemes without success on a stream. Interested readers are encouraged to look at `Vega-Pons & Ruiz-Shulcloper, 2011 (A Survey of Clustering Ensemble Algorithms) and Wei-Hao Lin, Alexander Hauptmann, 2003 (Meta-classification: Combining Multimodal Classifiers)` for detailed explanation of the techniques.
+2. The consensus clustering algorithm (topology.weka.EnsembleClusteringTopology) uses 2-level (shallow!) deep-learning technique. We experimented with relabelling and majority voting based schemes. However, since the clustering algorithm is quadratic and the hungarian algorithm is cubic in the size of the window, we were unable to keep up with a BPTI protein data stream (thus ran into storm timeouts). Interested readers are encouraged to look at `Vega-Pons & Ruiz-Shulcloper, 2011 (A Survey of Clustering Ensemble Algorithms) and Wei-Hao Lin, Alexander Hauptmann, 2003 (Meta-classification: Combining Multimodal Classifiers)` for detailed explanation of the techniques.
 
 ### Experiments
 
@@ -43,12 +43,12 @@ In our framework, each window is supplied for training to a WEKA analysis algori
   
       storm jar $REPO/mlstorm/target/mlstorm-00.01-jar-with-dependencies.jar topology.weka.EnsembleClustererTopology /damsl/projects/bpti_db/features 4 1000 5 1
 
-    The arguments to the topology is described below
+    The arguments to the topology are described below
   
-     1. `directory - The folder containing containing feature vectors` (We use BPTI dataset for our experiments. The spout  implementation - spout.mddb.MddbFeatureExtractorSpout - is responsible to feed the topology with the feature vectors. Look at res/features_o.txt for an example dataset. If you want access to the bpti dataset, contact lbhat1@jhu.edu or yanif@jhu.edu)
+     1. `directory - The folder containing containing feature vectors` (We use BPTI dataset for our experiments. The spout  implementation - spout.mddb.MddbFeatureExtractorSpout - is responsible to feed the topology with the feature vectors. Look at `res/features_o.txt` for an example dataset. If you want access to the bpti dataset, contact lbhat1@jhu.edu or yanif@jhu.edu)
      2. `no of workers - total no. of nodes to run the topology on.`
      3. `window-size - The total number of training examples in the sliding window`
-     4. `k - the number of clusters`
+     4. `k - the number of clusters`. This `k` is consistent across all the partitions including the meta-classifier/clusterer. This is a critical requirement for consensus clustering to be successful.
      5. `parallelism - the number of threads per bolt `
   
 
@@ -58,7 +58,7 @@ In our framework, each window is supplied for training to a WEKA analysis algori
       
     
   #### Important Notes  
-  - Note that the second argument to the DRPC query specifies the drpc function to invoke. These names are hard-coded in our Java files (topology.weka.EnsembleClassifierTopology.java and so on.)
+  - Note that the second argument to the DRPC query specifies the drpc function to invoke. These names are hard-coded in our Java files (`topology.weka.EnsembleClassifierTopology.java` and so on.)
   - All the configuration parameters including the `list of drpc servers`, `number of workers`, `max spout pending (described below)` are hard-coded in the Topology source files. Any change to these will require a code recompile.
  
  #### How to compile?
@@ -66,7 +66,7 @@ In our framework, each window is supplied for training to a WEKA analysis algori
   - fire away the command `mvn -f m2-pom.xml package` (Assuming that you have maven installed!)
   - this builds the `mlstorm-00.01-jar-with-dependencies.jar` in the `$REPO/mlstorm/target` directory.
 
-3. There is also an implementation of an ensemble of binary classifiers (topology.weka.EnsembleBinaryClassifierTopology) and it's online counterpart (topology.weka.OnlineEnsembleBinaryClassifierTopology). All the base/weak learning algorithms are run in parallel with their continuous predictions reduced into (a ReducerAggregator aggregating a grouped stream) a meta-classifier training sample labelled using the original dataset. We use `linear SVM` as our meta classifier and a bunch of weak learners including `pruned decision trees, perceptron, svm, decision stubs` etc.
+3. There is also an implementation of an ensemble of binary classifiers (topology.weka.EnsembleBinaryClassifierTopology) and it's online counterpart (`topology.weka.OnlineEnsembleBinaryClassifierTopology`). All the base/weak learning algorithms are run in parallel with their continuous predictions reduced into (a ReducerAggregator aggregating a grouped stream) a meta-classifier training sample labelled using the original dataset. We use `linear SVM` as our meta classifier and a bunch of weak learners including `pruned decision trees, perceptron, svm, decision stubs` etc.
 
     You may submit the topologies for execution using the following command
 
@@ -75,24 +75,24 @@ In our framework, each window is supplied for training to a WEKA analysis algori
       ` storm jar $REPO/mlstorm/target/mlstorm-00.01-jar-with-dependencies.jar topology.weka.OnlineEnsembleClassifierTopology $REPO/mlstorm/res/elecNormNew.arff 1 1000 5 1 `
       
     
-    To classify a test example, one can invoke a drpc query to query the meta learner (SVM, by default) state.
+    To classify a test example, one can invoke a drpc query to query the meta learner (`SVM, by default`) state.
      
       `java -cp .:`storm classpath`:$REPO/mlstorm/target/mlstorm-00.01-jar-with-dependencies.jar drpc.AustralianElectricityPricingQuery drpc-server-host-name ClassifierEnsemble`
       
       `java -cp .:`storm classpath`:$REPO/mlstorm/target/mlstorm-00.01-jar-with-dependencies.jar drpc.AustralianElectricityPricingQuery drpc-server-host-name OnlineClassifierEnsemble`
       
       
-4. Our implementation of `Kmeans clustering` allows querying different partitions (each partition runs a separate k-means instance). The result of such a query is a partitionId and the query result (for ex. the centroids of all the clusters or the distribution depicting the association of a test sample (feature vector) to the different clusters). Using the partion id returned and the usefulness of the results a human/machine can update the parameters of the model on the fly. The following is an example.
+4. Our implementation of `Kmeans clustering` allows querying different partitions (`each partition runs a separate k-means instance`). The result of such a query is a partitionId and the query result (for ex. the centroids of all the clusters or the distribution depicting the association of a test sample (feature vector) to the different clusters). Using the partion id returned and the usefulness of the results a human/machine can update the parameters of the model on the fly. The following is an example.
 
   a.  Submit/Start the topology as usual.
 
       storm jar $REPO/mlstorm/target/mlstorm-00.01-jar-with-dependencies.jar topology.weka.KmeansClusteringTopology /damsl/projects/bpti_db/features 4 10000 10 10
 
          
-   The arguments to the topology is described below:
+   The arguments to the topology are described below:
    1. `directory -- The folder containing containing feature vectors`
    2. `no of workers -- total no. of nodes to run the topology on.`
-   3. `k -- the number of clusters`
+   3. `k -- the number of clusters`.
    4. `parallelism -- the number of threads per bolt`
 
 
@@ -100,7 +100,7 @@ In our framework, each window is supplied for training to a WEKA analysis algori
 
       java -cp .: `storm classpath` : $REPO/mlstorm/target/mlstorm-00.01-jar-with-dependencies.jar drpc.DrpcQueryRunner qp-hd3 kmeans "no args" 
 
-  c. A parameter update (`k for k-means`) can be made using the following DRPC query. Here we are updating the parameters of the said algorithm (K-means clustering) on the fly using DRPC. We started the topology with 10 partitions and (c) is updating the Clusterer at partition '0' to [k=45]. 
+  c. A parameter update (`k for k-means`) can be made using the following DRPC query. Here we are updating the parameters of the said algorithm (K-means clustering) on the fly using DRPC. We started the topology with 10 partitions and (c) is updating the Clusterer at partition '0' to [`k=45`]. 
 
       java -cp .:`storm classpath`:$REPO/mlstorm/target/mlstorm-00.01-jar-with-dependencies.jar  drpc.DrpcQueryRunner qp-hd3 kUpdate 0,45 
 
