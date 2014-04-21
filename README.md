@@ -5,17 +5,17 @@ Experimenting with parallel streaming PCA and Ensemble methods for collaborative
 
 Introduction
 ------------
-a. A basic description of Storm and its capabilities is available at - http://storm.incubator.apache.org/
+a. A basic description of Storm and its capabilities is available at [storm home page] (http://storm.incubator.apache.org/)
 
-b. A detailed tutorial on how to install and run a multi-node storm cluster is available at - http://www.michael-noll.com/tutorials/running-multi-node-storm-cluster/
+b. A detailed tutorial on how to install and run a multi-node storm cluster is available [here] ( http://www.michael-noll.com/tutorials/running-multi-node-storm-cluster/)
 
-c. The following wiki page helps you understand the lifecycle of a storm topology -  https://github.com/nathanmarz/storm/wiki/Lifecycle-of-a-topology
+c. This [wiki page] (https://github.com/nathanmarz/storm/wiki/Lifecycle-of-a-topology) helps you understand the lifecycle of a storm topology
 
-d. The following wiki provides a detailed description of the API's used in this project - https://github.com/nathanmarz/storm/wiki/Trident-API-Overview
+d. This [wiki page] (https://github.com/nathanmarz/storm/wiki/Trident-API-Overview) provides a detailed description of the API's used in this project.
 
-e. This following wiki page should be useful to understand the parallelism of a storm topology - https://github.com/nathanmarz/storm/wiki/Understanding-the-parallelism-of-a-Storm-topology
+e. This [wiki page] (https://github.com/nathanmarz/storm/wiki/Understanding-the-parallelism-of-a-Storm-topology) should be useful to understand the parallelism of a storm topology.
 
-f. We have implemented several spouts to stream BPTI features, sensor data etc. spout.mddb.MddbFeatureExtractorSpout, spout.sensor.SensorStreamingSpout and spout.AustralianElectricityPricingSpout are all NonTransactional spouts. A detailed description of Transactional, Non-Transactional and Opaque-Transactional spouts is available here - https://github.com/nathanmarz/storm/wiki/Trident-spouts
+f. We have implemented several spouts to stream BPTI features, sensor data etc. spout.mddb.MddbFeatureExtractorSpout, spout.sensor.SensorStreamingSpout and spout.AustralianElectricityPricingSpout are all NonTransactional spouts. A detailed description of Transactional, Non-Transactional and Opaque-Transactional spouts is available [here] (https://github.com/nathanmarz/storm/wiki/Trident-spouts)
 
 A General Framework for Online Machine Learning In Storm
 ---------------------------------------------------------
@@ -37,32 +37,43 @@ Implementation Details
 Experiments
 -----------
 
-2. Our implementation of consensus clustering uses the MddbFeatureExtractorSpout to inject feature vectors. 
+2. Our implementation of consensus clustering uses the MddbFeatureExtractorSpout to inject feature vectors. All the base clusterers we use implement [weka.clustereres interface] (http://weka.sourceforge.net/doc.dev/weka/clusterers/Clusterer.html). The ensemble consists of SimpleKMeans, DensityBasedClusterer, FarthestFirst, HierarchicalClusterer, EM and FilteredClusterer with base algorithm being SimpleKMeans. The meta-clustering algorithm is density based. If you want modify/replace these algorithms, you may do so by updating the Enum class - bolt.ml.state.weka.utils.WekaClusterers and the factory methods in bolt.ml.state.weka.utils.WekaUtils. We use default parameters for individual clusterers but you may inject the appropriate options that can be handled by weka OptionHandler. For example, you can find all the available options for [SimpleKMeans] ( http://weka.sourceforge.net/doc.dev/weka/clusterers/SimpleKMeans.html), which could be specified as a Java String[]. 
 
   a. To submit the topology one can fire away the following command.
 
       <code> storm jar $REPO/mlstorm/target/mlstorm-00.01-jar-with-dependencies.jar topology.weka.EnsembleClustererTopology /damsl/projects/bpti_db/features 4 1000 5 1 </code>
       
-    <code>The arguments to the topology is described below </code>
+    The arguments to the topology is described below
   
-     1. directory - The folder containing containing feature vectors (We use BPTI dataset for our experiments. The spout  implementation - spout.mddb.MddbFeatureExtractorSpout - is responsible to feed the topology with the feature vectors. Look at res/features_o.txt for an example dataset. If you want access to the bpti dataset, contact lbhat1@jhu.edu or yanif@jhu.edu)
-     2. no of workers - total no. of nodes to run the topology on.
-     3. window-size - The total number of training examples in the sliding window
-     4. k - the number of clusters
-     5. parallelism - the number of threads per bolt
+     1. <code>directory - The folder containing containing feature vectors (We use BPTI dataset for our experiments. The spout  implementation - spout.mddb.MddbFeatureExtractorSpout - is responsible to feed the topology with the feature vectors. Look at res/features_o.txt for an example dataset. If you want access to the bpti dataset, contact lbhat1@jhu.edu or yanif@jhu.edu)</code>
+     2. <code> no of workers - total no. of nodes to run the topology on. </code>
+     3. <code> window-size - The total number of training examples in the sliding window </code>
+     4. <code> k - the number of clusters </code>
+     5. <code> parallelism - the number of threads per bolt </code>
   
 
-  b. To predict the cluster for a test example, one can invoke a drpc query to query the meta learner (k-means clustering, by default) state.
+  b. To predict the most likely cluster for a test sample, one can invoke a drpc query to query the meta learner state.
   
     <code> java -cp .:`storm classpath`:$REPO/mlstorm/target/mlstorm-00.01-jar-with-dependencies.jar drpc.BptiEnsembleQuery drpc-server-host ClustererEnsemble </code>
+    
+    <bold> Note that the second argument to the DRPC query specifies the drpc function to invoke. These names are hard-coded in our Java files (topology.weka.EnsembleClassifierTopology.java and so on.)</bold>
 
-3. There are also implementations of an ensemble of binary classifiers (topology.weka.EnsembleBinaryClassifierTopology) and it's online counterpart (topology.weka.OnlineEnsembleBinaryClassifierTopology). All the base/weak learning algorithms are run in parallel with their predictions reduced into (aggregation) a meta-classifier training sample labelled using the original dataset.
+3. There is also an implementation of an ensemble of binary classifiers (topology.weka.EnsembleBinaryClassifierTopology) and it's online counterpart (topology.weka.OnlineEnsembleBinaryClassifierTopology). All the base/weak learning algorithms are run in parallel with their predictions reduced into (ReducerAggregator) a meta-classifier training sample labelled using the original dataset. We use linear SVM as our meta classifier and a bunch of weak learners including pruned decision trees, perceptron, svm, decision stubs etc.
+
+    You may submit the topologies for execution by the following command
 
       <code> storm jar $REPO/mlstorm/target/mlstorm-00.01-jar-with-dependencies.jar topology.weka.EnsembleClassifierTopology $REPO/mlstorm/res/elecNormNew.arff 1 10 5 1 </code>
       
-      b. To classify a test example, one can invoke a drpc query to query the meta learner (SVM, by default) state.
+      <code> storm jar $REPO/mlstorm/target/mlstorm-00.01-jar-with-dependencies.jar topology.weka.OnlineEnsembleClassifierTopology $REPO/mlstorm/res/elecNormNew.arff 1 10 5 1 </code>
+      
+    
+    To classify a test example, one can invoke a drpc query to query the meta learner (SVM, by default) state.
       
       <code> java -cp .:`storm classpath`:$REPO/mlstorm/target/mlstorm-00.01-jar-with-dependencies.jar drpc.AustralianElectricityPricingQuery drpc-server-host-name ClassifierEnsemble </code>
+      
+      <code> java -cp .:`storm classpath`:$REPO/mlstorm/target/mlstorm-00.01-jar-with-dependencies.jar drpc.AustralianElectricityPricingQuery drpc-server-host-name OnlineClassifierEnsemble </code>
+      
+      
 
 4. Our implementation of Kmeans clustering allows querying different partitions (each partition runs a separate k-means instance). The result of such a query is a partitionId and the query result (for ex. the centroids of all the clusters or the distribution depicting the association of a test sample (feature vector) to the different clusters). Using the partion id returned and the usefulness of the results a human/machine can update the parameters of the model on the fly. The following is an example.
 
