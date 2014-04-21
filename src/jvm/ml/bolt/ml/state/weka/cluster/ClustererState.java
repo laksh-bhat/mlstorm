@@ -40,10 +40,10 @@ public class ClustererState extends BaseWekaState {
     private boolean isTrained;
 
 
-    public ClustererState(String clustererName, int numClusters, int windowSize, boolean emitAfterUpdate) throws Exception {
+    public ClustererState(String clustererName, int numClusters, int windowSize, boolean emitAfterUpdate, String[] options) throws Exception {
         super(windowSize);
         // This is where you create your own classifier and set the necessary parameters
-        this.clusterer = WekaUtils.makeClusterer(clustererName, numClusters);
+        this.clusterer = WekaUtils.makeClusterer(clustererName, numClusters, options);
         this.numClusters = numClusters;
         this.lock = new Object();
         this.emitAfterUpdate = emitAfterUpdate;

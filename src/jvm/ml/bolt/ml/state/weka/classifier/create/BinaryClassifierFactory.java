@@ -6,6 +6,7 @@ import bolt.ml.state.weka.classifier.BinaryClassifierState;
 import bolt.ml.state.weka.classifier.OnlineBinaryClassifierState;
 import storm.trident.state.State;
 import storm.trident.state.StateFactory;
+import weka.Run;
 
 import java.util.Map;
 
@@ -29,11 +30,13 @@ import java.util.Map;
 public class BinaryClassifierFactory implements StateFactory {
     private final int windowSize;
     private final String classifier;
+    private final String[] options;
     private BinaryClassifierState state = null;
 
-    public BinaryClassifierFactory (String classifier, int windowSize) {
+    public BinaryClassifierFactory (String classifier, int windowSize, String[] options) {
         this.classifier = classifier;
         this.windowSize = windowSize;
+        this.options    = options;
     }
 
     @Override
@@ -42,18 +45,24 @@ public class BinaryClassifierFactory implements StateFactory {
                             final int partitionIndex,
                             final int numPartitions)
     {
-        if (state == null) state = new BinaryClassifierState(classifier, windowSize);
+        if (state == null) try {
+            state = new BinaryClassifierState(classifier, windowSize, options);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         return state;
     }
 
     public static class OnlineBinaryClassifierFactory implements StateFactory {
         private final int windowSize;
         private final String classifier;
+        private final String[] options;
         private MlStormWekaState state = null;
 
-        public OnlineBinaryClassifierFactory (String classifier, int windowSize) {
+        public OnlineBinaryClassifierFactory (String classifier, int windowSize, String[] options) {
             this.classifier = classifier;
             this.windowSize = windowSize;
+            this.options = options;
         }
 
         @Override
@@ -62,7 +71,11 @@ public class BinaryClassifierFactory implements StateFactory {
                                 final int partitionIndex,
                                 final int numPartitions)
         {
-            if (state == null) state = new OnlineBinaryClassifierState(classifier, windowSize);
+            if (state == null) try {
+                state = new OnlineBinaryClassifierState(classifier, windowSize, options);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
             return state;
         }
     }

@@ -36,9 +36,9 @@ public class BinaryClassifierState extends BaseWekaState {
      *
      * @param windowSize the size of the sliding window (cache size)
      */
-    public BinaryClassifierState(String classifier, int windowSize) {
+    public BinaryClassifierState(String classifier, int windowSize, String[] options) throws Exception {
         super(windowSize);
-        this.classifier = WekaUtils.makeClassifier(classifier);
+        this.classifier = WekaUtils.makeClassifier(classifier, options);
         lock = new Object();
     }
 

@@ -6,7 +6,7 @@ import storm.trident.operation.TridentCollector;
 import storm.trident.operation.TridentOperationContext;
 import storm.trident.state.StateUpdater;
 import storm.trident.tuple.TridentTuple;
-import topology.weka.EnsembleLearnerTopologyBase;
+import topology.weka.EnsembleLearnerTopologyBuilderBase;
 
 import java.text.MessageFormat;
 import java.util.List;
@@ -39,8 +39,8 @@ public class BinaryClassifierStateUpdater implements StateUpdater<MlStormWekaSta
                              final TridentCollector collector)
     {
         for (TridentTuple tuple : tuples) {
-            double[] fv = (double[]) tuple.getValueByField(EnsembleLearnerTopologyBase.featureVectorField.get(0));
-            int key = tuple.getIntegerByField(EnsembleLearnerTopologyBase.keyField.get(0));
+            double[] fv = (double[]) tuple.getValueByField(EnsembleLearnerTopologyBuilderBase.featureVectorField.get(0));
+            int key = tuple.getIntegerByField(EnsembleLearnerTopologyBuilderBase.keyField.get(0));
             state.getFeatureVectorsInWindow().put(key, fv);
             try {
                  collector.emit(new Values(localPartition, key, (int) state.predict(state.makeWekaInstance(fv)), fv[fv.length - 1]));

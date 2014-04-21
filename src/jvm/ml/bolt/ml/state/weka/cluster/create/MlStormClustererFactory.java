@@ -34,14 +34,16 @@ public class MlStormClustererFactory {
     public static class ClustererFactory implements StateFactory {
         private final int windowSize, k;
         private final String clustererName;
+        private final String[] options;
         private ClustererState state = null;
         private final boolean emitTuples;
 
-        public ClustererFactory(int k, int windowSize, String clustererName, boolean emitTuplesAfterUpdate) {
+        public ClustererFactory(int k, int windowSize, String clustererName, boolean emitTuplesAfterUpdate, String[] options) {
             this.k = k;
             this.windowSize = windowSize;
             this.clustererName = clustererName;
             this.emitTuples = emitTuplesAfterUpdate;
+            this.options = options;
         }
 
         @Override
@@ -51,7 +53,7 @@ public class MlStormClustererFactory {
                                 final int numPartitions)
         {
             if (state == null) try {
-                state = new ClustererState(clustererName, k, windowSize, emitTuples);
+                state = new ClustererState(clustererName, k, windowSize, emitTuples, options);
             } catch (Exception e) {
                 System.err.println("Could not ");
                 e.printStackTrace();

@@ -1,36 +1,39 @@
-mlstorm
-=======
+mlstorm - Machine Learning in storm ecosystem
+---------------------------------------------
 
-Machine Learning in storm
---------------------------
 Experimenting with parallel streaming PCA and Ensemble methods for collaborative learning.
 
+Introduction
+------------
+a. A basic description of Storm and its capabilities is available at http://storm.incubator.apache.org/
+b. A detailed tutorial on how to install and run a multi-node storm cluster is described at http://www.michael-noll.com/tutorials/running-multi-node-storm-cluster/
+c. The following page helps you understand the lifecycle of a storm topology.
+   https://github.com/nathanmarz/storm/wiki/Lifecycle-of-a-topology
+d. https://github.com/nathanmarz/storm/wiki/Trident-API-Overview provides a detailed description of the API's used in this project.
 
 
 
-1. The PCA and Clustering algorithm implementations are window based. There's also an online/incremental PCA implementation available for experimentation.
+1. All the learning algorithms are implemented in Trident and use external EJML and Weka libraries. All these libraries reside in the /lib directory in the project home directory. Look at m2-pom.xml to get an idea about the project dependencies.
 
-2. All the learning algorithms are implemented in Trident and use external EJML and Weka libraries.
+2. The consensus clustering algorithm (topology.weka.EnsembleClusteringTopology) uses 2-level (shallow!) deep-learning technique. We experimented with relabelling and majority voting based schemes without success on a stream. Interested readers are encouraged to look at Vega-Pons & Ruiz-Shulcloper, 2011 for detailed explanation of the techniques.
 
-3. The consensus clustering algorithms (EnsembleClusteringTopology.java) use 2-level (shallow!) deep-learning technique. I experimented with relabelling and majority voting based scheme without decent result on a stream. Interested readers are encouraged to look at Vega-Pons & Ruiz-Shulcloper, 2011 for detailed explanation of the techniques.  
+3. There are also implementations of an ensemble of binary classifiers (topology.weka.EnsembleBinaryClassifierTopology) and it's online counterpart (topology.weka.OnlineEnsembleBinaryClassifierTopology). All the base/weak learning algorithms are run in parallel with their predictions reduced into (aggregation) a meta-classifier training sample labelled using the original dataset.
 
-4. There are also an implementation of EnsembleBinaryClassifierTopology and it's online counterpart in OnlineEnsembleBinaryClassifierTopology.java. All the base algorithms are run in parallel with intelligent reduction (aggregation) into meta-classifier inputs. 
+4. The Kmeans clustering implementation allows querying different partitions (each partition runs a separate k-means instance). The result of such a query is a partitionId and the query result (for ex. the centroids of all the clusters or the distribution depicting the association of a test sample (feature vector) to the different clusters). Using the partion id returned and the usefulness of the results a human/machine can update the parameters of the model on the fly. The following is an example.
 
-5. The Kmeans clustering implementation allows querying different partitions. The result of such a query is a partitionId and the query result. Using the partion id returned and the usefulness of the results a human/machine can update the parameters of the model on the fly. The following is an example.
-
-  a.  The topology is run as usual.
+  a.  Submit/Start the topology as usual.
 
       storm jar /damsl/software/storm/code/mlstorm/target/mlstorm-00.01-jar-with-dependencies.jar topology.weka.KmeansClusteringTopology /damsl/projects/bpti_db/features 4 10000 10 10
 
          
    The arguments to the topology is described below:
-   1. <directory> The folder containing containing feature vectors (We use BPTI dataset for our experiments. The spout  implementation - spout.mddb.MddbFeatureExtractorSpout - is responsible to feed the topology with the feature vectors. Look at res/features_o.txt for an example dataset.)
+   1. <directory> The folder containing containing feature vectors (We use BPTI dataset for our experiments. The spout  implementation - spout.mddb.MddbFeatureExtractorSpout - is responsible to feed the topology with the feature vectors. Look at res/features_o.txt for an example dataset. If you want access to the bpti dataset, contact lbhat1@jhu.edu or yanif@jhu.edu)
    2. <no of workers> total no. of nodes to run the topology on.
    3. <k> the number of clusters
    4. <parallelism> the number of threads per bolt
 
 
-  b. A distributed query (querying for parameters/model statistics) on the model can be executed as the following. This query returns the centroids of all the clusters for a given instance of clustering algorithm.
+  b. A distributed query (querying for parameters/model statistics) on the model can be executed as below. This query returns the centroids of all the clusters for a given instance of clustering algorithm.
 
       java -cp .: `storm classpath` : $REPO/mlstorm/target/mlstorm-00.01-jar-with-dependencies.jar drpc.DrpcQueryRunner qp-hd3 kmeans "no args" 
 
@@ -46,3 +49,4 @@ Experimenting with parallel streaming PCA and Ensemble methods for collaborative
       <[["0,35","k update request (30->35) received at [0]; average trainingtime for k = [30] = [334,809]ms"]]>
        
        
+5. The PCA and Clustering algorithm implementations are window based. There's also an online/incremental PCA implementation available for experimentation.

@@ -32,19 +32,36 @@ import java.util.List;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class EnsembleLearnerTopologyBase {
+
+public abstract class EnsembleLearnerTopologyBuilderBase {
+    /**
+     * @param spout The Spout that injects tuples into this topology
+     * @param parallelism threads per bolt
+     * @param weakAlgorithmStateUpdaters A List of StateUpdaters having 1-1 correspondence to states created by List of
+     *                                   StateFactories
+     * @param weakAlgorithmStateFactories A List of StateFactories responsible for initializing states
+     * @param weakAlgorithmQueryFunctions A list of QueryFunctions that query the State created by above StateFactories
+     * @param drpcQueryFunctionNames A list of query-function-names that a drpc client can use to query the states in
+     *                               the topology
+     * @param drpcPartitionResultAggregator An aggregator to collect results from base/weak learners
+     * @param metaStateFactory StateFactory responsible for initializing state for meta algorithm
+     * @param metaStateUpdater StateUpdater responsible for updating meta learner state
+     * @param metaQueryFunction QueryFunction that queries the meta State created by above meta-StateFactory
+     * @param metaFeatureVectorBuilder An aggregator responsible for building a feature vector for the meta learner by
+     *                                 combining results from the base learners
+     */
     protected static StormTopology buildTopology(final IRichSpout spout,
                                                  final int parallelism,
-                                                 final List<StateUpdater> stateUpdaters,
-                                                 final List<StateFactory> stateFactories,
-                                                 final List<QueryFunction> queryFunctions,
+                                                 final List<StateUpdater> weakAlgorithmStateUpdaters,
+                                                 final List<StateFactory> weakAlgorithmStateFactories,
+                                                 final List<QueryFunction> weakAlgorithmQueryFunctions,
                                                  final List<String> drpcQueryFunctionNames,
                                                  final ReducerAggregator drpcPartitionResultAggregator,
                                                  final StateFactory metaStateFactory,
                                                  final StateUpdater metaStateUpdater,
                                                  final QueryFunction metaQueryFunction,
                                                  final Aggregator metaFeatureVectorBuilder) {
-        assertArguments(spout, parallelism, stateUpdaters, stateFactories, queryFunctions, drpcQueryFunctionNames, drpcPartitionResultAggregator, metaStateFactory, metaStateUpdater, metaQueryFunction);
+        assertArguments(spout, parallelism, weakAlgorithmStateUpdaters, weakAlgorithmStateFactories, weakAlgorithmQueryFunctions, drpcQueryFunctionNames, drpcPartitionResultAggregator, metaStateFactory, metaStateUpdater, metaQueryFunction);
 
         /**
          * Stream the feature vectors using the given spout.
@@ -62,12 +79,12 @@ public class EnsembleLearnerTopologyBase {
 
         // create individual learner states and persist them
         final List<TridentState> ensembleStates = new ArrayList<TridentState>();
-        for (int i = 0; i < stateUpdaters.size(); i++) {
+        for (int i = 0; i < weakAlgorithmStateUpdaters.size(); i++) {
             ensembleStates.add(i,
                     broadcastStream.partitionPersist(
-                            stateFactories.get(i),
+                            weakAlgorithmStateFactories.get(i),
                             clustererUpdaterFields,
-                            stateUpdaters.get(i),
+                            weakAlgorithmStateUpdaters.get(i),
                             partitionProjectionFields
                     ).parallelismHint(parallelism))
             ;
@@ -90,10 +107,10 @@ public class EnsembleLearnerTopologyBase {
         final Stream drpcQueryStream = topology.newDRPCStream(drpcQueryFunctionNames.get(0));
 
         // This queries the partition for partitionId and cluster distribution.
-        for (int i = 0; i < stateUpdaters.size(); i++) {
+        for (int i = 0; i < weakAlgorithmStateUpdaters.size(); i++) {
             drpcQueryStream
                     .broadcast() // broadcast the query to all partitions
-                    .stateQuery(ensembleStates.get(i), drpcQueryArgsField, queryFunctions.get(i), partitionQueryOutputFields)
+                    .stateQuery(ensembleStates.get(i), drpcQueryArgsField, weakAlgorithmQueryFunctions.get(i), partitionQueryOutputFields)
                     .toStream()
                     .aggregate(partitionQueryOutputFields, drpcPartitionResultAggregator, candidateVotesField)
                     .stateQuery(metaState, candidateVotesField, metaQueryFunction, finalVoteField)

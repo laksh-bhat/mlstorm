@@ -14,6 +14,7 @@ import weka.classifiers.trees.J48;
 import weka.classifiers.trees.RandomForest;
 import weka.clusterers.*;
 import weka.core.Attribute;
+import weka.core.OptionHandler;
 import weka.filters.AllFilter;
 
 import java.text.MessageFormat;
@@ -67,66 +68,93 @@ public class WekaUtils {
         return attributeInfo;
     }
 
-    public static Classifier makeClassifier(String wekaClassifier) {
+    public static Classifier makeClassifier(String wekaClassifier, String[] options) throws Exception {
         switch (WekaClassificationAlgorithms.valueOf(wekaClassifier)) {
             case decisionTree:
-                return new J48();
+                J48 j48 = new J48();
+                setOptionsForWekaPredictor(options, j48);
+                return j48;
             case svm:
-                return new SMO();
+                SMO smo = new SMO();
+                setOptionsForWekaPredictor(options, smo);
+                return smo;
             case logisticRegression:
-                return new Logistic();
+                Logistic logistic = new Logistic();
+                setOptionsForWekaPredictor(options, logistic);
+                return logistic;
             case randomForest:
-                return new RandomForest();
+                RandomForest forest = new RandomForest();
+                setOptionsForWekaPredictor(options, forest);
+                return forest;
             case decisionStump:
-                return new DecisionStump();
+                DecisionStump stump = new DecisionStump();
+                setOptionsForWekaPredictor(options, stump);
+                return stump;
             case perceptron:
-                return new MultilayerPerceptron();
+                MultilayerPerceptron perceptron = new MultilayerPerceptron();
+                setOptionsForWekaPredictor(options, perceptron);
+                return perceptron;
             default:
                 return new SMO();
         }
     }
 
-    public static Classifier makeOnlineClassifier(String wekaClassifier) {
+    public static Classifier makeOnlineClassifier(String wekaClassifier, String[] options) throws Exception{
         switch (WekaOnlineClassificationAlgorithms.valueOf(wekaClassifier)) {
             case naiveBayes:
-                return new NaiveBayesUpdateable();
+                NaiveBayesUpdateable naiveBayesUpdateable = new NaiveBayesUpdateable();
+                setOptionsForWekaPredictor(options, naiveBayesUpdateable);
+                return naiveBayesUpdateable;
             case locallyWeightedLearner:
-                return new LWL();
+                LWL lwl = new LWL();
+                setOptionsForWekaPredictor(options, lwl);
+                return lwl;
             case nearestNeighbors:
-                return new IBk();
+                IBk ibk = new IBk();
+                setOptionsForWekaPredictor(options, ibk);
+                return ibk;
             case onlineDecisionTree:
-                return new HoeffdingTree();
+                HoeffdingTree tree = new HoeffdingTree();
+                setOptionsForWekaPredictor(options, tree);
+                return tree;
             case stochasticGradientDescent:
-                return new SGD();
+                SGD sgd = new SGD();
+                setOptionsForWekaPredictor(options, sgd);
+                return sgd;
             default:
                 return new NaiveBayesUpdateable();
         }
     }
 
-    public static Clusterer makeClusterer(String wekaClassifier, int numClusters) throws Exception {
+    public static Clusterer makeClusterer(String wekaClassifier, int numClusters, String[] options) throws Exception {
         try {
             switch (WekaClusterers.valueOf(wekaClassifier)) {
                 case kmeans:
                     SimpleKMeans kmeans = new SimpleKMeans();
                     kmeans.setNumClusters(numClusters);
+                    setOptionsForWekaPredictor(options, kmeans);
                     return kmeans;
                 case densityBased:
                     MakeDensityBasedClusterer clusterer = new MakeDensityBasedClusterer();
                     clusterer.setNumClusters(numClusters);
+                    setOptionsForWekaPredictor(options, clusterer);
                     return clusterer;
                 case farthestFirst:
                     FarthestFirst ff = new FarthestFirst();
                     ff.setNumClusters(numClusters);
+                    setOptionsForWekaPredictor(options, ff);
                     return ff;
                 case hierarchicalClusterer:
                     HierarchicalClusterer hc = new HierarchicalClusterer();
                     hc.setNumClusters(numClusters);
+                    setOptionsForWekaPredictor(options, hc);
                     return hc;
                 case em:
                     EM em = new EM();
                     em.setMaxIterations(10);
                     em.setMaximumNumberOfClusters(numClusters);
                     em.setNumClusters(numClusters);
+                    setOptionsForWekaPredictor(options, em);
                     return em;
                 case filteredClusterer:
                     kmeans = new SimpleKMeans();
@@ -134,14 +162,20 @@ public class WekaUtils {
                     FilteredClusterer fc = new FilteredClusterer();
                     fc.setFilter(new AllFilter());
                     fc.setClusterer(kmeans);
+                    setOptionsForWekaPredictor(options, fc);
                     return fc;
                 default:
                     kmeans = new SimpleKMeans();
                     kmeans.setNumClusters(numClusters);
+                    setOptionsForWekaPredictor(options, kmeans);
                     return kmeans;
             }
         } catch (Exception e) {
             throw new Exception("Could not make Clusterer", e);
         }
+    }
+
+    public static void setOptionsForWekaPredictor(String[] options, OptionHandler kmeans) throws Exception {
+        if (options != null) kmeans.setOptions(options);
     }
 }

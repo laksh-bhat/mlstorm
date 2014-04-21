@@ -43,6 +43,7 @@ public class KmeansClusteringTopology extends WekaBaseLearningTopology {
             return;
         }
 
+        /* The fields our spout is going to emit. These field names are used by the State updaters, so edit with caution */
         String[] fields = {"keyField", "featureVectorField"};
         int numWorkers = Integer.valueOf(args[1]);
         int windowSize = Integer.valueOf(args[2]);
@@ -65,7 +66,7 @@ public class KmeansClusteringTopology extends WekaBaseLearningTopology {
         Config conf = new Config();
         conf.setNumAckers(numWorkers);
         conf.setNumWorkers(numWorkers);
-        conf.setMaxSpoutPending(10);
+        conf.setMaxSpoutPending(20); // This is critical; if you don't set this, it's likely that you'll run out of memory and storm will throw wierd errors
         conf.put("topology.spout.max.batch.size", 1 /* x1000 i.e. every tuple has 1000 feature vectors*/);
         conf.put("topology.trident.batch.emit.interval.millis", 500);
         conf.put(Config.DRPC_SERVERS, Lists.newArrayList("qp-hd3", "qp-hd4", "qp-hd5", "qp-hd6"));

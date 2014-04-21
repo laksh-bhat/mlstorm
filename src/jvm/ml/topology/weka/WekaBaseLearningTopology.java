@@ -30,7 +30,7 @@ import storm.trident.state.StateUpdater;
  */
 
 
-public class WekaBaseLearningTopology {
+public abstract class WekaBaseLearningTopology {
     protected static StormTopology buildTopology(final IRichSpout spout,
                                                  final int parallelism,
                                                  final StateUpdater stateUpdater,

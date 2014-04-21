@@ -40,10 +40,10 @@ public class OnlineBinaryClassifierState extends BaseOnlineWekaState {
     private final Object lock = new Object();
     private boolean isTrained;
 
-    public OnlineBinaryClassifierState(String classifier, int windowSize) {
+    public OnlineBinaryClassifierState(String classifier, int windowSize, String[] options) throws Exception {
         super(windowSize);
         // This is where you create your own classifier and set the necessary parameters
-        updateableClassifier = WekaUtils.makeOnlineClassifier(classifier);
+        updateableClassifier = WekaUtils.makeOnlineClassifier(classifier, options);
     }
 
     @Override

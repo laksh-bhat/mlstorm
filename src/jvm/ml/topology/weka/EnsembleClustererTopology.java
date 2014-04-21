@@ -43,13 +43,18 @@ import java.util.Map;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class EnsembleClustererTopology extends EnsembleLearnerTopologyBase {
+
+/**
+ *
+ */
+public class EnsembleClustererTopology extends EnsembleLearnerTopologyBuilderBase {
     public static void main(String[] args) throws AlreadyAliveException, InvalidTopologyException {
         if (args.length < 5) {
             System.err.println(" Where are all the arguments? -- use args -- bpti_folder numWorkers windowSize k parallelism");
             return;
         }
 
+        /* The fields our spout is going to emit. These field names are used by the State updaters, so edit with caution */
         final String[] fields = {"keyField", "featureVectorField"};
         final String queryFunctionName = "ClustererEnsemble";
 
@@ -68,18 +73,23 @@ public class EnsembleClustererTopology extends EnsembleLearnerTopologyBase {
 
         final ReducerAggregator drpcPartitionResultAggregator =  new EnsembleLabelDistributionPairAggregator();
         final StateUpdater metaStateUpdater = new ClustererUpdater();
-        final StateFactory metaStateFactory = new MlStormClustererFactory.ClustererFactory(k, windowSize, WekaClusterers.densityBased.name(), false);
+        final StateFactory metaStateFactory = new MlStormClustererFactory.ClustererFactory(k, windowSize,
+                WekaClusterers.densityBased.name(), false, null /* additional options to this weka algorithm */);
         final QueryFunction metaQueryFunction = new MlStormClustererQuery.MetaQuery();
         final Aggregator metaFeatureVectorBuilder = new MetaFeatureVectorBuilder();
 
         for (WekaClusterers alg : WekaClusterers.values()) {
-            factories.add(new MlStormClustererFactory.ClustererFactory(k, windowSize, alg.name(), true));
+            factories.add(new MlStormClustererFactory.ClustererFactory(k, windowSize, alg.name(), true, null));
             stateUpdaters.add(stateUpdater);
             queryFunctions.add(queryFunction);
             queryFunctionNames.add(queryFunctionName);
         }
 
         final IRichSpout features = new MddbFeatureExtractorSpout(args[0], fields);
+        /*
+        *  This is where we actually build our concrete topology
+        *  Take a look at the Base class for detailed description of the arguments and the topology construction details
+        */
         final StormTopology stormTopology = buildTopology(features, parallelism, stateUpdaters, factories,
                 queryFunctions, queryFunctionNames, drpcPartitionResultAggregator, metaStateFactory, metaStateUpdater, metaQueryFunction, metaFeatureVectorBuilder);
 
@@ -93,9 +103,12 @@ public class EnsembleClustererTopology extends EnsembleLearnerTopologyBase {
         Config conf = new Config();
         conf.setNumAckers(numWorkers);
         conf.setNumWorkers(numWorkers);
-        conf.setMaxSpoutPending(10);
+        conf.setMaxSpoutPending(10); // This is critical; if you don't set this, it's likely that you'll run out of memory and storm will throw wierd errors
         conf.put("topology.spout.max.batch.size", 1 /* x1000 i.e. every tuple has 1000 feature vectors*/);
         conf.put("topology.trident.batch.emit.interval.millis", 500);
+        // These are the DRPC servers our topology is going to use. So clients must know about this.
+        // Its hard-coded here so that I could play with it
+        // I'm using a 5 node cluster (1 nimbus, 4 nodes acting as both supervisors and drpc servers)
         conf.put(Config.DRPC_SERVERS, Lists.newArrayList("qp-hd3", "qp-hd4", "qp-hd5", "qp-hd6"));
         conf.put(Config.STORM_CLUSTER_MODE, "distributed");
         conf.put(Config.NIMBUS_TASK_TIMEOUT_SECS, 30);

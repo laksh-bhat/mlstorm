@@ -60,7 +60,11 @@ public class PcaTopology {
         conf.setMaxSpoutPending(100);
         conf.put("topology.spout.max.batch.size", 1000);
         conf.put("topology.trident.batch.emit.interval.millis", 500);
-        conf.put(Config.DRPC_SERVERS, Lists.newArrayList("qp-hd3", "qp-hd4", "qp-hd5", "qp-hd6", "qp-hd7", "qp-hd8", "qp-hd9"));
+
+        // These are the DRPC servers our topology is going to use. So clients must know about this.
+        // Its hard-coded here so that I could play with it
+        // I'm using a 5 node cluster (1 nimbus, 4 nodes acting as both supervisors and drpc servers)
+        conf.put(Config.DRPC_SERVERS, Lists.newArrayList("qp-hd3", "qp-hd4", "qp-hd5", "qp-hd6"));
         conf.put(Config.STORM_CLUSTER_MODE, "distributed");
         conf.put(Config.NIMBUS_TASK_TIMEOUT_SECS, 120);
         return conf;
@@ -89,14 +93,6 @@ public class PcaTopology {
                 .aggregate(new Fields("components"), new PrincipalComponentsAggregator(), new Fields("eigen"))
                 .project(new Fields("eigen"));
 
-        //principalComponentsStream
-        //.aggregate(new Fields("components"), new PrincipalComponentsAggregator(), new Fields("eigen"))
-        //.each(new Fields("refreshedEigen"), new AggregateFilter(), new Fields("eigen"))
-        //.project(new Fields("eigen"))
-        //.broadcast()
-        //.partitionPersist(pcaFactory, new Fields("eigen"), new PrincipalComponentsRefresher())
-        //.parallelismHint(parallelism)
-        ;
         return topology.build();
     }
 }
