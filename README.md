@@ -16,7 +16,7 @@ e. This [wiki page] (https://github.com/nathanmarz/storm/wiki/Understanding-the-
 
 f. The common configurations and details of running Storm on a production cluster can be found in this [wiki page] (https://github.com/nathanmarz/storm/wiki/Running-topologies-on-a-production-cluster)
 
-g. We have implemented spouts to stream BPTI features, sensor data etc. spout.mddb.MddbFeatureExtractorSpout, spout.sensor.SensorStreamingSpout and spout.AustralianElectricityPricingSpout are all NonTransactional spouts. A detailed description of Transactional, Non-Transactional and Opaque-Transactional spouts is available [here] (https://github.com/nathanmarz/storm/wiki/Trident-spouts)
+g. We have implemented spouts to stream BPTI features, sensor data etc. `spout.mddb.MddbFeatureExtractorSpout`, `spout.sensor.SensorStreamingSpout` and `spout.AustralianElectricityPricingSpout` are all NonTransactional spouts. A detailed description of Transactional, Non-Transactional and Opaque-Transactional spouts is available [here] (https://github.com/nathanmarz/storm/wiki/Trident-spouts)
 
 h. The entire storm documentattion resides [here] (https://github.com/nathanmarz/storm/wiki/Documentation)
 
@@ -118,7 +118,9 @@ In our framework, each window is supplied for training to a WEKA analysis algori
 Storm is an open-source system that was initially developed by BackType before its acquisition by Twitter, Inc. The documentation and support for Storm primarily arises from the open-source user community that continues to develop its capabilities through the github project repository. Storm has been incubated as an Apache project as of September 2013. In this section we provide an initial report on our experiences in developing with the Storm framework, particularly as we deploy it onto a cluster environment and develop online learning and event detection algorithms.
 
 ##### Notes useful for Debugging
+--------------------------------
 ##### Storm Components
+--------------------------------
 
 ###### supervisor
   - JVM process launched on each storm worker machine. This does not execute your code — just supervises it.
@@ -147,7 +149,9 @@ Storm is an open-source system that was initially developed by BackType before i
       or fail with an `InsufficientCapacityException`, in which case add the tuple to the overflow buffer.
     - The spout’s async-loop won’t call nextTuple if overflow is present, so the overflow buffer only has to accommodate the maximum number of tuples emitted in a single nextTuple call.
 
+-------------
 ##### Acking
+-------------
   - Acker is just a regular bolt — all the interesting action takes place in its execute method.
   - set number of ackers equal to number of workers. (`default is 1 per topology`)
   - The Acker holds a single `O(1)` lookup table
@@ -157,13 +161,17 @@ Storm is an open-source system that was initially developed by BackType before i
   - when you go to update or add to it, it performs the operation on the right component of HashMap.
   - periodically (`when you receive a tick tuple in Storm8.2+`), it will pull off oldest component HashMap, mark it as dead; invoke the expire callback for each element in that HashMap.
 
+-----------------
 ##### Throttling
+-----------------
   - Max spout pending (`TOPOLOGY_MAX_SPOUT_PENDING`) sets the number of tuple trees live in the system at any point in time.
   - Trident batch emit interval (topology.trident.batch.emit.interval.millis) sets the maximum pace at which the trident master batch co-ordinator issues new seed tuples. If batch delay is 500ms and the most recent batch was released 486ms, the spout coordinator will wait 14ms before dispensing a new seed tuple. If the next pending entry isn’t cleared for 523ms, it will be dispensed immediately.
   - Trident batch emit interval  is extremely useful to prevent congestion, especially around startup/rebalance. 
   - As opposed to a traditional Storm spout, a Trident spout will likely dispatch hundreds of records with each batch. If max-pending is 20, and the spout releases `500 records per batch`, the spout will try to cram `10,000` records into its send queue.
 
+------------------
 ##### Batch Size
+------------------
   - Set the batch size to `optimize the throughput of the most expensive batch operation` — a bulk database operation, network request, or large aggregation.
   - When the batch size is too small, bookkeeping dominates response time i.e `response time is constant`
   - Execution times increase slowly and we get better and better records-per-second throughput with increase in batch size.
