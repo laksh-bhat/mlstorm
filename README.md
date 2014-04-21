@@ -18,8 +18,9 @@ f. The common configurations and details of running Storm on a production cluste
 
 g. We have implemented spouts to stream BPTI features, sensor data etc. spout.mddb.MddbFeatureExtractorSpout, spout.sensor.SensorStreamingSpout and spout.AustralianElectricityPricingSpout are all NonTransactional spouts. A detailed description of Transactional, Non-Transactional and Opaque-Transactional spouts is available [here] (https://github.com/nathanmarz/storm/wiki/Trident-spouts)
 
-## A General Framework for Online Machine Learning In Storm
+h. The entire storm documentattion resides [here] (https://github.com/nathanmarz/storm/wiki/Documentation)
 
+## A General Framework for Online Machine Learning In Storm
 
 Our framework integrates the Storm stream processing system with the ability to perform exploratory and confirmatory data analysis tasks through the WEKA toolkit. WEKA is a popular library for a range of data mining and machine learning algorithms implemented in the Java programming language. As such, it is straightforward to incorporate WEKA’s algorithms directly into Storm’s bolts (where bolts are the basic unit of processing in the Storm system). 
 
