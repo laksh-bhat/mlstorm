@@ -11,7 +11,7 @@ import bolt.ml.state.weka.cluster.ClustererState;
 import bolt.ml.state.weka.cluster.create.MlStormClustererFactory;
 import bolt.ml.state.weka.cluster.query.EnsembleLabelDistributionPairAggregator;
 import bolt.ml.state.weka.cluster.query.MlStormClustererQuery;
-import bolt.ml.state.weka.cluster.update.ClustererUpdater;
+import bolt.ml.state.weka.cluster.update.BaseClustererUpdater;
 import bolt.ml.state.weka.cluster.update.MetaFeatureVectorBuilder;
 import bolt.ml.state.weka.utils.WekaClusterers;
 import com.google.common.collect.Lists;
@@ -63,7 +63,7 @@ public class EnsembleClustererTopology extends EnsembleLearnerTopologyBuilderBas
         final int k = Integer.valueOf(args[3]);
         final int parallelism = Integer.valueOf(args[4]);
 
-        final StateUpdater stateUpdater = new ClustererUpdater();
+        final StateUpdater stateUpdater = new BaseClustererUpdater();
         final QueryFunction<ClustererState, Map.Entry<Integer, double[]>> queryFunction = new MlStormClustererQuery.ClustererQuery();
 
         final List<StateUpdater> stateUpdaters = new ArrayList<StateUpdater>();
@@ -72,7 +72,7 @@ public class EnsembleClustererTopology extends EnsembleLearnerTopologyBuilderBas
         final List<String> queryFunctionNames = new ArrayList<String>();
 
         final ReducerAggregator drpcPartitionResultAggregator =  new EnsembleLabelDistributionPairAggregator();
-        final StateUpdater metaStateUpdater = new ClustererUpdater();
+        final StateUpdater metaStateUpdater = new BaseClustererUpdater();
         final StateFactory metaStateFactory = new MlStormClustererFactory.ClustererFactory(k, windowSize,
                 WekaClusterers.densityBased.name(), false, null /* additional options to this weka algorithm */);
         final QueryFunction metaQueryFunction = new MlStormClustererQuery.MetaQuery();

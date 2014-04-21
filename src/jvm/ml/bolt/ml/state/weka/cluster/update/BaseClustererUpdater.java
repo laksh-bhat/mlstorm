@@ -29,7 +29,7 @@ import java.text.MessageFormat;
 import java.util.List;
 import java.util.Map;
 
-public class ClustererUpdater implements StateUpdater<ClustererState> {
+public class BaseClustererUpdater implements StateUpdater<ClustererState> {
 
     private int localPartition, numPartitions;
 
