@@ -1,4 +1,4 @@
-#mlstorm - Machine Learning in Storm Ecosystem
+# mlstorm - Machine Learning in Storm Ecosystem
 
 Experimenting with online ensemble methods for collaborative learning and parallel streaming principal components analysis.
 
@@ -36,7 +36,7 @@ In our framework, each window is supplied for training to a WEKA analysis algori
 
 ### Experiments
 
-2. Our implementation of consensus clustering uses the MddbFeatureExtractorSpout to inject feature vectors. All the base clusterers we use implement [weka.clustereres interface] (http://weka.sourceforge.net/doc.dev/weka/clusterers/Clusterer.html). The ensemble consists of SimpleKMeans, DensityBasedClusterer, FarthestFirst, HierarchicalClusterer, EM and FilteredClusterer with base algorithm being SimpleKMeans. The meta-clustering algorithm is density based. If you want modify/replace these algorithms, you may do so by updating the Enum class - bolt.ml.state.weka.utils.WekaClusterers and the factory methods in bolt.ml.state.weka.utils.WekaUtils. We use default parameters for individual clusterers but you may inject the appropriate options that can be handled by weka OptionHandler. For example, you can find all the available options for [SimpleKMeans] ( http://weka.sourceforge.net/doc.dev/weka/clusterers/SimpleKMeans.html), which could be specified as a Java String[]. 
+2. Our implementation of consensus clustering uses the MddbFeatureExtractorSpout to inject feature vectors. All the base clusterers we use implement [weka.clustereres interface] (http://weka.sourceforge.net/doc.dev/weka/clusterers/Clusterer.html). The ensemble consists of SimpleKMeans, DensityBasedClusterer, FarthestFirst, HierarchicalClusterer, EM and FilteredClusterer with base algorithm being SimpleKMeans. The meta-clustering algorithm is density based. If you want modify/replace these algorithms, you may do so by updating the Enum class - bolt.ml.state.weka.utils.WekaClusterers and the factory methods in bolt.ml.state.weka.utils.WekaUtils. We use default parameters for individual clusterers but you may inject the appropriate options that can be handled by weka OptionHandler. For example, you can find all the available options for [SimpleKMeans] ( http://weka.sourceforge.net/doc.dev/weka/clusterers/SimpleKMeans.html), which could be specified as a Java String[]. If the options are incorrect, we throw a RuntimeException wrapping the actual exception thrown by Weka.
 
   a. To submit the topology one can fire away the following command.
 
@@ -54,8 +54,14 @@ In our framework, each window is supplied for training to a WEKA analysis algori
   b. To predict the most likely cluster for a test sample, one can invoke a drpc query to query the meta learner state.
   
     <code> java -cp .:`storm classpath`:$REPO/mlstorm/target/mlstorm-00.01-jar-with-dependencies.jar drpc.BptiEnsembleQuery drpc-server-host ClustererEnsemble </code>
-    
-    <bold> Note that the second argument to the DRPC query specifies the drpc function to invoke. These names are hard-coded in our Java files (topology.weka.EnsembleClassifierTopology.java and so on.)</bold>
+  #### Important Notes  
+  - Note that the second argument to the DRPC query specifies the drpc function to invoke. These names are hard-coded in our Java files (topology.weka.EnsembleClassifierTopology.java and so on.)
+  - All the configuration parameters including the `list of drpc servers`, `number of workers`, `max spout pending -- described below` are hard-coded in the Topology source files. Any change to these will require a code recompile.
+ 
+ #### how to compile?
+  - Go to the project home directory
+  - fire away the command <code> mvn -f m2-pom.xml package </code> (Assuming that you have maven installed!)
+  - this builds the <code>mlstorm-00.01-jar-with-dependencies.jar</code> in the <code>$REPO/mlstorm/target</code> directory.
 
 3. There is also an implementation of an ensemble of binary classifiers (topology.weka.EnsembleBinaryClassifierTopology) and it's online counterpart (topology.weka.OnlineEnsembleBinaryClassifierTopology). All the base/weak learning algorithms are run in parallel with their predictions reduced into (ReducerAggregator) a meta-classifier training sample labelled using the original dataset. We use linear SVM as our meta classifier and a bunch of weak learners including pruned decision trees, perceptron, svm, decision stubs etc.
 
@@ -88,11 +94,11 @@ In our framework, each window is supplied for training to a WEKA analysis algori
    4. <code> parallelism -- the number of threads per bolt </code>
 
 
-  b. A distributed query (querying for parameters/model statistics) on the model can be executed as below. This query returns the centroids of all the clusters for a given instance of clustering algorithm.
+  b. A distributed query (`querying for parameters/model statistics`) on the model can be executed as below. This query returns the centroids of all the clusters for a given instance of clustering algorithm.
 
       <code>java -cp .: `storm classpath` : $REPO/mlstorm/target/mlstorm-00.01-jar-with-dependencies.jar drpc.DrpcQueryRunner qp-hd3 kmeans "no args" </code>
 
-  c. A parameter update (k for k-means) can be made using the following DRPC query. Here we are updating the parameters of the said algorithm (K-means clustering) on the fly using DRPC. We started the topology with 10 partitions and (c) is updating the Clusterer at partition '0' to [k=45]. 
+  c. A parameter update (`k for k-means`) can be made using the following DRPC query. Here we are updating the parameters of the said algorithm (K-means clustering) on the fly using DRPC. We started the topology with 10 partitions and (c) is updating the Clusterer at partition '0' to [k=45]. 
 
       <code>java -cp .:`storm classpath`:$REPO/mlstorm/target/mlstorm-00.01-jar-with-dependencies.jar  drpc.DrpcQueryRunner qp-hd3 kUpdate 0,45 </code>
 
@@ -104,7 +110,7 @@ In our framework, each window is supplied for training to a WEKA analysis algori
 5. The PCA and Clustering algorithm implementations are window based. There's also an online/incremental PCA implementation available for experimentation.
 
 
-###Storm Experience Report
+### Storm Experience Report
 
 Storm is an open-source system that was initially developed by BackType before its acquisition by Twitter, Inc. The documentation and support for Storm primarily arises from the open-source user community that continues to develop its capabilities through the github project repository. Storm has been incubated as an Apache project as of September 2013. In this section we provide an initial report on our experiences in developing with the Storm framework, particularly as we deploy it onto a cluster environment and develop online learning and event detection algorithms.
 
