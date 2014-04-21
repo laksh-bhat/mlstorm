@@ -109,51 +109,56 @@ In our framework, each window is supplied for training to a WEKA analysis algori
 
 Storm is an open-source system that was initially developed by BackType before its acquisition by Twitter, Inc. The documentation and support for Storm primarily arises from the open-source user community that continues to develop its capabilities through the github project repository. Storm has been incubated as an Apache project as of September 2013. In this section we provide an initial report on our experiences in developing with the Storm framework, particularly as we deploy it onto a cluster environment and develop online learning and event detection algorithms.
 
-Documentation (or lack of) and Debugging
-Storm Components
-supervisor
-JVM process launched on each storm worker machine. This does not execute your code — just supervises it.
-number of workers set by number of supervisor.slots.ports on each machine.
-worker
-jvm process launched by the supervisor
-intra-worker transport is more efficient, so we run one worker per topology per machine
-if worker dies, supervisor will restart. But worker dies for any minor failure.
-Coordinator generates new transaction ID
-sends tuple, which influences spout to dispatch a new batch
-each transaction ID corresponds identically to single trident batch and vice-versa
-Transaction IDs for a given topo_launch are serially incremented globally.
-knows about Zookeeper/transactional; so it recovers the transaction ID.
-Executor
-Each executor is responsible for one bolt or spout.
-therefore with 3 sensor/MDDB spouts on a worker, there are three executors spouting.
+##### Notes useful for Debugging
+##### Storm Components
 
-Acking
-Acker is just a regular bolt — all the interesting action takes place in its execute method.
-set number of ackers equal to number of workers. (default is 1 per topology)
-The acker holds a single O(1) lookup table
-it is actually a collection of lookup tables: current, old and dead. new tuple trees are added to the current bucket; after every timeout number of seconds, current becomes old, and old becomes dead — they are declared failed and their records retried.
-it knows
-id == tuple[0] the tuple’s stream-id
-there is a time-expiring data structure, the RotatingHashMap
-when you go to update or add to it, it performs the operation on the right component of HashMap.
-periodically (when you receive a tick tuple in Storm8.2+), it will pull off oldest component HashMap, mark it as dead; invoke the expire callback for each element in that HashMap.
+###### supervisor
+  - JVM process launched on each storm worker machine. This does not execute your code — just supervises it.
+  - number of workers is set by number of supervisor.slots.ports on each machine.
+  
+###### worker
+  - jvm process launched by the supervisor
+  - intra-worker transport is more efficient, so we run one worker per topology per machine
+  - if worker dies, supervisor will restart. But worker dies for any minor failure (fail fast)
+  
+###### Coordinator 
+  - generates new transaction ID
+  - sends tuple, which influences spout to dispatch a new batch
+  - each transaction ID corresponds identically to single trident batch and vice-versa
+  - Transaction IDs for a given topo_launch are serially incremented globally.
+  - knows about Zookeeper/transactional; so it recovers the transaction ID.
+  
+###### Executor
+  - Each executor is responsible for one bolt or spout.
+  - therefore with 3 sensor/MDDB spouts on a worker, there are three executors spouting.
 
-Hard to Debug Mistakes
-A spout must never block when emitting — if it blocks, critical bookkeeping tuples will get trapped, and the topology hangs. So its emitter keeps an "overflow buffer", and publishes as follows:
-if there are tuples in the overflow buffer add the tuple to it — the queue is certainly full.
-otherwise, publish the tuple to the flow with the non-blocking call. That call will either succeed immediately
-or fail with an InsufficientCapacityException, in which case add the tuple to the overflow buffer.
-The spout’s async-loop won’t call nextTuple if overflow is present, so the overflow buffer only has to accommodate the maximum number of tuples emitted in a single nextTuple call.
+###### Hard to Debug Mistakes
+  - A spout must never block when emitting — if it blocks, critical bookkeeping tuples will get trapped, and the topology hangs. So its emitter keeps an "overflow buffer", and publishes as follows:
+    - if there are tuples in the overflow buffer add the tuple to it — the queue is certainly full.
+    - otherwise, publish the tuple to the flow with the non-blocking call. That call will either succeed immediately
+      or fail with an InsufficientCapacityException, in which case add the tuple to the overflow buffer.
+    - The spout’s async-loop won’t call nextTuple if overflow is present, so the overflow buffer only has to accommodate the maximum number of tuples emitted in a single nextTuple call.
 
-Throttling
-Max spout pending (TOPOLOGY_MAX_SPOUT_PENDING) sets the number of tuple trees live in the system at any point in time.
-Trident batch emit interval (topology.trident.batch.emit.interval.millis) sets the maximum pace at which the trident master batch co-ordinator issues new seed tuples. If batch delay is 500ms and the most recent batch was released 486ms, the spout coordinator will wait 14ms before dispensing a new seed tuple. If the next pending entry isn’t cleared for 523ms, it will be dispensed immediately.
-Trident batch emit interval  is extremely useful to prevent congestion, especially around startup/rebalance. As opposed to a traditional Storm spout, a Trident spout will likely dispatch hundreds of records with each batch. If max-pending is 20, and the spout releases 500 records per batch, the spout will try to cram 10,000 records into its send queue.
+##### Acking
+  - Acker is just a regular bolt — all the interesting action takes place in its execute method.
+  - set number of ackers equal to number of workers. (default is 1 per topology)
+  - The acker holds a single O(1) lookup table
+  - it is actually a collection of lookup tables: current, old and dead. new tuple trees are added to the current bucket; after every timeout number of seconds, current becomes old, and old becomes dead — they are declared failed and their records retried.
+  - it knows id == tuple[0] the tuple’s stream-id
+  - there is a time-expiring data structure, the RotatingHashMap
+  - when you go to update or add to it, it performs the operation on the right component of HashMap.
+  - periodically (when you receive a tick tuple in Storm8.2+), it will pull off oldest component HashMap, mark it as dead; invoke the expire callback for each element in that HashMap.
 
-Batch Size
-Set the batch size to optimize the throughput of the most expensive batch operation — a bulk database operation, network request, or large aggregation.
-When the batch size is too small, bookkeeping dominates response time i.e response time is constant
-Execution times increase slowly and we get better and better records-per-second throughput with increase in batch size.
-at some point, we start overwhelming some resource and execution time increases sharply (usually due to network failures and replays in our case)
+##### Throttling
+  - Max spout pending (TOPOLOGY_MAX_SPOUT_PENDING) sets the number of tuple trees live in the system at any point in time.
+  - Trident batch emit interval (topology.trident.batch.emit.interval.millis) sets the maximum pace at which the trident master batch co-ordinator issues new seed tuples. If batch delay is 500ms and the most recent batch was released 486ms, the spout coordinator will wait 14ms before dispensing a new seed tuple. If the next pending entry isn’t cleared for 523ms, it will be dispensed immediately.
+  - Trident batch emit interval  is extremely useful to prevent congestion, especially around startup/rebalance. 
+  - As opposed to a traditional Storm spout, a Trident spout will likely dispatch hundreds of records with each batch. If max-pending is 20, and the spout releases 500 records per batch, the spout will try to cram 10,000 records into its send queue.
+
+##### Batch Size
+  - Set the batch size to optimize the throughput of the most expensive batch operation — a bulk database operation, network request, or large aggregation.
+  - When the batch size is too small, bookkeeping dominates response time i.e response time is constant
+  - Execution times increase slowly and we get better and better records-per-second throughput with increase in batch size.
+  - at some point, we start overwhelming some resource and execution time increases sharply (usually due to network failures and replays in our case)
  
 
