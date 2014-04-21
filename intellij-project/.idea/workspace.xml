@@ -76,7 +76,7 @@
       <file leaf-file-name="KmeansClusterUpdater.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/update/KmeansClusterUpdater.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="35" column="64" selection-start="1191" selection-end="1191" vertical-scroll-proportion="0.0" vertical-offset="300" max-vertical-offset="1330">
+            <state line="35" column="64" selection-start="1191" selection-end="1191" vertical-scroll-proportion="0.0" vertical-offset="300" max-vertical-offset="1586">
               <folding />
             </state>
           </provider>
@@ -85,7 +85,7 @@
       <file leaf-file-name="KmeansClustererState.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/KmeansClustererState.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="138" column="0" selection-start="4422" selection-end="4422" vertical-scroll-proportion="0.0" vertical-offset="1627" max-vertical-offset="2816">
+            <state line="136" column="86" selection-start="4356" selection-end="4356" vertical-scroll-proportion="0.0" vertical-offset="1612" max-vertical-offset="2786">
               <folding />
             </state>
           </provider>
@@ -103,14 +103,13 @@
       <file leaf-file-name="WekaUtils.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/utils/WekaUtils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="73" column="34" selection-start="3222" selection-end="3222" vertical-scroll-proportion="0.0" vertical-offset="772" max-vertical-offset="3431">
+            <state line="42" column="85" selection-start="1689" selection-end="1689" vertical-scroll-proportion="0.0" vertical-offset="267" max-vertical-offset="3326">
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#948#959#0" expanded="true" />
                 <element signature="e#1480#1491#0" expanded="true" />
-                <element signature="e#1741#1749#0" expanded="true" />
-                <element signature="e#2329#2340#0" expanded="true" />
-                <element signature="e#2650#2658#0" expanded="true" />
+                <element signature="e#1970#1981#0" expanded="true" />
+                <element signature="e#2291#2299#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -146,7 +145,7 @@
       <file leaf-file-name="ClustererState.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/ClustererState.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="106" column="58" selection-start="3616" selection-end="3616" vertical-scroll-proportion="0.39398086" vertical-offset="1182" max-vertical-offset="2426">
+            <state line="106" column="0" selection-start="3558" selection-end="3558" vertical-scroll-proportion="0.39398086" vertical-offset="1182" max-vertical-offset="2411">
               <folding />
             </state>
           </provider>
@@ -202,7 +201,6 @@
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/MlStormWekaState.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/query/BinaryClassifierQuery.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/update/BinaryClassifierStateUpdater.java" />
-        <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/utils/WekaUtils.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/BinaryClassifierState.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/OnlineBinaryClassifierState.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/create/BinaryClassifierFactory.java" />
@@ -223,6 +221,7 @@
         <option value="$PROJECT_DIR$/../src/jvm/ml/topology/weka/KmeansClusteringTopology.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/update/KmeansClusterUpdater.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/BaseWekaState.java" />
+        <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/utils/WekaUtils.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/KmeansClustererState.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/ClustererState.java" />
       </list>
@@ -1322,13 +1321,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/update/KmeansClusterUpdater.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="64" selection-start="1191" selection-end="1191" vertical-scroll-proportion="0.0" vertical-offset="300" max-vertical-offset="1330">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$PROJECT_DIR$/../lib/weka.jar!/weka/clusterers/SimpleKMeans.class">
       <provider selected="true" editor-type-id="text-editor">
         <state line="80" column="16" selection-start="3880" selection-end="3880" vertical-scroll-proportion="0.35240275" vertical-offset="1031" max-vertical-offset="3332">
@@ -1343,30 +1335,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/utils/WekaUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="73" column="34" selection-start="3222" selection-end="3222" vertical-scroll-proportion="0.0" vertical-offset="772" max-vertical-offset="3431">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#948#959#0" expanded="true" />
-            <element signature="e#1480#1491#0" expanded="true" />
-            <element signature="e#1741#1749#0" expanded="true" />
-            <element signature="e#2329#2340#0" expanded="true" />
-            <element signature="e#2650#2658#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/CobwebClustererState.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="58" column="40" selection-start="1931" selection-end="1931" vertical-scroll-proportion="0.0" vertical-offset="322" max-vertical-offset="2291">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/KmeansClustererState.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="138" column="0" selection-start="4422" selection-end="4422" vertical-scroll-proportion="0.0" vertical-offset="1627" max-vertical-offset="2816">
           <folding />
         </state>
       </provider>
@@ -1378,9 +1349,36 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/utils/WekaUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="42" column="85" selection-start="1689" selection-end="1689" vertical-scroll-proportion="0.0" vertical-offset="267" max-vertical-offset="3326">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#948#959#0" expanded="true" />
+            <element signature="e#1480#1491#0" expanded="true" />
+            <element signature="e#1970#1981#0" expanded="true" />
+            <element signature="e#2291#2299#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/update/KmeansClusterUpdater.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="64" selection-start="1191" selection-end="1191" vertical-scroll-proportion="0.0" vertical-offset="300" max-vertical-offset="1330">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/KmeansClustererState.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="136" column="86" selection-start="4356" selection-end="4356" vertical-scroll-proportion="0.0" vertical-offset="1612" max-vertical-offset="2786">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/ClustererState.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="106" column="58" selection-start="3616" selection-end="3616" vertical-scroll-proportion="0.39398086" vertical-offset="1182" max-vertical-offset="2426">
+        <state line="106" column="0" selection-start="3558" selection-end="3558" vertical-scroll-proportion="0.39398086" vertical-offset="1182" max-vertical-offset="2411">
           <folding />
         </state>
       </provider>
