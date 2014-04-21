@@ -28,14 +28,17 @@ WEKA is designed as a general-purpose data mining and machine learning library, 
 
 In our framework, each window is supplied for training to a WEKA analysis algorithm. Once training completes, the resulting model can be used to predict or classify future stream events arriving to the system. Below, we present our framework as used with the k-means clustering and principal components analysis algorithms. Our current focus is to support the scalable exploration, training and validation performed by multiple algorithms simultaneously in the Storm system, as is commonly needed when the class of algorithms that ideally models a particular dataset is not known up front, and must be determined through experimentation. For example, with our framework, we can run multiple k-means clustering algorithms in Storm, each configured with a different parameter value for k. Thus in many application scenarios where k is not known a priori, we can discover k through experimentation. Our framework leverages Storm’s abilities to distribute its program topology across multiple machines for scalable execution of analysis algorithms, as well as its fault-tolerance features. 
 
-
+---------------------------
 ### Implementation Details 
+---------------------------
 
-1. All the learning algorithms are implemented in `Trident` and use external `EJML` and `Weka` libraries. All these libraries reside in the /lib directory in the project home directory. Look at `m2-pom.xml` to get an idea about the project dependencies.
+1. All the learning algorithms are implemented in `Trident` and use external `EJML (Efficient Java Matrix Library)` and `Weka (Weka Machine Learning Toolkit)` libraries. All these libraries reside in the /lib directory in the project home directory. Look at `m2-pom.xml` to get an idea about the project dependencies.
 
-2. The consensus clustering algorithm (topology.weka.EnsembleClusteringTopology) uses 2-level (shallow!) deep-learning technique. We experimented with relabelling and majority voting based schemes. However, since the clustering algorithm is quadratic and the hungarian algorithm is cubic in the size of the window, we were unable to keep up with a BPTI protein data stream (thus ran into storm timeouts). Interested readers are encouraged to look at `Vega-Pons & Ruiz-Shulcloper, 2011 (A Survey of Clustering Ensemble Algorithms) and Wei-Hao Lin, Alexander Hauptmann, 2003 (Meta-classification: Combining Multimodal Classifiers)` for detailed explanation of the techniques.
+2. The consensus clustering algorithm (`topology.weka.EnsembleClusteringTopology`) uses 2-level (shallow!) deep-learning technique. We experimented with relabelling and majority voting based schemes. However, since the clustering algorithm is quadratic and the hungarian algorithm (used for relabeling) is cubic in the size of the window, we were unable to keep up with a BPTI protein data stream (thus ran into storm timeouts). Interested readers are encouraged to look at `Vega-Pons & Ruiz-Shulcloper, 2011 (A Survey of Clustering Ensemble Algorithms) and Wei-Hao Lin, Alexander Hauptmann, 2003 (Meta-classification: Combining Multimodal Classifiers)` for detailed explanation of the techniques.
 
+----------------
 ### Experiments
+----------------
 
 2. Our implementation of consensus clustering uses the MddbFeatureExtractorSpout to inject feature vectors. All the base clusterers we use implement [weka.clustereres interface] (http://weka.sourceforge.net/doc.dev/weka/clusterers/Clusterer.html). The ensemble consists of `SimpleKMeans, DensityBasedClusterer, FarthestFirst, HierarchicalClusterer, EM and FilteredClusterer (with underlying algorithm being SimpleKMeans)`. The meta-clustering algorithm is density based. If you want modify/replace these algorithms, you may do so by updating the Enum class - bolt.ml.state.weka.utils.WekaClusterers and the factory methods in bolt.ml.state.weka.utils.WekaUtils. We use default parameters for individual clusterers but you may inject the appropriate options that can be handled by weka OptionHandler. For example, you can find all the available options for [SimpleKMeans] ( http://weka.sourceforge.net/doc.dev/weka/clusterers/SimpleKMeans.html), which could be specified as a Java String[]. `If the options are incorrect, we throw a RuntimeException wrapping the actual exception thrown by Weka.`
 
@@ -56,23 +59,26 @@ In our framework, each window is supplied for training to a WEKA analysis algori
   
       java -cp .:`storm classpath`:$REPO/mlstorm/target/mlstorm-00.01-jar-with-dependencies.jar drpc.BptiEnsembleQuery        drpc-server-host ClustererEnsemble
       
-    
-  #### Important Notes  
+
+  #### Important Notes 
+  --------------------
   - Note that the second argument to the DRPC query specifies the drpc function to invoke. These names are hard-coded in our Java files (`topology.weka.EnsembleClassifierTopology.java` and so on.)
   - All the configuration parameters including the `list of drpc servers`, `number of workers`, `max spout pending (described below)` are hard-coded in the Topology source files. Any change to these will require a code recompile.
  
- #### How to compile?
+  #### How to compile?
+  --------------------
   - Go to the project home directory
   - fire away the command `mvn -f m2-pom.xml package` (Assuming that you have maven installed!)
   - this builds the `mlstorm-00.01-jar-with-dependencies.jar` in the `$REPO/mlstorm/target` directory.
 
-3. There is also an implementation of an ensemble of binary classifiers (topology.weka.EnsembleBinaryClassifierTopology) and it's online counterpart (`topology.weka.OnlineEnsembleBinaryClassifierTopology`). All the base/weak learning algorithms are run in parallel with their continuous predictions reduced into (a ReducerAggregator aggregating a grouped stream) a meta-classifier training sample labelled using the original dataset. We use `linear SVM` as our meta classifier and a bunch of weak learners including `pruned decision trees, perceptron, svm, decision stubs` etc.
+
+3. There is also an implementation of an ensemble of binary classifiers (`topology.weka.EnsembleBinaryClassifierTopology`) and it's online counterpart (`topology.weka.OnlineEnsembleBinaryClassifierTopology`). All the base/weak learning algorithms are run in parallel with their continuous predictions reduced into (a ReducerAggregator aggregating a grouped stream) a meta-classifier training sample labelled using the original dataset. We use `linear SVM` as our meta classifier and a bunch of weak learners including `pruned decision trees, perceptron, svm, decision stubs` etc.
 
     You may submit the topologies for execution using the following command
 
-      `storm jar $REPO/mlstorm/target/mlstorm-00.01-jar-with-dependencies.jar topology.weka.EnsembleClassifierTopology $REPO/mlstorm/res/elecNormNew.arff 1 1000 5 1 `
+      `storm jar $REPO/mlstorm/target/mlstorm-00.01-jar-with-dependencies.jar topology.weka.EnsembleClassifierTopology $REPO/mlstorm/res/elecNormNew.arff 1 1000 5 1`
       
-      ` storm jar $REPO/mlstorm/target/mlstorm-00.01-jar-with-dependencies.jar topology.weka.OnlineEnsembleClassifierTopology $REPO/mlstorm/res/elecNormNew.arff 1 1000 5 1 `
+      `storm jar $REPO/mlstorm/target/mlstorm-00.01-jar-with-dependencies.jar topology.weka.OnlineEnsembleClassifierTopology $REPO/mlstorm/res/elecNormNew.arff 1 1000 5 1 `
       
     
     To classify a test example, one can invoke a drpc query to query the meta learner (`SVM, by default`) state.
@@ -112,8 +118,9 @@ In our framework, each window is supplied for training to a WEKA analysis algori
        
 5. The PCA and Clustering algorithm implementations are window based. There's also an online/incremental clustering (`Cobweb`) and PCA implementation available for experimentation.
 
-
+--------------------------------------------------------------------------------------------------------------------------
 ### Storm Experience Report
+--------------------------------------------------------------------------------------------------------------------------
 
 Storm is an open-source system that was initially developed by BackType before its acquisition by Twitter, Inc. The documentation and support for Storm primarily arises from the open-source user community that continues to develop its capabilities through the github project repository. Storm has been incubated as an Apache project as of September 2013. In this section we provide an initial report on our experiences in developing with the Storm framework, particularly as we deploy it onto a cluster environment and develop online learning and event detection algorithms.
 
