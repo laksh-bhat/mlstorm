@@ -135,6 +135,8 @@ public class KmeansClustererState extends BaseWekaState {
 
             // we are now ready to create a training dataset metadata
             dataset = new Instances("training", this.wekaAttributes, this.windowSize);
+            dataset.setClassIndex(this.wekaAttributes.size()-1);
+
         }
     }
 

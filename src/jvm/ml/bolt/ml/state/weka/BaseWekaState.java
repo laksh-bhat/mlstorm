@@ -121,7 +121,7 @@ public abstract class BaseWekaState implements MlStormWekaState {
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
-            dataset.delete();
+            dataset.clear();
         }
     }
 
