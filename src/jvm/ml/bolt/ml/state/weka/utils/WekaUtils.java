@@ -73,6 +73,7 @@ public class WekaUtils {
                 return j48;
             case svm:
                 SMO smo = new SMO();
+                smo.setNumFolds(-1);
                 setOptionsForWekaPredictor(options, smo);
                 return smo;
             case logisticRegression:

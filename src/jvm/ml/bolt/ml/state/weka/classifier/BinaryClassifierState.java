@@ -72,9 +72,9 @@ public class BinaryClassifierState extends BaseWekaState {
                 Instance trainingInstance = new DenseInstance(wekaAttributes.size());
                 trainingInstance.setDataset(dataset);
                 for (int i = 0; i < features.length && i < wekaAttributes.size(); i++){
-                    if (i != wekaAttributes.size() - 1) trainingInstance.setValue(i , features[i]);
-                    else trainingInstance.setValue(dataset.attribute(WekaUtils.CLASSES_ATTR_NAME), features[i]);
+                    trainingInstance.setValue(i , features[i]);
                 }
+                dataset.add(trainingInstance);
             }
             train();
             postUpdate();
@@ -110,7 +110,7 @@ public class BinaryClassifierState extends BaseWekaState {
 
         // we are now ready to create a training dataset metadata
         dataset = new Instances("training", this.wekaAttributes, this.windowSize);
-        dataset.setClass(dataset.attribute(WekaUtils.CLASSES_ATTR_NAME));
+        dataset.setClassIndex(wekaAttributes.size() - 1);
     }
 
     @Override
