@@ -59,6 +59,7 @@ public abstract class WekaBaseLearningTopology {
                 .stateQuery(state, new Fields("args"), queryFunction, new Fields("partition", "result"))
                 .toStream()
                 .each(new Fields("partition", "result"), new Printer())
+                .project(new Fields("result"))
         ;
 
         /**
