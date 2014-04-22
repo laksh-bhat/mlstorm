@@ -39,7 +39,7 @@ public class AustralianElectricityPricingTest {
 
         int correct = 0, total = 0;
 
-        final DRPCClient client = new DRPCClient(args[1], 3772, 10000 /*timeout*/);
+        final DRPCClient client = new DRPCClient(args[1], 3772, 1000000 /*timeout*/);
         for (Map.Entry<Integer, double[]> features : generateHoldOutDataset(args[0])){
             int label = features.getKey();
             double[] fv = features.getValue();

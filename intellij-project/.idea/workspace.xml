@@ -122,24 +122,22 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BinaryClassifierState.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="BinaryClassifierState.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/BinaryClassifierState.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="76" column="46" selection-start="2755" selection-end="2755" vertical-scroll-proportion="0.38987687" vertical-offset="720" max-vertical-offset="2621">
+            <state line="76" column="46" selection-start="2755" selection-end="2755" vertical-scroll-proportion="0.0" vertical-offset="720" max-vertical-offset="2621">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EnsembleClustererTopology.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/weka/EnsembleClustererTopology.java">
+      <file leaf-file-name="AustralianElectricityPricingTest.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/../src/jvm/ml/drpc/AustralianElectricityPricingTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="75" column="84" selection-start="3457" selection-end="3457" vertical-scroll-proportion="0.0" vertical-offset="330" max-vertical-offset="2098">
+            <state line="49" column="45" selection-start="1955" selection-end="1955" vertical-scroll-proportion="0.64021885" vertical-offset="267" max-vertical-offset="2111">
               <folding>
-                <element signature="e#2936#2950#0" expanded="true" />
-                <element signature="e#3012#3026#0" expanded="true" />
-                <element signature="e#3094#3109#0" expanded="true" />
-                <element signature="e#3174#3182#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#2931#2961#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -231,11 +229,11 @@
         <option value="$PROJECT_DIR$/../src/jvm/ml/spout/mddb/MddbFeatureExtractorSpout.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/query/BinaryClassifierQuery.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/drpc/AustralianElectricityPricingQuery.java" />
-        <option value="$PROJECT_DIR$/../src/jvm/ml/drpc/AustralianElectricityPricingTest.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/BaseWekaState.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/topology/weka/SvmTopology.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/utils/WekaUtils.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/BinaryClassifierState.java" />
+        <option value="$PROJECT_DIR$/../src/jvm/ml/drpc/AustralianElectricityPricingTest.java" />
       </list>
     </option>
   </component>
@@ -1298,16 +1296,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/drpc/AustralianElectricityPricingTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="44" selection-start="1531" selection-end="1531" vertical-scroll-proportion="0.0" vertical-offset="252" max-vertical-offset="2111">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2929#2959#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/weka/EnsembleClustererTopology.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="75" column="84" selection-start="3457" selection-end="3457" vertical-scroll-proportion="0.0" vertical-offset="330" max-vertical-offset="2098">
@@ -1405,8 +1393,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/BinaryClassifierState.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="76" column="46" selection-start="2755" selection-end="2755" vertical-scroll-proportion="0.38987687" vertical-offset="720" max-vertical-offset="2621">
+        <state line="76" column="46" selection-start="2755" selection-end="2755" vertical-scroll-proportion="0.0" vertical-offset="720" max-vertical-offset="2621">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/drpc/AustralianElectricityPricingTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="49" column="45" selection-start="1955" selection-end="1955" vertical-scroll-proportion="0.64021885" vertical-offset="267" max-vertical-offset="2111">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2931#2961#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
