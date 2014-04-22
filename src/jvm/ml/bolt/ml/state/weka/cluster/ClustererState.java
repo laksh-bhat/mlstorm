@@ -118,6 +118,11 @@ public class ClustererState extends BaseWekaState {
         return emitAfterUpdate;
     }
 
+    @Override
+    public long getWindowSize() {
+        return super.windowSize;
+    }
+
     public boolean isTrained() {
         return isTrained;
     }

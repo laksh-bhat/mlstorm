@@ -75,6 +75,11 @@ public class OnlineBinaryClassifierState extends BaseOnlineWekaState {
     }
 
     @Override
+    public long getWindowSize() {
+        return super.windowSize;
+    }
+
+    @Override
     public boolean isTrained() {
         return isTrained;
     }

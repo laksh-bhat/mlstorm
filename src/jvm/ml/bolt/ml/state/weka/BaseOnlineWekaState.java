@@ -36,6 +36,7 @@ public abstract class BaseOnlineWekaState implements MlStormWekaState {
      * @param windowSize the size of the sliding window (cache size)
      */
     public BaseOnlineWekaState(final int windowSize) {
+        this.windowSize = windowSize;
         featureVectorsInWindow = new LinkedHashMap<Integer, double[]>(windowSize, 0.75f /*load factor*/, false) {
             public boolean removeEldestEntry(Map.Entry<Integer, double[]> eldest) {
                 return size() > windowSize;
@@ -128,5 +129,6 @@ public abstract class BaseOnlineWekaState implements MlStormWekaState {
 
     protected Map<Integer, double[]> featureVectorsInWindow;
     protected ArrayList<Attribute> wekaAttributes = null;
+    protected long windowSize;
     protected Instances dataset;
 }

@@ -73,6 +73,11 @@ public class KmeansClustererState extends BaseWekaState {
     }
 
     @Override
+    public long getWindowSize() {
+        return super.windowSize;
+    }
+
+    @Override
     public boolean isTrained() {
         return isTrained;
     }

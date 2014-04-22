@@ -77,6 +77,11 @@ public class CobwebClustererState extends BaseOnlineWekaState {
     }
 
     @Override
+    public long getWindowSize() {
+        return super.windowSize;
+    }
+
+    @Override
     public boolean isTrained() {
         return isTrained;
     }
