@@ -56,8 +56,8 @@ public class AustralianElectricityPricingTest {
                 int returnLabel = yHat.intValue();
                 if (returnLabel == label){
                     correct++;
-                    System.out.println(Arrays.toString(fv) + yHat + " - " + label + " - CORRECT");
-                } else System.out.println(Arrays.toString(fv)  + yHat + " - " + label + "INCORRECT");
+                    System.out.println(Arrays.toString(fv) + " - " + yHat + " - " + label + " - CORRECT");
+                } else System.out.println(Arrays.toString(fv) + " - " + yHat + " - " + label + "INCORRECT");
                 total++;
             }
         }
@@ -77,8 +77,8 @@ public class AustralianElectricityPricingTest {
         List<Map.Entry<Integer, double[]>> returnList = new ArrayList<Map.Entry<Integer, double[]>>();
         int totalTests = 0;
 
-        while (totalTests < 1000 && scanner.hasNextLine()) {
-            if (totalTests++ % 2 == 0) {
+        while (totalTests < 45000 && scanner.hasNextLine()) {
+            if (totalTests++ % 100 == 0) {
                 String line = scanner.nextLine();
                 String[] features = line.split(",");
                 double[] fv = new double[features.length - 1];
