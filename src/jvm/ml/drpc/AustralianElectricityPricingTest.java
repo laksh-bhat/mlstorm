@@ -34,7 +34,7 @@ import static utils.FeatureVectorUtils.serializeFeatureVector;
 public class AustralianElectricityPricingTest {
 
     public static void main(final String[] args) throws IOException, TException, DRPCExecutionException {
-        if (args.length < 2) {
+        if (args.length < 3) {
             System.err.println("Where are the arguments? args -- HoldoutDataFile DrpcServer DrpcFunctionName");
             return;
         }
@@ -42,8 +42,8 @@ public class AustralianElectricityPricingTest {
         int correct = 0, total = 0;
 
         final DRPCClient client = new DRPCClient(args[1], 3772, 1000000 /*timeout*/);
-        for (Map.Entry<Integer, double[]> features : generateHoldOutDataset(args[0])){
-            int label = features.getKey();
+        for (Map.Entry<Double, double[]> features : generateHoldOutDataset(args[0])){
+            double label = features.getKey();
             double[] fv = features.getValue();
             final String parameters = serializeFeatureVector(fv);
             String result = runQuery(args[2], parameters, client);
@@ -52,12 +52,11 @@ public class AustralianElectricityPricingTest {
             for (Object obj : deserialized) {
                 // Storm always returns a list
                 List l = ((List) obj);
-                Double yHat = (Double) l.get(0);
-                int returnLabel = yHat.intValue();
-                if (returnLabel == label){
+                double yHat = (Double) l.get(0);
+                if (yHat == label){
                     correct++;
-                    System.out.println(Arrays.toString(fv) + " - " + yHat + " - " + label + " - CORRECT");
-                } else System.out.println(Arrays.toString(fv) + " - " + yHat + " - " + label + "INCORRECT");
+                    System.out.println(Arrays.toString(fv) + " CORRECT");
+                } else System.out.println(Arrays.toString(fv) + " INCORRECT");
                 total++;
             }
         }
@@ -72,24 +71,24 @@ public class AustralianElectricityPricingTest {
         return client.execute(topologyAndDrpcServiceName, args);
     }
 
-    public static List<Map.Entry<Integer, double[]>> generateHoldOutDataset(String filename) throws FileNotFoundException {
+    public static List<MlStormClustererQuery.Pair<Double,double[]>> generateHoldOutDataset(String filename) throws FileNotFoundException {
         Scanner scanner = new Scanner(new File(filename));
-        List<Map.Entry<Integer, double[]>> returnList = new ArrayList<Map.Entry<Integer, double[]>>();
+        List<MlStormClustererQuery.Pair<Double, double[]>> returnList = new ArrayList<MlStormClustererQuery.Pair<Double, double[]>>();
         int totalTests = 0;
 
         while (totalTests < 45000 && scanner.hasNextLine()) {
-            if (totalTests++ % 100 == 0) {
+            if (totalTests++ % 125 == 0) {
                 String line = scanner.nextLine();
                 String[] features = line.split(",");
                 double[] fv = new double[features.length - 1];
-                int label = 0;
+                double label = 0;
                 for (int i = 0; i < fv.length; i++) {
                     if (!features[i].equalsIgnoreCase("UP") && !features[i].equalsIgnoreCase("DOWN")) {
                         fv[i] = Double.valueOf(features[i]);
                     } else
-                        label = features[i].equalsIgnoreCase("UP")? 1 : 0;
+                        label = features[i].equalsIgnoreCase("DOWN")? 0 : 1;
                 }
-                returnList.add(new MlStormClustererQuery.Pair<Integer, double[]>(label, fv));
+                returnList.add(new MlStormClustererQuery.Pair<Double, double[]>(label, fv));
             }
         }
         return returnList;

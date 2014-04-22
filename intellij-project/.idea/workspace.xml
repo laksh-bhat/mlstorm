@@ -144,10 +144,10 @@
       <file leaf-file-name="AustralianElectricityPricingTest.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/drpc/AustralianElectricityPricingTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="85" column="53" selection-start="3572" selection-end="3572" vertical-scroll-proportion="0.6607387" vertical-offset="792" max-vertical-offset="2171">
+            <state line="94" column="5" selection-start="3940" selection-end="3940" vertical-scroll-proportion="0.64021885" vertical-offset="942" max-vertical-offset="2156">
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#3154#3184#0" expanded="true" />
+                <element signature="e#3066#3112#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -1440,10 +1440,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/drpc/AustralianElectricityPricingTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="85" column="53" selection-start="3572" selection-end="3572" vertical-scroll-proportion="0.6607387" vertical-offset="792" max-vertical-offset="2171">
+        <state line="94" column="5" selection-start="3940" selection-end="3940" vertical-scroll-proportion="0.64021885" vertical-offset="942" max-vertical-offset="2156">
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3154#3184#0" expanded="true" />
+            <element signature="e#3066#3112#0" expanded="true" />
           </folding>
         </state>
       </provider>
