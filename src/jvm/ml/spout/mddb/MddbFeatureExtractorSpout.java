@@ -154,8 +154,8 @@ public class MddbFeatureExtractorSpout implements IRichSpout {
                 if (scanner.hasNextLine()) previous = scanner.nextLine();
                 List<Map<String, List<Double>>> dict = SpoutUtils.pythonDictToJava(previous);
                 for (Map<String, List<Double>> map : dict) {
-                    Double[] features = map.get("chi1").toArray(new Double[0]);
-                    Double[] moreFeatures = map.get("chi2").toArray(new Double[0]);
+                    Double[] features = map.get("chi2").toArray(new Double[0]);
+                    Double[] moreFeatures = map.get("chi1").toArray(new Double[0]);
                     Double[] both = (Double[]) ArrayUtils.addAll(features, moreFeatures);
                     collector.emit(new Values(messageId++, ArrayUtils.toPrimitive(both)));
                 }

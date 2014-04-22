@@ -55,8 +55,8 @@ public class KMeansDrpcQuery {
             for (Map<String, List<Double>> map : dict) {
                 i ++;
 
-                Double[] features = map.get("chi1").toArray(new Double[0]);
-                Double[] moreFeatures = map.get("chi2").toArray(new Double[0]);
+                Double[] features = map.get("chi2").toArray(new Double[0]);
+                Double[] moreFeatures = map.get("chi1").toArray(new Double[0]);
                 Double[] rmsd = map.get("rmsd").toArray(new Double[0]);
                 Double[] both = (Double[]) ArrayUtils.addAll(features, moreFeatures);
                 String parameters = serializeFeatureVector(ArrayUtils.toPrimitive(both));
