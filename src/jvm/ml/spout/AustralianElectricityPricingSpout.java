@@ -12,7 +12,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.MessageFormat;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -102,7 +101,6 @@ public class AustralianElectricityPricingSpout implements IRichSpout {
                     else if (attr.equalsIgnoreCase("DOWN")) fv [i] = 0.0;
                     else fv[i] = Double.valueOf(attr);
                 }
-                System.err.println(Arrays.toString(fv));
                 _collector.emit(new Values(messageId++, fv));
             }
         }

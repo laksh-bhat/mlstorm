@@ -47,8 +47,8 @@ public class SvmTopology extends WekaBaseLearningTopology {
         int windowSize = Integer.valueOf(args[2]);
         int parallelism = Integer.valueOf(args[3]);
         StateUpdater stateUpdater = new BinaryClassifierStateUpdater();
-        StateFactory stateFactory = new BinaryClassifierFactory(WekaClassificationAlgorithms.svm.name(), windowSize,
-                weka.core.Utils.splitOptions("-C 1.0 -L 0.0010 -P 1.0E-12 -N 0 -V -1 -W 1 -K \"weka.classifiers.functions.supportVector.PolyKernel -C 250007 -E 1.0\""));
+        StateFactory stateFactory = new BinaryClassifierFactory(WekaClassificationAlgorithms.svm.name(), windowSize, null /*
+                weka.core.Utils.splitOptions("-C 1.0 -L 0.0010 -P 1.0E-12 -N 0 -V -1 -W 1 -K \"weka.classifiers.functions.supportVector.PolyKernel -C 250007 -E 1.0\"")*/);
         QueryFunction<MlStormWekaState, Integer> queryFunction = new BinaryClassifierQuery.SvmQuery();
         QueryFunction<KmeansClustererState, String> parameterUpdateFunction = null;
         IRichSpout features = new AustralianElectricityPricingSpout(args[0], fields);
@@ -64,9 +64,9 @@ public class SvmTopology extends WekaBaseLearningTopology {
         Config conf = new Config();
         conf.setNumAckers(numWorkers);
         conf.setNumWorkers(numWorkers);
-        conf.setMaxSpoutPending(8); // This is critical; if you don't set this, it's likely that you'll run out of memory and storm will throw wierd errors
-        conf.put("topology.spout.max.batch.size", 1 /* x1000 i.e. every tuple has 1000 feature vectors*/);
-        conf.put("topology.trident.batch.emit.interval.millis", 50);
+        conf.setMaxSpoutPending(5); // This is critical; if you don't set this, it's likely that you'll run out of memory and storm will throw wierd errors
+        conf.put("topology.spout.max.batch.size", 1000 /* x1000 i.e. every tuple has 1000 feature vectors*/);
+        conf.put("topology.trident.batch.emit.interval.millis", 500);
         conf.put(Config.DRPC_SERVERS, Lists.newArrayList("qp-hd3", "qp-hd4", "qp-hd5", "qp-hd6"));
         conf.put(Config.STORM_CLUSTER_MODE, "distributed");
         conf.put(Config.NIMBUS_TASK_TIMEOUT_SECS, 30);

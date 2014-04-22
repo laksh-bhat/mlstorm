@@ -67,7 +67,7 @@
       <file leaf-file-name="SvmTopology.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/weka/SvmTopology.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="50" column="83" selection-start="2378" selection-end="2378" vertical-scroll-proportion="0.0" vertical-offset="362" max-vertical-offset="1828">
+            <state line="71" column="54" selection-start="3910" selection-end="3910" vertical-scroll-proportion="0.0" vertical-offset="542" max-vertical-offset="1828">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -75,10 +75,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AustralianElectricityPricingSpout.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="AustralianElectricityPricingSpout.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/spout/AustralianElectricityPricingSpout.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="110" column="39" selection-start="3675" selection-end="3675" vertical-scroll-proportion="0.0" vertical-offset="1170" max-vertical-offset="2486">
+            <state line="103" column="0" selection-start="3449" selection-end="3449" vertical-scroll-proportion="0.53351575" vertical-offset="1155" max-vertical-offset="2456">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -131,10 +131,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AustralianElectricityPricingTest.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="AustralianElectricityPricingTest.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/drpc/AustralianElectricityPricingTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="49" column="45" selection-start="1955" selection-end="1955" vertical-scroll-proportion="0.64021885" vertical-offset="267" max-vertical-offset="2111">
+            <state line="49" column="45" selection-start="1955" selection-end="1955" vertical-scroll-proportion="0.0" vertical-offset="327" max-vertical-offset="2111">
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#2931#2961#0" expanded="true" />
@@ -202,7 +202,6 @@
         <option value="$PROJECT_DIR$/../src/jvm/ml/spout/AustralianElectricity.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/utils/WekaClassificationAlgorithms.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/query/VotingConsensusAggregator.java" />
-        <option value="$PROJECT_DIR$/../src/jvm/ml/spout/AustralianElectricityPricingSpout.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/update/MetaFeatureVectorBuilder.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/MlStormWekaState.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/update/BinaryClassifierStateUpdater.java" />
@@ -230,10 +229,11 @@
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/query/BinaryClassifierQuery.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/drpc/AustralianElectricityPricingQuery.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/BaseWekaState.java" />
-        <option value="$PROJECT_DIR$/../src/jvm/ml/topology/weka/SvmTopology.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/utils/WekaUtils.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/BinaryClassifierState.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/drpc/AustralianElectricityPricingTest.java" />
+        <option value="$PROJECT_DIR$/../src/jvm/ml/topology/weka/SvmTopology.java" />
+        <option value="$PROJECT_DIR$/../src/jvm/ml/spout/AustralianElectricityPricingSpout.java" />
       </list>
     </option>
   </component>
@@ -1360,24 +1360,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/spout/AustralianElectricityPricingSpout.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="110" column="39" selection-start="3675" selection-end="3675" vertical-scroll-proportion="0.0" vertical-offset="1245" max-vertical-offset="2486">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/weka/SvmTopology.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="50" column="83" selection-start="2378" selection-end="2378" vertical-scroll-proportion="0.0" vertical-offset="362" max-vertical-offset="1828">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/utils/WekaUtils.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="75" column="36" selection-start="3260" selection-end="3260" vertical-scroll-proportion="0.0" vertical-offset="762" max-vertical-offset="3401">
@@ -1400,10 +1382,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/drpc/AustralianElectricityPricingTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="45" selection-start="1955" selection-end="1955" vertical-scroll-proportion="0.64021885" vertical-offset="267" max-vertical-offset="2111">
+        <state line="49" column="45" selection-start="1955" selection-end="1955" vertical-scroll-proportion="0.0" vertical-offset="327" max-vertical-offset="2111">
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#2931#2961#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/weka/SvmTopology.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="71" column="54" selection-start="3910" selection-end="3910" vertical-scroll-proportion="0.0" vertical-offset="542" max-vertical-offset="1828">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/spout/AustralianElectricityPricingSpout.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="103" column="0" selection-start="3449" selection-end="3449" vertical-scroll-proportion="0.53351575" vertical-offset="1155" max-vertical-offset="2456">
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
