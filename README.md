@@ -183,5 +183,25 @@ Storm is an open-source system that was initially developed by BackType before i
   - When the batch size is too small, bookkeeping dominates response time i.e `response time is constant`
   - Execution times increase slowly and we get better and better records-per-second throughput with increase in batch size.
   - at some point, we start overwhelming some resource and execution time increases sharply (usually due to network failures and replays in our case)
- 
+  
+
+
+-------------------
+## Consensus Clustering
+-------------------
+
+Consensus clustering, also known as cluster ensemble, aims to find a single partitioning of data from multiple existing basic partitionings `[Monti et al., 2003; Zhang et al., 2010]`. It has been recognized that consensus clustering helps to generate robust partitionings, find bizarre clusters, handle noise and outliers, and integrate solutions from multiple distributed sources. The main motivation for Consensus clustering is the need to assess the “stability” of the discovered clusters, that is, the robustness of the putative clusters to sampling variability. The basic assumption of this method is intuitively simple: if the data represent a sample of items drawn from distinct sub-populations, and if we were to observe a different samples drawn from the same sub-populations, the induced cluster composition and number should not be radically different. Therefore, the more the attained clusters are robust to sampling variability, the more we can be conﬁdent that these clusters represent real structure. 
+
+However, theoretically, Consensus clustering is NP-complete `[Filkov and Steven, 2004a; Topchy et al., 2005]`. In the literature, many algorithms have been proposed to address the computational challenges, among which a K-means-based method proposed in `[Topchy et al., 2003]` attracts great interests. 
+
+Consensus clustering (CC) is essentially a combinatorial optimization problem. The existing literature can be roughly divided into two categories: CC with implicit objectives (CCIO) and CC with explicit objectives (CCEO).
+
+Methods in CCIO do not set global objective functions. Rather, they directly adopt some heuristics to find approximate solutions. The representative methods include the graph-based algorithms `[Strehl and Ghosh, 2002; Fern and Brodley, 2004]`, the co-association matrix based methods `[Fred and Jain, 2005; Wang et al., 2009]`, Relabeling and Voting methods `[Fischer and Buhmann, 2003; Ayad and Kamel, 2008]`, Locally Adaptive Cluster based methods [Domeniconi and Al-Razgan, 2009], genetic algorithm based methods `[Yoon et al., 2006]`, and still many more.
+
+Methods in CCEO have explicit global objective functions for consensus clustering. The Median Partition problem based on Mirkin distance is among the oldest ones `[Filkov and Steven, 2004b; Gionis et al., 2007]`. In the inspiring work, `[Topchy et al., 2003]` proposed a Quadratic Mutual Information based objective function and used K-means clustering to find the solution. This elegant idea could be traced back to the work by Mirkin on the Category Utility Function `[Mirkin, 2001]`. Other solutions for different objective functions include EM algorithm [Topchy et al., 2004], non - negative matrix factorization `[Li et al., 2007]`, kernel-based methods `[Vega-Pons et al., 2010]`, simulated annealing `[Lu et al., 2008]`, and among others.
+
+In general, compared with CCIO methods, CCEO methods might offer better interpretability and higher robustness to clustering results, via the guidance of objective functions. However, they often bear high computational costs. Moreover, one CCEO method typically works for one objective function, which seriously limits its applicative scope.
+
+We attempt to build a general framework using meta-clustering for efficient density based consensus clustering using multiple base utility functions. The base functions use k-means as the underlying algorithm and apply various density manipulation and attribute filtering techniques to them. Thus each base function is parameterized differently.
+
 
