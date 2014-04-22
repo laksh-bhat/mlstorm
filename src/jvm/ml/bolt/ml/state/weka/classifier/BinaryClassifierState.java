@@ -116,7 +116,7 @@ public class BinaryClassifierState extends BaseWekaState {
     @Override
     protected void loadWekaAttributes(double[] features) {
         if (this.wekaAttributes == null) {
-            this.wekaAttributes = WekaUtils.makeFeatureVectorForBinaryClassification(features.length);
+            this.wekaAttributes = WekaUtils.makeFeatureVectorForBinaryClassification(features.length-1);
             this.wekaAttributes.trimToSize();
         }
     }
