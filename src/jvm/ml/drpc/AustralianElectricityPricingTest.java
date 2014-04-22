@@ -75,8 +75,8 @@ public class AustralianElectricityPricingTest {
         List<Map.Entry<Integer, double[]>> returnList = new ArrayList<Map.Entry<Integer, double[]>>();
         int totalTests = 0;
 
-        while (totalTests < 40000 && scanner.hasNextLine()) {
-            if (totalTests % 1000 == 0) {
+        while (totalTests < 1000 && scanner.hasNextLine()) {
+            if (totalTests++ % 2 == 0) {
                 String line = scanner.nextLine();
                 String[] features = line.split(",");
                 double[] fv = new double[features.length - 1];
@@ -84,7 +84,8 @@ public class AustralianElectricityPricingTest {
                 for (int i = 0; i < fv.length; i++) {
                     if (!features[i].equalsIgnoreCase("UP") && !features[i].equalsIgnoreCase("DOWN")) {
                         fv[i] = Double.valueOf(features[i]);
-                    } else label = features[i].equalsIgnoreCase("UP")? 1 : 0;
+                    } else
+                        label = features[i].equalsIgnoreCase("UP")? 1 : 0;
                 }
                 returnList.add(new MlStormClustererQuery.Pair<Integer, double[]>(label, fv));
             }
