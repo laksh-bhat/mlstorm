@@ -66,8 +66,8 @@ public class KMeansDrpcQuery {
                 for (Object obj : deserialized) {
                     // result we get is of the form <partition, result>
                     List l = ((List) obj);
-                    System.out.println(l.size());
-
+                    System.out.println(l.get(0));
+                    centroidsSerialized = (String) l.get(0);
                     String[] centroidSerializedArrays = centroidsSerialized.split(MlStormClustererQuery.KmeansClustererQuery.CENTROID_DELIM);
                     List<double[]> centroids = new ArrayList<double[]>();
                     for (String centroid : centroidSerializedArrays)
