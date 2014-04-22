@@ -61,6 +61,7 @@ public class WekaUtils {
         Attribute classes = new Attribute(CLASSES_ATTR_NAME, classNames);
         // last element in a FEATURE VECTOR is the category
         attributeInfo.add(classes);
+        System.err.println("DEBUG: no. of attributes = " + attributeInfo.size());
         return attributeInfo;
     }
 
