@@ -45,8 +45,10 @@ public class BinaryClassifierStateUpdater implements StateUpdater<MlStormWekaSta
             try {
                  collector.emit(new Values(localPartition, key, (int) state.predict(state.makeWekaInstance(fv)), fv[fv.length - 1]));
             } catch (Exception e) {
-                if (e.toString().contains(MlStormWekaState.NOT_READY_TO_PREDICT))
+                if (e.toString().contains(MlStormWekaState.NOT_READY_TO_PREDICT)){
+                    state.commit((long) key);
                     collector.emit(new Values(localPartition, key, (int) fv[fv.length - 1], fv[fv.length - 1]));
+                }
                 else
                     throw new RuntimeException(e.getMessage());
 
@@ -66,5 +68,50 @@ public class BinaryClassifierStateUpdater implements StateUpdater<MlStormWekaSta
     @Override
     public void cleanup () {
 
+    }
+
+
+    public class BinaryMetaClassifierStateUpdater implements StateUpdater<MlStormWekaState> {
+
+        private int localPartition, numPartitions;
+
+        @Override
+        public void updateState (final MlStormWekaState state,
+                                 final List<TridentTuple> tuples,
+                                 final TridentCollector collector)
+        {
+            for (TridentTuple tuple : tuples) {
+                double[] fv = (double[]) tuple.getValueByField(EnsembleLearnerTopologyBuilderBase.featureVectorField.get(0));
+                int key = tuple.getIntegerByField(EnsembleLearnerTopologyBuilderBase.keyField.get(0));
+                state.getFeatureVectorsInWindow().put(key, fv);
+                if (!state.getFeatureVectorsInWindow().containsKey(key - state.getWindowSize()))
+                    state.commit(key/state.getWindowSize());
+                try {
+                    collector.emit(new Values(localPartition, key, (int) state.predict(state.makeWekaInstance(fv)), fv[fv.length - 1]));
+                } catch (Exception e) {
+                    if (e.toString().contains(MlStormWekaState.NOT_READY_TO_PREDICT)){
+                        state.commit((long) key);
+                        collector.emit(new Values(localPartition, key, (int) fv[fv.length - 1], fv[fv.length - 1]));
+                    }
+                    else
+                        throw new RuntimeException(e.getMessage());
+
+                }
+            }
+
+            System.err.println(MessageFormat.format(
+                    "finished updating state at partition [{0}] of [{1}]", localPartition, numPartitions));
+        }
+
+        @Override
+        public void prepare (final Map map, final TridentOperationContext tridentOperationContext) {
+            localPartition = tridentOperationContext.getPartitionIndex();
+            numPartitions = tridentOperationContext.numPartitions();
+        }
+
+        @Override
+        public void cleanup () {
+
+        }
     }
 }

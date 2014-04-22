@@ -101,7 +101,7 @@ public class EnsembleClassifierTopology extends EnsembleLearnerTopologyBuilderBa
         conf.setNumWorkers(numWorkers);
         conf.setMaxSpoutPending(2); // This is critical; if you don't set this, it's likely that you'll run out of memory and storm will throw wierd errors
 
-        conf.put("topology.spout.max.batch.size", 100 /* x1000 i.e. every tuple has 1000 feature vectors*/);
+        conf.put("topology.spout.max.batch.size", 1000 /* x1000 i.e. every tuple has 1000 feature vectors*/);
         conf.put("topology.trident.batch.emit.interval.millis", 1000);
         // These are the DRPC servers our topology is going to use. So clients must know about this.
         // Its hard-coded here so that I could play with it

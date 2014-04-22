@@ -7,6 +7,7 @@ import weka.core.DenseInstance;
 import weka.core.Instance;
 import weka.core.Instances;
 
+import java.text.MessageFormat;
 import java.util.Collection;
 
 /**
@@ -64,6 +65,7 @@ public class BinaryClassifierState extends BaseWekaState {
 
     @Override
     public synchronized void commit(final Long txId) {
+        System.err.println(MessageFormat.format("Commit invoked for transaction {0}", txId));
         // this is windowed learning.
         Collection<double[]> groundValues = getFeatureVectorsInWindow().values();
         try {

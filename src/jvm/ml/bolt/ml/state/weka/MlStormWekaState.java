@@ -27,6 +27,8 @@ public interface MlStormWekaState extends State {
 
     Instance makeWekaInstance(double[] featureVector);
 
+    long getWindowSize();
+
     boolean isTrained();
 
     @Override
