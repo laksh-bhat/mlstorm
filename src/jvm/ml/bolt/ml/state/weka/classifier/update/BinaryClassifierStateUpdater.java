@@ -71,7 +71,7 @@ public class BinaryClassifierStateUpdater implements StateUpdater<MlStormWekaSta
     }
 
 
-    public class BinaryMetaClassifierStateUpdater implements StateUpdater<MlStormWekaState> {
+    public static class BinaryMetaClassifierStateUpdater implements StateUpdater<MlStormWekaState> {
 
         private int localPartition, numPartitions;
 
@@ -85,12 +85,12 @@ public class BinaryClassifierStateUpdater implements StateUpdater<MlStormWekaSta
                 int key = tuple.getIntegerByField(EnsembleLearnerTopologyBuilderBase.keyField.get(0));
                 state.getFeatureVectorsInWindow().put(key, fv);
                 if (!state.getFeatureVectorsInWindow().containsKey(key - state.getWindowSize()))
-                    state.commit(key/state.getWindowSize());
+                    state.commit(-1L);
                 try {
                     collector.emit(new Values(localPartition, key, (int) state.predict(state.makeWekaInstance(fv)), fv[fv.length - 1]));
                 } catch (Exception e) {
                     if (e.toString().contains(MlStormWekaState.NOT_READY_TO_PREDICT)){
-                        state.commit((long) key);
+                        state.commit((long) -1);
                         collector.emit(new Values(localPartition, key, (int) fv[fv.length - 1], fv[fv.length - 1]));
                     }
                     else

@@ -58,7 +58,7 @@ public class OnlineEnsembleClassifierTopology extends EnsembleLearnerTopologyBui
         final int windowSize  = Integer.valueOf(args[2]);
         final int parallelism = Integer.valueOf(args[3]);
 
-        final StateUpdater stateUpdater = new BinaryClassifierStateUpdater();
+        final StateUpdater stateUpdater = new BinaryClassifierStateUpdater.BinaryMetaClassifierStateUpdater();
         /* All the weak learners and meta learner are Updateable/online learners */
         final StateFactory metaFactory  = new BinaryClassifierFactory.
                 OnlineBinaryClassifierFactory(WekaOnlineClassificationAlgorithms.onlineDecisionTree.name(),

@@ -58,7 +58,7 @@ public class EnsembleClassifierTopology extends EnsembleLearnerTopologyBuilderBa
         final int windowSize  = Integer.valueOf(args[2]);
         final int parallelism = Integer.valueOf(args[3]);
 
-        final StateUpdater stateUpdater = new BinaryClassifierStateUpdater();
+        final StateUpdater stateUpdater = new BinaryClassifierStateUpdater.BinaryMetaClassifierStateUpdater();
         /* All the weak learners and meta learner are batch (window) learners */
         final StateFactory metaFactory  = new BinaryClassifierFactory(WekaClassificationAlgorithms.svm.name(),
                 windowSize, null /* additional options to this weka algorithm */);

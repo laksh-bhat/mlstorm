@@ -70,7 +70,7 @@ public class BinaryClassifierState extends BaseWekaState {
 
     @Override
     public synchronized void commit(final Long txId) {
-        System.err.println(MessageFormat.format("Commit invoked for transaction {0}", txId));
+        System.err.println(MessageFormat.format("Commit invoked for transaction {0} by thread {1}", txId, Thread.currentThread().getId()));
         // this is windowed learning.
         Collection<double[]> groundValues = getFeatureVectorsInWindow().values();
         try {
