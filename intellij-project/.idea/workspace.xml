@@ -64,33 +64,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="BaseClustererUpdater.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/update/BaseClustererUpdater.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="42" column="59" selection-start="1643" selection-end="1643" vertical-scroll-proportion="0.0" vertical-offset="222" max-vertical-offset="1631">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="KmeansClusterUpdater.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/update/KmeansClusterUpdater.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="35" column="64" selection-start="1191" selection-end="1191" vertical-scroll-proportion="0.0" vertical-offset="300" max-vertical-offset="1586">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="KmeansClustererState.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/KmeansClustererState.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="144" column="108" selection-start="4667" selection-end="4667" vertical-scroll-proportion="0.0" vertical-offset="1507" max-vertical-offset="2786">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="MlStormClustererQuery.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/query/MlStormClustererQuery.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -100,20 +73,55 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MddbFeatureExtractorSpout.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="MddbFeatureExtractorSpout.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/spout/mddb/MddbFeatureExtractorSpout.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="165" column="9" selection-start="6800" selection-end="6800" vertical-scroll-proportion="0.45821726" vertical-offset="1951" max-vertical-offset="3478">
+            <state line="165" column="9" selection-start="6800" selection-end="6800" vertical-scroll-proportion="0.0" vertical-offset="1951" max-vertical-offset="3478">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ClustererState.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/ClustererState.java">
+      <file leaf-file-name="SvmTopology.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/weka/SvmTopology.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="108" column="13" selection-start="3578" selection-end="3578" vertical-scroll-proportion="0.0" vertical-offset="1182" max-vertical-offset="2411">
+            <state line="65" column="38" selection-start="3298" selection-end="3298" vertical-scroll-proportion="0.0" vertical-offset="437" max-vertical-offset="1843">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AustralianElectricityPricingTest.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/../src/jvm/ml/drpc/AustralianElectricityPricingTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="56" column="77" selection-start="2304" selection-end="2304" vertical-scroll-proportion="0.55813956" vertical-offset="432" max-vertical-offset="2111">
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#2929#2959#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="WekaClassificationAlgorithms.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/utils/WekaClassificationAlgorithms.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="9" column="18" selection-start="175" selection-end="175" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="896">
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BinaryClassifierQuery.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/query/BinaryClassifierQuery.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="161" column="63" selection-start="7028" selection-end="7028" vertical-scroll-proportion="0.0" vertical-offset="1782" max-vertical-offset="3341">
+              <folding>
+                <element signature="e#3940#3969#0" expanded="true" />
+                <element signature="e#6283#6292#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -121,7 +129,7 @@
       <file leaf-file-name="KMeansDrpcQuery.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/drpc/KMeansDrpcQuery.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="80" column="0" selection-start="3649" selection-end="3649" vertical-scroll-proportion="0.0" vertical-offset="708" max-vertical-offset="2428">
+            <state line="71" column="60" selection-start="3035" selection-end="3118" vertical-scroll-proportion="0.0" vertical-offset="708" max-vertical-offset="2428">
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1881#1889#0" expanded="true" />
@@ -133,7 +141,7 @@
       <file leaf-file-name="KmeansClusteringTopology.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/weka/KmeansClusteringTopology.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="56" column="48" selection-start="2760" selection-end="2760" vertical-scroll-proportion="0.0" vertical-offset="307" max-vertical-offset="1648">
+            <state line="75" column="5" selection-start="1550" selection-end="3904" vertical-scroll-proportion="0.0" vertical-offset="307" max-vertical-offset="1648">
               <folding />
             </state>
           </provider>
@@ -142,7 +150,7 @@
       <file leaf-file-name="WekaBaseLearningTopology.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/weka/WekaBaseLearningTopology.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="60" column="46" selection-start="2738" selection-end="2738" vertical-scroll-proportion="0.0" vertical-offset="207" max-vertical-offset="1826">
+            <state line="52" column="67" selection-start="2300" selection-end="2310" vertical-scroll-proportion="0.0" vertical-offset="342" max-vertical-offset="1826">
               <folding />
             </state>
           </provider>
@@ -152,7 +160,9 @@
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/general/Printer.java">
           <provider selected="true" editor-type-id="text-editor">
             <state line="29" column="35" selection-start="1039" selection-end="1039" vertical-scroll-proportion="0.0" vertical-offset="72" max-vertical-offset="1286">
-              <folding />
+              <folding>
+                <element signature="imports" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -170,8 +180,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/query/HungarianMethodBasedConsensus.java" />
-        <option value="$PROJECT_DIR$/../src/jvm/ml/utils/HungarianAlgorithm.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/topology/weka/WekaEnsembleStreamLearnerTopology.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/update/MetaStateReducer.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/update/ClusterUpdater.java" />
@@ -186,7 +194,6 @@
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/utils/WekaOnlineClassificationAlgorithms.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/WekaOnlineClassifier.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/BaseOnlineWekaState.java" />
-        <option value="$PROJECT_DIR$/../src/jvm/ml/drpc/AustralianElectricityPricingQuery.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/CobwebClustererState.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/update/MetaFeatureVectorBuilder.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/spout/AustralianElectricity.java" />
@@ -195,7 +202,6 @@
         <option value="$PROJECT_DIR$/../src/jvm/ml/spout/AustralianElectricityPricingSpout.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/update/MetaFeatureVectorBuilder.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/MlStormWekaState.java" />
-        <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/query/BinaryClassifierQuery.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/update/BinaryClassifierStateUpdater.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/BinaryClassifierState.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/OnlineBinaryClassifierState.java" />
@@ -221,6 +227,10 @@
         <option value="$PROJECT_DIR$/../src/jvm/ml/topology/weka/WekaBaseLearningTopology.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/drpc/KMeansDrpcQuery.java" />
         <option value="$PROJECT_DIR$/../src/jvm/ml/spout/mddb/MddbFeatureExtractorSpout.java" />
+        <option value="$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/query/BinaryClassifierQuery.java" />
+        <option value="$PROJECT_DIR$/../src/jvm/ml/topology/weka/SvmTopology.java" />
+        <option value="$PROJECT_DIR$/../src/jvm/ml/drpc/AustralianElectricityPricingQuery.java" />
+        <option value="$PROJECT_DIR$/../src/jvm/ml/drpc/AustralianElectricityPricingTest.java" />
       </list>
     </option>
   </component>
@@ -686,7 +696,7 @@
       <recent name="bolt.ml.state" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.AustralianElectricityPricingQuery">
+  <component name="RunManager" selected="Application.AustralianElectricityPricingTest">
     <configuration default="false" name="SpoutUtils" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="utils.SpoutUtils" />
       <option name="VM_PARAMETERS" />
@@ -709,8 +719,8 @@
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
-    <configuration default="false" name="AustralianElectricityPricingQuery" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="drpc.AustralianElectricityPricingQuery" />
+    <configuration default="false" name="AustralianElectricityPricingTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="drpc.AustralianElectricityPricingTest" />
       <option name="VM_PARAMETERS" />
       <option name="PROGRAM_PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
@@ -877,11 +887,11 @@
     <list size="3">
       <item index="0" class="java.lang.String" itemvalue="Application.TestJdbcConnection" />
       <item index="1" class="java.lang.String" itemvalue="Application.SpoutUtils" />
-      <item index="2" class="java.lang.String" itemvalue="Application.AustralianElectricityPricingQuery" />
+      <item index="2" class="java.lang.String" itemvalue="Application.AustralianElectricityPricingTest" />
     </list>
     <recent_temporary>
       <list size="2">
-        <item index="0" class="java.lang.String" itemvalue="Application.AustralianElectricityPricingQuery" />
+        <item index="0" class="java.lang.String" itemvalue="Application.AustralianElectricityPricingTest" />
         <item index="1" class="java.lang.String" itemvalue="Application.SpoutUtils" />
       </list>
     </recent_temporary>
@@ -994,13 +1004,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$PROJECT_DIR$/../lib/weka.jar!/weka/classifiers/UpdateableClassifier.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="25" selection-start="144" selection-end="144" vertical-scroll-proportion="0.063739374" vertical-offset="0" max-vertical-offset="796">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$PROJECT_DIR$/../lib/weka.jar!/weka/classifiers/bayes/NaiveBayesUpdateable.class">
       <provider selected="true" editor-type-id="text-editor">
         <state line="9" column="31" selection-start="365" selection-end="375" vertical-scroll-proportion="0.16997167" vertical-offset="0" max-vertical-offset="976">
@@ -1050,36 +1053,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/utils/WekaClassificationAlgorithms.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="82" selection-start="239" selection-end="239" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="896">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/cluster/query/EnsembleLabelDistributionPairAggregator.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="24" column="13" selection-start="877" selection-end="877" vertical-scroll-proportion="0.33333334" vertical-offset="64" max-vertical-offset="1263">
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/drpc/AustralianElectricityPricingQuery.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="39" column="67" selection-start="1492" selection-end="1492" vertical-scroll-proportion="0.0" vertical-offset="177" max-vertical-offset="1481">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/query/BinaryClassifierQuery.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="104" column="68" selection-start="4436" selection-end="4436" vertical-scroll-proportion="0.0" vertical-offset="1002" max-vertical-offset="2561">
-          <folding>
-            <element signature="e#1754#1784#0" expanded="false" />
-            <element signature="e#3940#3969#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1332,7 +1309,9 @@
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/general/Printer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="29" column="35" selection-start="1039" selection-end="1039" vertical-scroll-proportion="0.0" vertical-offset="72" max-vertical-offset="1286">
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1350,23 +1329,56 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/spout/mddb/MddbFeatureExtractorSpout.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="165" column="9" selection-start="6800" selection-end="6800" vertical-scroll-proportion="0.0" vertical-offset="1951" max-vertical-offset="3478">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/weka/KmeansClusteringTopology.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="56" column="48" selection-start="2760" selection-end="2760" vertical-scroll-proportion="0.0" vertical-offset="307" max-vertical-offset="1648">
+        <state line="75" column="5" selection-start="1550" selection-end="3904" vertical-scroll-proportion="0.0" vertical-offset="307" max-vertical-offset="1648">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/weka/WekaBaseLearningTopology.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="60" column="46" selection-start="2738" selection-end="2738" vertical-scroll-proportion="0.0" vertical-offset="207" max-vertical-offset="1826">
+        <state line="52" column="67" selection-start="2300" selection-end="2310" vertical-scroll-proportion="0.0" vertical-offset="342" max-vertical-offset="1826">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/utils/WekaClassificationAlgorithms.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="18" selection-start="175" selection-end="175" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="896">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/bolt/ml/state/weka/classifier/query/BinaryClassifierQuery.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="161" column="63" selection-start="7028" selection-end="7028" vertical-scroll-proportion="0.0" vertical-offset="1782" max-vertical-offset="3341">
+          <folding>
+            <element signature="e#3940#3969#0" expanded="true" />
+            <element signature="e#6283#6292#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/weka/SvmTopology.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="65" column="38" selection-start="3298" selection-end="3298" vertical-scroll-proportion="0.0" vertical-offset="437" max-vertical-offset="1843">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/drpc/KMeansDrpcQuery.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="80" column="0" selection-start="3649" selection-end="3649" vertical-scroll-proportion="0.0" vertical-offset="708" max-vertical-offset="2428">
+        <state line="71" column="60" selection-start="3035" selection-end="3118" vertical-scroll-proportion="0.0" vertical-offset="708" max-vertical-offset="2428">
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1881#1889#0" expanded="true" />
@@ -1374,10 +1386,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/spout/mddb/MddbFeatureExtractorSpout.java">
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/drpc/AustralianElectricityPricingTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="165" column="9" selection-start="6800" selection-end="6800" vertical-scroll-proportion="0.45821726" vertical-offset="1951" max-vertical-offset="3478">
-          <folding />
+        <state line="56" column="77" selection-start="2304" selection-end="2304" vertical-scroll-proportion="0.55813956" vertical-offset="432" max-vertical-offset="2111">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2929#2959#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

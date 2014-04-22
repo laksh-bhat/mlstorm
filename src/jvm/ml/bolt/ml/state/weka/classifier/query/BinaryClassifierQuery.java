@@ -137,4 +137,56 @@ public class BinaryClassifierQuery implements QueryFunction<MlStormWekaState, Ma
         public void cleanup() {
         }
     }
+
+    public static class SvmQuery implements QueryFunction<MlStormWekaState,Integer> {
+        private int localPartition, numPartitions;
+
+        @Override
+        public List<Integer> batchRetrieve(final MlStormWekaState binaryClassifierState, final List<TridentTuple> queryTuples) {
+            List<Integer> queryResults = new ArrayList<Integer>();
+            for (TridentTuple queryTuple : queryTuples) {
+                double[] fv = getFeatureVectorFromArgs(queryTuple);
+                final Instance instance = binaryClassifierState.makeWekaInstance(fv);
+                try {
+                    final int classification = (int) binaryClassifierState.predict(instance);
+                    queryResults.add(classification);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            return queryResults;
+        }
+
+        @Override
+        public void execute(final TridentTuple tuple, final Integer result, final TridentCollector collector) {
+            collector.emit(new Values(localPartition, result));
+        }
+
+        @Override
+        public void prepare(final Map map, final TridentOperationContext tridentOperationContext) {
+            localPartition = tridentOperationContext.getPartitionIndex();
+            numPartitions = tridentOperationContext.numPartitions();
+        }
+
+        @Override
+        public void cleanup() {
+        }
+
+        private double[] getFeatureVectorFromArgs(TridentTuple queryTuple){
+            String args = queryTuple.getStringByField(EnsembleLearnerTopologyBuilderBase.drpcQueryArgsField.get(0));
+            try {
+                return FeatureVectorUtils.deserializeToFeatureVector(args);
+            } catch (DecoderException e) {
+                e.printStackTrace();
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                e.printStackTrace();
+                throw new RuntimeException(e);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
 }
