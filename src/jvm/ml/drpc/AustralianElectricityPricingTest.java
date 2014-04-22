@@ -44,7 +44,7 @@ public class AustralianElectricityPricingTest {
             int label = features.getKey();
             double[] fv = features.getValue();
             final String parameters = serializeFeatureVector(fv);
-            String result = runQuery(args[1], parameters, client);
+            String result = runQuery(args[2], parameters, client);
             Gson gson = new Gson();
             Object[] deserialized = gson.fromJson(result, Object[].class);
             for (Object obj : deserialized) {
