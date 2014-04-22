@@ -75,8 +75,8 @@ public class AustralianElectricityPricingTest {
         List<Map.Entry<Integer, double[]>> returnList = new ArrayList<Map.Entry<Integer, double[]>>();
         int totalTests = 0;
 
-        while (totalTests < 100 && scanner.hasNextLine()) {
-            if (totalTests % 100 == 0) {
+        while (totalTests < 40000 && scanner.hasNextLine()) {
+            if (totalTests % 1000 == 0) {
                 String line = scanner.nextLine();
                 String[] features = line.split(",");
                 double[] fv = new double[features.length - 1];
