@@ -79,17 +79,22 @@ public class KMeansDrpcQuery {
 
                     for (int k = 0; k < centroids.size(); k++) {
                         double[] centroid = centroids.get(k);
-                        rmsdKmeans[k] = computeRootMeanSquareDeviation(rmsdPrimitive, centroid);
+                        rmsdKmeans[k] = computeRootMeanSquare(centroid);
                     }
                     System.out.println("1 rmsd original -- " + Arrays.toString(rmsd));
                     System.out.println("2 rmsd k- Means -- " + Arrays.toString(rmsdKmeans));
                     System.out.println();
                 }
 
-
             }
         }
         client.close();
+    }
+
+    private static double computeRootMeanSquare(double[] v) {
+        double distance = 0;
+        for (double aV : v) distance += Math.pow((aV), 2);
+        return Math.sqrt(distance / v.length);
     }
 
     private static double computeRootMeanSquareDeviation(double[] v, double[] w) {
