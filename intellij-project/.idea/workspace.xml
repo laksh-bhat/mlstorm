@@ -87,7 +87,7 @@
       <file leaf-file-name="AustralianElectricityPricingSpout.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/spout/AustralianElectricityPricingSpout.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="103" column="0" selection-start="3449" selection-end="3449" vertical-scroll-proportion="0.0" vertical-offset="1155" max-vertical-offset="2456">
+            <state line="78" column="47" selection-start="2539" selection-end="2548" vertical-scroll-proportion="0.0" vertical-offset="1095" max-vertical-offset="2456">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -144,10 +144,10 @@
       <file leaf-file-name="AustralianElectricityPricingTest.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/drpc/AustralianElectricityPricingTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="79" column="49" selection-start="3205" selection-end="3205" vertical-scroll-proportion="0.3529412" vertical-offset="927" max-vertical-offset="2141">
+            <state line="75" column="42" selection-start="3003" selection-end="3003" vertical-scroll-proportion="1.0506155" vertical-offset="357" max-vertical-offset="2171">
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#2991#3021#0" expanded="true" />
+                <element signature="e#3089#3119#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -1402,15 +1402,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/spout/AustralianElectricityPricingSpout.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="103" column="0" selection-start="3449" selection-end="3449" vertical-scroll-proportion="0.0" vertical-offset="1155" max-vertical-offset="2456">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/topology/weka/WekaBaseLearningTopology.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="33" column="35" selection-start="1174" selection-end="1174" vertical-scroll-proportion="0.0" vertical-offset="237" max-vertical-offset="1826">
@@ -1438,12 +1429,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/drpc/AustralianElectricityPricingTest.java">
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/spout/AustralianElectricityPricingSpout.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="79" column="49" selection-start="3205" selection-end="3205" vertical-scroll-proportion="0.3529412" vertical-offset="927" max-vertical-offset="2141">
+        <state line="78" column="47" selection-start="2539" selection-end="2548" vertical-scroll-proportion="0.0" vertical-offset="1095" max-vertical-offset="2456">
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2991#3021#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/jvm/ml/drpc/AustralianElectricityPricingTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="75" column="42" selection-start="3003" selection-end="3003" vertical-scroll-proportion="1.0506155" vertical-offset="357" max-vertical-offset="2171">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#3089#3119#0" expanded="true" />
           </folding>
         </state>
       </provider>

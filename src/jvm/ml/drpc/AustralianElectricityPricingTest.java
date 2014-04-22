@@ -6,6 +6,8 @@ import bolt.ml.state.weka.cluster.query.MlStormClustererQuery;
 import com.google.gson.Gson;
 import org.apache.thrift7.TException;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 
@@ -70,8 +72,8 @@ public class AustralianElectricityPricingTest {
         return client.execute(topologyAndDrpcServiceName, args);
     }
 
-    public static List<Map.Entry<Integer, double[]>> generateHoldOutDataset(String filename) {
-        Scanner scanner = new Scanner(filename);
+    public static List<Map.Entry<Integer, double[]>> generateHoldOutDataset(String filename) throws FileNotFoundException {
+        Scanner scanner = new Scanner(new File(filename));
         List<Map.Entry<Integer, double[]>> returnList = new ArrayList<Map.Entry<Integer, double[]>>();
         int totalTests = 0;
 
