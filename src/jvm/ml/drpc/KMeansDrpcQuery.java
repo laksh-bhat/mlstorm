@@ -63,11 +63,12 @@ public class KMeansDrpcQuery {
 
                 Gson gson = new Gson();
                 Object[] deserialized = gson.fromJson(centroidsSerialized, Object[].class);
+
                 for (Object obj : deserialized) {
-                    // result we get is of the form <partition, result>
+                    // result we get is of the form List<result>
                     List l = ((List) obj);
-                    System.out.println(l.get(0));
                     centroidsSerialized = (String) l.get(0);
+
                     String[] centroidSerializedArrays = centroidsSerialized.split(MlStormClustererQuery.KmeansClustererQuery.CENTROID_DELIM);
                     List<double[]> centroids = new ArrayList<double[]>();
                     for (String centroid : centroidSerializedArrays)
@@ -80,8 +81,8 @@ public class KMeansDrpcQuery {
                         double[] centroid = centroids.get(k);
                         rmsdKmeans[k] = computeRootMeanSquareDeviation(rmsdPrimitive, centroid);
                     }
-                    System.out.println("1 -- " + Arrays.toString(rmsd));
-                    System.out.println("2 -- " + Arrays.toString(rmsdKmeans));
+                    System.out.println("1 rmsd original -- " + Arrays.toString(rmsd));
+                    System.out.println("2 rmsd k- Means -- " + Arrays.toString(rmsdKmeans));
                     System.out.println();
                 }
 
