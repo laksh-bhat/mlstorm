@@ -73,7 +73,7 @@ public class BinaryClassifierState extends BaseWekaState {
                 trainingInstance.setDataset(dataset);
                 for (int i = 0; i < features.length && i < wekaAttributes.size(); i++){
                     if (i != features.length - 1) trainingInstance.setValue(i , features[i]);
-                    else trainingInstance.setValue(i, String.valueOf(features[i]));
+                    else trainingInstance.setValue(dataset.attribute(WekaUtils.CLASSES_ATTR_NAME), features[i]);
                 }
             }
             train();

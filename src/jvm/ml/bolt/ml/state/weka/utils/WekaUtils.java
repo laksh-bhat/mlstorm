@@ -22,6 +22,9 @@ import java.util.ArrayList;
 
 public class WekaUtils {
 
+    public static final String CLASSES_ATTR_NAME = "classes";
+    public static final String FEATURE_PREFIX = "feature-";
+
     public static ArrayList<Attribute> makeFeatureVectorForOnlineClustering(int noOfClusters, int noOfAttributes) {
         // Declare FAST VECTOR
         ArrayList<Attribute> attributeInfo = new ArrayList<Attribute>();
@@ -55,7 +58,7 @@ public class WekaUtils {
         ArrayList<String> classNames = new ArrayList<String>(2);
         for (int i = 1; i <= 2; i++)
             classNames.add(MessageFormat.format("class-{0}", String.valueOf(i)));
-        Attribute classes = new Attribute("classes", classNames);
+        Attribute classes = new Attribute(CLASSES_ATTR_NAME, classNames);
         // last element in a FEATURE VECTOR is the category
         attributeInfo.add(classes);
         return attributeInfo;
