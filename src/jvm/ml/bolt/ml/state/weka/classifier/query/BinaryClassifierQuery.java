@@ -9,7 +9,6 @@ import storm.trident.operation.TridentOperationContext;
 import storm.trident.state.QueryFunction;
 import storm.trident.tuple.TridentTuple;
 import topology.weka.EnsembleLearnerTopologyBuilderBase;
-import utils.FeatureVectorUtils;
 import weka.core.Instance;
 
 import java.io.IOException;
@@ -74,7 +73,7 @@ public class BinaryClassifierQuery implements QueryFunction<MlStormWekaState, Ma
     private double[] getFeatureVectorFromArgs(TridentTuple queryTuple){
         String args = queryTuple.getStringByField(EnsembleLearnerTopologyBuilderBase.drpcQueryArgsField.get(0));
         try {
-            return FeatureVectorUtils.deserializeToFeatureVector(args);
+            return utils.FeatureVectorUtils.deserializeToFeatureVector(args);
         } catch (DecoderException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -175,7 +174,7 @@ public class BinaryClassifierQuery implements QueryFunction<MlStormWekaState, Ma
         private double[] getFeatureVectorFromArgs(TridentTuple queryTuple){
             String args = queryTuple.getStringByField(EnsembleLearnerTopologyBuilderBase.drpcQueryArgsField.get(0));
             try {
-                return FeatureVectorUtils.deserializeToFeatureVector(args);
+                return utils.FeatureVectorUtils.deserializeToFeatureVector(args);
             } catch (DecoderException e) {
                 e.printStackTrace();
                 throw new RuntimeException(e);
