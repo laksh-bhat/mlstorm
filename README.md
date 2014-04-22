@@ -194,14 +194,25 @@ Consensus clustering, also known as cluster ensemble, aims to find a single part
 
 However, theoretically, Consensus clustering is NP-complete `[Filkov and Steven, 2004a; Topchy et al., 2005]`. In the literature, many algorithms have been proposed to address the computational challenges, among which a K-means-based method proposed in `[Topchy et al., 2003]` attracts great interests. 
 
+----------------
+#### Background
+----------------
 Consensus clustering (CC) is essentially a combinatorial optimization problem. The existing literature can be roughly divided into two categories: CC with implicit objectives (CCIO) and CC with explicit objectives (CCEO).
 
-Methods in CCIO do not set global objective functions. Rather, they directly adopt some heuristics to find approximate solutions. The representative methods include the graph-based algorithms `[Strehl and Ghosh, 2002; Fern and Brodley, 2004]`, the co-association matrix based methods `[Fred and Jain, 2005; Wang et al., 2009]`, Relabeling and Voting methods `[Fischer and Buhmann, 2003; Ayad and Kamel, 2008]`, Locally Adaptive Cluster based methods [Domeniconi and Al-Razgan, 2009], genetic algorithm based methods `[Yoon et al., 2006]`, and still many more.
+Methods in CCIO do not set global objective functions. Rather, they directly adopt some heuristics to find approximate solutions. The representative methods include the graph-based algorithms `[Strehl and Ghosh, 2002; Fern and Brodley, 2004]`, the co-association matrix based methods `[Fred and Jain, 2005; Wang et al., 2009]` and Relabeling & Voting based methods `[Fischer and Buhmann, 2003; Ayad and Kamel, 2008]`.
 
 Methods in CCEO have explicit global objective functions for consensus clustering. The Median Partition problem based on Mirkin distance is among the oldest ones `[Filkov and Steven, 2004b; Gionis et al., 2007]`. In the inspiring work, `[Topchy et al., 2003]` proposed a Quadratic Mutual Information based objective function and used K-means clustering to find the solution. This elegant idea could be traced back to the work by Mirkin on the Category Utility Function `[Mirkin, 2001]`. Other solutions for different objective functions include EM algorithm [Topchy et al., 2004], non - negative matrix factorization `[Li et al., 2007]`, kernel-based methods `[Vega-Pons et al., 2010]`, simulated annealing `[Lu et al., 2008]`, and among others.
 
 In general, compared with CCIO methods, CCEO methods might offer better interpretability and higher robustness to clustering results, via the guidance of objective functions. However, they often bear high computational costs. Moreover, one CCEO method typically works for one objective function, which seriously limits its applicative scope.
 
 We attempt to build a general framework using meta-clustering for efficient density based consensus clustering using multiple base utility functions. The base functions use k-means as the underlying algorithm and apply various density manipulation and attribute filtering techniques to them. Thus each base function is parameterized differently.
+
+-----------------------------------------------------
+#### The Hungarian Algorithm and Cluster Relabeling
+-----------------------------------------------------
+
+The Hungarian algorithm is used to solve the assignment problem. An instance of the assignment problem consists of a number of workers along with a number of jobs and a cost matrix which gives the cost of assigning the i'th worker to the j'th job at position (i, j). The goal is to find an assignment of workers to jobs so that no job is assigned more than one worker and so that no worker is assigned to more than one job in such a manner so as to minimize the total cost of completing the jobs. An assignment for a cost matrix that has more workers than jobs will necessarily include unassigned workers, indicated by an assignment value of -1; in no other circumstance will there be unassigned workers. Similarly, an assignment for a cost matrix that has more jobs than workers will necessarily include unassigned jobs; in no other circumstance will there be unassigned jobs. The Hungarian algorithm runs in time O(n^3), where n is the maximum among the number of workers and the number of jobs.
+
+The voting approach to consensus clustering attempts to solve the cluster correspondence problem. A simple voting produce can be used to assign objects in clusters to determine the final consensus partition. However, label correspondence is exactly what makes unsupervised combination difficult. The main idea behind this scheme is to permute the cluster labels such that best agreement between the labels of two partitions is obtained. All the partitions from the ensemble must be relabeled according to a fixed `reference partition`. The reference partition can be taken as one from the ensemble, or from a new clustering of the dataset. Also, a meaningful voting procedure assumes that the `number of clusters` in every given partition is the same as in the `target partition`. This requires that the number of clusters in the target consensus partition is known. `The complexity of this process is k! , which can be reduced to O(k^3) if the Hungarian method is employed` for the minimal weight bipartite matching problem.
 
 
