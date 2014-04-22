@@ -6,7 +6,6 @@ import bolt.ml.state.weka.classifier.BinaryClassifierState;
 import bolt.ml.state.weka.classifier.OnlineBinaryClassifierState;
 import storm.trident.state.State;
 import storm.trident.state.StateFactory;
-import weka.Run;
 
 import java.util.Map;
 

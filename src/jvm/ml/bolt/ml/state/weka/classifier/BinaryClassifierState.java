@@ -3,7 +3,6 @@ package bolt.ml.state.weka.classifier;
 import bolt.ml.state.weka.BaseWekaState;
 import bolt.ml.state.weka.utils.WekaUtils;
 import weka.classifiers.Classifier;
-import weka.core.DenseInstance;
 import weka.core.Instance;
 import weka.core.Instances;
 
@@ -53,37 +52,37 @@ public class BinaryClassifierState extends BaseWekaState {
         assert testInstance != null;
         if (!isTrained()) throw new Exception(NOT_READY_TO_PREDICT);
 
-        Instances dataUnlabeled = new Instances("TestInstances", wekaAttributes, 0);
-        dataUnlabeled.setClassIndex(wekaAttributes.size() - 1);
-        dataUnlabeled.add(testInstance);
+        Instances datasetUnlabeled = new Instances("TestInstances", wekaAttributes, 0);
+        datasetUnlabeled.setClassIndex(wekaAttributes.size() - 1);
+        datasetUnlabeled.add(testInstance);
 
         synchronized (lock) {
-            return (int) classifier.classifyInstance(dataUnlabeled.firstInstance());
+            return (int) classifier.classifyInstance(datasetUnlabeled.firstInstance());
         }
     }
 
-    @Override
-    public synchronized void commit(final Long txId) {
-        // this is windowed learning.
-        Collection<double[]> groundValues = getFeatureVectorsInWindow().values();
-        try {
-            createDataSet();
-            for (double[] features : groundValues) {
-                Instance trainingInstance = new DenseInstance(wekaAttributes.size());
-                for (int i = 0; i < features.length && i < wekaAttributes.size(); i++)
-                    if (i != features.length - 1) trainingInstance.setValue(i , features[i]);
-                    else trainingInstance.setClassValue(String.valueOf(features[i]));
-                dataset.add(trainingInstance);
-            }
-            train();
-            postUpdate();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }finally {
-            dataset.clear();
-        }
-    }
+//    @Override
+//    public synchronized void commit(final Long txId) {
+//        // this is windowed learning.
+//        Collection<double[]> groundValues = getFeatureVectorsInWindow().values();
+//        try {
+//            createDataSet();
+//            for (double[] features : groundValues) {
+//                Instance trainingInstance = new DenseInstance(wekaAttributes.size());
+//                for (int i = 0; i < features.length && i < wekaAttributes.size(); i++)
+//                    if (i != features.length - 1) trainingInstance.setValue(i , features[i]);
+//                    else trainingInstance.setValue(i, String.valueOf(features[i]));
+//                dataset.add(trainingInstance);
+//            }
+//            train();
+//            postUpdate();
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }finally {
+//            dataset.clear();
+//        }
+//    }
 
     @Override
     protected void postUpdate() {
@@ -115,8 +114,7 @@ public class BinaryClassifierState extends BaseWekaState {
     @Override
     protected void loadWekaAttributes(double[] features) {
         if (this.wekaAttributes == null) {
-            this.wekaAttributes = WekaUtils.makeFeatureVectorForBatchClustering
-                    (features.length-1 /* don't count class attributes */, 2 /* binary classification */);
+            this.wekaAttributes = WekaUtils.makeFeatureVectorForBinaryClassification(features.length);
             this.wekaAttributes.trimToSize();
         }
     }
