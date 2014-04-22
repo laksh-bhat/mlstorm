@@ -38,7 +38,7 @@ import storm.trident.state.StateUpdater;
  */
 public class SvmTopology extends WekaBaseLearningTopology {
     public static void main(String[] args) throws AlreadyAliveException, InvalidTopologyException {
-        if (args.length < 5) {
+        if (args.length < 4) {
             System.err.println(" Where are all the arguments? -- use args -- file numWorkers windowSize parallelism");
             return;
         }
