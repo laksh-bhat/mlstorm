@@ -3,6 +3,7 @@ package bolt.ml.state.weka.classifier;
 import bolt.ml.state.weka.BaseWekaState;
 import bolt.ml.state.weka.utils.WekaUtils;
 import weka.classifiers.Classifier;
+import weka.core.DenseInstance;
 import weka.core.Instance;
 import weka.core.Instances;
 
@@ -61,28 +62,28 @@ public class BinaryClassifierState extends BaseWekaState {
         }
     }
 
-//    @Override
-//    public synchronized void commit(final Long txId) {
-//        // this is windowed learning.
-//        Collection<double[]> groundValues = getFeatureVectorsInWindow().values();
-//        try {
-//            createDataSet();
-//            for (double[] features : groundValues) {
-//                Instance trainingInstance = new DenseInstance(wekaAttributes.size());
-//                for (int i = 0; i < features.length && i < wekaAttributes.size(); i++)
-//                    if (i != features.length - 1) trainingInstance.setValue(i , features[i]);
-//                    else trainingInstance.setValue(i, String.valueOf(features[i]));
-//                dataset.add(trainingInstance);
-//            }
-//            train();
-//            postUpdate();
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }finally {
-//            dataset.clear();
-//        }
-//    }
+    @Override
+    public synchronized void commit(final Long txId) {
+        // this is windowed learning.
+        Collection<double[]> groundValues = getFeatureVectorsInWindow().values();
+        try {
+            createDataSet();
+            for (double[] features : groundValues) {
+                Instance trainingInstance = new DenseInstance(wekaAttributes.size());
+                for (int i = 0; i < features.length && i < wekaAttributes.size(); i++)
+                    if (i != features.length - 1) trainingInstance.setValue(i , features[i]);
+                    else trainingInstance.setValue(i, String.valueOf(features[i]));
+                dataset.add(trainingInstance);
+            }
+            train();
+            postUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            dataset.clear();
+        }
+    }
 
     @Override
     protected void postUpdate() {
