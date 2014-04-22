@@ -39,7 +39,7 @@ public class AustralianElectricityPricingTest {
             return;
         }
 
-        int correct = 0, total = 0;
+        double correct = 0, total = 0;
 
         final DRPCClient client = new DRPCClient(args[1], 3772, 1000000 /*timeout*/);
         for (Map.Entry<Double, double[]> features : generateHoldOutDataset(args[0])){
@@ -61,7 +61,7 @@ public class AustralianElectricityPricingTest {
             }
         }
 
-        System.err.println(correct/total * 1.0 + " percent correct");
+        System.err.println(correct/total + " percent correct");
         client.close();
     }
 
