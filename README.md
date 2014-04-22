@@ -83,9 +83,9 @@ In our framework, each window is supplied for training to a WEKA analysis algori
     
     To classify a test example, one can invoke a drpc query to query the meta learner (`SVM, by default`) state.
      
-      `java -cp .:`storm classpath`:$REPO/mlstorm/target/mlstorm-00.01-jar-with-dependencies.jar drpc.AustralianElectricityPricingQuery drpc-server-host-name ClassifierEnsemble`
+      `java -cp .:`storm classpath`:$REPO/mlstorm/target/mlstorm-00.01-jar-with-dependencies.jar drpc.AustralianElectricityPricingTest drpc-server-host-name ClassifierEnsemble`
       
-      `java -cp .:`storm classpath`:$REPO/mlstorm/target/mlstorm-00.01-jar-with-dependencies.jar drpc.AustralianElectricityPricingQuery drpc-server-host-name OnlineClassifierEnsemble`
+      `java -cp .:`storm classpath`:$REPO/mlstorm/target/mlstorm-00.01-jar-with-dependencies.jar drpc.AustralianElectricityPricingTest drpc-server-host-name OnlineClassifierEnsemble`
       
       
 4. Our implementation of `Kmeans clustering` allows querying different partitions (`each partition runs a separate k-means instance`). The result of such a query is a partitionId and the query result (for ex. the centroids of all the clusters or the distribution depicting the association of a test sample (feature vector) to the different clusters). Using the partion id returned and the usefulness of the results a human/machine can update the parameters of the model on the fly. The following is an example.
