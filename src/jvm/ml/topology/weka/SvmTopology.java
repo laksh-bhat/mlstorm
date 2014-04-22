@@ -3,8 +3,6 @@ package topology.weka;
 import backtype.storm.Config;
 import backtype.storm.LocalCluster;
 import backtype.storm.StormSubmitter;
-import backtype.storm.generated.AlreadyAliveException;
-import backtype.storm.generated.InvalidTopologyException;
 import backtype.storm.generated.StormTopology;
 import backtype.storm.topology.IRichSpout;
 import bolt.ml.state.weka.MlStormWekaState;
@@ -37,7 +35,7 @@ import storm.trident.state.StateUpdater;
  * limitations under the License.
  */
 public class SvmTopology extends WekaBaseLearningTopology {
-    public static void main(String[] args) throws AlreadyAliveException, InvalidTopologyException {
+    public static void main(String[] args) throws Exception {
         if (args.length < 4) {
             System.err.println(" Where are all the arguments? -- use args -- file numWorkers windowSize parallelism");
             return;
@@ -49,7 +47,8 @@ public class SvmTopology extends WekaBaseLearningTopology {
         int windowSize = Integer.valueOf(args[2]);
         int parallelism = Integer.valueOf(args[3]);
         StateUpdater stateUpdater = new BinaryClassifierStateUpdater();
-        StateFactory stateFactory = new BinaryClassifierFactory(WekaClassificationAlgorithms.svm.name(), windowSize, null);
+        StateFactory stateFactory = new BinaryClassifierFactory(WekaClassificationAlgorithms.svm.name(), windowSize, 
+                weka.core.Utils.splitOptions("-C 1.0 -L 0.0010 -P 1.0E-12 -N 0 -V -1 -W 1 -K \"weka.classifiers.functions.supportVector.PolyKernel -C 250007 -E 1.0\""));
         QueryFunction<MlStormWekaState, Integer> queryFunction = new BinaryClassifierQuery.SvmQuery();
         QueryFunction<KmeansClustererState, String> parameterUpdateFunction = null;
         IRichSpout features = new AustralianElectricityPricingSpout(args[0], fields);
