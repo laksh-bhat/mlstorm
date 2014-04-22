@@ -50,9 +50,11 @@ public class KMeansDrpcQuery {
 
         Scanner scanner = new Scanner(featureFiles.peek());
         int i = 0;
-        while (scanner.hasNextLine() && i++ < 1) {
+        while (scanner.hasNextLine() && i++ < 10) {
             List<Map<String, List<Double>>> dict = SpoutUtils.pythonDictToJava(scanner.nextLine());
             for (Map<String, List<Double>> map : dict) {
+                i ++;
+                
                 Double[] features = map.get("chi1").toArray(new Double[0]);
                 Double[] moreFeatures = map.get("chi2").toArray(new Double[0]);
                 Double[] rmsd = map.get("rmsd").toArray(new Double[0]);
@@ -78,9 +80,11 @@ public class KMeansDrpcQuery {
                     double[] rmsdKmeans = new double[centroids.size()];
 
                     for (int k = 0; k < centroids.size(); k++) {
+                        System.out.println("centroid        -- " + Arrays.toString(centroids.get(k)));
                         double[] centroid = centroids.get(k);
                         rmsdKmeans[k] = computeRootMeanSquare(centroid);
                     }
+
                     System.out.println("1 rmsd original -- " + Arrays.toString(rmsd));
                     System.out.println("2 rmsd k- Means -- " + Arrays.toString(rmsdKmeans));
                     System.out.println();

@@ -112,7 +112,7 @@
       <file leaf-file-name="KMeansDrpcQuery.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../src/jvm/ml/drpc/KMeansDrpcQuery.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="87" column="0" selection-start="4088" selection-end="4088" vertical-scroll-proportion="0.4972145" vertical-offset="948" max-vertical-offset="2368">
+            <state line="56" column="16" selection-start="2292" selection-end="2292" vertical-scroll-proportion="0.18384402" vertical-offset="708" max-vertical-offset="2428">
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1881#1889#0" expanded="true" />
@@ -1364,7 +1364,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../src/jvm/ml/drpc/KMeansDrpcQuery.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="87" column="0" selection-start="4088" selection-end="4088" vertical-scroll-proportion="0.4972145" vertical-offset="948" max-vertical-offset="2368">
+        <state line="56" column="16" selection-start="2292" selection-end="2292" vertical-scroll-proportion="0.18384402" vertical-offset="708" max-vertical-offset="2428">
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1881#1889#0" expanded="true" />
