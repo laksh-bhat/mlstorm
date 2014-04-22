@@ -50,8 +50,9 @@ public class AustralianElectricityPricingTest {
             for (Object obj : deserialized) {
                 // Storm always returns a list
                 List l = ((List) obj);
-                int yHat = (Integer) l.get(0);
-                if (yHat == label){
+                Double yHat = (Double) l.get(0);
+                int returnLabel = yHat.intValue();
+                if (returnLabel == label){
                     correct++;
                     System.out.println(Arrays.toString(fv) + "CORRECT");
                 } else System.out.println(Arrays.toString(fv) + "INCORRECT");
