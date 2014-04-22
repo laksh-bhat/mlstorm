@@ -54,7 +54,7 @@ public class KMeansDrpcQuery {
             List<Map<String, List<Double>>> dict = SpoutUtils.pythonDictToJava(scanner.nextLine());
             for (Map<String, List<Double>> map : dict) {
                 i ++;
-                
+
                 Double[] features = map.get("chi1").toArray(new Double[0]);
                 Double[] moreFeatures = map.get("chi2").toArray(new Double[0]);
                 Double[] rmsd = map.get("rmsd").toArray(new Double[0]);
