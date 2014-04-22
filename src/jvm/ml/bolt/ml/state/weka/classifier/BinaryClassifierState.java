@@ -70,10 +70,11 @@ public class BinaryClassifierState extends BaseWekaState {
             createDataSet();
             for (double[] features : groundValues) {
                 Instance trainingInstance = new DenseInstance(wekaAttributes.size());
-                for (int i = 0; i < features.length && i < wekaAttributes.size(); i++)
+                trainingInstance.setDataset(dataset);
+                for (int i = 0; i < features.length && i < wekaAttributes.size(); i++){
                     if (i != features.length - 1) trainingInstance.setValue(i , features[i]);
                     else trainingInstance.setValue(i, String.valueOf(features[i]));
-                dataset.add(trainingInstance);
+                }
             }
             train();
             postUpdate();
