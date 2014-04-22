@@ -56,8 +56,8 @@ public class AustralianElectricityPricingTest {
                 int returnLabel = yHat.intValue();
                 if (returnLabel == label){
                     correct++;
-                    System.out.println(Arrays.toString(fv) + "CORRECT");
-                } else System.out.println(Arrays.toString(fv) + "INCORRECT");
+                    System.out.println(Arrays.toString(fv) + label + "CORRECT");
+                } else System.out.println(Arrays.toString(fv) + label + "INCORRECT");
                 total++;
             }
         }
