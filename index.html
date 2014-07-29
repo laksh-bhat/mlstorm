@@ -1,91 +1,276 @@
 <!DOCTYPE html>
 <html>
-
   <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="Mlstorm : Machinelearning in storm" />
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
 
-    <title>Mlstorm</title>
+    <title>Mlstorm by LakkiB</title>
   </head>
 
   <body>
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/lbhat1/mlstorm">View on GitHub</a>
+    <header>
+      <div class="container">
+        <h1>Mlstorm</h1>
+        <h2>Machinelearning in storm</h2>
 
-          <h1 id="project_title">Mlstorm</h1>
-          <h2 id="project_tagline">Machinelearning in storm</h2>
+        <section id="downloads">
+          <a href="https://github.com/LakkiB/mlstorm/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/LakkiB/mlstorm/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/LakkiB/mlstorm" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
 
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/lbhat1/mlstorm/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/lbhat1/mlstorm/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
+    <div class="container">
+      <section id="main_content">
         <h1>
-<a name="mlstorm" class="anchor" href="#mlstorm"><span class="octicon octicon-link"></span></a>mlstorm</h1>
+<a name="mlstorm---machine-learning-in-storm-ecosystem" class="anchor" href="#mlstorm---machine-learning-in-storm-ecosystem"><span class="octicon octicon-link"></span></a>mlstorm - Machine Learning in Storm Ecosystem</h1>
+
+<p>Experimenting with online ensemble methods for collaborative learning and parallel streaming principal components analysis.</p>
 
 <h2>
-<a name="machine-learning-in-storm-experimenting-with-parallel-streaming-pca-and-ensemble-methods-for-collaborative-learning" class="anchor" href="#machine-learning-in-storm-experimenting-with-parallel-streaming-pca-and-ensemble-methods-for-collaborative-learning"><span class="octicon octicon-link"></span></a>Machine Learning in storm: Experimenting with parallel streaming PCA and Ensemble methods for collaborative learning.</h2>
+<a name="introduction" class="anchor" href="#introduction"><span class="octicon octicon-link"></span></a>Introduction</h2>
+
+<p>a. A basic description of Storm and its capabilities is available at <a href="http://storm.incubator.apache.org/">storm home page</a></p>
+
+<p>b. A detailed tutorial on how to install and run a multi-node storm cluster is available <a href="http://www.michael-noll.com/tutorials/running-multi-node-storm-cluster/">here</a></p>
+
+<p>c. This <a href="https://github.com/nathanmarz/storm/wiki/Lifecycle-of-a-topology">wiki page</a> helps you understand the lifecycle of a storm topology</p>
+
+<p>d. This <a href="https://github.com/nathanmarz/storm/wiki/Trident-API-Overview">wiki page</a> provides a detailed description of the API's used in this project.</p>
+
+<p>e. This <a href="https://github.com/nathanmarz/storm/wiki/Understanding-the-parallelism-of-a-Storm-topology">wiki page</a> should be useful to understand the parallelism of a storm topology.</p>
+
+<p>f. The common configurations and details of running Storm on a production cluster can be found in this <a href="https://github.com/nathanmarz/storm/wiki/Running-topologies-on-a-production-cluster">wiki page</a></p>
+
+<p>g. We have implemented spouts to stream BPTI features, sensor data etc. <code>spout.mddb.MddbFeatureExtractorSpout</code>, <code>spout.sensor.SensorStreamingSpout</code> and <code>spout.AustralianElectricityPricingSpout</code> are all NonTransactional spouts. A detailed description of Transactional, Non-Transactional and Opaque-Transactional spouts is available <a href="https://github.com/nathanmarz/storm/wiki/Trident-spouts">here</a></p>
+
+<p>h. The entire storm documentattion resides <a href="https://github.com/nathanmarz/storm/wiki/Documentation">here</a></p>
+
+<h2>
+<a name="a-general-framework-for-online-machine-learning-in-storm" class="anchor" href="#a-general-framework-for-online-machine-learning-in-storm"><span class="octicon octicon-link"></span></a>A General Framework for Online Machine Learning In Storm</h2>
+
+<p>Our framework integrates the Storm stream processing system with the ability to perform exploratory and confirmatory data analysis tasks through the WEKA toolkit. WEKA is a popular library for a range of data mining and machine learning algorithms implemented in the Java programming language. As such, it is straightforward to incorporate WEKA’s algorithms directly into Storm’s bolts (where bolts are the basic unit of processing in the Storm system). </p>
+
+<p>WEKA is designed as a general-purpose data mining and machine learning library, with its typical use-case in offline modes, where users have already collected and curated their dataset, and are now seeking to determine relationships in the dataset through analysis. To enable WEKA’s algorithms to be used in an online fashion, we decouple the continuous arrival of stream events from the execution of WEKA algorithms through window-based approaches. Our framework supplies window capturing facilities through Storm’s provision of stateful topology components, for example its State classes, persistentAggregate, and stateQuery topology construction methods to access and manipulate state. Our windows define the scope of the data on which we can evaluate WEKA algorithms. Furthermore, while we have implemented basic window sliding capabilities, one can arbitrarily manage the set of open windows in the system through Storm’s state operations. This allows us to dynamically select which windows we should consider for processing, beyond standard sliding mechanisms, for example disjoint windows or predicate-based windows that are defined by other events in the system.</p>
+
+<p>In our framework, each window is supplied for training to a WEKA analysis algorithm. Once training completes, the resulting model can be used to predict or classify future stream events arriving to the system. Below, we present our framework as used with the k-means clustering and principal components analysis algorithms. Our current focus is to support the scalable exploration, training and validation performed by multiple algorithms simultaneously in the Storm system, as is commonly needed when the class of algorithms that ideally models a particular dataset is not known up front, and must be determined through experimentation. For example, with our framework, we can run multiple k-means clustering algorithms in Storm, each configured with a different parameter value for k. Thus in many application scenarios where k is not known a priori, we can discover k through experimentation. Our framework leverages Storm’s abilities to distribute its program topology across multiple machines for scalable execution of analysis algorithms, as well as its fault-tolerance features. </p>
+
+<hr><h3>
+<a name="implementation-details" class="anchor" href="#implementation-details"><span class="octicon octicon-link"></span></a>Implementation Details</h3>
+
+<hr><ol>
+<li><p>All the learning algorithms are implemented in <code>Trident</code> and use external <code>EJML (Efficient Java Matrix Library)</code> and <code>Weka (Weka Machine Learning Toolkit)</code> libraries. All these libraries reside in the /lib directory in the project home directory. Look at <code>m2-pom.xml</code> to get an idea about the project dependencies.</p></li>
+<li><p>The consensus clustering algorithm (<code>topology.weka.EnsembleClusteringTopology</code>) uses 2-level (shallow!) deep-learning technique. We experimented with relabelling and majority voting based schemes. However, since the clustering algorithm is quadratic and the hungarian algorithm (used for relabeling) is cubic in the size of the window, we were unable to keep up with a BPTI protein data stream (thus ran into storm timeouts). Interested readers are encouraged to look at <code>Vega-Pons &amp; Ruiz-Shulcloper, 2011 (A Survey of Clustering Ensemble Algorithms) and Wei-Hao Lin, Alexander Hauptmann, 2003 (Meta-classification: Combining Multimodal Classifiers)</code> for detailed explanation of the techniques.</p></li>
+</ol><hr><h3>
+<a name="experiments" class="anchor" href="#experiments"><span class="octicon octicon-link"></span></a>Experiments</h3>
+
+<hr><ol>
+<li>
+<p>Our implementation of consensus clustering uses the MddbFeatureExtractorSpout to inject feature vectors. All the base clusterers we use implement <a href="http://weka.sourceforge.net/doc.dev/weka/clusterers/Clusterer.html">weka.clustereres interface</a>. The ensemble consists of <code>SimpleKMeans, DensityBasedClusterer, FarthestFirst, HierarchicalClusterer, EM and FilteredClusterer (with underlying algorithm being SimpleKMeans)</code>. The meta-clustering algorithm is density based. If you want modify/replace these algorithms, you may do so by updating the Enum class - bolt.ml.state.weka.utils.WekaClusterers and the factory methods in bolt.ml.state.weka.utils.WekaUtils. We use default parameters for individual clusterers but you may inject the appropriate options that can be handled by weka OptionHandler. For example, you can find all the available options for <a href="http://weka.sourceforge.net/doc.dev/weka/clusterers/SimpleKMeans.html">SimpleKMeans</a>, which could be specified as a Java String[]. <code>If the options are incorrect, we throw a RuntimeException wrapping the actual exception thrown by Weka.</code></p>
+
+<p>a. To submit the topology one can fire away the following command.</p>
+
+<pre><code>storm jar $REPO/mlstorm/target/mlstorm-00.01-jar-with-dependencies.jar topology.weka.EnsembleClustererTopology /damsl/projects/bpti_db/features 4 1000 5 1
+</code></pre>
+
+<p>The arguments to the topology are described below</p>
 
 <ol>
-<li><p>The PCA and Clustering algorithm implementations are window based. There's also an online/incremental PCA implementation available for experimentation.</p></li>
-<li><p>All the learning algorithms are implemented in Trident and use external EJML and Weka libraries.</p></li>
-<li><p>The consensus clustering algorithms (EnsembleClusteringTopology.java) use 2-level (shallow!) deep-learning technique. I experimented with relabelling and majority voting based scheme without decent result on a stream. Interested readers are encouraged to look at Vega-Pons &amp; Ruiz-Shulcloper, 2011 for detailed explanation of the techniques.  </p></li>
-<li><p>There are also an implementation of EnsembleBinaryClassifierTopology and it's online counterpart in OnlineEnsembleBinaryClassifierTopology.java. All the base algorithms are run in parallel with intelligent reduction (aggregation) into meta-classifier inputs. </p></li>
-<li><p>The Kmeans clustering implementation allows querying different partitions. The result of such a query is a partitionId and the query result. Using the partion id returned and the usefulness of the results a human/machine can update the parameters of the model on the fly. The following is an example.</p></li>
-</ol><h1></h1>
+<li>
+<code>directory - The folder containing containing feature vectors</code> (We use BPTI dataset for our experiments. The spout  implementation - spout.mddb.MddbFeatureExtractorSpout - is responsible to feed the topology with the feature vectors. Look at <code>res/features_o.txt</code> for an example dataset. If you want access to the bpti dataset, contact <a href="mailto:lbhat1@jhu.edu">lbhat1@jhu.edu</a> or <a href="mailto:yanif@jhu.edu">yanif@jhu.edu</a>)</li>
+<li><code>no of workers - total no. of nodes to run the topology on.</code></li>
+<li><code>window-size - The total number of training examples in the sliding window</code></li>
+<li>
+<code>k - the number of clusters</code>. This <code>k</code> is consistent across all the partitions including the meta-classifier/clusterer. This is a critical requirement for consensus clustering to be successful.</li>
+<li><code>parallelism - the number of threads per bolt</code></li>
+</ol>
+<p>b. To predict the most likely cluster for a test sample, one can invoke a drpc query to query the meta learner state.</p>
 
-<pre><code>   a. The topology is run as usual.
-
-     storm jar /damsl/software/storm/code/mlstorm/target/mlstorm-00.01-jar-with-dependencies.jar topology.weka.KmeansClusteringTopology /damsl/projects/bpti_db/features&lt;directory containing feature vectors&gt; 4&lt;no of workers&gt; 10000 10&lt;k&gt; 10&lt;parallelism&gt;
+<pre><code>java -cp .:`storm classpath`:$REPO/mlstorm/target/mlstorm-00.01-jar-with-dependencies.jar drpc.BptiEnsembleQuery        drpc-server-host ClustererEnsemble
 </code></pre>
 
-<h1></h1>
+<h4>
+<a name="important-notes" class="anchor" href="#important-notes"><span class="octicon octicon-link"></span></a>Important Notes</h4>
 
-<pre><code>   b. A distributed query (querying for parameters/model statistics) on the model can be executed like the following.
-     java -cp .: (output of "storm classpath" command) : $REPO/mlstorm/target/mlstorm-00.01-jar-with-dependencies.jar drpc.DrpcQueryRunner qp-hd3 kmeans "no args" *-- This returns the centroids of all the clusters for a given K --*
+<hr>
+<ul>
+<li>Note that the second argument to the DRPC query specifies the drpc function to invoke. These names are hard-coded in our Java files (<code>topology.weka.EnsembleClassifierTopology.java</code> and so on.)</li>
+<li>All the configuration parameters including the <code>list of drpc servers</code>, <code>number of workers</code>, <code>max spout pending (described below)</code> are hard-coded in the Topology source files. Any change to these will require a code recompile.</li>
+</ul>
+<h4>
+<a name="how-to-compile" class="anchor" href="#how-to-compile"><span class="octicon octicon-link"></span></a>How to compile?</h4>
+
+<hr>
+<ul>
+<li>Go to the project home directory</li>
+<li>fire away the command <code>mvn -f m2-pom.xml package</code> (Assuming that you have maven installed!)</li>
+<li>this builds the <code>mlstorm-00.01-jar-with-dependencies.jar</code> in the <code>$REPO/mlstorm/target</code> directory.</li>
+</ul>
+</li>
+<li>
+<p>There is also an implementation of an ensemble of binary classifiers (<code>topology.weka.EnsembleBinaryClassifierTopology</code>) and it's online counterpart (<code>topology.weka.OnlineEnsembleBinaryClassifierTopology</code>). All the base/weak learning algorithms are run in parallel with their continuous predictions reduced into (a ReducerAggregator aggregating a grouped stream) a meta-classifier training sample labelled using the original dataset. We use <code>linear SVM</code> as our meta classifier and a bunch of weak learners including <code>pruned decision trees, perceptron, svm, decision stubs</code> etc.</p>
+
+<p>You may submit the topologies for execution using the following command</p>
+
+<p><code>storm jar $REPO/mlstorm/target/mlstorm-00.01-jar-with-dependencies.jar topology.weka.EnsembleClassifierTopology $REPO/mlstorm/res/elecNormNew.arff 1 1000 5 1</code></p>
+
+<p><code>storm jar $REPO/mlstorm/target/mlstorm-00.01-jar-with-dependencies.jar topology.weka.OnlineEnsembleClassifierTopology $REPO/mlstorm/res/elecNormNew.arff 1 1000 5 1</code></p>
+
+<p>To classify a test example, one can invoke a drpc query to query the meta learner (<code>SVM, by default</code>) state.</p>
+
+<p><code>java -cp .:</code>storm classpath<code>:$REPO/mlstorm/target/mlstorm-00.01-jar-with-dependencies.jar drpc.AustralianElectricityPricingTest drpc-server-host-name ClassifierEnsemble</code></p>
+
+<p><code>java -cp .:</code>storm classpath<code>:$REPO/mlstorm/target/mlstorm-00.01-jar-with-dependencies.jar drpc.AustralianElectricityPricingTest drpc-server-host-name OnlineClassifierEnsemble</code></p>
+</li>
+<li>
+<p>Our implementation of <code>Kmeans clustering</code> allows querying different partitions (<code>each partition runs a separate k-means instance</code>). The result of such a query is a partitionId and the query result (for ex. the centroids of all the clusters or the distribution depicting the association of a test sample (feature vector) to the different clusters). Using the partion id returned and the usefulness of the results a human/machine can update the parameters of the model on the fly. The following is an example.</p>
+
+<p>a.  Submit/Start the topology as usual.</p>
+
+<pre><code>storm jar $REPO/mlstorm/target/mlstorm-00.01-jar-with-dependencies.jar topology.weka.KmeansClusteringTopology /damsl/projects/bpti_db/features 4 10000 10 10
 </code></pre>
 
-<h1></h1>
+<p>The arguments to the topology are described below:</p>
 
-<pre><code>   c. An update could be made like the following.
+<ol>
+<li><code>directory -- The folder containing containing feature vectors</code></li>
+<li><code>no of workers -- total no. of nodes to run the topology on.</code></li>
+<li>
+<code>k -- the number of clusters</code>.</li>
+<li><code>parallelism -- the number of threads per bolt</code></li>
+</ol>
+<p>b. A distributed query (<code>querying for parameters/model statistics</code>) on the model can be executed as below. This query returns the centroids of all the clusters for a given instance of clustering algorithm.</p>
 
- Run/&gt; java -cp .:`storm classpath`:$REPO/mlstorm/target/mlstorm-00.01-jar-with-dependencies.jar 
- drpc.DrpcQueryRunner qp-hd3 kUpdate 0,45
-
- Description/&gt; In (c) we are updating the parameters of the said algorithm (K-means clustering)
- on the fly using DRPC. We started the topology with 10 partitions and (c) is updating the Clusterer
- at partition '0' to [k=45]. 
-
-     Result/&gt; &lt;[["0,35","k update request (30-&gt;35) received at [0]; average trainingtime for 
-     k = [30] = [334,809]ms"]]&gt;
-
-   The classpath above is returned by the "storm classpath" command.
+<pre><code>java -cp .: `storm classpath` : $REPO/mlstorm/target/mlstorm-00.01-jar-with-dependencies.jar drpc.DrpcQueryRunner qp-hd3 kmeans "no args" 
 </code></pre>
 
-<h1></h1>
+<p>c. A parameter update (<code>k for k-means</code>) can be made using the following DRPC query. Here we are updating the parameters of the said algorithm (K-means clustering) on the fly using DRPC. We started the topology with 10 partitions and (c) is updating the Clusterer at partition '0' to [<code>k=45</code>]. </p>
+
+<pre><code>java -cp .:`storm classpath`:$REPO/mlstorm/target/mlstorm-00.01-jar-with-dependencies.jar  drpc.DrpcQueryRunner qp-hd3 kUpdate 0,45 
+</code></pre>
+
+<p>The result of the above query looks like the following:</p>
+
+<pre><code>&lt;[["0,35","k update request (30-&gt;35) received at [0]; average trainingtime for k = [30] = [334,809]ms"]]&gt;
+</code></pre>
+</li>
+<li><p>The PCA and Clustering algorithm implementations are window based. There's also an online/incremental clustering (<code>Cobweb</code>) and PCA implementation available for experimentation.</p></li>
+</ol><hr><h3>
+<a name="storm-experience-report" class="anchor" href="#storm-experience-report"><span class="octicon octicon-link"></span></a>Storm Experience Report</h3>
+
+<hr><p>Storm is an open-source system that was initially developed by BackType before its acquisition by Twitter, Inc. The documentation and support for Storm primarily arises from the open-source user community that continues to develop its capabilities through the github project repository. Storm has been incubated as an Apache project as of September 2013. In this section we provide an initial report on our experiences in developing with the Storm framework, particularly as we deploy it onto a cluster environment and develop online learning and event detection algorithms.</p>
+
+<h5>
+<a name="notes-useful-for-debugging" class="anchor" href="#notes-useful-for-debugging"><span class="octicon octicon-link"></span></a>Notes useful for Debugging</h5>
+
+<hr><h5>
+<a name="storm-components" class="anchor" href="#storm-components"><span class="octicon octicon-link"></span></a>Storm Components</h5>
+
+<hr><h6>
+<a name="supervisor" class="anchor" href="#supervisor"><span class="octicon octicon-link"></span></a>supervisor</h6>
+
+<ul>
+<li>JVM process launched on each storm worker machine. This does not execute your code — just supervises it.</li>
+<li>number of workers is set by number of <code>supervisor.slots.ports</code> on each machine.</li>
+</ul><h6>
+<a name="worker" class="anchor" href="#worker"><span class="octicon octicon-link"></span></a>worker</h6>
+
+<ul>
+<li>jvm process launched by the supervisor</li>
+<li>intra-worker transport is more efficient, so we run one worker per topology per machine</li>
+<li>if worker dies, supervisor will restart. But worker dies for any minor failure (<code>fail fast</code>)</li>
+</ul><h6>
+<a name="coordinator" class="anchor" href="#coordinator"><span class="octicon octicon-link"></span></a>Coordinator</h6>
+
+<ul>
+<li>generates new transaction ID</li>
+<li>sends tuple, which influences spout to dispatch a new batch</li>
+<li>each transaction ID corresponds identically to single trident batch and vice-versa</li>
+<li>Transaction IDs for a given <code>topo_launch</code> are serially incremented globally.</li>
+<li>knows about Zookeeper/transactional; so it recovers the transaction ID.</li>
+</ul><h6>
+<a name="executor" class="anchor" href="#executor"><span class="octicon octicon-link"></span></a>Executor</h6>
+
+<ul>
+<li>Each executor is responsible for one bolt or spout.</li>
+<li>therefore with 3 sensor/MDDB spouts on a worker, there are three executors spouting.</li>
+</ul><h6>
+<a name="hard-to-debug-mistakes" class="anchor" href="#hard-to-debug-mistakes"><span class="octicon octicon-link"></span></a>Hard to Debug Mistakes</h6>
+
+<ul>
+<li>A spout must never block when emitting — if it blocks, critical bookkeeping tuples will get trapped, and the topology hangs. So its emitter keeps an <code>overflow buffer</code>, and publishes as follows:
+
+<ul>
+<li>if there are tuples in the overflow buffer add the tuple to it — the queue is certainly full.</li>
+<li>otherwise, publish the tuple to the flow with the non-blocking call. That call will either succeed immediately
+or fail with an <code>InsufficientCapacityException</code>, in which case add the tuple to the overflow buffer.</li>
+<li>The spout’s async-loop won’t call nextTuple if overflow is present, so the overflow buffer only has to accommodate the maximum number of tuples emitted in a single nextTuple call.</li>
+</ul>
+</li>
+</ul><hr><h5>
+<a name="acking" class="anchor" href="#acking"><span class="octicon octicon-link"></span></a>Acking</h5>
+
+<hr><ul>
+<li>Acker is just a regular bolt — all the interesting action takes place in its execute method.</li>
+<li>set number of ackers equal to number of workers. (<code>default is 1 per topology</code>)</li>
+<li>The Acker holds a single <code>O(1)</code> lookup table</li>
+<li>it is actually a collection of lookup tables: current, old and dead. new tuple trees are added to the current bucket; after every timeout number of seconds, current becomes old, and old becomes dead — they are declared failed and their records retried.</li>
+<li>it knows <code>id == tuple[0]</code> the tuple’s stream-id</li>
+<li>there is a time-expiring data structure, the RotatingHashMap</li>
+<li>when you go to update or add to it, it performs the operation on the right component of HashMap.</li>
+<li>periodically (<code>when you receive a tick tuple in Storm8.2+</code>), it will pull off oldest component HashMap, mark it as dead; invoke the expire callback for each element in that HashMap.</li>
+</ul><hr><h5>
+<a name="throttling" class="anchor" href="#throttling"><span class="octicon octicon-link"></span></a>Throttling</h5>
+
+<hr><ul>
+<li>Max spout pending (<code>TOPOLOGY_MAX_SPOUT_PENDING</code>) sets the number of tuple trees live in the system at any point in time.</li>
+<li>Trident batch emit interval (topology.trident.batch.emit.interval.millis) sets the maximum pace at which the trident master batch co-ordinator issues new seed tuples. If batch delay is 500ms and the most recent batch was released 486ms, the spout coordinator will wait 14ms before dispensing a new seed tuple. If the next pending entry isn’t cleared for 523ms, it will be dispensed immediately.</li>
+<li>Trident batch emit interval  is extremely useful to prevent congestion, especially around startup/rebalance. </li>
+<li>As opposed to a traditional Storm spout, a Trident spout will likely dispatch hundreds of records with each batch. If max-pending is 20, and the spout releases <code>500 records per batch</code>, the spout will try to cram <code>10,000</code> records into its send queue.</li>
+</ul><hr><h5>
+<a name="batch-size" class="anchor" href="#batch-size"><span class="octicon octicon-link"></span></a>Batch Size</h5>
+
+<hr><ul>
+<li>Set the batch size to <code>optimize the throughput of the most expensive batch operation</code> — a bulk database operation, network request, or large aggregation.</li>
+<li>When the batch size is too small, bookkeeping dominates response time i.e <code>response time is constant</code>
+</li>
+<li>Execution times increase slowly and we get better and better records-per-second throughput with increase in batch size.</li>
+<li>at some point, we start overwhelming some resource and execution time increases sharply (usually due to network failures and replays in our case)</li>
+</ul><hr><h2>
+<a name="consensus-clustering" class="anchor" href="#consensus-clustering"><span class="octicon octicon-link"></span></a>Consensus Clustering</h2>
+
+<hr><p>Consensus clustering, also known as cluster ensemble, aims to find a single partitioning of data from multiple existing basic partitionings <code>[Monti et al., 2003; Zhang et al., 2010]</code>. It has been recognized that consensus clustering helps to generate robust partitionings, find bizarre clusters, handle noise and outliers, and integrate solutions from multiple distributed sources. The main motivation for Consensus clustering is the need to assess the “stability” of the discovered clusters, that is, the robustness of the putative clusters to sampling variability. The basic assumption of this method is intuitively simple: if the data represent a sample of items drawn from distinct sub-populations, and if we were to observe a different samples drawn from the same sub-populations, the induced cluster composition and number should not be radically different. Therefore, the more the attained clusters are robust to sampling variability, the more we can be conﬁdent that these clusters represent real structure. </p>
+
+<p>However, theoretically, Consensus clustering is NP-complete <code>[Filkov and Steven, 2004a; Topchy et al., 2005]</code>. In the literature, many algorithms have been proposed to address the computational challenges, among which a K-means-based method proposed in <code>[Topchy et al., 2003]</code> attracts great interests. </p>
+
+<hr><h4>
+<a name="background" class="anchor" href="#background"><span class="octicon octicon-link"></span></a>Background</h4>
+
+<hr><p>Consensus clustering (CC) is essentially a combinatorial optimization problem. The existing literature can be roughly divided into two categories: CC with implicit objectives (CCIO) and CC with explicit objectives (CCEO).</p>
+
+<p>Methods in CCIO do not set global objective functions. Rather, they directly adopt some heuristics to find approximate solutions. The representative methods include the graph-based algorithms <code>[Strehl and Ghosh, 2002; Fern and Brodley, 2004]</code>, the co-association matrix based methods <code>[Fred and Jain, 2005; Wang et al., 2009]</code> and Relabeling &amp; Voting based methods <code>[Fischer and Buhmann, 2003; Ayad and Kamel, 2008]</code>.</p>
+
+<p>Methods in CCEO have explicit global objective functions for consensus clustering. The Median Partition problem based on Mirkin distance is among the oldest ones <code>[Filkov and Steven, 2004b; Gionis et al., 2007]</code>. In the inspiring work, <code>[Topchy et al., 2003]</code> proposed a Quadratic Mutual Information based objective function and used K-means clustering to find the solution. This elegant idea could be traced back to the work by Mirkin on the Category Utility Function <code>[Mirkin, 2001]</code>. Other solutions for different objective functions include EM algorithm [Topchy et al., 2004], non - negative matrix factorization <code>[Li et al., 2007]</code>, kernel-based methods <code>[Vega-Pons et al., 2010]</code>, simulated annealing <code>[Lu et al., 2008]</code>, and among others.</p>
+
+<p>In general, compared with CCIO methods, CCEO methods might offer better interpretability and higher robustness to clustering results, via the guidance of objective functions. However, they often bear high computational costs. Moreover, one CCEO method typically works for one objective function, which seriously limits its applicative scope.</p>
+
+<p>We attempt to build a general framework using meta-clustering for efficient density based consensus clustering using multiple base utility functions. The base functions use k-means as the underlying algorithm and apply various density manipulation and attribute filtering techniques to them. Thus each base function is parameterized differently.</p>
+
+<hr><h4>
+<a name="the-hungarian-algorithm-and-cluster-relabeling" class="anchor" href="#the-hungarian-algorithm-and-cluster-relabeling"><span class="octicon octicon-link"></span></a>The Hungarian Algorithm and Cluster Relabeling</h4>
+
+<hr><p>The Hungarian algorithm is used to solve the assignment problem. An instance of the assignment problem consists of a number of workers along with a number of jobs and a cost matrix which gives the cost of assigning the i'th worker to the j'th job at position (i, j). The goal is to find an assignment of workers to jobs so that no job is assigned more than one worker and so that no worker is assigned to more than one job in such a manner so as to minimize the total cost of completing the jobs. An assignment for a cost matrix that has more workers than jobs will necessarily include unassigned workers, indicated by an assignment value of -1; in no other circumstance will there be unassigned workers. Similarly, an assignment for a cost matrix that has more jobs than workers will necessarily include unassigned jobs; in no other circumstance will there be unassigned jobs. The Hungarian algorithm runs in time O(n^3), where n is the maximum among the number of workers and the number of jobs.</p>
+
+<p>The voting approach to consensus clustering attempts to solve the cluster correspondence problem. A simple voting produce can be used to assign objects in clusters to determine the final consensus partition. However, label correspondence is exactly what makes unsupervised combination difficult. The main idea behind this scheme is to permute the cluster labels such that best agreement between the labels of two partitions is obtained. All the partitions from the ensemble must be relabeled according to a fixed <code>reference partition</code>. The reference partition can be taken as one from the ensemble, or from a new clustering of the dataset. Also, a meaningful voting procedure assumes that the <code>number of clusters</code> in every given partition is the same as in the <code>target partition</code>. This requires that the number of clusters in the target consensus partition is known. <code>The complexity of this process is k! , which can be reduced to O(k^3) if the Hungarian method is employed</code> for the minimal weight bipartite matching problem.</p>
       </section>
     </div>
 
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Mlstorm maintained by <a href="https://github.com/lbhat1">lbhat1</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
-
     
-
   </body>
 </html>
