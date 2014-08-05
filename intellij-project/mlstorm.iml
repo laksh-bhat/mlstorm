@@ -3,7 +3,8 @@
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_6" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$/../src">
-      <sourceFolder url="file://$MODULE_DIR$/../src/jvm/ml" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../src/com.mlstorm.jvm/batch.ml" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../src/com.mlstorm.jvm/streaming" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
