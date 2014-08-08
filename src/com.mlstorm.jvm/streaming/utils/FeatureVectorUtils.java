@@ -1,7 +1,10 @@
 package utils;
 
+import backtype.storm.tuple.Values;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
+import storm.trident.tuple.TridentTuple;
+import utils.fields.FieldTemplate;
 import weka.core.DenseInstance;
 
 import java.io.*;
@@ -24,7 +27,19 @@ import java.io.*;
  * limitations under the License.
  */
 public class FeatureVectorUtils {
-    public static weka.core.Instance buildInstance(double[] featureVector) {
+
+    public static Values buildMlStormFeatureVector(Object key, double[] value){
+        return new Values(key, value);
+    }
+
+    public static Pair<Object, double[]> getKeyValuePairFromMlStormFeatureVector(FieldTemplate template, TridentTuple tuple){
+        if (!(tuple.getValueByField(template.getFeatureVectorField()) instanceof double[])){
+            throw new IllegalStateException("Malformed feature vector");
+        }
+        return new Pair<Object, double[]>(tuple.getValueByField(template.getKeyField()), (double[]) tuple.getValueByField(template.getFeatureVectorField()));
+    }
+
+    public static weka.core.Instance buildWekaInstance(double[] featureVector) {
         weka.core.Instance instance = new DenseInstance(featureVector.length);
         for (int i = 0; i < featureVector.length; i++) {
             instance.setValue(i, featureVector[i]);

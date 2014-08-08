@@ -7,11 +7,13 @@ import java.text.MessageFormat;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by lbhat@DaMSl on 1/9/14.
  * <p/>
- * Copyright {2013} {Lakshmisha Bhat}
+ * Copyright {2013 - 2015} {Lakshmisha Bhat}
  * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,8 +42,8 @@ public class WindowedStormPca extends PrincipalComponentsBase {
     private void addSamplesInWindowToMatrix(final Set<String> sensorNames, final int numColumns) {
         for (String sensorName : sensorNames) {
             int columnIndex = 0;
-            double[] row = new double[numColumns];
-            Iterator<Map<String, Double>> valuesIterator = windowTimesteps.values().iterator();
+            final double[] row = new double[numColumns];
+            final Iterator<Map<String, Double>> valuesIterator = windowTimesteps.values().iterator();
             while (valuesIterator.hasNext() && columnIndex < numColumns) {
                 final Map<String, Double> timeStep = valuesIterator.next();
                 row[columnIndex++] = timeStep.containsKey(sensorName) ? timeStep.get(sensorName) : 0.0;
@@ -68,6 +70,7 @@ public class WindowedStormPca extends PrincipalComponentsBase {
      */
     @Override
     public void beginCommit(final Long txid) {
+        Logger.getAnonymousLogger().log(Level.INFO, "PCA training starts now.");
     }
 
     /**
@@ -77,13 +80,13 @@ public class WindowedStormPca extends PrincipalComponentsBase {
      */
     @Override
     public synchronized void commit(final Long txId) {
-        System.err.println("DEBUG: Commit called for transaction " + txId);
+        Logger.getAnonymousLogger().log(Level.INFO, MessageFormat.format("Commit called for transaction {0}", txId));
 
         final Set<String> sensorNames = this.sensorDictionary.keySet();
         final int numRows = this.sensorDictionary.size();
         final int numColumns = this.windowSize;
 
-        System.err.println(MessageFormat.format("DEBUG: matrix has {0} rows and {1} columns", numRows, numColumns));
+        Logger.getAnonymousLogger().log(Level.INFO, MessageFormat.format("matrix has {0} rows and {1} columns", numRows, numColumns));
 
         if (currentSensors.size() > numRows / 2 + 10 /*we expect 50% + 10 success rate*/) {
             windowTimesteps.put(txId, getCurrentSensorsAndReset(true));

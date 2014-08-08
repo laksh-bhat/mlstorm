@@ -5,6 +5,9 @@ import storm.trident.operation.TridentCollector;
 import storm.trident.operation.TridentOperationContext;
 import storm.trident.state.StateUpdater;
 import storm.trident.tuple.TridentTuple;
+import utils.FeatureVectorUtils;
+import utils.Pair;
+import utils.fields.FieldTemplate;
 
 import java.util.List;
 import java.util.Map;
@@ -16,30 +19,33 @@ import java.util.Map;
  */
 
 public class PrincipalComponentUpdater implements StateUpdater<PrincipalComponentsBase> {
+    private final FieldTemplate template    ;
     int localPartition, numPartitions;
 
+    public PrincipalComponentUpdater(FieldTemplate template){
+        this.template = template;
+    }
     @Override
     public void updateState(final PrincipalComponentsBase state,
                             final List<TridentTuple> tuples,
                             final TridentCollector collector) {
         for (TridentTuple tuple : tuples) {
-            String sensor = tuple.getStringByField("sensor");
-            Double data = (Double) tuple.getValueByField("sensorData");
-            //System.err.println(MessageFormat.format("DEBUG: Updating state: sensor name is {0} and temperature is {1}", sensor, data));
-            Map<String, Double> sensors = state.getCurrentSensors();
-
+            final Pair<Object, double[]> pair = FeatureVectorUtils.getKeyValuePairFromMlStormFeatureVector(template, tuple);
+            final String sensor = (String) pair.getKey();
+            final double temperature = pair.getValue()[0];
+            final Map<String, Double> sensors = state.getCurrentSensors();
             if (sensors.containsKey(sensor)) {
-                Double existingValue = sensors.get(sensor);
-                sensors.put(sensor, (existingValue + data) / 2.0);
+                double existingValue = sensors.get(sensor);
+                sensors.put(sensor, (existingValue + temperature) / 2.0);
             } else {
-                sensors.put(sensor, data);
+                sensors.put(sensor, temperature);
             }
         }
     }
 
     @Override
     public void prepare(final Map conf, final TridentOperationContext context) {
-        localPartition = context.getPartitionIndex();
+        localPartition = context.getPartitionIndex() + 1;
         numPartitions = context.numPartitions();
     }
 

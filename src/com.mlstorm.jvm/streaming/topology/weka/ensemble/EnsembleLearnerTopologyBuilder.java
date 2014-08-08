@@ -3,7 +3,7 @@ package topology.weka.ensemble;
 import backtype.storm.generated.StormTopology;
 import backtype.storm.topology.IRichSpout;
 import backtype.storm.tuple.Fields;
-import spout.MlStormSpout;
+import spout.ml.MlStormSpout;
 import storm.trident.Stream;
 import storm.trident.TridentState;
 import storm.trident.TridentTopology;

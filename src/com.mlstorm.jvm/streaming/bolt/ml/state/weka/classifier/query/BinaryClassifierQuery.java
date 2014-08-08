@@ -21,7 +21,21 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/* license text */
+ /*
+ * Copyright 2013-2015 Lakshmisha Bhat
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * 		http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 public class BinaryClassifierQuery implements QueryFunction<MlStormWekaState, Map.Entry<Integer, double[]>> {
     private int localPartition, numPartitions;
 
@@ -42,7 +56,7 @@ public class BinaryClassifierQuery implements QueryFunction<MlStormWekaState, Ma
                 }
 
                 try {
-                    Instance testInstance = FeatureVectorUtils.buildInstance(fv);
+                    Instance testInstance = FeatureVectorUtils.buildWekaInstance(fv);
                     double[] distribution = null;
                     double result = clustererState.predict(testInstance);
                     queryResults.add(new Pair<Double, double[]>(result, distribution));
@@ -104,7 +118,7 @@ public class BinaryClassifierQuery implements QueryFunction<MlStormWekaState, Ma
             List<Integer> queryResults = new ArrayList<Integer>();
             for (TridentTuple queryTuple : queryTuples) {
                 double[] fv = getFeatureVectorFromArgs(queryTuple);
-                final Instance instance = FeatureVectorUtils.buildInstance(fv);
+                final Instance instance = FeatureVectorUtils.buildWekaInstance(fv);
                 try {
                     final int classification = (int) binaryClassifierState.predict(instance);
                     queryResults.add(classification);
@@ -152,7 +166,7 @@ public class BinaryClassifierQuery implements QueryFunction<MlStormWekaState, Ma
         List<Map.Entry<Integer, double[]>> queryResults = new ArrayList<Map.Entry<Integer, double[]>>();
         for (TridentTuple queryTuple : queryTuples) {
             double[] fv = getFeatureVectorFromArgs(queryTuple);
-            final Instance instance = FeatureVectorUtils.buildInstance(fv);
+            final Instance instance = FeatureVectorUtils.buildWekaInstance(fv);
             try {
                 final int classification = (int) binaryClassifierState.predict(instance);
                 final double[] distribution = null;
