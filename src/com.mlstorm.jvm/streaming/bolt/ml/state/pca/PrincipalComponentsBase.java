@@ -9,11 +9,12 @@ import org.ejml.ops.SingularOps;
 import spout.utils.MsSqlServerSensorDbUtils;
 import storm.trident.state.State;
 
-import java.sql.SQLException;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentSkipListMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
  /*
  * Copyright 2013-2015 Lakshmisha Bhat
@@ -57,7 +58,7 @@ public abstract class PrincipalComponentsBase implements State {
     public PrincipalComponentsBase(final int elementsInSample,
                                    int numPrincipalComponents,
                                    int localPartition,
-                                   int numPartitions) throws SQLException {
+                                   int numPartitions) throws Exception {
         this.localPartition = localPartition;
         this.numPartition = numPartitions;
         this.windowSize = elementsInSample;
@@ -119,8 +120,7 @@ public abstract class PrincipalComponentsBase implements State {
      *                      smaller than the number of elements in the input vector.
      */
     public void computeBasis(int numComponents) {
-
-        System.out.println("DEBUG: Compute basis to get principal components. ");
+        Logger.getAnonymousLogger().log(Level.INFO, "Compute basis to get principal components.");
 
         if (numComponents > A.getNumCols()) {
             throw new IllegalArgumentException("More components requested that the data's length.");
@@ -156,11 +156,11 @@ public abstract class PrincipalComponentsBase implements State {
         SingularValueDecomposition<DenseMatrix64F> svd =
                 DecompositionFactory.svd(A.numRows, A.numCols, false, true, false);
         if (!svd.decompose(A)) {
-            throw new RuntimeException("SVD failed");
+            throw new IllegalStateException("SVD failure.");
         }
 
         V_t = svd.getV(null, true);
-        DenseMatrix64F W = svd.getW(null);
+        final DenseMatrix64F W = svd.getW(null);
 
         // Singular values are in an arbitrary order initially
         SingularOps.descendingOrder(null, false, W, V_t, true);

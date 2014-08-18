@@ -19,10 +19,10 @@
 package bolt.ml.state.pca.incremental;
 
 import bolt.ml.state.pca.PrincipalComponentsBase;
+import org.ejml.data.DenseMatrix64F;
 import org.ejml.simple.SimpleEVD;
 import org.ejml.simple.SimpleMatrix;
 
-import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -35,8 +35,10 @@ public class IncrementalStormPca extends PrincipalComponentsBase {
 
     private SimpleMatrix simpleMatrix;
     private SimpleEVD evd;
+    private double eigenValues[];
+    private DenseMatrix64F eigenVectors;
 
-    public IncrementalStormPca(int elementsInSample, int numPrincipalComponents, int localPartition, int numPartitions) throws SQLException {
+    public IncrementalStormPca(int elementsInSample, int numPrincipalComponents, int localPartition, int numPartitions) throws Exception {
         super(elementsInSample, numPrincipalComponents, localPartition, numPartitions);
     }
 
@@ -61,6 +63,8 @@ public class IncrementalStormPca extends PrincipalComponentsBase {
 
     @Override
     public void beginCommit(Long txid) {
+        // C ≈ (gamma)EpΛpE + + (1−gamma)yyT = AAT
+
 
         final Set<String> sensorNames = this.sensorDictionary.keySet();
         final int numRows = this.sensorDictionary.size();

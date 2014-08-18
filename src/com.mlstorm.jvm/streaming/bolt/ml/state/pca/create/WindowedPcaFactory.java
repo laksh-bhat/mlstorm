@@ -7,7 +7,6 @@ import bolt.ml.state.pca.windowed.WindowedStormPca;
 import storm.trident.state.State;
 import storm.trident.state.StateFactory;
 
-import java.sql.SQLException;
 import java.util.Map;
 
  /*
@@ -45,8 +44,8 @@ public class WindowedPcaFactory implements StateFactory {
         if (pc == null) {
             try {
                 pc = new WindowedStormPca(sampleSize, numPrincipalComponents, partitionIndex, numPartitions);
-            } catch (SQLException e) {
-                e.printStackTrace();
+            } catch (Exception e) {
+                throw new IllegalStateException(e);
             }
         }
         return pc;

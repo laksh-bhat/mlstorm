@@ -2,7 +2,6 @@ package bolt.ml.state.pca.windowed;
 
 import bolt.ml.state.pca.PrincipalComponentsBase;
 
-import java.sql.SQLException;
 import java.text.MessageFormat;
 import java.util.Iterator;
 import java.util.Map;
@@ -29,7 +28,7 @@ import java.util.logging.Logger;
  */
 
 public class WindowedStormPca extends PrincipalComponentsBase {
-    public WindowedStormPca(int elementsInSample, int numPrincipalComponents, int localPartition, int numPartitions) throws SQLException {
+    public WindowedStormPca(int elementsInSample, int numPrincipalComponents, int localPartition, int numPartitions) throws Exception {
         super(elementsInSample, numPrincipalComponents, localPartition, numPartitions);
     }
 
