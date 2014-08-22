@@ -1,0 +1,49 @@
+
+ digraph G {
+ size ="4,4";
+ edge [color= blue];
+ //rankdir=LR;
+ rankdir=RL;
+ DrpcParameterUpdate-> LearnerState1[label="", penwidth=3, color= black];
+DrpcParameterUpdate-> LearnerState2[label="", penwidth=3,  color= black];
+DrpcParameterUpdate-> LearnerState3[label="", penwidth=3,  color= black];
+DrpcParameterUpdate-> LearnerState4[label="", penwidth=3,  color= black];
+
+DrpcParameterQuery-> LearnerState1[label="", penwidth=2];
+DrpcParameterQuery-> LearnerState2[label="", penwidth=2];
+DrpcParameterQuery-> LearnerState3[label="", penwidth=2];
+DrpcParameterQuery-> LearnerState4[label="", penwidth=2];
+
+ TridentSpout -> StateUpdater1[label="(on broadcast)", penwidth=2,  color= green];
+ TridentSpout -> StateUpdater2[label="(on broadcast)", penwidth=2, color= green];
+ TridentSpout -> StateUpdater3[label="(on broadcast)", penwidth=2,  color= green];
+ TridentSpout -> StateUpdater4[label="(on broadcast)", penwidth=2,  color= green];
+
+ StateUpdater1->LearnerState1[label="updates", penwidth=3, color= red];
+ StateUpdater2->LearnerState2[label="updates", penwidth=3, color= red];
+ StateUpdater3->LearnerState3[label="updates", penwidth=3, color= red];
+ StateUpdater4->LearnerState4[label="updates", penwidth=3, color= red];
+
+
+LearnerState1->PrinterBolt[label="(display)", penwidth=2];
+LearnerState2->PrinterBolt[label="(display)", penwidth=2];
+LearnerState3->PrinterBolt[label="(display)", penwidth=2];
+LearnerState4->PrinterBolt[label="(display)", penwidth=2];
+
+
+TridentSpout[shape=box, color=green, penwidth=2, fontsize = 20];
+DrpcParameterQuery[shape=box, color=green, penwidth=2, fontsize = 20];
+DrpcParameterUpdate[shape=box, color=green, penwidth=2, fontsize = 20];
+
+PrinterBolt[shape=diamond, penwidth=2, fontsize = 20];
+StateUpdater1[shape=diamond, penwidth=2, fontsize = 20];
+StateUpdater2[shape=diamond, penwidth=2, fontsize = 20];
+StateUpdater3[shape=diamond, penwidth=2, fontsize = 20];
+StateUpdater4[shape=diamond, penwidth=2, fontsize = 20];
+
+LearnerState1[style=filled,fillcolor="#FCD975", penwidth=2, fontsize = 20];
+LearnerState2[style=filled,fillcolor="#FCD975", penwidth=2, fontsize = 20];
+LearnerState3[style=filled,fillcolor="#FCD975", penwidth=2, fontsize = 20];
+LearnerState4[style=filled,fillcolor="#FCD975", penwidth=2, fontsize = 20];
+
+ }
