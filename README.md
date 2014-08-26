@@ -68,7 +68,7 @@ In our framework, each window is supplied for training to a WEKA analysis algori
   #### How to compile?
   --------------------
   - Go to the project home directory
-  - fire away the command `mvn -f m2-pom.xml package` (Assuming that you have maven installed!)
+  - fire away the command `mvn -f mlstorm.pom package` (Assuming that you have maven installed!)
   - this builds the `mlstorm-00.01-jar-with-dependencies.jar` in the `$REPO/mlstorm/target` directory.
 
 
