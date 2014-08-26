@@ -46,32 +46,33 @@ public abstract class PrincipalComponentsBase implements State {
     protected Map<Integer, String> reverseSensorDictionary;
     protected Map<String, Integer> sensorDictionary;
     // where the data is stored
-    protected DenseMatrix64F A = new DenseMatrix64F(1, 1);
+    protected DenseMatrix64F dataMatrix = new DenseMatrix64F(1, 1);
     protected int sampleIndex;
     // mean values of each element across all the samples
     private double mean[];
     // principal component subspace is stored in the rows
-    private DenseMatrix64F V_t;
+    private DenseMatrix64F principalComponentSubspace;
     // how many principal components are used
     private int numPrincipalComponents;
 
-    public PrincipalComponentsBase(final int elementsInSample,
-                                   int numPrincipalComponents,
-                                   int localPartition,
-                                   int numPartitions) throws Exception {
+    public PrincipalComponentsBase(final int elementsInSample, int numPrincipalComponents, int localPartition, int numPartitions) throws Exception {
         this.localPartition = localPartition;
         this.numPartition = numPartitions;
         this.windowSize = elementsInSample;
         this.numExpectedComponents = numPrincipalComponents;
         this.currentSensors = new ConcurrentSkipListMap<String, Double>();
+
+        // Least recently updated Sliding window
         this.windowTimesteps = new LinkedHashMap<Long, Map<String, Double>>(this.windowSize, 0.75f, false) {
             public boolean removeEldestEntry(Map.Entry<Long, Map<String, Double>> eldest) {
                 return size() > windowSize;
             }
         };
+
         this.windowTimesteps = Collections.synchronizedMap(this.windowTimesteps);
         this.reverseSensorDictionary = new ConcurrentSkipListMap<Integer, String>();
         this.sensorDictionary = new ConcurrentSkipListMap<String, Integer>();
+
         // Bad practice, but gets the job done :D
         this.reverseSensorDictionary = MsSqlServerSensorDbUtils.buildBiDirectionalSensorDictionary(this.sensorDictionary);
     }
@@ -88,7 +89,7 @@ public abstract class PrincipalComponentsBase implements State {
      */
     public void constructDataMatrixForPca(int numSamples, int sampleSize) {
         this.mean = new double[sampleSize];
-        this.A.reshape(numSamples, sampleSize, false);
+        this.dataMatrix.reshape(numSamples, sampleSize, false);
         this.sampleIndex = 0;
         this.numPrincipalComponents = -1;
     }
@@ -100,15 +101,15 @@ public abstract class PrincipalComponentsBase implements State {
      * @param sampleData Sample from original raw data.
      */
     public void addSample(double[] sampleData) {
-        if (A.getNumCols() != sampleData.length) {
+        if (dataMatrix.getNumCols() != sampleData.length) {
             throw new IllegalArgumentException("Unexpected sample size");
         }
-        if (sampleIndex >= A.getNumRows()) {
+        if (sampleIndex >= dataMatrix.getNumRows()) {
             throw new IllegalArgumentException("Too many samples");
         }
 
         for (int i = 0; i < sampleData.length; i++) {
-            A.set(sampleIndex, i, sampleData[i]);
+            dataMatrix.set(sampleIndex, i, sampleData[i]);
         }
         sampleIndex++;
     }
@@ -122,10 +123,10 @@ public abstract class PrincipalComponentsBase implements State {
     public void computeBasis(int numComponents) {
         Logger.getAnonymousLogger().log(Level.INFO, "Compute basis to get principal components.");
 
-        if (numComponents > A.getNumCols()) {
+        if (numComponents > dataMatrix.getNumCols()) {
             throw new IllegalArgumentException("More components requested that the data's length.");
         }
-        if (sampleIndex != A.getNumRows()) {
+        if (sampleIndex != dataMatrix.getNumRows()) {
             throw new IllegalArgumentException("Not all the data has been added");
         }
         if (numComponents > sampleIndex) {
@@ -136,37 +137,37 @@ public abstract class PrincipalComponentsBase implements State {
         this.numPrincipalComponents = numComponents;
 
         // compute the mean of all the samples
-        for (int i = 0; i < A.getNumRows(); i++) {
+        for (int i = 0; i < dataMatrix.getNumRows(); i++) {
             for (int j = 0; j < mean.length; j++) {
-                mean[j] += A.get(i, j);
+                mean[j] += dataMatrix.get(i, j);
             }
         }
         for (int j = 0; j < mean.length; j++) {
-            mean[j] /= A.getNumRows();
+            mean[j] /= dataMatrix.getNumRows();
         }
 
         // subtract the mean from the original data
-        for (int i = 0; i < A.getNumRows(); i++) {
+        for (int i = 0; i < dataMatrix.getNumRows(); i++) {
             for (int j = 0; j < mean.length; j++) {
-                A.set(i, j, A.get(i, j) - mean[j]);
+                dataMatrix.set(i, j, dataMatrix.get(i, j) - mean[j]);
             }
         }
 
         // Compute SVD and save time by not computing U
         SingularValueDecomposition<DenseMatrix64F> svd =
-                DecompositionFactory.svd(A.numRows, A.numCols, false, true, false);
-        if (!svd.decompose(A)) {
+                DecompositionFactory.svd(dataMatrix.numRows, dataMatrix.numCols, false, true, false);
+        if (!svd.decompose(dataMatrix)) {
             throw new IllegalStateException("SVD failure.");
         }
 
-        V_t = svd.getV(null, true);
+        principalComponentSubspace = svd.getV(null, true);
         final DenseMatrix64F W = svd.getW(null);
 
         // Singular values are in an arbitrary order initially
-        SingularOps.descendingOrder(null, false, W, V_t, true);
+        SingularOps.descendingOrder(null, false, W, getPrincipalComponentSubspace(), true);
 
         // strip off unneeded components and find the basis
-        V_t.reshape(numComponents, mean.length, true);
+        getPrincipalComponentSubspace().reshape(numComponents, mean.length, true);
     }
 
     /**
@@ -203,8 +204,8 @@ public abstract class PrincipalComponentsBase implements State {
             throw new IllegalArgumentException("Invalid component");
         }
 
-        DenseMatrix64F v = new DenseMatrix64F(1, A.numCols);
-        CommonOps.extract(V_t, which, which + 1, 0, A.numCols, v, 0, 0);
+        DenseMatrix64F v = new DenseMatrix64F(1, dataMatrix.numCols);
+        CommonOps.extract(getPrincipalComponentSubspace(), which, which + 1, 0, dataMatrix.numCols, v, 0, 0);
 
         return v.data;
     }
@@ -216,17 +217,17 @@ public abstract class PrincipalComponentsBase implements State {
      * @return Eigen space projection.
      */
     public double[] sampleToEigenSpace(double[] sampleData) {
-        if (sampleData.length != A.getNumCols()) {
+        if (sampleData.length != dataMatrix.getNumCols()) {
             throw new IllegalArgumentException("Unexpected sample length");
         }
-        DenseMatrix64F mean = DenseMatrix64F.wrap(A.getNumCols(), 1, this.mean);
+        DenseMatrix64F mean = DenseMatrix64F.wrap(dataMatrix.getNumCols(), 1, this.mean);
 
-        DenseMatrix64F s = new DenseMatrix64F(A.getNumCols(), 1, true, sampleData);
+        DenseMatrix64F s = new DenseMatrix64F(dataMatrix.getNumCols(), 1, true, sampleData);
         DenseMatrix64F r = new DenseMatrix64F(numPrincipalComponents, 1);
 
         CommonOps.sub(s, mean, s);
 
-        CommonOps.mult(V_t, s, r);
+        CommonOps.mult(getPrincipalComponentSubspace(), s, r);
 
         return r.data;
     }
@@ -242,12 +243,12 @@ public abstract class PrincipalComponentsBase implements State {
             throw new IllegalArgumentException("Unexpected sample length");
         }
 
-        DenseMatrix64F s = new DenseMatrix64F(A.getNumCols(), 1);
+        DenseMatrix64F s = new DenseMatrix64F(dataMatrix.getNumCols(), 1);
         DenseMatrix64F r = DenseMatrix64F.wrap(numPrincipalComponents, 1, eigenData);
 
-        CommonOps.multTransA(V_t, r, s);
+        CommonOps.multTransA(getPrincipalComponentSubspace(), r, s);
 
-        DenseMatrix64F mean = DenseMatrix64F.wrap(A.getNumCols(), 1, this.mean);
+        DenseMatrix64F mean = DenseMatrix64F.wrap(dataMatrix.getNumCols(), 1, this.mean);
         CommonOps.add(s, mean, s);
 
         return s.data;
@@ -289,14 +290,14 @@ public abstract class PrincipalComponentsBase implements State {
      * @return Higher value indicates it is more likely to be a member of input dataset.
      */
     public double response(double[] sample) {
-        if (sample.length != A.numCols) {
+        if (sample.length != dataMatrix.numCols) {
             throw new IllegalArgumentException("Expected input vector to be in sample space");
         }
 
         DenseMatrix64F dots = new DenseMatrix64F(numPrincipalComponents, 1);
-        DenseMatrix64F s = DenseMatrix64F.wrap(A.numCols, 1, sample);
+        DenseMatrix64F s = DenseMatrix64F.wrap(dataMatrix.numCols, 1, sample);
 
-        CommonOps.mult(V_t, s, dots);
+        CommonOps.mult(getPrincipalComponentSubspace(), s, dots);
         return NormOps.normF(dots);
     }
 
@@ -350,5 +351,9 @@ public abstract class PrincipalComponentsBase implements State {
      */
     public Map<Integer, String> getReverseSensorDictionary() {
         return reverseSensorDictionary;
+    }
+
+    public DenseMatrix64F getPrincipalComponentSubspace() {
+        return principalComponentSubspace;
     }
 }

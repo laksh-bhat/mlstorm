@@ -109,7 +109,7 @@ public class CommandLineUtilities {
         OptionBuilder.withArgName("file");
         OptionBuilder.hasArg();
         OptionBuilder
-                .withDescription("A file containing command line parameters as a Java properties file.");
+                .withDescription("dataMatrix file containing command line parameters as a Java properties file.");
         option = OptionBuilder.create("parameter_file");
 
         options.addOption(option);

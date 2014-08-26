@@ -19,9 +19,6 @@
 package bolt.ml.state.pca.incremental;
 
 import bolt.ml.state.pca.PrincipalComponentsBase;
-import org.ejml.data.DenseMatrix64F;
-import org.ejml.simple.SimpleEVD;
-import org.ejml.simple.SimpleMatrix;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -32,11 +29,6 @@ import java.util.Set;
  * todo
  */
 public class IncrementalStormPca extends PrincipalComponentsBase {
-
-    private SimpleMatrix simpleMatrix;
-    private SimpleEVD evd;
-    private double eigenValues[];
-    private DenseMatrix64F eigenVectors;
 
     public IncrementalStormPca(int elementsInSample, int numPrincipalComponents, int localPartition, int numPartitions) throws Exception {
         super(elementsInSample, numPrincipalComponents, localPartition, numPartitions);
@@ -63,25 +55,36 @@ public class IncrementalStormPca extends PrincipalComponentsBase {
 
     @Override
     public void beginCommit(Long txid) {
-        // C ≈ (gamma)EpΛpE + + (1−gamma)yyT = AAT
-
-
-        final Set<String> sensorNames = this.sensorDictionary.keySet();
-        final int numRows = this.sensorDictionary.size();
-        final int numColumns = this.windowSize;
-
-        if (!(A.getNumElements() > 0)) {
-            addSamplesInWindowToMatrix(sensorNames, numColumns);
-            simpleMatrix = new SimpleMatrix(A);
-            SimpleEVD evd = simpleMatrix.eig();
-        } else {
-            int noOfEigenValues = evd.getEVD().getNumberOfEigenvalues();
-
-        }
     }
 
     @Override
     public void commit(Long txid) {
+        if(isEigenDecompositionPresent()){
+            // do incremental processing of instances
+        } else {
+            // initialize eigen vectors and values by singular value decomposition
+            // C ≈ (gamma)EpΛpE + + (1−gamma)yyT = AAT
+            initializePCSubspace();
+        }
+    }
 
+    public void initializePCSubspace() {
+        final Set<String> sensorNames = this.sensorDictionary.keySet();
+        final int numRows = this.sensorDictionary.size();
+        final int numColumns = this.windowSize;
+
+        super.constructDataMatrixForPca(numRows, numColumns);
+        addSamplesInWindowToMatrix(sensorNames, numColumns);
+        if (numRows > 0 && numColumns > 0) {
+            computeBasis(numExpectedComponents);
+        }
+    }
+
+    /**
+     * Has PCA been initialized?
+     * @return truth about PCA initialization
+     */
+    private boolean isEigenDecompositionPresent() {
+        return getPrincipalComponentSubspace() != null;
     }
 }

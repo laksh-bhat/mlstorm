@@ -18,6 +18,14 @@
           <root url="file://$MODULE_DIR$/../lib" />
           <root url="jar://$MODULE_DIR$/../lib/storm-0.8.3-wip3.jar!/src/jvm" />
           <root url="jar://$USER_HOME$/.ideaLibSources/ejml-0.23-sources.jar!/" />
+          <root url="jar://$MODULE_DIR$/../lib/ejml-0.23-src.zip!/ejml-0.23/src" />
+          <root url="jar://$MODULE_DIR$/../lib/ejml-0.23-src.zip!/ejml-0.23/test" />
+          <root url="jar://$MODULE_DIR$/../lib/ejml-0.23-src.zip!/ejml-0.23/examples/src" />
+          <root url="jar://$MODULE_DIR$/../lib/ejml-0.23-src.zip!/ejml-0.23/examples/test" />
+          <root url="jar://$MODULE_DIR$/../lib/ejml-0.23-src.zip!/ejml-0.23/benchmarks/src" />
+          <root url="jar://$MODULE_DIR$/../lib/ejml-0.23-src.zip!/ejml-0.23/benchmarks/test" />
+          <root url="jar://$MODULE_DIR$/../lib/ejml-0.23-src.zip!/ejml-0.23/experimental/src" />
+          <root url="jar://$MODULE_DIR$/../lib/ejml-0.23-src.zip!/ejml-0.23/experimental/test" />
         </SOURCES>
         <jarDirectory url="file://$MODULE_DIR$/../lib" recursive="false" />
         <jarDirectory url="file://$MODULE_DIR$/../lib" recursive="false" type="SOURCES" />

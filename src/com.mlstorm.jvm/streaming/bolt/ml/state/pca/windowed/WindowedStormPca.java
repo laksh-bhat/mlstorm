@@ -57,7 +57,7 @@ public class WindowedStormPca extends PrincipalComponentsBase {
     private void computePrincipalComponentsAndResetDataMatrix() {
         computeBasis(numExpectedComponents);
         {   // Reset the data matrix and its index
-            A.zero();
+            dataMatrix.zero();
             sampleIndex = 0;
         }
     }
