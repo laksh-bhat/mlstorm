@@ -19,6 +19,11 @@
 package bolt.ml.state.pca.incremental;
 
 import bolt.ml.state.pca.PrincipalComponentsBase;
+import org.ejml.data.DenseMatrix64F;
+import org.ejml.factory.DecompositionFactory;
+import org.ejml.ops.CommonOps;
+import org.ejml.simple.SimpleMatrix;
+import utils.fields.FieldTemplate;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -30,24 +35,24 @@ import java.util.Set;
  */
 public class IncrementalStormPca extends PrincipalComponentsBase {
 
-    public IncrementalStormPca(int elementsInSample, int numPrincipalComponents, int localPartition, int numPartitions) throws Exception {
-        super(elementsInSample, numPrincipalComponents, localPartition, numPartitions);
+    public IncrementalStormPca(int elementsInSample, int numPrincipalComponents, int localPartition, int numPartitions, FieldTemplate template) throws Exception {
+        super(elementsInSample, numPrincipalComponents, localPartition, numPartitions, template);
     }
 
     /**
-     * Simply adds samples in the window to the data matrix by making sure 0's are added when a particular sensor isn't seen
+     * Simply adds samples in the window to the data matrix by making sure 0's are added when a particular feature isn't seen
      *
-     * @param sensorNames
-     * @param numColumns
+     * @param sampleNames keys identifying training samples
+     * @param numColumnVectors total no. of columns we expect in a training feature vector
      */
-    private void addSamplesInWindowToMatrix(final Set<String> sensorNames, final int numColumns) {
-        for (String sensorName : sensorNames) {
+    private void addSamplesInSlidingWindowToMatrix(final Set<String> sampleNames, final int numColumnVectors) {
+        for (String sample : sampleNames) {
             int columnIndex = 0;
-            double[] row = new double[numColumns];
-            Iterator<Map<String, Double>> valuesIterator = windowTimesteps.values().iterator();
-            while (valuesIterator.hasNext() && columnIndex < numColumns) {
-                final Map<String, Double> timeStep = valuesIterator.next();
-                row[columnIndex++] = timeStep.containsKey(sensorName) ? timeStep.get(sensorName) : 0.0;
+            double[] row = new double[numColumnVectors];
+            Iterator<Map<String, Double>> timeStepsIterator = timesteps.values().iterator();
+            while (timeStepsIterator.hasNext() && columnIndex < numColumnVectors) {
+                final Map<String, Double> timeStep = timeStepsIterator.next();
+                row[columnIndex++] = timeStep.containsKey(sample) ? timeStep.get(sample) : 0.0;
             }
             addSample(row);
         }
@@ -64,17 +69,17 @@ public class IncrementalStormPca extends PrincipalComponentsBase {
         } else {
             // initialize eigen vectors and values by singular value decomposition
             // C ≈ (gamma)EpΛpE + + (1−gamma)yyT = AAT
-            initializePCSubspace();
+            initializePrincipalComponentsSubspaceForIncrementalProcessing();
         }
     }
 
-    public void initializePCSubspace() {
-        final Set<String> sensorNames = this.sensorDictionary.keySet();
-        final int numRows = this.sensorDictionary.size();
+    public void initializePrincipalComponentsSubspaceForIncrementalProcessing() {
+        final Set<String> sensorNames = this.featureDictionary.keySet();
+        final int numRows = this.featureDictionary.size();
         final int numColumns = this.windowSize;
 
         super.constructDataMatrixForPca(numRows, numColumns);
-        addSamplesInWindowToMatrix(sensorNames, numColumns);
+        addSamplesInSlidingWindowToMatrix(sensorNames, numColumns);
         if (numRows > 0 && numColumns > 0) {
             computeBasis(numExpectedComponents);
         }
@@ -86,5 +91,18 @@ public class IncrementalStormPca extends PrincipalComponentsBase {
      */
     private boolean isEigenDecompositionPresent() {
         return getPrincipalComponentSubspace() != null;
+    }
+
+    public static void main(String[] args) {
+        DenseMatrix64F y = new DenseMatrix64F(1, 2, true, new double[]{1.0, 2.0});
+        DenseMatrix64F yT = CommonOps.transpose(y, null);
+        DenseMatrix64F m = new DenseMatrix64F(2,2);
+        CommonOps.mult(yT, y, m);
+
+        SimpleMatrix m2 = new SimpleMatrix(2,2, true, new double[]{1,2,3,4});
+        org.ejml.factory.SingularValueDecomposition<DenseMatrix64F> svd = DecompositionFactory.svd(2, 2, false, true, false);
+        svd.decompose(m);
+        m = svd.getV(null, true);
+
     }
 }

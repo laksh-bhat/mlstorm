@@ -85,7 +85,7 @@ public class ClustererState extends BaseWekaState {
 
     @Override
     public void beginCommit(Long txId) {
-        lazyLoadWekaAttributes(getFieldTemplate().getNumFeatures());
+        lazyLoadWekaAttributes(getFieldTemplate().getRuntimeFeatureCount());
     }
 
     @Override

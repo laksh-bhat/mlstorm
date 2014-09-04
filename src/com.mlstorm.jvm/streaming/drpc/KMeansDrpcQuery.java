@@ -7,14 +7,14 @@ import com.google.gson.Gson;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.thrift7.TException;
-import utils.FeatureVectorUtils;
+import utils.MlStormFeatureVectorUtils;
 import utils.SpoutUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-import static utils.FeatureVectorUtils.serializeFeatureVector;
+import static utils.MlStormFeatureVectorUtils.serializeFeatureVector;
 
  /*
  * Copyright 2013-2015 Lakshmisha Bhat
@@ -89,7 +89,7 @@ public class KMeansDrpcQuery {
                     String[] centroidSerializedArrays = centroidsSerialized.split(MlStormClustererQuery.KmeansClustererQuery.CENTROID_DELIM);
                     List<double[]> centroids = new ArrayList<double[]>();
                     for (String centroid : centroidSerializedArrays) {
-                        centroids.add(FeatureVectorUtils.deserializeToFeatureVector(centroid));
+                        centroids.add(MlStormFeatureVectorUtils.deserializeToFeatureVector(centroid));
                     }
 
                     double[] rmsdPrimitive = ArrayUtils.toPrimitive(both);

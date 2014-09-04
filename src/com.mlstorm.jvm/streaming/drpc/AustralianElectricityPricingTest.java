@@ -4,14 +4,14 @@ import backtype.storm.generated.DRPCExecutionException;
 import backtype.storm.utils.DRPCClient;
 import com.google.gson.Gson;
 import org.apache.thrift7.TException;
-import utils.Pair;
+import utils.KeyValuePair;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 
-import static utils.FeatureVectorUtils.serializeFeatureVector;
+import static utils.MlStormFeatureVectorUtils.serializeFeatureVector;
 
 
  /*
@@ -32,9 +32,9 @@ import static utils.FeatureVectorUtils.serializeFeatureVector;
 
 public class AustralianElectricityPricingTest {
 
-    public static List<Pair<Double, double[]>> generateHoldOutDataset(String filename) throws FileNotFoundException {
+    public static List<KeyValuePair<Double, double[]>> generateHoldOutDataset(String filename) throws FileNotFoundException {
         Scanner scanner = new Scanner(new File(filename));
-        List<Pair<Double, double[]>> returnList = new ArrayList<Pair<Double, double[]>>();
+        List<KeyValuePair<Double, double[]>> returnList = new ArrayList<KeyValuePair<Double, double[]>>();
         int totalTests = 0;
 
         while (totalTests < 45000 && scanner.hasNextLine()) {
@@ -50,7 +50,7 @@ public class AustralianElectricityPricingTest {
                         label = features[i].equalsIgnoreCase("DOWN") ? 0 : 1;
                     }
                 }
-                returnList.add(new Pair<Double, double[]>(label, fv));
+                returnList.add(new KeyValuePair<Double, double[]>(label, fv));
             }
         }
         return returnList;

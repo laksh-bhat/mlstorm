@@ -7,7 +7,7 @@ import backtype.storm.topology.OutputFieldsDeclarer;
 import backtype.storm.tuple.Fields;
 import spout.ml.MlStormSpout;
 import spout.utils.PeekableScanner;
-import utils.FeatureVectorUtils;
+import utils.MlStormFeatureVectorUtils;
 import utils.fields.FieldTemplate;
 
 import java.io.File;
@@ -115,7 +115,7 @@ public class AustralianElectricityPricingSpout implements MlStormSpout {
         if (peekableScanner.hasNext()) {
             final String featureValuesText = peekableScanner.next();
             final double[] fv = getFeatureValues(featureValuesText);
-            spoutOutputCollector.emit(FeatureVectorUtils.buildMlStormFeatureVector(getTupleKey(), fv));
+            spoutOutputCollector.emit(MlStormFeatureVectorUtils.buildMlStormFeatureVector(getTupleKey(), fv));
             incrementTupleKey();
         }
     }
@@ -149,7 +149,7 @@ public class AustralianElectricityPricingSpout implements MlStormSpout {
 
     @Override
     public void updateMlStormFieldTemplate(FieldTemplate template, int features) {
-        this.fieldTemplate.setNumFeatures(features);
+        this.fieldTemplate.setRuntimeFeatureCount(features);
     }
 
 }

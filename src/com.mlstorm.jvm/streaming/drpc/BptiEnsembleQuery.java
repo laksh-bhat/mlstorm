@@ -12,7 +12,7 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static utils.FeatureVectorUtils.serializeFeatureVector;
+import static utils.MlStormFeatureVectorUtils.serializeFeatureVector;
 
 /**
  * Created by lbhat@DaMSl on 4/10/14.

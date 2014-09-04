@@ -16,11 +16,15 @@ package utils.fields;
  */
 
 /**
- * A Field template is a key interface in MlStorm to define the Storm stream fields and the feature vectors.
+ * Field template is a key interface in MlStorm to define the Storm stream fields and the feature vectors.
  * It helps to consistently name the fields across topologies and streams.
  * <p/>
  * Every tuple in the top level Storm stream must consist of a key and a feature vector.
  * The merged streams can have arbitrary names, but the standard names are constants in this interface.
+ * <p/>
+ * The runtime feature count is setup by the MlStormSpout to which this FieldTemplate is injected.
+ * The same field template is "passed around" in the entire topology. This will ensure all bolts
+ * and operators know exactly what fields and features to expect.
  */
 public interface FieldTemplate {
 
@@ -30,16 +34,16 @@ public interface FieldTemplate {
 
     String getFeatureVectorField();
 
-    int getNumFeatures();
+    int getRuntimeFeatureCount();
 
-    void setNumFeatures(int numFeatures);
+    void setRuntimeFeatureCount(int numFeatures);
 
     public interface FieldConstants {
         String ARGS = "args";
         String PARTITION = "partition";
         String RESULT = "result";
 
-        public interface PCA{
+        public interface PCA {
             String PCA = "PCA";
             String PCA_DRPC = "PCA-DRPC";
             String PCA_COMPONENTS = "components";

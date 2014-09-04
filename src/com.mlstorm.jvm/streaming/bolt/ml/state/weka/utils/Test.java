@@ -1,7 +1,5 @@
 package bolt.ml.state.weka.utils;
 
-import utils.Pair;
-
 /**
  * Created by lakshmisha.bhat on 8/6/14.
  */

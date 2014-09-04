@@ -51,7 +51,7 @@ public final class MlStormFieldTemplate implements FieldTemplate {
     }
 
     @Override
-    public int getNumFeatures() {
+    public int getRuntimeFeatureCount() {
         if (numFeatures == 0) {
             throw new IllegalStateException(MessageFormat.format("Programmer error: {0}.numFeatures has not been updated by the MlStormSpout", getClass().getCanonicalName()));
         }
@@ -59,7 +59,7 @@ public final class MlStormFieldTemplate implements FieldTemplate {
     }
 
     @Override
-    public void setNumFeatures(int numFeatures) {
+    public void setRuntimeFeatureCount(int numFeatures) {
         this.numFeatures = numFeatures;
     }
 }

@@ -1,6 +1,7 @@
 package bolt.ml.state.pca.windowed;
 
 import bolt.ml.state.pca.PrincipalComponentsBase;
+import utils.fields.FieldTemplate;
 
 import java.text.MessageFormat;
 import java.util.Iterator;
@@ -28,8 +29,8 @@ import java.util.logging.Logger;
  */
 
 public class WindowedStormPca extends PrincipalComponentsBase {
-    public WindowedStormPca(int elementsInSample, int numPrincipalComponents, int localPartition, int numPartitions) throws Exception {
-        super(elementsInSample, numPrincipalComponents, localPartition, numPartitions);
+    public WindowedStormPca(int elementsInSample, int numPrincipalComponents, int localPartition, int numPartitions, FieldTemplate template) throws Exception {
+        super(elementsInSample, numPrincipalComponents, localPartition, numPartitions, template);
     }
 
     /**
@@ -42,7 +43,7 @@ public class WindowedStormPca extends PrincipalComponentsBase {
         for (String sensorName : sensorNames) {
             int columnIndex = 0;
             final double[] row = new double[numColumns];
-            final Iterator<Map<String, Double>> valuesIterator = windowTimesteps.values().iterator();
+            final Iterator<Map<String, Double>> valuesIterator = timesteps.values().iterator();
             while (valuesIterator.hasNext() && columnIndex < numColumns) {
                 final Map<String, Double> timeStep = valuesIterator.next();
                 row[columnIndex++] = timeStep.containsKey(sensorName) ? timeStep.get(sensorName) : 0.0;
@@ -57,7 +58,7 @@ public class WindowedStormPca extends PrincipalComponentsBase {
     private void computePrincipalComponentsAndResetDataMatrix() {
         computeBasis(numExpectedComponents);
         {   // Reset the data matrix and its index
-            dataMatrix.zero();
+            getDataMatrix().zero();
             sampleIndex = 0;
         }
     }
@@ -81,16 +82,16 @@ public class WindowedStormPca extends PrincipalComponentsBase {
     public synchronized void commit(final Long txId) {
         Logger.getAnonymousLogger().log(Level.INFO, MessageFormat.format("Commit called for transaction {0}", txId));
 
-        final Set<String> sensorNames = this.sensorDictionary.keySet();
-        final int numRows = this.sensorDictionary.size();
+        final Set<String> sensorNames = this.featureDictionary.keySet();
+        final int numRows = this.featureDictionary.size();
         final int numColumns = this.windowSize;
 
         Logger.getAnonymousLogger().log(Level.INFO, MessageFormat.format("matrix has {0} rows and {1} columns", numRows, numColumns));
 
-        if (currentSensors.size() > numRows / 2 + 10 /*we expect 50% + 10 success rate*/) {
-            windowTimesteps.put(txId, getCurrentSensorsAndReset(true));
+        if (currentSamples.size() > numRows / 2 + 10 /*we expect 50% + 10 success rate*/) {
+            timesteps.put(txId, getCurrentSensorsAndReset(true));
         }
-        if (windowTimesteps.size() < windowSize) {
+        if (timesteps.size() < windowSize) {
             return;
         }
 

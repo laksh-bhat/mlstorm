@@ -7,7 +7,7 @@ import backtype.storm.topology.OutputFieldsDeclarer;
 import backtype.storm.tuple.Fields;
 import spout.ml.MlStormSpout;
 import spout.utils.MsSqlServerSensorDbUtils;
-import utils.FeatureVectorUtils;
+import utils.MlStormFeatureVectorUtils;
 import utils.fields.FieldTemplate;
 
 import java.sql.Connection;
@@ -35,13 +35,13 @@ import java.util.logging.Logger;
 */
 
 public class SensorStreamingSpout implements MlStormSpout {
-    private final String[] fields;
+    private final FieldTemplate fieldTemplate;
     private Connection jdbcConnection;
     private ResultSet sensor;
     private SpoutOutputCollector collector;
 
-    public SensorStreamingSpout(final String[] fields) {
-        this.fields = fields;
+    public SensorStreamingSpout(final FieldTemplate fieldTemplate) {
+        this.fieldTemplate = fieldTemplate;
     }
 
     /**
@@ -62,7 +62,7 @@ public class SensorStreamingSpout implements MlStormSpout {
      */
     @Override
     public void declareOutputFields(final OutputFieldsDeclarer declarer) {
-        declarer.declare(new Fields(fields));
+        declarer.declare(new Fields(fieldTemplate.getFields()));
     }
 
     /**
@@ -91,6 +91,7 @@ public class SensorStreamingSpout implements MlStormSpout {
             Logger.getAnonymousLogger().log(Level.INFO, MessageFormat.format("Starting JHU sensor spout. Connecting to database at {0}", MsSqlServerSensorDbUtils.DB_URL));
             jdbcConnection = MsSqlServerSensorDbUtils.getNewDatabaseConnection(MsSqlServerSensorDbUtils.DB_USER, MsSqlServerSensorDbUtils.DB_USER);
             sensor = MsSqlServerSensorDbUtils.getAllFromSensorDb(jdbcConnection, MsSqlServerSensorDbUtils.TABLE_NAME, MsSqlServerSensorDbUtils.ORDER_BY_COLUMN);
+            updateMlStormFieldTemplate(fieldTemplate, sensor.getMetaData().getColumnCount());
             moveSpoutForward();
             this.collector = collector;
         } catch (SQLException e) {
@@ -158,7 +159,7 @@ public class SensorStreamingSpout implements MlStormSpout {
                 double[] temperature = new double[1];
                 temperature[0] = sensor.getDouble(MsSqlServerSensorDbUtils.DATA_COLUMN);
                 // Always emit an MLStorm feature vector.
-                collector.emit(FeatureVectorUtils.buildMlStormFeatureVector(sensorName, temperature));
+                collector.emit(MlStormFeatureVectorUtils.buildMlStormFeatureVector(sensorName, temperature));
                 // todo (fix this) this is a hack.
                 // we need the following if we are going to wrap this spout in a batch spout
                 moveSpoutForward();
@@ -198,6 +199,6 @@ public class SensorStreamingSpout implements MlStormSpout {
 
     @Override
     public void updateMlStormFieldTemplate(FieldTemplate template, int numFeatures) {
-        template.setNumFeatures(numFeatures);
+        template.setRuntimeFeatureCount(numFeatures);
     }
 }

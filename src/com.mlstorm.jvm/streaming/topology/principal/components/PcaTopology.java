@@ -52,10 +52,9 @@ public class PcaTopology {
                                                final int pcaRowWidth,
                                                final int numPrincipalComponents,
                                                final FieldTemplate template) {
-        final ITridentSpout batchSpout = new RichSpoutBatchExecutor(mlStormSpout);
         final TridentTopology topology = new TridentTopology();
-        final Stream sensorStream = topology.newStream(FieldTemplate.FieldConstants.PCA.PCA, batchSpout);
-        final StateFactory pcaFactory = new WindowedPcaFactory(pcaRowWidth, numPrincipalComponents);
+        final Stream sensorStream = topology.newStream(FieldTemplate.FieldConstants.PCA.PCA, mlStormSpout);
+        final StateFactory pcaFactory = new WindowedPcaFactory(pcaRowWidth, numPrincipalComponents, template);
 
         final TridentState principalComponents =
                 sensorStream
@@ -77,7 +76,7 @@ public class PcaTopology {
     // Look at spout.ml.sensor.SensorStreamingSpout or spout.ml.weka.AustralianElectricityPricingSpout for example.
     public static void main(String[] args) throws AlreadyAliveException, InvalidTopologyException {
         final FieldTemplate fieldTemplate = new MlStormFieldTemplate();
-        final MlStormSpout spout = new SensorStreamingSpout(fieldTemplate.getFields());
+        final MlStormSpout spout = new SensorStreamingSpout(fieldTemplate);
         final int parallelism = args.length > 0 ? Integer.valueOf(args[0]) : 1;
         final StormTopology stormTopology = buildTopology(spout, parallelism, PCA_SAMPLE_SIZE, PRINCIPAL_COMPONENTS, fieldTemplate);
 

@@ -22,17 +22,28 @@ import storm.trident.operation.TridentCollector;
 import storm.trident.operation.TridentOperationContext;
 import storm.trident.state.StateUpdater;
 import storm.trident.tuple.TridentTuple;
-import utils.FeatureVectorUtils;
-import utils.Pair;
+import utils.MlStormFeatureVectorUtils;
+import utils.KeyValuePair;
 import utils.fields.FieldTemplate;
 
 import java.util.List;
 import java.util.Map;
 
 /**
- * User: lbhat <laksh85@gmail.com>
- * Date: 12/13/13
- * Time: 10:55 PM
+ * <p/>
+ * Copyright {2013} {Lakshmisha Bhat}
+ * <p/>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p/>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p/>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 public class PrincipalComponentUpdater implements StateUpdater<PrincipalComponentsBase> {
@@ -47,15 +58,15 @@ public class PrincipalComponentUpdater implements StateUpdater<PrincipalComponen
                             final List<TridentTuple> tuples,
                             final TridentCollector collector) {
         for (TridentTuple tuple : tuples) {
-            final Pair<Object, double[]> pair = FeatureVectorUtils.getKeyValuePairFromMlStormFeatureVector(template, tuple);
-            final String sensor = (String) pair.getKey();
-            final double temperature = pair.getValue()[0];
-            final Map<String, Double> sensors = state.getCurrentSensors();
-            if (sensors.containsKey(sensor)) {
-                final double existingValue = sensors.get(sensor);
-                sensors.put(sensor, (existingValue + temperature) / 2.0);
+            final KeyValuePair<Object, double[]> keyValuePair = MlStormFeatureVectorUtils.getKeyValueFromMlStormFeatureVector(template, tuple);
+            final String sample = (String) keyValuePair.getKey();
+            final double temperature = keyValuePair.getValue()[0];
+            final Map<String, Double> samples = state.getCurrentSamples();
+            if (samples.containsKey(sample)) {
+                final double existingValue = samples.get(sample);
+                samples.put(sample, (existingValue + temperature) / 2.0);
             } else {
-                sensors.put(sensor, temperature);
+                samples.put(sample, temperature);
             }
         }
     }

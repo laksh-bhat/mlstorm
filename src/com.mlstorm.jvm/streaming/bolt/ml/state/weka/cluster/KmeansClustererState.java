@@ -86,7 +86,7 @@ public class KmeansClustererState extends BaseWekaState {
 
     @Override
     public void beginCommit(Long txId) {
-        lazyLoadWekaAttributes(getFieldTemplate().getNumFeatures());
+        lazyLoadWekaAttributes(getFieldTemplate().getRuntimeFeatureCount());
     }
 
     /**
@@ -102,7 +102,7 @@ public class KmeansClustererState extends BaseWekaState {
             numClusters = k;
             clusterer = new SimpleKMeans();
             clusterer.setNumClusters(numClusters);
-            this.wekaAttributes = WekaUtils.makeFeatureVectorForBatchClustering(getFieldTemplate().getNumFeatures(), numClusters);
+            this.wekaAttributes = WekaUtils.makeFeatureVectorForBatchClustering(getFieldTemplate().getRuntimeFeatureCount(), numClusters);
             this.wekaAttributes.trimToSize();
             this.dataset = new Instances("training", this.wekaAttributes, this.windowSize);
         }

@@ -8,8 +8,8 @@ import storm.trident.operation.TridentCollector;
 import storm.trident.operation.TridentOperationContext;
 import storm.trident.state.QueryFunction;
 import storm.trident.tuple.TridentTuple;
-import utils.FeatureVectorUtils;
-import utils.Pair;
+import utils.MlStormFeatureVectorUtils;
+import utils.KeyValuePair;
 import weka.core.Instance;
 import weka.core.Instances;
 
@@ -55,10 +55,10 @@ public class MlStormClustererQuery {
                 }
 
                 try {
-                    final Instance testInstance = FeatureVectorUtils.buildWekaInstance(fv);
+                    final Instance testInstance = MlStormFeatureVectorUtils.buildWekaInstance(fv);
                     final double[] distribution = clustererState.getClusterer().distributionForInstance(testInstance);
                     final Integer result = clustererState.getClusterer().clusterInstance(testInstance);
-                    queryResults.add(new Pair<Integer, double[]>(result, distribution));
+                    queryResults.add(new KeyValuePair<Integer, double[]>(result, distribution));
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (ClassNotFoundException e) {
@@ -95,11 +95,11 @@ public class MlStormClustererQuery {
             for (TridentTuple query : queryTuples) {
                 String q = query.getStringByField("args");
                 try {
-                    final double[] featureVector = FeatureVectorUtils.deserializeToFeatureVector(q);
-                    final Instance testInstance = FeatureVectorUtils.buildWekaInstance(featureVector);
+                    final double[] featureVector = MlStormFeatureVectorUtils.deserializeToFeatureVector(q);
+                    final Instance testInstance = MlStormFeatureVectorUtils.buildWekaInstance(featureVector);
                     final double[] distribution = clustererState.getClusterer().distributionForInstance(testInstance);
                     final Integer label = clustererState.getClusterer().clusterInstance(testInstance);
-                    queryResults.add(new Pair<Integer, double[]>(label, distribution));
+                    queryResults.add(new KeyValuePair<Integer, double[]>(label, distribution));
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (ClassNotFoundException e) {
@@ -167,7 +167,7 @@ public class MlStormClustererQuery {
                     StringBuilder serializedClusterCentres = new StringBuilder();
                     for (int i = 0; i < centroids.size(); i++) {
                         Instance centroid = centroids.get(i);
-                        String serialized = FeatureVectorUtils.serializeFeatureVector(centroid.toDoubleArray());
+                        String serialized = MlStormFeatureVectorUtils.serializeFeatureVector(centroid.toDoubleArray());
                         if (i != centroids.size() - 1) {
                             serialized += CENTROID_DELIM;
                         }

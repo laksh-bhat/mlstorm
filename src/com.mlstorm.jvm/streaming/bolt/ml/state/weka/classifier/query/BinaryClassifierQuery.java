@@ -8,8 +8,8 @@ import storm.trident.operation.TridentOperationContext;
 import storm.trident.state.QueryFunction;
 import storm.trident.tuple.TridentTuple;
 import topology.weka.ensemble.EnsembleLearnerTopologyBuilder;
-import utils.FeatureVectorUtils;
-import utils.Pair;
+import utils.MlStormFeatureVectorUtils;
+import utils.KeyValuePair;
 import weka.core.Instance;
 
 import java.io.IOException;
@@ -56,10 +56,10 @@ public class BinaryClassifierQuery implements QueryFunction<MlStormWekaState, Ma
                 }
 
                 try {
-                    Instance testInstance = FeatureVectorUtils.buildWekaInstance(fv);
+                    Instance testInstance = MlStormFeatureVectorUtils.buildWekaInstance(fv);
                     double[] distribution = null;
                     double result = clustererState.predict(testInstance);
-                    queryResults.add(new Pair<Double, double[]>(result, distribution));
+                    queryResults.add(new KeyValuePair<Double, double[]>(result, distribution));
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -68,7 +68,7 @@ public class BinaryClassifierQuery implements QueryFunction<MlStormWekaState, Ma
                 } catch (Exception e) {
                     if (e.toString().contains(MlStormWekaState.NOT_READY_TO_PREDICT)) {
                         System.err.println(MessageFormat.format("Not Ready yet! Continue training with - {0}", Arrays.toString(fv)));
-                        queryResults.add(new Pair<Double, double[]>(fv[fv.length - 1], null));
+                        queryResults.add(new KeyValuePair<Double, double[]>(fv[fv.length - 1], null));
                     } else {
                         throw new IllegalStateException(e);
                     }
@@ -100,7 +100,7 @@ public class BinaryClassifierQuery implements QueryFunction<MlStormWekaState, Ma
         private double[] getFeatureVectorFromArgs(TridentTuple queryTuple) {
             String args = queryTuple.getStringByField(EnsembleLearnerTopologyBuilder.drpcQueryArgsField.get(0));
             try {
-                return utils.FeatureVectorUtils.deserializeToFeatureVector(args);
+                return MlStormFeatureVectorUtils.deserializeToFeatureVector(args);
             } catch (DecoderException e) {
                 e.printStackTrace();
                 throw new RuntimeException(e);
@@ -118,7 +118,7 @@ public class BinaryClassifierQuery implements QueryFunction<MlStormWekaState, Ma
             List<Integer> queryResults = new ArrayList<Integer>();
             for (TridentTuple queryTuple : queryTuples) {
                 double[] fv = getFeatureVectorFromArgs(queryTuple);
-                final Instance instance = FeatureVectorUtils.buildWekaInstance(fv);
+                final Instance instance = MlStormFeatureVectorUtils.buildWekaInstance(fv);
                 try {
                     final int classification = (int) binaryClassifierState.predict(instance);
                     queryResults.add(classification);
@@ -148,7 +148,7 @@ public class BinaryClassifierQuery implements QueryFunction<MlStormWekaState, Ma
     private double[] getFeatureVectorFromArgs(TridentTuple queryTuple) {
         String args = queryTuple.getStringByField(EnsembleLearnerTopologyBuilder.drpcQueryArgsField.get(0));
         try {
-            return utils.FeatureVectorUtils.deserializeToFeatureVector(args);
+            return MlStormFeatureVectorUtils.deserializeToFeatureVector(args);
         } catch (DecoderException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -166,11 +166,11 @@ public class BinaryClassifierQuery implements QueryFunction<MlStormWekaState, Ma
         List<Map.Entry<Integer, double[]>> queryResults = new ArrayList<Map.Entry<Integer, double[]>>();
         for (TridentTuple queryTuple : queryTuples) {
             double[] fv = getFeatureVectorFromArgs(queryTuple);
-            final Instance instance = FeatureVectorUtils.buildWekaInstance(fv);
+            final Instance instance = MlStormFeatureVectorUtils.buildWekaInstance(fv);
             try {
                 final int classification = (int) binaryClassifierState.predict(instance);
                 final double[] distribution = null;
-                queryResults.add(new Pair<Integer, double[]>(classification, distribution));
+                queryResults.add(new KeyValuePair<Integer, double[]>(classification, distribution));
             } catch (Exception e) {
                 e.printStackTrace();
             }

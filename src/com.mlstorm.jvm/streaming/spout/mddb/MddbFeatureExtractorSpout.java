@@ -205,6 +205,6 @@ public class MddbFeatureExtractorSpout implements MlStormSpout {
 
     @Override
     public void updateMlStormFieldTemplate(FieldTemplate template, int numFeatures) {
-        template.setNumFeatures(numFeatures);
+        template.setRuntimeFeatureCount(numFeatures);
     }
 }

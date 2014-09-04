@@ -6,9 +6,10 @@ import org.ejml.factory.SingularValueDecomposition;
 import org.ejml.ops.CommonOps;
 import org.ejml.ops.NormOps;
 import org.ejml.ops.SingularOps;
-import spout.utils.MsSqlServerSensorDbUtils;
 import storm.trident.state.State;
+import utils.fields.FieldTemplate;
 
+import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -35,81 +36,79 @@ import java.util.logging.Logger;
 
 public abstract class PrincipalComponentsBase implements State {
 
-    protected final int numExpectedComponents;
     protected final int windowSize;
+    protected final int numExpectedComponents;
     // state partition information
     private final int localPartition;
     private final int numPartition;
-
-    protected Map<String, Double> currentSensors;
-    protected Map<Long, Map<String, Double>> windowTimesteps;
-    protected Map<Integer, String> reverseSensorDictionary;
-    protected Map<String, Integer> sensorDictionary;
-    // where the data is stored
-    protected DenseMatrix64F dataMatrix = new DenseMatrix64F(1, 1);
+    private final FieldTemplate fieldTemplate;
+    protected Map<String, Double> currentSamples;
+    protected Map<String, Integer> featureDictionary;
+    protected Map<Long, Map<String, Double>> timesteps;
+    protected Map<Integer, String> reverseLookupFeatureDictionary;
     protected int sampleIndex;
+    // where the data is stored
+    private DenseMatrix64F dataMatrix = new DenseMatrix64F(1, 1);
     // mean values of each element across all the samples
-    private double mean[];
+    private double[] mean;
     // principal component subspace is stored in the rows
     private DenseMatrix64F principalComponentSubspace;
     // how many principal components are used
     private int numPrincipalComponents;
 
-    public PrincipalComponentsBase(final int elementsInSample, int numPrincipalComponents, int localPartition, int numPartitions) throws Exception {
+    public PrincipalComponentsBase(final int numElementsInWindow, int numPrincipalComponents, int localPartition, int numPartitions, FieldTemplate fieldTemplate) throws Exception {
         this.localPartition = localPartition;
         this.numPartition = numPartitions;
-        this.windowSize = elementsInSample;
+        this.windowSize = numElementsInWindow;
         this.numExpectedComponents = numPrincipalComponents;
-        this.currentSensors = new ConcurrentSkipListMap<String, Double>();
+        this.currentSamples = new ConcurrentSkipListMap<String, Double>();
 
         // Least recently updated Sliding window
-        this.windowTimesteps = new LinkedHashMap<Long, Map<String, Double>>(this.windowSize, 0.75f, false) {
+        this.timesteps = new LinkedHashMap<Long, Map<String, Double>>(this.windowSize, 0.75f /* load factor */, false) {
             public boolean removeEldestEntry(Map.Entry<Long, Map<String, Double>> eldest) {
                 return size() > windowSize;
             }
         };
 
-        this.windowTimesteps = Collections.synchronizedMap(this.windowTimesteps);
-        this.reverseSensorDictionary = new ConcurrentSkipListMap<Integer, String>();
-        this.sensorDictionary = new ConcurrentSkipListMap<String, Integer>();
+        this.fieldTemplate = fieldTemplate;
+        this.timesteps = Collections.synchronizedMap(this.timesteps);
+        this.featureDictionary = new ConcurrentSkipListMap<String, Integer>();
 
-        // Bad practice, but gets the job done :D
-        this.reverseSensorDictionary = MsSqlServerSensorDbUtils.buildBiDirectionalSensorDictionary(this.sensorDictionary);
     }
 
     public int getNumOfPrincipalComponents() {
-        return this.numPrincipalComponents;
+        return this.getNumPrincipalComponents();
     }
 
     /**
      * Must be called before any other functions. Declares and sets up internal data structures.
      *
      * @param numSamples Number of samples that will be processed.
-     * @param sampleSize Number of elements in each sample.
+     * @param features   Number of elements in each sample.
      */
-    public void constructDataMatrixForPca(int numSamples, int sampleSize) {
-        this.mean = new double[sampleSize];
-        this.dataMatrix.reshape(numSamples, sampleSize, false);
+    public void constructDataMatrixForPca(int numSamples, int features) {
+        this.setMean(new double[features]);
+        this.getDataMatrix().reshape(numSamples, features, false);
         this.sampleIndex = 0;
-        this.numPrincipalComponents = -1;
+        this.setNumPrincipalComponents(-1);
     }
 
     /**
      * Adds a new sample of the raw data to internal data structure for later processing.  All the samples
      * must be added before computeBasis is called.
      *
-     * @param sampleData Sample from original raw data.
+     * @param trainingVector Sample from original raw data.
      */
-    public void addSample(double[] sampleData) {
-        if (dataMatrix.getNumCols() != sampleData.length) {
+    public void addSample(double[] trainingVector) {
+        if (getDataMatrix().getNumCols() != trainingVector.length) {
             throw new IllegalArgumentException("Unexpected sample size");
         }
-        if (sampleIndex >= dataMatrix.getNumRows()) {
+        if (sampleIndex >= getDataMatrix().getNumRows()) {
             throw new IllegalArgumentException("Too many samples");
         }
 
-        for (int i = 0; i < sampleData.length; i++) {
-            dataMatrix.set(sampleIndex, i, sampleData[i]);
+        for (int i = 0; i < trainingVector.length; i++) {
+            getDataMatrix().set(sampleIndex, i, trainingVector[i]);
         }
         sampleIndex++;
     }
@@ -123,51 +122,56 @@ public abstract class PrincipalComponentsBase implements State {
     public void computeBasis(int numComponents) {
         Logger.getAnonymousLogger().log(Level.INFO, "Compute basis to get principal components.");
 
-        if (numComponents > dataMatrix.getNumCols()) {
-            throw new IllegalArgumentException("More components requested that the data's length.");
-        }
-        if (sampleIndex != dataMatrix.getNumRows()) {
-            throw new IllegalArgumentException("Not all the data has been added");
-        }
-        if (numComponents > sampleIndex) {
-            throw new IllegalArgumentException("More data needed to compute the desired number of components " +
-                    "(sampleIndex=" + sampleIndex + ") (numComponents = " + numComponents + ") ");
-        }
-
-        this.numPrincipalComponents = numComponents;
-
-        // compute the mean of all the samples
-        for (int i = 0; i < dataMatrix.getNumRows(); i++) {
-            for (int j = 0; j < mean.length; j++) {
-                mean[j] += dataMatrix.get(i, j);
-            }
-        }
-        for (int j = 0; j < mean.length; j++) {
-            mean[j] /= dataMatrix.getNumRows();
-        }
-
-        // subtract the mean from the original data
-        for (int i = 0; i < dataMatrix.getNumRows(); i++) {
-            for (int j = 0; j < mean.length; j++) {
-                dataMatrix.set(i, j, dataMatrix.get(i, j) - mean[j]);
-            }
-        }
+        validateData(numComponents);
+        setNumPrincipalComponents(numComponents);
+        computeNormalizedMean();
 
         // Compute SVD and save time by not computing U
         SingularValueDecomposition<DenseMatrix64F> svd =
-                DecompositionFactory.svd(dataMatrix.numRows, dataMatrix.numCols, false, true, false);
-        if (!svd.decompose(dataMatrix)) {
-            throw new IllegalStateException("SVD failure.");
+                DecompositionFactory.svd(getDataMatrix().numRows, getDataMatrix().numCols, false, true, false);
+        if (!svd.decompose(getDataMatrix())) {
+            throw new IllegalStateException("SVD failure. Can't compute principal components!");
         }
 
-        principalComponentSubspace = svd.getV(null, true);
-        final DenseMatrix64F W = svd.getW(null);
+        setPrincipalComponentSubspace(svd.getV(null, true));
+        final DenseMatrix64F singularDiagonalMatrix = svd.getW(null);
 
-        // Singular values are in an arbitrary order initially
-        SingularOps.descendingOrder(null, false, W, getPrincipalComponentSubspace(), true);
+        // Singular values are in an arbitrary order initially. We ask for principal components subspace to be transposed.
+        SingularOps.descendingOrder(null, false, singularDiagonalMatrix, getPrincipalComponentSubspace(), true);
 
         // strip off unneeded components and find the basis
-        getPrincipalComponentSubspace().reshape(numComponents, mean.length, true);
+        getPrincipalComponentSubspace().reshape(numComponents, getMean().length, true);
+    }
+
+    public void validateData(int numComponents) {
+        if (numComponents > getDataMatrix().getNumCols()) {
+            throw new IllegalArgumentException("More components requested that the data's length.");
+        }
+        if (sampleIndex != getDataMatrix().getNumRows()) {
+            throw new IllegalArgumentException("Not all the data has been added");
+        }
+        if (numComponents > sampleIndex) {
+            throw new IllegalArgumentException(MessageFormat.format("More data needed to compute the desired number of components (sampleIndex={0}) (numComponents = {1}) ", sampleIndex, numComponents));
+        }
+    }
+
+    protected void computeNormalizedMean() {
+        // compute mean
+        for (int i = 0; i < getDataMatrix().getNumRows(); i++) {
+            for (int j = 0; j < getMean().length; j++) {
+                getMean()[j] += getDataMatrix().get(i, j);
+            }
+        }
+        for (int j = 0; j < getMean().length; j++) {
+            getMean()[j] /= getDataMatrix().getNumRows();
+        }
+
+        // subtract the mean from the original data; and get zero mean data
+        for (int i = 0; i < getDataMatrix().getNumRows(); i++) {
+            for (int j = 0; j < getMean().length; j++) {
+                getDataMatrix().set(i, j, getDataMatrix().get(i, j) - getMean()[j]);
+            }
+        }
     }
 
     /**
@@ -175,17 +179,17 @@ public abstract class PrincipalComponentsBase implements State {
      *
      * @return pca
      */
-    public synchronized Double[][] getPrincipalComponents() {
+    public synchronized double[][] getPrincipalComponents() {
         int component = 0;
-        final Double[][] eigenRowMajor;
         final int numPrincipalComponents = this.getNumOfPrincipalComponents();
-        final int numSensors = this.getReverseSensorDictionary().size();
-        eigenRowMajor = new Double[numSensors][numPrincipalComponents];
+        // every MLStormSpout sets the runtime feature count.
+        final int numFeatures = this.fieldTemplate.getRuntimeFeatureCount();
+        final double[][] eigenRowMajor = new double[numFeatures][numPrincipalComponents];
 
         while (component < numPrincipalComponents) {
             final double[] basisColumnVector = this.getBasisVector(component);
-            for (int sensorIndex = 0; sensorIndex < basisColumnVector.length; sensorIndex++) {
-                eigenRowMajor[sensorIndex][component] = basisColumnVector[sensorIndex];
+            for (int featureIndex = 0; featureIndex < basisColumnVector.length; featureIndex++) {
+                eigenRowMajor[featureIndex][component] = basisColumnVector[featureIndex];
             }
             component++;
         }
@@ -200,12 +204,12 @@ public abstract class PrincipalComponentsBase implements State {
      * @return Vector from the PCA basis.
      */
     public double[] getBasisVector(int which) {
-        if (which < 0 || which >= numPrincipalComponents) {
+        if (which < 0 || which >= getNumPrincipalComponents()) {
             throw new IllegalArgumentException("Invalid component");
         }
 
-        DenseMatrix64F v = new DenseMatrix64F(1, dataMatrix.numCols);
-        CommonOps.extract(getPrincipalComponentSubspace(), which, which + 1, 0, dataMatrix.numCols, v, 0, 0);
+        DenseMatrix64F v = new DenseMatrix64F(1, getDataMatrix().numCols);
+        CommonOps.extract(getPrincipalComponentSubspace(), which, which + 1, 0, getDataMatrix().numCols, v, 0, 0);
 
         return v.data;
     }
@@ -217,13 +221,13 @@ public abstract class PrincipalComponentsBase implements State {
      * @return Eigen space projection.
      */
     public double[] sampleToEigenSpace(double[] sampleData) {
-        if (sampleData.length != dataMatrix.getNumCols()) {
+        if (sampleData.length != getDataMatrix().getNumCols()) {
             throw new IllegalArgumentException("Unexpected sample length");
         }
-        DenseMatrix64F mean = DenseMatrix64F.wrap(dataMatrix.getNumCols(), 1, this.mean);
+        DenseMatrix64F mean = DenseMatrix64F.wrap(getDataMatrix().getNumCols(), 1, this.getMean());
 
-        DenseMatrix64F s = new DenseMatrix64F(dataMatrix.getNumCols(), 1, true, sampleData);
-        DenseMatrix64F r = new DenseMatrix64F(numPrincipalComponents, 1);
+        DenseMatrix64F s = new DenseMatrix64F(getDataMatrix().getNumCols(), 1, true, sampleData);
+        DenseMatrix64F r = new DenseMatrix64F(getNumPrincipalComponents(), 1);
 
         CommonOps.sub(s, mean, s);
 
@@ -239,16 +243,16 @@ public abstract class PrincipalComponentsBase implements State {
      * @return Sample space projection.
      */
     public double[] eigenToSampleSpace(double[] eigenData) {
-        if (eigenData.length != numPrincipalComponents) {
+        if (eigenData.length != getNumPrincipalComponents()) {
             throw new IllegalArgumentException("Unexpected sample length");
         }
 
-        DenseMatrix64F s = new DenseMatrix64F(dataMatrix.getNumCols(), 1);
-        DenseMatrix64F r = DenseMatrix64F.wrap(numPrincipalComponents, 1, eigenData);
+        DenseMatrix64F s = new DenseMatrix64F(getDataMatrix().getNumCols(), 1);
+        DenseMatrix64F r = DenseMatrix64F.wrap(getNumPrincipalComponents(), 1, eigenData);
 
         CommonOps.multTransA(getPrincipalComponentSubspace(), r, s);
 
-        DenseMatrix64F mean = DenseMatrix64F.wrap(dataMatrix.getNumCols(), 1, this.mean);
+        DenseMatrix64F mean = DenseMatrix64F.wrap(getDataMatrix().getNumCols(), 1, this.getMean());
         CommonOps.add(s, mean, s);
 
         return s.data;
@@ -290,12 +294,12 @@ public abstract class PrincipalComponentsBase implements State {
      * @return Higher value indicates it is more likely to be a member of input dataset.
      */
     public double response(double[] sample) {
-        if (sample.length != dataMatrix.numCols) {
+        if (sample.length != getDataMatrix().numCols) {
             throw new IllegalArgumentException("Expected input vector to be in sample space");
         }
 
-        DenseMatrix64F dots = new DenseMatrix64F(numPrincipalComponents, 1);
-        DenseMatrix64F s = DenseMatrix64F.wrap(dataMatrix.numCols, 1, sample);
+        DenseMatrix64F dots = new DenseMatrix64F(getNumPrincipalComponents(), 1);
+        DenseMatrix64F s = DenseMatrix64F.wrap(getDataMatrix().numCols, 1, sample);
 
         CommonOps.mult(getPrincipalComponentSubspace(), s, dots);
         return NormOps.normF(dots);
@@ -307,7 +311,7 @@ public abstract class PrincipalComponentsBase implements State {
      *
      * @return map of sensors and data
      */
-    public Map<String, Double> getCurrentSensors() {
+    public Map<String, Double> getCurrentSamples() {
         return getCurrentSensorsAndReset(false);
     }
 
@@ -319,9 +323,9 @@ public abstract class PrincipalComponentsBase implements State {
      * @return
      */
     protected synchronized Map<String, Double> getCurrentSensorsAndReset(final boolean reset) {
-        final Map<String, Double> oldSensors = currentSensors;
+        final Map<String, Double> oldSensors = currentSamples;
         if (reset) {
-            currentSensors = new ConcurrentSkipListMap<String, Double>();
+            currentSamples = new ConcurrentSkipListMap<String, Double>();
         }
         return oldSensors;
     }
@@ -345,15 +349,49 @@ public abstract class PrincipalComponentsBase implements State {
     }
 
     /**
-     * Returns the dictionary that maps sensor ids to names
+     * Returns the dictionary that maps sample ids to names
      *
      * @return Map
      */
-    public Map<Integer, String> getReverseSensorDictionary() {
-        return reverseSensorDictionary;
+    public Map<Integer, String> getReverseLookupFeatureDictionary() {
+        return reverseLookupFeatureDictionary;
     }
 
     public DenseMatrix64F getPrincipalComponentSubspace() {
         return principalComponentSubspace;
+    }
+
+    protected void setPrincipalComponentSubspace(DenseMatrix64F principalComponentSubspace) {
+        this.principalComponentSubspace = principalComponentSubspace;
+    }
+
+    public double[] getMean() {
+        return mean;
+    }
+
+    public void setMean(double[] mean) {
+        this.mean = mean;
+    }
+
+    /**
+     * Rows of feature vectors
+     * Columns are features
+     *
+     * @return data matrix
+     */
+    public DenseMatrix64F getDataMatrix() {
+        return dataMatrix;
+    }
+
+    public void setDataMatrix(DenseMatrix64F dataMatrix) {
+        this.dataMatrix = dataMatrix;
+    }
+
+    public int getNumPrincipalComponents() {
+        return numPrincipalComponents;
+    }
+
+    public void setNumPrincipalComponents(int numPrincipalComponents) {
+        this.numPrincipalComponents = numPrincipalComponents;
     }
 }

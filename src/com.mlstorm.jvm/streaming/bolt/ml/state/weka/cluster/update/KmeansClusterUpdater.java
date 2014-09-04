@@ -21,8 +21,8 @@ import storm.trident.operation.TridentCollector;
 import storm.trident.operation.TridentOperationContext;
 import storm.trident.state.StateUpdater;
 import storm.trident.tuple.TridentTuple;
-import utils.FeatureVectorUtils;
-import utils.Pair;
+import utils.KeyValuePair;
+import utils.MlStormFeatureVectorUtils;
 import utils.fields.FieldTemplate;
 
 import java.text.MessageFormat;
@@ -49,7 +49,7 @@ public class KmeansClusterUpdater implements StateUpdater<KmeansClustererState> 
                             final List<TridentTuple> tuples,
                             final TridentCollector collector) {
         for (TridentTuple tuple : tuples) {
-            final Pair<Object, double[]> keyValue = FeatureVectorUtils.getKeyValuePairFromMlStormFeatureVector(template, tuple);
+            final KeyValuePair<Object, double[]> keyValue = MlStormFeatureVectorUtils.getKeyValueFromMlStormFeatureVector(template, tuple);
             final int key = (Integer) keyValue.getKey();
             final double[] fv = keyValue.getValue();
 

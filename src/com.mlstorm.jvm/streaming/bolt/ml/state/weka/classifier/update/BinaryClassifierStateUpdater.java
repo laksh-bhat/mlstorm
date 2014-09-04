@@ -6,8 +6,8 @@ import storm.trident.operation.TridentCollector;
 import storm.trident.operation.TridentOperationContext;
 import storm.trident.state.StateUpdater;
 import storm.trident.tuple.TridentTuple;
-import utils.FeatureVectorUtils;
-import utils.Pair;
+import utils.MlStormFeatureVectorUtils;
+import utils.KeyValuePair;
 import utils.fields.FieldTemplate;
 
 import java.text.MessageFormat;
@@ -57,7 +57,7 @@ public class BinaryClassifierStateUpdater implements StateUpdater<MlStormWekaSta
                                 final List<TridentTuple> tuples,
                                 final TridentCollector collector) {
             for (TridentTuple tuple : tuples) {
-                final Pair<Object, double[]> keyValue = FeatureVectorUtils.getKeyValuePairFromMlStormFeatureVector(fieldTemplate, tuple);
+                final KeyValuePair<Object, double[]> keyValue = MlStormFeatureVectorUtils.getKeyValueFromMlStormFeatureVector(fieldTemplate, tuple);
                 final int key = (Integer) keyValue.getKey();
                 final double[] fv = keyValue.getValue();
 
@@ -66,7 +66,7 @@ public class BinaryClassifierStateUpdater implements StateUpdater<MlStormWekaSta
                     state.commit(-1L);
                 }
                 try {
-                    collector.emit(new Values(localPartition, key, (int) state.predict(FeatureVectorUtils.buildWekaInstance(fv)), fv[fv.length - 1]));
+                    collector.emit(new Values(localPartition, key, (int) state.predict(MlStormFeatureVectorUtils.buildWekaInstance(fv)), fv[fv.length - 1]));
                 } catch (Exception e) {
                     if (e.toString().contains(MlStormWekaState.NOT_READY_TO_PREDICT)) {
                         // todo fix bug
@@ -97,13 +97,13 @@ public class BinaryClassifierStateUpdater implements StateUpdater<MlStormWekaSta
                             final List<TridentTuple> tuples,
                             final TridentCollector collector) {
         for (TridentTuple tuple : tuples) {
-            final Pair<Object, double[]> keyValue = FeatureVectorUtils.getKeyValuePairFromMlStormFeatureVector(fieldTemplate, tuple);
+            final KeyValuePair<Object, double[]> keyValue = MlStormFeatureVectorUtils.getKeyValueFromMlStormFeatureVector(fieldTemplate, tuple);
             final int key = (Integer) keyValue.getKey();
             final double[] fv = keyValue.getValue();
 
             state.getFeatureVectorsInCurrentWindow().put(key, fv);
             try {
-                collector.emit(new Values(localPartition, key, (int) state.predict(FeatureVectorUtils.buildWekaInstance(fv)), fv[fv.length - 1]));
+                collector.emit(new Values(localPartition, key, (int) state.predict(MlStormFeatureVectorUtils.buildWekaInstance(fv)), fv[fv.length - 1]));
             } catch (Exception e) {
                 if (e.toString().contains(MlStormWekaState.NOT_READY_TO_PREDICT)) {
                     // todo bug: fix this

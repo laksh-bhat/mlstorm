@@ -5,7 +5,7 @@ import storm.trident.operation.Aggregator;
 import storm.trident.operation.TridentCollector;
 import storm.trident.operation.TridentOperationContext;
 import storm.trident.tuple.TridentTuple;
-import utils.Pair;
+import utils.KeyValuePair;
 import utils.fields.FieldTemplate;
 
 import java.util.HashMap;
@@ -38,7 +38,7 @@ public class MetaFeatureVectorBuilder implements Aggregator<Map<Integer, Map.Ent
         final int partition = tuple.getIntegerByField(FieldTemplate.FieldConstants.PARTITION);
         final double label = tuple.getIntegerByField(FieldTemplate.FieldConstants.CLASSIFICATION.LABEL);
         final double actualLabel = tuple.getDoubleByField(FieldTemplate.FieldConstants.CLASSIFICATION.ACTUAL_LABEL);
-        val.put(partition, new Pair<Double, Double>(label, actualLabel));
+        val.put(partition, new KeyValuePair<Double, Double>(label, actualLabel));
     }
 
     @Override

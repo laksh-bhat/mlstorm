@@ -26,17 +26,17 @@ import java.io.*;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class FeatureVectorUtils {
+public class MlStormFeatureVectorUtils {
 
     public static Values buildMlStormFeatureVector(Object key, double[] value){
         return new Values(key, value);
     }
 
-    public static Pair<Object, double[]> getKeyValuePairFromMlStormFeatureVector(FieldTemplate template, TridentTuple tuple){
+    public static KeyValuePair<Object, double[]> getKeyValueFromMlStormFeatureVector(FieldTemplate template, TridentTuple tuple){
         if (!(tuple.getValueByField(template.getFeatureVectorField()) instanceof double[])){
             throw new IllegalStateException("Malformed feature vector");
         }
-        return new Pair<Object, double[]>(tuple.getValueByField(template.getKeyField()), (double[]) tuple.getValueByField(template.getFeatureVectorField()));
+        return new KeyValuePair<Object, double[]>(tuple.getValueByField(template.getKeyField()), (double[]) tuple.getValueByField(template.getFeatureVectorField()));
     }
 
     public static weka.core.Instance buildWekaInstance(double[] featureVector) {

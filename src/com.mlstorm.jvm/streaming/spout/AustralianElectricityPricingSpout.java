@@ -143,7 +143,7 @@ public class AustralianElectricityPricingSpout implements MlStormSpout {
 
     @Override
     public void updateMlStormFieldTemplate(FieldTemplate template, int features) {
-        this.fieldTemplate.setNumFeatures(features);
+        this.fieldTemplate.setRuntimeFeatureCount(features);
     }
 
 }

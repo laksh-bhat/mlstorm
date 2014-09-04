@@ -6,6 +6,7 @@ import bolt.ml.state.pca.PrincipalComponentsBase;
 import bolt.ml.state.pca.windowed.WindowedStormPca;
 import storm.trident.state.State;
 import storm.trident.state.StateFactory;
+import utils.fields.FieldTemplate;
 
 import java.util.Map;
 
@@ -29,11 +30,13 @@ import java.util.Map;
 public class WindowedPcaFactory implements StateFactory {
     final int sampleSize;
     private final int numPrincipalComponents;
+    private final FieldTemplate template;
     PrincipalComponentsBase pc = null;
 
-    public WindowedPcaFactory(int sampleSize, int numPrincipalComponents) {
+    public WindowedPcaFactory(int sampleSize, int numPrincipalComponents, FieldTemplate template) {
         this.sampleSize = sampleSize;
         this.numPrincipalComponents = numPrincipalComponents;
+        this.template = template;
     }
 
     @Override
@@ -43,7 +46,7 @@ public class WindowedPcaFactory implements StateFactory {
                                         final int numPartitions) {
         if (pc == null) {
             try {
-                pc = new WindowedStormPca(sampleSize, numPrincipalComponents, partitionIndex, numPartitions);
+                pc = new WindowedStormPca(sampleSize, numPrincipalComponents, partitionIndex, numPartitions, template);
             } catch (Exception e) {
                 throw new IllegalStateException(e);
             }
